@@ -15,7 +15,7 @@ import java.util.function.BiConsumer;
  * for more specific functionality.
  * 
  * @author Logan Ferree (Tadukoo)
- * @version Alpha v.0.1
+ * @version Pre-Alpha
  * 
  * @param <K> The type of keys in this ManyToManyMap
  * @param <V> The type of values in this ManyToManyMap

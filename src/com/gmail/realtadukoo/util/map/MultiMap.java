@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
  * functionality.
  * 
  * @author Logan Ferree (Tadukoo)
- * @version Alpha v.0.1
+ * @version Pre-Alpha
  * 
  * @param <K> The type of keys in this MultiMap
  * @param <V> The type of values in this MultiMap
