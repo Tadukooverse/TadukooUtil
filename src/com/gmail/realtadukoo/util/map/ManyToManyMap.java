@@ -20,19 +20,65 @@ import java.util.function.BiConsumer;
  * @param <K> The type of keys in this ManyToManyMap
  * @param <V> The type of values in this ManyToManyMap
  */
-public class ManyToManyMap<K, V>{
+public abstract class ManyToManyMap<K, V>{
 	/** The backing keys to values {@link MultiMap} */
 	private MultiMap<K, V> keysToValues;
 	/** The backing values to keys {@link MultiMap} */
 	private MultiMap<V, K> valuesToKeys;
 	
 	/**
-	 * Creates the backing {@link MultiMap}s for this ManyToManyMap.
-	 * The keysToValues and valuesToKeys MultiMaps.
+	 * Sets the backing {@link MultiMap}s for this ManyToManyMap.
+	 * 
+	 * @param keysToValues The keysToValues MultiMap to use for this ManyToManyMap
+	 * @param valuesToKeys The valuesToKeys MultiMap to use for this ManyToManyMap
 	 */
-	public ManyToManyMap(){
-		keysToValues = new MultiMap<K, V>();
-		valuesToKeys = new MultiMap<V, K>();
+	public ManyToManyMap(MultiMap<K, V> keysToValues, MultiMap<V, K> valuesToKeys){
+		this.keysToValues = keysToValues;
+		this.valuesToKeys = valuesToKeys;
+	}
+	
+	/**
+	 * Sets the backing {@link MultiMap}s for this ManyToManyMap and calls 
+	 * {@link #putAllKeyValMappings(Map) putAll} for the given map's entries.
+	 * 
+	 * @param keysToValues The keysToValues MultiMap to use for this ManyToManyMap
+	 * @param valuesToKeys The valuesToKeys MultiMap to use for this ManyToManyMap
+	 * @param map A Map containing entries to add to this ManyToManyMap
+	 */
+	public ManyToManyMap(MultiMap<K, V> keysToValues, MultiMap<V, K> valuesToKeys, Map<K, V> map){
+		this.keysToValues = keysToValues;
+		this.valuesToKeys = valuesToKeys;
+		putAllKeyValMappings(map);
+	}
+	
+	/**
+	 * Sets the backing {@link MultiMap}s for this ManyToManyMap and calls 
+	 * {@link #putAllKeyValMappings(MultiMap) putAll} for the given MultiMap's entries.
+	 * 
+	 * @param keysToValues The keysToValues MultiMap to use for this ManyToManyMap
+	 * @param valuesToKeys The valuesToKeys MultiMap to use for this ManyToManyMap
+	 * @param multiMap A MultiMap containing entries to add to this ManyToManyMap
+	 */
+	public ManyToManyMap(MultiMap<K, V> keysToValues, MultiMap<V, K> valuesToKeys, 
+			MultiMap<K, V> multiMap){
+		this.keysToValues = keysToValues;
+		this.valuesToKeys = valuesToKeys;
+		putAllKeyValMappings(multiMap);
+	}
+	
+	/**
+	 * Sets the backing {@link MultiMap}s for this ManyToManyMap and calls 
+	 * {@link #putAllKeyValMappings(ManyToManyMap) putAll} for the given ManyToManyMap's entries.
+	 * 
+	 * @param keysToValues The keysToValues MultiMap to use for this ManyToManyMap
+	 * @param valuesToKeys The valuesToKeys MultiMap to use for this ManyToManyMap
+	 * @param manyToManyMap A ManyToManyMap containing entries to add to this ManyToManyMap
+	 */
+	public ManyToManyMap(MultiMap<K, V> keysToValues, MultiMap<V, K> valuesToKeys, 
+			ManyToManyMap<K, V> manyToManyMap){
+		this.keysToValues = keysToValues;
+		this.valuesToKeys = valuesToKeys;
+		putAllKeyValMappings(manyToManyMap);
 	}
 	
 	/**
@@ -41,7 +87,7 @@ public class ManyToManyMap<K, V>{
 	 * 
 	 * @return true if this map contains no key-value mappings.
 	 */
-	public boolean isEmpty(){
+	public final boolean isEmpty(){
 		return keysToValues.isEmpty() && valuesToKeys.isEmpty();
 	}
 	
@@ -74,7 +120,7 @@ public class ManyToManyMap<K, V>{
 	 * @param key The key to check for
 	 * @return Whether this ManyToManyMap contains the given key or not
 	 */
-	public boolean containsKey(K key){
+	public final boolean containsKey(K key){
 		return keysToValues.containsKey(key);
 	}
 	
@@ -86,7 +132,7 @@ public class ManyToManyMap<K, V>{
 	 * @param value The value to check for
 	 * @return Whether this ManyToManyMap contains the given value or not
 	 */
-	public boolean containsValue(V value){
+	public final boolean containsValue(V value){
 		return valuesToKeys.containsKey(value);
 	}
 	
@@ -98,7 +144,7 @@ public class ManyToManyMap<K, V>{
 	 * @param value The value whose mapped keys are being requested
 	 * @return The list of keys mapped to the given value
 	 */
-	public List<K> getKeys(V value){
+	public final List<K> getKeys(V value){
 		return valuesToKeys.get(value);
 	}
 	
@@ -110,7 +156,7 @@ public class ManyToManyMap<K, V>{
 	 * @param key The key whose mapped values are being requested
 	 * @return The list of values mapped to the given key
 	 */
-	public List<V> getValues(K key){
+	public final List<V> getValues(K key){
 		return keysToValues.get(key);
 	}
 	
@@ -120,7 +166,7 @@ public class ManyToManyMap<K, V>{
 	 * 
 	 * @return The Set of keys in this ManyToManyMap
 	 */
-	public Set<K> keySet(){
+	public final Set<K> keySet(){
 		return keysToValues.keySet();
 	}
 	
@@ -130,7 +176,7 @@ public class ManyToManyMap<K, V>{
 	 * 
 	 * @return The Set of values in this ManyToManyMap
 	 */
-	public Set<V> valueSet(){
+	public final Set<V> valueSet(){
 		return valuesToKeys.keySet();
 	}
 	
@@ -139,7 +185,7 @@ public class ManyToManyMap<K, V>{
 	 * 
 	 * @return The underlying keysToValues MultiMap
 	 */
-	public MultiMap<K, V> keysToValues(){
+	public final MultiMap<K, V> keysToValues(){
 		return keysToValues;
 	}
 	
@@ -148,7 +194,7 @@ public class ManyToManyMap<K, V>{
 	 * 
 	 * @return The underlying valuesToKeys MultiMap
 	 */
-	public MultiMap<V, K> valuesToKeys(){
+	public final MultiMap<V, K> valuesToKeys(){
 		return valuesToKeys;
 	}
 	
@@ -159,7 +205,7 @@ public class ManyToManyMap<K, V>{
 	 * @param key The key to associate with the given value
 	 * @param value The value to associate with the given key
 	 */
-	public void put(K key, V value){
+	public final void put(K key, V value){
 		keysToValues.put(key, value);
 		valuesToKeys.put(value, key);
 	}
@@ -173,7 +219,7 @@ public class ManyToManyMap<K, V>{
 	 * @param value The value to associate with the given keys
 	 * @param keys The keys to associate with the given value
 	 */
-	public void putAllKeys(V value, List<K> keys){
+	public final void putAllKeys(V value, List<K> keys){
 		keys.forEach(key -> keysToValues.put(key, value));
 		valuesToKeys.putAll(value, keys);
 	}
@@ -187,7 +233,7 @@ public class ManyToManyMap<K, V>{
 	 * @param key The key to associate with the given values
 	 * @param values The values to associate with the given key
 	 */
-	public void putAllValues(K key, List<V> values){
+	public final void putAllValues(K key, List<V> values){
 		keysToValues.putAll(key, values);
 		values.forEach(value -> valuesToKeys.put(value, key));
 	}
@@ -202,7 +248,7 @@ public class ManyToManyMap<K, V>{
 	 * 
 	 * @param map The map whose mappings should be added to this
 	 */
-	public void putAllKeyValMappings(Map<K, V> map){
+	public final void putAllKeyValMappings(Map<K, V> map){
 		keysToValues.putAll(map);
 		map.forEach((key, value) -> valuesToKeys.put(value, key));
 	}
@@ -217,7 +263,7 @@ public class ManyToManyMap<K, V>{
 	 * 
 	 * @param map The map whose mappings should be added to this
 	 */
-	public void putAllValKeyMappings(Map<V, K> map){
+	public final void putAllValKeyMappings(Map<V, K> map){
 		map.forEach((key, value) -> keysToValues.put(value, key));
 		valuesToKeys.putAll(map);
 	}
@@ -232,7 +278,7 @@ public class ManyToManyMap<K, V>{
 	 * 
 	 * @param map The MultiMap whose mappings should be added to this
 	 */
-	public void putAllKeyValMappings(MultiMap<K, V> map){
+	public final void putAllKeyValMappings(MultiMap<K, V> map){
 		keysToValues.putAll(map);
 		map.forEach((key, value) -> valuesToKeys.put(value, key));
 	}
@@ -247,7 +293,7 @@ public class ManyToManyMap<K, V>{
 	 * 
 	 * @param map The MultiMap whose mappings should be added to this
 	 */
-	public void putAllValKeyMappings(MultiMap<V, K> map){
+	public final void putAllValKeyMappings(MultiMap<V, K> map){
 		map.forEach((key, value) -> keysToValues.put(value, key));
 		valuesToKeys.putAll(map);
 	}
@@ -261,7 +307,7 @@ public class ManyToManyMap<K, V>{
 	 * 
 	 * @param map The ManyToManyMap whose mappings should be added to this
 	 */
-	public void putAllKeyValMappings(ManyToManyMap<K, V> map){
+	public final void putAllKeyValMappings(ManyToManyMap<K, V> map){
 		map.forEach((key, value) -> put(key, value));
 	}
 	
@@ -274,7 +320,7 @@ public class ManyToManyMap<K, V>{
 	 * 
 	 * @param map The ManyToManyMap whose mappings should be added to this
 	 */
-	public void putAllValKeyMappings(ManyToManyMap<V, K> map){
+	public final void putAllValKeyMappings(ManyToManyMap<V, K> map){
 		map.forEach((key, value) -> put(value, key));
 	}
 	
@@ -287,7 +333,7 @@ public class ManyToManyMap<K, V>{
 	 * @param key The key whose associations are to be removed
 	 * @return The List of values the key used to be associated with
 	 */
-	public List<V> removeKey(K key){
+	public final List<V> removeKey(K key){
 		List<V> values = keysToValues.remove(key);
 		values.forEach(value -> valuesToKeys.remove(value, key));
 		return values;
@@ -302,7 +348,7 @@ public class ManyToManyMap<K, V>{
 	 * @param value The value whose associations are to be removed
 	 * @return The List of keys the value used to be associated with
 	 */
-	public List<K> removeValue(V value){
+	public final List<K> removeValue(V value){
 		List<K> keys = valuesToKeys.remove(value);
 		keys.forEach(key -> keysToValues.remove(key, value));
 		return keys;
@@ -322,7 +368,7 @@ public class ManyToManyMap<K, V>{
 	 * @param value The value of the given key-value association to remove
 	 * @return true if there was a mapping of the given key to the given value
 	 */
-	public boolean remove(K key, V value){
+	public final boolean remove(K key, V value){
 		if(keysToValues.remove(key, value)){
 			valuesToKeys.remove(value, key);
 			return true;
@@ -342,7 +388,7 @@ public class ManyToManyMap<K, V>{
 	 * @param keys The keys of the given value-key association to remove
 	 * @return Whether the list of keys was removed or not
 	 */
-	public boolean removeKeysList(V value, List<K> keys){
+	public final boolean removeKeysList(V value, List<K> keys){
 		if(valuesToKeys.removeEntireList(value, keys)){
 			keys.forEach(key -> keysToValues.remove(key, value));
 			return true;
@@ -362,7 +408,7 @@ public class ManyToManyMap<K, V>{
 	 * @param values The values of the given key-value association to remove
 	 * @return Whether the list of values was removed or not
 	 */
-	public boolean removeValuesList(K key, List<V> values){
+	public final boolean removeValuesList(K key, List<V> values){
 		if(keysToValues.removeEntireList(key, values)){
 			values.forEach(value -> valuesToKeys.remove(value, key));
 			return true;
@@ -384,7 +430,7 @@ public class ManyToManyMap<K, V>{
 	 * @param keys The keys to associate with the given value
 	 * @return The previous list of keys associated with the given value
 	 */
-	public List<K> replaceKeyList(V value, List<K> keys){
+	public final List<K> replaceKeyList(V value, List<K> keys){
 		List<K> oldKeys = valuesToKeys.replaceList(value, keys);
 		oldKeys.forEach(key -> keysToValues.remove(key, value));
 		keys.forEach(key -> keysToValues.put(key, value));
@@ -405,7 +451,7 @@ public class ManyToManyMap<K, V>{
 	 * @param values The values to associate with the given key
 	 * @return The previous list of values associated with the given key
 	 */
-	public List<V> replaceValueList(K key, List<V> values){
+	public final List<V> replaceValueList(K key, List<V> values){
 		List<V> oldValues = keysToValues.replaceList(key, values);
 		oldValues.forEach(value -> valuesToKeys.remove(value, key));
 		values.forEach(value -> valuesToKeys.put(value, key));
@@ -428,7 +474,7 @@ public class ManyToManyMap<K, V>{
 	 * @param newKey The new key to associate with the given value
 	 * @return true if the key was replaced
 	 */
-	public boolean replaceKey(V value, K oldKey, K newKey){
+	public final boolean replaceKey(V value, K oldKey, K newKey){
 		if(valuesToKeys.replace(value, oldKey, newKey)){
 			keysToValues.remove(oldKey, value);
 			keysToValues.put(newKey, value);
@@ -453,7 +499,7 @@ public class ManyToManyMap<K, V>{
 	 * @param newValue The new value to associate with the given key
 	 * @return true if the value was replaced
 	 */
-	public boolean replaceValue(K key, V oldValue, V newValue){
+	public final boolean replaceValue(K key, V oldValue, V newValue){
 		if(keysToValues.replace(key, oldValue, newValue)){
 			valuesToKeys.remove(oldValue, key);
 			valuesToKeys.put(newValue, key);
@@ -478,7 +524,7 @@ public class ManyToManyMap<K, V>{
 	 * @param newKeys The keys to associate with the given value
 	 * @return true if the keys were replaced
 	 */
-	public boolean replaceEntireKeyList(V value, List<K> oldKeys, List<K> newKeys){
+	public final boolean replaceEntireKeyList(V value, List<K> oldKeys, List<K> newKeys){
 		if(valuesToKeys.replaceEntireList(value, oldKeys, newKeys)){
 			oldKeys.forEach(key -> keysToValues.remove(key, value));
 			newKeys.forEach(key -> keysToValues.put(key, value));
@@ -503,7 +549,7 @@ public class ManyToManyMap<K, V>{
 	 * @param newValues The values to associate with the given key
 	 * @return true if the values were replaced
 	 */
-	public boolean replaceEntireValueList(K key, List<V> oldValues, List<V> newValues){
+	public final boolean replaceEntireValueList(K key, List<V> oldValues, List<V> newValues){
 		if(keysToValues.replaceEntireList(key, oldValues, newValues)){
 			oldValues.forEach(value -> valuesToKeys.remove(value, key));
 			newValues.forEach(value -> valuesToKeys.put(value, key));
@@ -519,7 +565,7 @@ public class ManyToManyMap<K, V>{
 	 * 
 	 * @return The number of keys currently in this ManyToManyMap
 	 */
-	public int keySetSize(){
+	public final int keySetSize(){
 		return keysToValues.keySetSize();
 	}
 	
@@ -530,7 +576,7 @@ public class ManyToManyMap<K, V>{
 	 * 
 	 * @return The number of values currently in this ManyToManyMap
 	 */
-	public int valueSetSize(){
+	public final int valueSetSize(){
 		return valuesToKeys.keySetSize();
 	}
 	
@@ -541,7 +587,7 @@ public class ManyToManyMap<K, V>{
 	 * 
 	 * @return The number of key-value associations of this ManyToManyMap.
 	 */
-	public int size(){
+	public final int size(){
 		return keysToValues.size();
 	}
 	
@@ -552,7 +598,7 @@ public class ManyToManyMap<K, V>{
 	 * 
 	 * @param action The action to be performed for each key-value association
 	 */
-	public void forEach(BiConsumer<? super K, ? super V> action){
+	public final void forEach(BiConsumer<? super K, ? super V> action){
 		for(K key: keySet()){
 			for(V value: keysToValues.get(key)){
 				action.accept(key, value);
@@ -566,7 +612,7 @@ public class ManyToManyMap<K, V>{
 	 * <br>
 	 * Calls {@link MultiMap#clear} on the underlying {@link MultiMap}s.
 	 */
-	public void clear(){
+	public final void clear(){
 		keysToValues.clear();
 		valuesToKeys.clear();
 	}

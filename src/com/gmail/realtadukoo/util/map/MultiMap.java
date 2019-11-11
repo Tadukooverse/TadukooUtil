@@ -1,7 +1,6 @@
 package com.gmail.realtadukoo.util.map;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -11,7 +10,7 @@ import java.util.stream.Collectors;
 /**
  * This class relates keys to values, but allows for one key to reference multiple values.
  * <br>
- * The implementation of this class is essentially a {@link HashMap} of keys to {@link ArrayList ArrayLists} of values.
+ * The implementation of this class is essentially a {@link Map} of keys to {@link ArrayList ArrayLists} of values.
  * <br>
  * For the most part, it's the same methods that a Map has, but there are some unique to this to allow for more specific 
  * functionality.
@@ -22,24 +21,50 @@ import java.util.stream.Collectors;
  * @param <K> The type of keys in this MultiMap
  * @param <V> The type of values in this MultiMap
  */
-public class MultiMap<K, V>{
+public abstract class MultiMap<K, V>{
 	/** Underlying Map used to store the key-value pairs */
 	private Map<K, List<V>> theMap;
 	
 	/**
-	 * Creates the backing {@link HashMap} for this MultiMap.
+	 * Sets the backing {@link Map} for this MultiMap.
+	 * 
+	 * @param theMap The Map to use for this MultiMap
 	 */
-	public MultiMap(){
-		theMap = new HashMap<K, List<V>>();
+	public MultiMap(Map<K, List<V>> theMap){
+		this.theMap = theMap;
+	}
+	
+	/**
+	 * Sets the backing {@link Map} for this MultiMap and calls 
+	 * {@link #putAll(Map) putAll} for the given otherMap's entries.
+	 * 
+	 * @param theMap The Map to use for this MultiMap
+	 * @param otherMap A Map containing entries to add to this MultiMap
+	 */
+	public MultiMap(Map<K, List<V>> theMap, Map<K, V> otherMap){
+		this.theMap = theMap;
+		putAll(otherMap);
+	}
+	
+	/**
+	 * Sets the backing {@link Map} for this MultiMap and calls 
+	 * {@link #putAll(MultiMap) putAll} for the given multiMap's entries.
+	 * 
+	 * @param theMap The Map to use for this MultiMap
+	 * @param multiMap A MultiMap containing entries to add to this MultiMap
+	 */
+	public MultiMap(Map<K, List<V>> theMap, MultiMap<K, V> multiMap){
+		this.theMap = theMap;
+		putAll(multiMap);
 	}
 	
 	/**
 	 * Returns true if this map contains no key-value mappings.
-	 * Calls {@link Map#isEmpty} on the underlying HashMap.
+	 * Calls {@link Map#isEmpty} on the underlying {@link Map}.
 	 * 
 	 * @return true if this map contains no key-value mappings.
 	 */
-	public boolean isEmpty(){
+	public final boolean isEmpty(){
 		return theMap.isEmpty();
 	}
 	
@@ -49,7 +74,7 @@ public class MultiMap<K, V>{
 	 * If they're both MultiMaps, it will run the {@link MultiMap#asMap} method on both MultiMaps and 
 	 * call {@link Map#equals} to compare their mappings.
 	 * 
-	 * @param o The object to be compared for equality with this map
+	 * @param o The object to be compared for equality with this MultiMap
 	 * @return true if the given object is equivalent to this MultiMap
 	 */
 	public boolean equals(Object o){
@@ -61,13 +86,13 @@ public class MultiMap<K, V>{
 	
 	/**
 	 * Returns true if this MultiMap contains a mapping for the specified key.
-	 * Calls {@link Map#containsKey} on the underlying HashMap to see if it contains 
+	 * Calls {@link Map#containsKey} on the underlying {@link Map} to see if it contains 
 	 * the given key or not.
 	 * 
 	 * @param key The key to check for
 	 * @return Whether this MultiMap contains the given key or not
 	 */
-	public boolean containsKey(K key){
+	public final boolean containsKey(K key){
 		return theMap.containsKey(key);
 	}
 	
@@ -78,50 +103,50 @@ public class MultiMap<K, V>{
 	 * @param value The value to check for
 	 * @return Whether this MultiMap contains the given value or not
 	 */
-	public boolean containsValue(V value){
+	public final boolean containsValue(V value){
 		return values().contains(value);
 	}
 	
 	/**
 	 * Returns the list of values to which the specified key is mapped, 
 	 * or null if this MultiMap contains no mappings for the key.
-	 * Calls {@link Map#get} on the underlying HashMap.
+	 * Calls {@link Map#get} on the underlying {@link Map}.
 	 * 
 	 * @param key The key whose mapped values are being requested
 	 * @return The list of values mapped to the given key
 	 */
-	public List<V> get(K key){
+	public final List<V> get(K key){
 		// Grab the list associated with the given key
 		return theMap.get(key);
 	}
 	
 	/**
 	 * Returns the Set of keys in this MultiMap.
-	 * Calls {@link Map#keySet} on the underlying HashMap.
+	 * Calls {@link Map#keySet} on the underlying {@link Map}.
 	 * 
 	 * @return The Set of keys in this MultiMap
 	 */
-	public Set<K> keySet(){
+	public final Set<K> keySet(){
 		return theMap.keySet();
 	}
 	
 	/**
 	 * Returns the list of values in this MultiMap as a single List.
-	 * Calls {@link Map#values} on the underlying HashMap and streams the Collection of Lists 
+	 * Calls {@link Map#values} on the underlying {@link Map} and streams the Collection of Lists 
 	 * to a single List.
 	 * 
 	 * @return A list of all the values in this MultiMap
 	 */
-	public List<V> values(){
+	public final List<V> values(){
 		return theMap.values().stream().flatMap(List::stream).collect(Collectors.toList());
 	}
 	
 	/**
-	 * Returns the underlying {@link HashMap} of this MultiMap.
+	 * Returns the underlying {@link Map} of this MultiMap.
 	 * 
-	 * @return The underlying HashMap
+	 * @return The underlying Map
 	 */
-	public Map<K, List<V>> asMap(){
+	public final Map<K, List<V>> asMap(){
 		return theMap;
 	}
 	
@@ -134,7 +159,7 @@ public class MultiMap<K, V>{
 	 * @param key The key to associate with the given value
 	 * @param value The value to associate with the given key
 	 */
-	public void put(K key, V value){
+	public final void put(K key, V value){
 		// Grab the current list from the map (if it exists)
 		List<V> list = theMap.get(key);
 		
@@ -156,7 +181,7 @@ public class MultiMap<K, V>{
 	 * @param key The key to associate with the given values
 	 * @param values The values to associate with the given key
 	 */
-	public void putAll(K key, List<V> values){
+	public final void putAll(K key, List<V> values){
 		values.forEach(value -> put(key, value));
 	}
 	
@@ -166,7 +191,7 @@ public class MultiMap<K, V>{
 	 * 
 	 * @param map The map whose mappings should be added to this
 	 */
-	public void putAll(Map<K, V> map){
+	public final void putAll(Map<K, V> map){
 		map.forEach((key, value) -> put(key, value));
 	}
 	
@@ -176,18 +201,18 @@ public class MultiMap<K, V>{
 	 * 
 	 * @param map The MulitMap whose mappings should be added to this one
 	 */
-	public void putAll(MultiMap<K, V> map){
+	public final void putAll(MultiMap<K, V> map){
 		map.forEach((key, value) -> put(key, value));
 	}
 	
 	/**
 	 * Removes all values associated with the given key from the MultiMap.
-	 * Calls {@link Map#remove(Object)} on the underlying HashMap.
+	 * Calls {@link Map#remove(Object)} on the underlying {@link Map}.
 	 * 
 	 * @param key The key whose associations are to be removed
 	 * @return The List of values the key used to be associated with
 	 */
-	public List<V> remove(K key){
+	public final List<V> remove(K key){
 		return theMap.remove(key);
 	}
 	
@@ -198,13 +223,13 @@ public class MultiMap<K, V>{
 	 * Will return whether the mapping existed or not.
 	 * <br><br>
 	 * If the removed value was the last one associated with the given key, 
-	 * this method will remove the empty list from the underlying HashMap.
+	 * this method will remove the empty list from the underlying {@link Map}.
 	 * 
 	 * @param key The key of the given key-value association to remove
 	 * @param value The value of the given key-value association to remove
 	 * @return true if there was a mapping of the given key to the given value
 	 */
-	public boolean remove(K key, V value){
+	public final boolean remove(K key, V value){
 		// Grab the list of values for the given key
 		List<V> values = theMap.get(key);
 		
@@ -229,13 +254,13 @@ public class MultiMap<K, V>{
 	 * Removes the given list of values associated with the given key if the 
 	 * list of values matches the current list.
 	 * <br>
-	 * This method is calling {@link Map#remove(Object,Object)} on the underlying HashMap.
+	 * This method is calling {@link Map#remove(Object,Object)} on the underlying {@link Map}.
 	 * 
 	 * @param key The key of the given key-value association to remove
 	 * @param values The values of the given key-value association to remove
 	 * @return Whether the list of values was removed or not
 	 */
-	public boolean removeEntireList(K key, List<V> values){
+	public final boolean removeEntireList(K key, List<V> values){
 		return theMap.remove(key, values);
 	}
 	
@@ -243,13 +268,13 @@ public class MultiMap<K, V>{
 	 * Replaces the current list of values associated with the given key 
 	 * with the given list of values.
 	 * <br>
-	 * Calls {@link Map#replace(K,V)} on the underlying HashMap.
+	 * Calls {@link Map#replace(K,V)} on the underlying {@link Map}.
 	 * 
 	 * @param key The key to change the associations of
 	 * @param values The values to associate with the given key
 	 * @return The previous list of values associated with the given key
 	 */
-	public List<V> replaceList(K key, List<V> values){
+	public final List<V> replaceList(K key, List<V> values){
 		return theMap.replace(key, values);
 	}
 	
@@ -267,7 +292,7 @@ public class MultiMap<K, V>{
 	 * @param newValue The new value to associate with the given key
 	 * @return true if the value was replaced
 	 */
-	public boolean replace(K key, V oldValue, V newValue){
+	public final boolean replace(K key, V oldValue, V newValue){
 		// Grab the list of current values associated with the given key
 		List<V> values = theMap.get(key);
 		
@@ -293,25 +318,25 @@ public class MultiMap<K, V>{
 	 * with the given new list of values if the given old list matches the 
 	 * current list.
 	 * <br>
-	 * Calls {@link Map#replace(K,V,V)} on the underlying HashMap.
+	 * Calls {@link Map#replace(K,V,V)} on the underlying {@link Map}.
 	 * 
 	 * @param key The key to change the associations of
 	 * @param oldValues The old list of values associated with the given key
 	 * @param newValues The values to associate with the given key
 	 * @return true if the values were replaced
 	 */
-	public boolean replaceEntireList(K key, List<V> oldValues, List<V> newValues){
+	public final boolean replaceEntireList(K key, List<V> oldValues, List<V> newValues){
 		return theMap.replace(key, oldValues, newValues);
 	}
 	
 	/**
 	 * Returns the number of keys currently in this MultiMap.
 	 * <br>
-	 * Calls {@link Map#size} on the underlying HashMap.
+	 * Calls {@link Map#size} on the underlying {@link Map}.
 	 * 
 	 * @return The number of keys currently in this MultiMap
 	 */
-	public int keySetSize(){
+	public final int keySetSize(){
 		return theMap.size();
 	}
 	
@@ -322,7 +347,7 @@ public class MultiMap<K, V>{
 	 * 
 	 * @return The number of key-value associations of this MultiMap.
 	 */
-	public int size(){
+	public final int size(){
 		return values().size();
 	}
 	
@@ -333,7 +358,7 @@ public class MultiMap<K, V>{
 	 * 
 	 * @param action The action to be performed for each key-value association
 	 */
-	public void forEach(BiConsumer<? super K, ? super V> action){
+	public final void forEach(BiConsumer<? super K, ? super V> action){
 		for(K key : keySet()){
 			for(V value: theMap.get(key)){
 				action.accept(key, value);
@@ -345,9 +370,9 @@ public class MultiMap<K, V>{
 	 * Removes all of the key-value associations from this MultiMap.
 	 * The MultiMap will be empty after this call returns.
 	 * <br>
-	 * Calls {@link Map#clear} on the underlying HashMap.
+	 * Calls {@link Map#clear} on the underlying {@link Map}.
 	 */
-	public void clear(){
+	public final void clear(){
 		theMap.clear();
 	}
 }
