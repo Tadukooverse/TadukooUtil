@@ -1,5 +1,7 @@
 package com.gmail.realtadukoo.util.annotation.process;
 
+import java.io.IOException;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -41,8 +43,14 @@ public class AnnotationProcessorProcessor extends AbstractAnnotationProcessor{
 		String filename = AnnotationUtil.ANNOTATION_PROCESSOR_FILE;
 		
 		// Get a list of all the processors already in the file
-		Set<String> processors = FileUtil.getLinesAsList(annotationUtil.getFileReader(filename))
-									.stream().collect(Collectors.toSet());
+		Set<String> processors;
+		try{
+			// Try to load from file
+			processors = FileUtil.getLinesAsList(annotationUtil.getFileReader(filename)).stream().collect(Collectors.toSet());
+		}catch(IOException e){
+			// If file loading fails, create empty Set
+			processors = new HashSet<String>();
+		}
 		
 		// Process the elements
 		for(Element element: elements){

@@ -173,7 +173,7 @@ public class AnnotationUtil{
 	 * @return A FileObject for the new file
 	 */
 	public FileObject createFile(String filename) throws IOException{
-		return filer.createResource(StandardLocation.CLASS_OUTPUT, "", filename);
+		return filer.createResource(StandardLocation.SOURCE_OUTPUT, "", filename);
 	}
 	
 	/**
@@ -183,7 +183,7 @@ public class AnnotationUtil{
 	 * @return A FileObject for the existing file
 	 */
 	public FileObject getExistingFile(String filename) throws IOException{
-		return filer.getResource(StandardLocation.CLASS_OUTPUT, "", filename);
+		return filer.getResource(StandardLocation.SOURCE_OUTPUT, "", filename);
 	}
 	
 	/**
