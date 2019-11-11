@@ -1,9 +1,8 @@
 package com.gmail.realtadukoo.util.annotation.process;
 
-import java.io.BufferedWriter;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
+import java.io.Reader;
+import java.io.Writer;
 
 import javax.annotation.processing.Filer;
 import javax.annotation.processing.Messager;
@@ -56,8 +55,8 @@ public class AnnotationUtil{
 	 * @param element The element to get the canonical class name of
 	 * @return The canonical class name of the given Element
 	 */
-	public CharSequence getCanonicalClassName(Element element){
-		return getTypeElement(element).getQualifiedName();
+	public String getCanonicalClassName(Element element){
+		return getTypeElement(element).getQualifiedName().toString();
 	}
 	
 	/**
@@ -168,17 +167,48 @@ public class AnnotationUtil{
 	}
 	
 	/**
-	 * Writes a file with the given content to the given filename(/path).
+	 * Creates a new file (as a {@link FileObject}) using the given filename/path.
 	 * 
-	 * @param filename The filename/path to write to
-	 * @param content The content of the file
+	 * @param filename The file name/path to use
+	 * @return A FileObject for the new file
 	 */
-	public void writeFile(String filename, String content) throws IOException{
-		FileObject file = filer.createResource(StandardLocation.CLASS_OUTPUT, "", filename);
-		OutputStream os = file.openOutputStream();
-		BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os));
-		writer.write(content);
-		writer.flush();
-		writer.close();
+	public FileObject createFile(String filename) throws IOException{
+		return filer.createResource(StandardLocation.CLASS_OUTPUT, "", filename);
+	}
+	
+	/**
+	 * Grabs the file (as a {@link FileObject}) specified by the filename/path.
+	 * 
+	 * @param filename The file name/path to use
+	 * @return A FileObject for the existing file
+	 */
+	public FileObject getExistingFile(String filename) throws IOException{
+		return filer.getResource(StandardLocation.CLASS_OUTPUT, "", filename);
+	}
+	
+	/**
+	 * Grabs the existing file specified using {@link #getExistingFile} and 
+	 * then opens a {@link Reader} for it and returns it.
+	 * 
+	 * @param filename The file name/path to use
+	 * @return A Reader for the existing file
+	 */
+	public Reader getFileReader(String filename) throws IOException{
+		FileObject file = getExistingFile(filename);
+		return file.openReader(true);
+	}
+	
+	/**
+	 * Creates a new file using {@link #createFile} and then opens a 
+	 * {@link Writer} for it and returns it.
+	 * <br><br>
+	 * <b>Note</b>: This will overwrite the file if it already exists.
+	 * 
+	 * @param filename The file name/path to use
+	 * @return A Writer for the newly created file
+	 */
+	public Writer getFileWriter(String filename) throws IOException{
+		FileObject file = createFile(filename);
+		return file.openWriter();
 	}
 }

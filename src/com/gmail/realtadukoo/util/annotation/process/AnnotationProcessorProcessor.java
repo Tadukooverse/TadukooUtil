@@ -1,10 +1,12 @@
 package com.gmail.realtadukoo.util.annotation.process;
 
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.annotation.processing.AbstractProcessor;
 import javax.lang.model.element.Element;
 
+import com.gmail.realtadukoo.util.FileUtil;
 import com.gmail.realtadukoo.util.annotation.AnnotationProcessor;
 
 /**
@@ -35,15 +37,25 @@ public class AnnotationProcessorProcessor extends AbstractAnnotationProcessor{
 	 */
 	@Override
 	protected void processElements(Set<? extends Element> elements) throws Throwable{
-		String processorListString = "";
+		// Grab the filename from AnnotationUtil
+		String filename = AnnotationUtil.ANNOTATION_PROCESSOR_FILE;
+		
+		// Get a list of all the processors already in the file
+		Set<String> processors = FileUtil.getLinesAsList(annotationUtil.getFileReader(filename))
+									.stream().collect(Collectors.toSet());
+		
+		// Process the elements
 		for(Element element: elements){
 			if(annotationUtil.isSubType(element, AbstractProcessor.class)){
-				processorListString += annotationUtil.getCanonicalClassName(element) + "\n";
+				// If it's an annotation processor, add it to the list (in case it isn't already)
+				processors.add(annotationUtil.getCanonicalClassName(element));
 			}else{
+				// If it's not an annotation processor, give a compilation error
 				annotationUtil.displayCompileError(element, "This class must be a sub-class of AbstractProcessor!");
 			}
 		}
 		
-		annotationUtil.writeFile(AnnotationUtil.ANNOTATION_PROCESSOR_FILE, processorListString);
+		// Write the new file contents to the file
+		FileUtil.writeFile(annotationUtil.getFileWriter(filename), processors);
 	}
 }
