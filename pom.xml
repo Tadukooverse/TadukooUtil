@@ -9,5 +9,6 @@
 	<modules>
 		<module>TadukooUtil</module>
 		<module>TadukooDatabase</module>
+		<module>TadukooFileFormat</module>
 	</modules>
 </project>
