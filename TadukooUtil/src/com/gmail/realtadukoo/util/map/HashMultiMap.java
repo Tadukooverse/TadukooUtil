@@ -81,4 +81,13 @@ public class HashMultiMap<K, V> extends MultiMap<K, V>{
 		}
 		return false;
 	}
+	
+	/**
+	 * Returns the underlying {@link HashMap} of this HashMultiMap.
+	 * 
+	 * @return The underlying HashMap
+	 */
+	public HashMap<K, List<V>> asMap(){
+		return (HashMap<K, List<V>>) super.asMap();
+	}
 }

@@ -1,4 +1,4 @@
-/bin/
+/target/
+TadukooUtil.jar
 /.apt_generated/
 .factorypath
-TadukooUtil.jar

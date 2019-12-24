@@ -146,7 +146,7 @@ public abstract class MultiMap<K, V>{
 	 * 
 	 * @return The underlying Map
 	 */
-	public final Map<K, List<V>> asMap(){
+	public Map<K, List<V>> asMap(){
 		return theMap;
 	}
 	
