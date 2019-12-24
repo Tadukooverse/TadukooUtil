@@ -8,5 +8,6 @@
 	<packaging>pom</packaging>
 	<modules>
 		<module>TadukooUtil</module>
+		<module>TadukooDatabase</module>
 	</modules>
 </project>
