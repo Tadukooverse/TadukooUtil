@@ -5,8 +5,8 @@ import static org.junit.Assert.assertTrue;
 import java.io.IOException;
 import java.util.logging.Logger;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import com.gmail.realtadukoo.util.fileformat.FileFormat;
 import com.gmail.realtadukoo.util.fileformat.FileFormatSchemaVerification;
@@ -17,7 +17,7 @@ public class FileFormatSchemaVerificationTest{
 	private String filepath;
 	private FileFormat fileFormat;
 	
-	@Before
+	@BeforeEach
 	public void setup() throws SecurityException, IOException{
 		Logger logger = LoggerUtil.setupLogger(subfolder, "setup");
 		filepath = "1959.ghdr";

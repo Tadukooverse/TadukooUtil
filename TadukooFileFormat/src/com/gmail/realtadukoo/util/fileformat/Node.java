@@ -35,7 +35,7 @@ import java.util.List;
  * .getNextSibling() (as Job is a sibling of Name).
  * 
  * @author Logan Ferree (Tadukoo)
- * @version 1.0
+ * @version 0.1-Alpha-SNAPSHOT
  */
 public class Node{
 	/** The name for what this piece of data is */

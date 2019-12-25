@@ -67,26 +67,26 @@ public class FileFormatSchemaVerification{
 		FormatNode format = null;
 		
 		if(node == null){
-			if(nodeNames.contains("<null>")){
+			if(nodeNames.contains(FormatNode.NULL_NODE)){
 				goodNode = true;
 			}
 		}else{
 			while(!goodNode && i < nodeNames.size()){
 				name = nodeNames.get(i);
-				if(!name.equalsIgnoreCase("<null>")){
+				if(!name.equalsIgnoreCase(FormatNode.NULL_NODE)){
 					format = formatNodes.get(name);
 					boolean titleMatch = verifyFormat(filepath, format.getTitleRegex(), node.getTitle());
 					if(!titleMatch){
 						logger.log(Level.FINE, "Title doesn't match!\n"
 								+ "* In checking Node " + node.toString() + " as a " + name + "\n"
-								+ "* Format Expected: " + format.getTitleFormat() + "\n"
+								+ "* Format Expected: " + format.getTitleRegex() + "\n"
 								+ "* Title Received: " + node.getTitle());
 					}
 					boolean dataMatch = verifyFormat(filepath, format.getDataRegex(), node.getData());
 					if(!dataMatch){
 						logger.log(Level.FINE, "Data doesn't match!\n"
 								+ "* In checking Node " + node.toString() + " as a " + name + "\n"
-								+ "* Format Expected: " + format.getDataFormat() + "\n"
+								+ "* Format Expected: " + format.getDataRegex() + "\n"
 								+ "* Data Received: " + node.getData());
 					}
 					boolean levelMatch = format.getLevel() == node.getLevel();
@@ -116,7 +116,7 @@ public class FileFormatSchemaVerification{
 		
 		if(goodNode && node != null){
 			logger.log(Level.FINER, "This was a good node!\n"
-					+ "* Format: " + format.getNodeFormat() + "\n"
+					+ "* Format: " + format.getNodeRegex() + "\n"
 					+ "* Actual: " + node.toString());
 		}
 		

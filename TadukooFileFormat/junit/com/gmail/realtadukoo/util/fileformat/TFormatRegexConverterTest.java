@@ -5,8 +5,8 @@ import static org.junit.Assert.assertEquals;
 import java.io.IOException;
 import java.util.logging.Logger;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import com.gmail.realtadukoo.util.fileformat.TFormatRegexConverter;
 
@@ -15,7 +15,7 @@ public class TFormatRegexConverterTest{
 	private String formatString;
 	private String regexString;
 	
-	@Before
+	@BeforeEach
 	public void setup(){
 		formatString = "<filename>/<fileTitle>.<fileExtension>/<text>/<imagefile>[$<#>,<#>,<#>,<#>]";
 		regexString = "<filename>/<fileTitle>\\.<fileExtension>/.*/.*\\.jpg(\\$(\\d)*,(\\d)*,(\\d)*,(\\d)*)?";
