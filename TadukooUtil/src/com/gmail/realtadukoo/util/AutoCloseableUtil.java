@@ -8,6 +8,9 @@ package com.gmail.realtadukoo.util;
  */
 public class AutoCloseableUtil{
 	
+	// Not allowed to create an AutoCloseableUtil
+	private AutoCloseableUtil(){ }
+	
 	/**
 	 * Closes the given AutoCloseable while suppressing any error messages
 	 * 

@@ -14,6 +14,9 @@ import java.io.StringWriter;
  */
 public class ExceptionUtil{
 	
+	// Not allowed to create an ExceptionUtil
+	private ExceptionUtil(){ }
+	
 	/**
 	 * Returns a String of the stack trace for the given {@link Throwable}. 
 	 * The String will be the equivalent of calling {@link Throwable#printStackTrace()}.

@@ -13,6 +13,9 @@ import java.util.List;
  */
 public class StringUtil{
 	
+	// Not allowed to create a StringUtil
+	private StringUtil(){ }
+	
 	/**
 	 * Builds a string from the given collection of Strings with the given separator placed 
 	 * between them.

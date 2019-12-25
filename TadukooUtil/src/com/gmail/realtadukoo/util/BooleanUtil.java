@@ -8,6 +8,9 @@ package com.gmail.realtadukoo.util;
  */
 public class BooleanUtil{
 	
+	// Not allowed to create a BooleanUtil
+	private BooleanUtil(){ }
+	
 	/**
 	 * Checks that the given Boolean is true, properly handling cases of 
 	 * null as false (meaning returning a false result).

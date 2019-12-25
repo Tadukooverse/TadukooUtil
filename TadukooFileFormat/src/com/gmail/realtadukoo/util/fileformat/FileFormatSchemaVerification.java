@@ -51,8 +51,8 @@ public class FileFormatSchemaVerification{
 	}
 	
 	private static Map<String, FormatNode> getFormatNodesHashMap(FileFormatSchema schema){
-		ArrayList<FormatNode> nodes = schema.getFormatNodes();
-		HashMap<String, FormatNode> nodesMap = new HashMap<String, FormatNode>();
+		List<FormatNode> nodes = schema.getFormatNodes();
+		Map<String, FormatNode> nodesMap = new HashMap<String, FormatNode>();
 		for(FormatNode node: nodes){
 			nodesMap.put(node.getName(), node);
 		}

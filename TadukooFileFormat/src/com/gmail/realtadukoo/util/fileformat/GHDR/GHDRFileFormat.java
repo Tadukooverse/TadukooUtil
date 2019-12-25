@@ -2,6 +2,7 @@ package com.gmail.realtadukoo.util.fileformat.GHDR;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Logger;
 
 import com.gmail.realtadukoo.util.fileformat.FileFormat;
@@ -12,11 +13,12 @@ import com.gmail.realtadukoo.util.fileformat.Node;
 public class GHDRFileFormat extends FileFormat{
 	
 	public GHDRFileFormat(Logger logger){
-		super(generateHashMap(logger));
+		super(logger);
 	}
 	
-	private static HashMap<String, FileFormatSchema> generateHashMap(Logger logger){
-		HashMap<String, FileFormatSchema> schemas = new HashMap<String, FileFormatSchema>();
+	@Override
+	protected Map<String, FileFormatSchema> createSchemas(Logger logger){
+		Map<String, FileFormatSchema> schemas = new HashMap<String, FileFormatSchema>();
 		// Version 1.0 File Format Schema
 		ArrayList<FormatNode> v1Nodes = new ArrayList<FormatNode>();
 		v1Nodes.add(FormatNode.builder()

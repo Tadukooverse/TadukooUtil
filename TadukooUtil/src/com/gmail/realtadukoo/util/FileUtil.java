@@ -17,6 +17,9 @@ import java.util.List;
  */
 public class FileUtil{
 	
+	// Not allowed to create a FileUtil
+	private FileUtil(){ }
+	
 	/**
 	 * Creates a List of Strings for each line in the file being read in the 
 	 * given {@link Reader}.
