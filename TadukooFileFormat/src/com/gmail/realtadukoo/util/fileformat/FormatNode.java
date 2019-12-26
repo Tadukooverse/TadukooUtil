@@ -531,12 +531,12 @@ public class FormatNode{
 			
 			// If we have title TFormatting, convert it to a regex
 			if(titleFormat != null){
-				titleRegex = TFormatRegexConverter.convertTFormatToRegex(logger, titleFormat);
+				titleRegex = TadFormatRegexConverter.convertTadFormatToRegex(logger, titleFormat);
 			}
 			
 			// If we have data TFormatting, convert it to a regex
 			if(dataFormat != null){
-				dataRegex = TFormatRegexConverter.convertTFormatToRegex(logger, dataFormat);
+				dataRegex = TadFormatRegexConverter.convertTadFormatToRegex(logger, dataFormat);
 			}
 			
 			// If parentNames is null, change it to allow a null parent Node
