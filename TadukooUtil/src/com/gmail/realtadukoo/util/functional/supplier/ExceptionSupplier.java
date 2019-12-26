@@ -10,6 +10,7 @@ package com.gmail.realtadukoo.util.functional.supplier;
  * @author Logan Ferree (Tadukoo)
  * @version 0.1-Alpha-SNAPSHOT
  */
+@FunctionalInterface
 public interface ExceptionSupplier<R> extends ThrowingSupplier<R>{
 	
 	/**
