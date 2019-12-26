@@ -14,7 +14,7 @@ public class CommonResultSetConverters{
 		return resultSet.next();
 	}
 	
-	public static <Type> List<Type> simpleList(ResultSet resultSet, SQLFunction<Integer, Type> getter) throws SQLException{
+	public static <Type> List<Type> simpleList(ResultSet resultSet, SQLExceptionFunction<Integer, Type> getter) throws SQLException{
 		List<Type> values = new ArrayList<>();
 		while(resultSet.next()){
 			values.add(getter.apply(1));

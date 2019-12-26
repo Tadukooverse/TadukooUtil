@@ -42,7 +42,7 @@ public class DBUtil{
 	}
 	
 	public static <ResultType> Query<ResultType> createQuery(String name, String sql, 
-			SQLFunction<ResultSet, ResultType> convertFromResultSet){
+			SQLExceptionFunction<ResultSet, ResultType> convertFromResultSet){
 		return new Query<ResultType>(){
 			
 			@Override

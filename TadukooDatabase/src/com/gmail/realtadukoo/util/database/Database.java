@@ -70,7 +70,7 @@ public class Database{
 	 * @param transaction The transaction function to run
 	 * @return The result from the transaction function
 	 */
-	public <ResultType> ResultType execute(SQLFunction<Connection, ResultType> transaction) throws SQLException{
+	public <ResultType> ResultType execute(SQLExceptionFunction<Connection, ResultType> transaction) throws SQLException{
 		// Create the connection
 		Connection conn = connect();
 		
@@ -86,7 +86,7 @@ public class Database{
 				result = transaction.apply(conn);
 				conn.commit();
 				success = true;
-			}catch(Throwable t){
+			}catch(SQLException e){
 				// TODO: Log error
 			}
 		}
@@ -117,16 +117,16 @@ public class Database{
 	 * @param <ResultType> The type of result to be returned
 	 * @param name The name to use for the query (for debugging purposes - may be null)
 	 * @param sql The sql query string to run
-	 * @param convertFromResultSet The {@link SQLFunction} to use to run the query
+	 * @param convertFromResultSet The {@link SQLExceptionFunction} to use to run the query
 	 * @return The result from the query
 	 */
 	public <ResultType> ResultType executeQuery(String name, String sql, 
-			SQLFunction<ResultSet, ResultType> convertFromResultSet) throws SQLException{
+			SQLExceptionFunction<ResultSet, ResultType> convertFromResultSet) throws SQLException{
 		return executeQuery(DBUtil.createQuery(name, sql, convertFromResultSet));
 	}
 	
 	// TODO: Rework this (Move to DBUtil and such)
-	public<ResultType> ResultType doSearch(SQLFunction<ResultSet, ResultType> convertFromResultSet, 
+	public<ResultType> ResultType doSearch(SQLExceptionFunction<ResultSet, ResultType> convertFromResultSet, 
 			String returnPieces, String mainTable, 
 			Collection<String> otherTables, Collection<String> junctions, 
 			String[] intArgs, int[] intValues, 
