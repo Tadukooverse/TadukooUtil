@@ -27,4 +27,40 @@ public interface ThrowingFunction<S, R>{
 	 * @throws Throwable
 	 */
 	public abstract R apply(S s) throws Throwable;
+	
+	/**
+	 * Creates a ThrowingFunction that runs the given ThrowingFunction and puts the result 
+	 * into this ThrowingFunction.
+	 * 
+	 * @param <V> The input type to the composed ThrowingFunction
+	 * @param before The ThrowingFunction to run before this one, and put the result into this one
+	 * @return The ThrowingFunction made from composing this one and the given one
+	 */
+	public default <V> ThrowingFunction<V, R> compose(ThrowingFunction<? super V, ? extends S> before){
+		return v -> this.apply(before.apply(v));
+	}
+	
+	/**
+	 * Creates a ThrowingFunction that runs this ThrowingFunction and puts the result 
+	 * into the given ThrowingFunction.
+	 * 
+	 * @param <V> The output type of the 2nd ThrowingFunction
+	 * @param after A 2nd ThrowingFunction to put the result of this one into
+	 * @return The ThrowingFunction made from composing this one and the given one
+	 */
+	public default <V> ThrowingFunction<S, V> andThen(ThrowingFunction<? super R, ? extends V> after){
+		return s -> after.apply(this.apply(s));
+	}
+	
+	/**
+	 * Returns a ThrowingFunction that always returns its input argument
+	 * 
+	 * @param <S> The type of argument
+	 * @return A ThrowingFunction that always returns its input argument
+	 */
+	public static <S> ThrowingFunction<S, S> identity(){
+		return s -> {
+						return s;
+					};
+	}
 }

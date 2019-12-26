@@ -28,4 +28,16 @@ public interface ExceptionFunction3<S, T, U, R> extends ThrowingFunction3<S, T, 
 	 */
 	@Override
 	public abstract R apply(S s, T t, U u) throws Exception;
+	
+	/**
+	 * Creates an ExceptionFunction3 that runs this ExceptionFunction3 and 
+	 * puts the result into the given {@link ExceptionFunction}.
+	 * 
+	 * @param <V> The output type of the {@link ExceptionFunction}
+	 * @param after An {@link ExceptionFunction} to put the result of this ExceptionFunction3 into
+	 * @return The ExceptionFunction3 made from composing this one and the given {@link ExceptionFunction}
+	 */
+	public default <V> ExceptionFunction3<S, T, U, V> andThen(ExceptionFunction<? super R, ? extends V> after){
+		return (s, t, u) -> after.apply(this.apply(s, t, u));
+	}
 }

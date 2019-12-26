@@ -29,4 +29,16 @@ public interface ThrowingFunction2<S, T, R>{
 	 * @throws Throwable
 	 */
 	public abstract R apply(S s, T t) throws Throwable;
+	
+	/**
+	 * Creates a ThrowingFunction2 that runs this ThrowingFunction2 and 
+	 * puts the result into the given {@link ThrowingFunction}.
+	 * 
+	 * @param <V> The output type of the {@link ThrowingFunction}
+	 * @param after A {@link ThrowingFunction} to put the result of this ThrowingFunction2 into
+	 * @return The ThrowingFunction2 made from composing this one and the given {@link ThrowingFunction}
+	 */
+	public default <V> ThrowingFunction2<S, T, V> andThen(ThrowingFunction<? super R, ? extends V> after){
+		return (s, t) -> after.apply(this.apply(s, t));
+	}
 }
