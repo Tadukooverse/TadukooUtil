@@ -23,7 +23,7 @@ public class GHDRFileFormat extends FileFormat{
 		ArrayList<FormatNode> v1Nodes = new ArrayList<FormatNode>();
 		v1Nodes.add(FormatNode.builder()
 								.logger(logger)
-								.name("head")
+								.name(FormatNode.HEAD_NODE)
 								.titleFormat("<fileTitle>")
 								.dataFormat("")
 								.level(0)
@@ -35,7 +35,7 @@ public class GHDRFileFormat extends FileFormat{
 								.titleFormat("<text>")
 								.dataFormat("<imagefile>[$<#>,<#>,<#>,<#>]")
 								.level(1)
-								.parentName("head")
+								.parentName(FormatNode.HEAD_NODE)
 								.nullParentName()
 								.prevSiblingName("title")
 								.nullPrevSiblingName()

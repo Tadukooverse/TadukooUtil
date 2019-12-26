@@ -17,6 +17,8 @@ import com.gmail.realtadukoo.util.StringUtil;
 public class FormatNode{
 	/** The text used to signify a null (e.g. as an allowed Node for parent/child/sibling) */
 	public static final String NULL_NODE = "<null>";
+	/** The name used to signify the Node that should start a File */
+	public static final String HEAD_NODE = "head";
 	
 	/** The name of the Node - used to distinguish in parent/child/sibling requirements */
 	private String name;

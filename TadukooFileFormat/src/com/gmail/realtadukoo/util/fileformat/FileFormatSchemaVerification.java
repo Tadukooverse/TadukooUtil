@@ -1,6 +1,5 @@
 package com.gmail.realtadukoo.util.fileformat;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -54,7 +53,7 @@ public class FileFormatSchemaVerification{
 		
 		// Load the file
 		Node headNode = Node.loadFromFile(filepath);
-		boolean goodNodes = verifyNode(logger, nodes, headNode, new ArrayList<String>(Arrays.asList("head")), filepath);
+		boolean goodNodes = verifyNode(logger, nodes, headNode, Arrays.asList(FormatNode.HEAD_NODE), filepath);
 		
 		// Update correctFileFormat to false if the nodes failed
 		correctFileFormat = correctFileFormat && goodNodes;
