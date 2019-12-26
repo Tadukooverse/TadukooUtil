@@ -7,7 +7,7 @@ import java.util.function.BiConsumer;
  * allows for the consumers to throw anything. Using this requires 
  * you to check whatever may be thrown, but this class can be 
  * extended to allow for more specific throwing suppliers. 
- * See {@link ExceptionConsumer} for an example of a 
+ * See {@link ExceptionConsumer2} for an example of a 
  * more fine-tuned extension.
  *
  * @param <S> The 1st input argument type to be consumed
