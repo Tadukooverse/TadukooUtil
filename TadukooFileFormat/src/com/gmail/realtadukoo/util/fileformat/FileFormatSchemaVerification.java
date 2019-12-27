@@ -1,6 +1,5 @@
 package com.gmail.realtadukoo.util.fileformat;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,6 +7,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import com.gmail.realtadukoo.util.ListUtil;
 
 /**
  * This class is used to verify that files match a particular {@link FileFormatSchema}.
@@ -53,7 +54,7 @@ public class FileFormatSchemaVerification{
 		
 		// Load the file
 		Node headNode = Node.loadFromFile(filepath);
-		boolean goodNodes = verifyNode(logger, nodes, headNode, Arrays.asList(FormatNode.HEAD_NODE), filepath);
+		boolean goodNodes = verifyNode(logger, nodes, headNode, ListUtil.createList(FormatNode.HEAD_NODE), filepath);
 		
 		// Update correctFileFormat to false if the nodes failed
 		correctFileFormat = correctFileFormat && goodNodes;
@@ -101,9 +102,6 @@ public class FileFormatSchemaVerification{
 	 */
 	private static boolean verifyNode(Logger logger, Map<String, FormatNode> formatNodes, Node node, 
 			List<String> nodeNames, String filepath){
-		// Remove null node from the list of names if it's there and determine if it's allowed
-		boolean nullAllowed = nodeNames.remove(FormatNode.NULL_NODE);
-		
 		// Need to determine if the passed-in Node is a good one or not
 		boolean goodNode = false;
 		int i = 0;
@@ -112,12 +110,17 @@ public class FileFormatSchemaVerification{
 		
 		if(node == null){
 			// If Node is null, it's only good if null is allowed
-			goodNode = nullAllowed;
+			goodNode = nodeNames.contains(FormatNode.NULL_NODE);
 		}else{
 			// If Node isn't null, compare its format with the allowed formats until we find a match
 			while(!goodNode && i < nodeNames.size()){
 				// Grab current Node name to check
 				name = nodeNames.get(i);
+				// If it's the null node name, move on
+				if(name.equals(FormatNode.NULL_NODE)){
+					i++;
+					continue;
+				}
 				// Grab FormatNode with the given name
 				format = formatNodes.get(name);
 				

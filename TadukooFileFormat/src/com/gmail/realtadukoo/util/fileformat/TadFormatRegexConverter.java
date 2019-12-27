@@ -41,6 +41,14 @@ public class TadFormatRegexConverter{
 					+ "* TadFormat changed to " + TadFormat);
 		}
 		
+		// If TadFormatting contains "<boolean>", change it to "(true|false)"
+		// <boolean> is TadFormat's way of including a boolean
+		if(TadFormat.contains("<boolean>")){
+			TadFormat = TadFormat.replaceAll("<boolean>", "(true|false)");
+			logger.log(Level.FINEST, "* Found <boolean>\n" 
+					+ "* TadFormat changed to " + TadFormat);
+		}
+		
 		// If TadFormatting contains <imagefile>, change it to look for common image file extensions
 		// Currently just .jpg (TODO: Add other image file extensions)
 		if(TadFormat.contains("<imagefile>")){
@@ -96,6 +104,14 @@ public class TadFormatRegexConverter{
 		if(regex.contains("(\\d)*")){
 			regex = regex.replaceAll("\\(\\\\d\\)\\*", "<#>");
 			logger.log(Level.FINEST, "* Found (\\d)*\n"
+					+ "* Regex changed to " + regex);
+		}
+		
+		// Change boolean checks ("(true|false)") to "<boolean>"
+		// <boolean> is TadFormat's way of checking for a boolean
+		if(regex.contains("(true|false)")){
+			regex = regex.replaceAll("\\(true\\|false\\)", "<boolean>");
+			logger.log(Level.FINEST, "* Found (true|false)\n"
 					+ "* Regex changed to " + regex);
 		}
 		

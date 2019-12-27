@@ -1,10 +1,10 @@
 package com.gmail.realtadukoo.util.fileformat;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Logger;
 
+import com.gmail.realtadukoo.util.ListUtil;
 import com.gmail.realtadukoo.util.StringUtil;
 
 /**
@@ -518,7 +518,7 @@ public class FormatNode{
 		 * @return A List with the NULL_NODE string in it
 		 */
 		private List<String> makeNullAllowed(){
-			return Arrays.asList(NULL_NODE);
+			return ListUtil.createList(NULL_NODE);
 		}
 		
 		public FormatNode build(){
