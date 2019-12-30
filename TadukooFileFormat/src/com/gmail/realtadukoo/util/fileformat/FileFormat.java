@@ -12,6 +12,14 @@ import java.util.logging.Logger;
  * @version 0.1-Alpha-SNAPSHOT
  */
 public abstract class FileFormat{
+	/** 
+	 * This will be updated if the general Tad Format changes, and there will be a way in the future 
+	 * to update between Tad Format Versions. Note: This does not directly correspond to the current 
+	 * project's version, only to actual formatting changes.
+	 */
+	public static final int TAD_FORMAT_VERSION_NUM = 1;
+	/** The name of this file format */
+	private String name;
 	/** A mapping of version strings to {@link FileFormatSchema}s */
 	private Map<String, FileFormatSchema> schemas;
 	
@@ -22,8 +30,16 @@ public abstract class FileFormat{
 	 * 
 	 * @param logger The Logger to use in logging messages
 	 */
-	public FileFormat(Logger logger){
+	public FileFormat(Logger logger, String name){
+		this.name = name;
 		schemas = createSchemas(logger);
+	}
+	
+	/**
+	 * @return The name of the File Format
+	 */
+	public final String getName(){
+		return name;
 	}
 	
 	/**

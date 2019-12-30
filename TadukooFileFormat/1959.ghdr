@@ -1,3 +1,9 @@
+TadFormat:
+  TadFormat Version Num:1
+  File Format:GHDR
+    Schema:
+      Version:Version 1.0
+      Version Num:1
 1959:
   1959 Cover:001 1959 Cover.jpg
   January 1-6, 1959:002 January 1-6.jpg

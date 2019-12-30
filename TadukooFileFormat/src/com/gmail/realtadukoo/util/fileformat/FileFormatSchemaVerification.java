@@ -5,8 +5,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import com.gmail.realtadukoo.util.ListUtil;
 
@@ -26,11 +24,12 @@ public class FileFormatSchemaVerification{
 	 * {@link FileFormatSchema} or not.
 	 * 
 	 * @param logger The Logger to log any messages
+	 * @param format The FileFormat to use for checking against
 	 * @param schema The FileFormatSchema to use for checking against
 	 * @param filepath The path to the file to be checked
 	 * @return If the file matches the formatting or not
 	 */
-	public static boolean verifyFileFormat(Logger logger, FileFormatSchema schema, String filepath){
+	public static boolean verifyFileFormat(Logger logger, FileFormat format, FileFormatSchema schema, String filepath){
 		logger.log(Level.INFO, "Starting verification of file " + filepath + "...");
 		// This will be the return value. It gets set false on any failure to match the FileFormatSchema
 		boolean correctFileFormat = true;
@@ -54,10 +53,16 @@ public class FileFormatSchemaVerification{
 		
 		// Load the file
 		Node headNode = Node.loadFromFile(filepath);
+		
+		// Check the Tad Format Node at the start of the file
+		boolean goodTadFormatNode = TadFormatNodeHeader.verifyTadFormatNode(logger, headNode, format, schema);
+		headNode = headNode.getNextSibling();
+		
+		// Check the rest of the Nodes, that they're correct
 		boolean goodNodes = verifyNode(logger, nodes, headNode, ListUtil.createList(FormatNode.HEAD_NODE), filepath);
 		
 		// Update correctFileFormat to false if the nodes failed
-		correctFileFormat = correctFileFormat && goodNodes;
+		correctFileFormat = correctFileFormat && goodTadFormatNode && goodNodes;
 		
 		// Give a logger message on whether the format of the file matched or not
 		if(correctFileFormat){
@@ -124,37 +129,14 @@ public class FileFormatSchemaVerification{
 				// Grab FormatNode with the given name
 				format = formatNodes.get(name);
 				
-				// Check if the title of this Node matches the FormatNode's format
-				boolean titleMatch = verifyFormat(filepath, format.getTitleRegex(), node.getTitle());
-				// If title doesn't match, give a Logger message
-				if(!titleMatch){
-					logger.log(Level.FINE, "Title doesn't match!\n"
-							+ "* In checking Node " + node.toString() + " as a " + name + "\n"
-							+ "* Format Expected: " + format.getTitleRegex() + "\n"
-							+ "* Title Received: " + node.getTitle());
-				}
-				
-				// Check if the data of this Node matches the FormatNode's format
-				boolean dataMatch = verifyFormat(filepath, format.getDataRegex(), node.getData());
-				// If data doesn't match, give a Logger message
-				if(!dataMatch){
-					logger.log(Level.FINE, "Data doesn't match!\n"
-							+ "* In checking Node " + node.toString() + " as a " + name + "\n"
-							+ "* Format Expected: " + format.getDataRegex() + "\n"
-							+ "* Data Received: " + node.getData());
-				}
-				
-				// Check if the level of this Node matches the FormatNode's required level
-				boolean levelMatch = format.getLevel() == node.getLevel();
-				// If level doesn't match, give a Logger message
-				if(!levelMatch){
-					logger.log(Level.FINE, "Incorrect Node level!\n"
-							+ "* In checking Node " + node.toString() + " as a " + name + "\n"
-							+ "* Expected: " + format.getLevel() + ", but was: " + node.getLevel() + "!");
-				}
-				
-				// It's a good Node if all things matched
-				goodNode = titleMatch && dataMatch && levelMatch;
+				// Check if this Node matches the current FormatNode
+				goodNode = FormatNodeVerification.verifySingleNode(
+						FormatNodeVerification.singleNodeVerificationParametersBuilder()
+												.logger(logger)
+												.filepath(filepath)
+												.node(node)
+												.format(format)
+												.build());
 				
 				// If not a good Node, give a Logger message
 				if(!goodNode){
@@ -188,50 +170,5 @@ public class FileFormatSchemaVerification{
 		}
 		
 		return goodNode;
-	}
-	
-	/**
-	 * Checks if the formatting of the given String matches the given formatting. 
-	 * The filepath is passed in to be replaced in the regex if any TFormatting is 
-	 * present specific to filepath variables.
-	 * 
-	 * @param filepath The path to the file
-	 * @param regex The formatting to match against
-	 * @param actual The String to be tested for formatting conformity
-	 * @return If the String matches the formatting or not
-	 */
-	private static boolean verifyFormat(String filepath, String regex, String actual){
-		// Get filename for use in matching against <filename> in the FileFormatSchema
-		String[] filepathPieces = filepath.split("/");
-		String filename = filepathPieces[filepathPieces.length - 1];
-		
-		// Get fileTitle and fileExtension for future use
-		int periodIndex = filename.indexOf('.');
-		// FileTitle is used in matching against <filetitle> in the FileFormatSchema
-		String fileTitle = filename.substring(0, periodIndex);
-		// FileExtension is used in matching against <fileExtension> in the FileFormatSchema
-		String fileExtension = filename.substring(periodIndex);
-		
-		// Replace <filename> (used in TFormatting) with the actual filename
-		if(regex.contains("<filename>")){
-			regex = regex.replaceAll("<filename>", filename);
-		}
-		
-		// Replace <fileTitle> (used in TFormatting) with the actual fileTitle
-		if(regex.contains("<fileTitle>")){
-			regex = regex.replaceAll("<fileTitle>", fileTitle);
-		}
-		
-		// Replace <fileExtension> (used in TFormatting) with the actual fileExtension
-		if(regex.contains("<fileExtension>")){
-			regex = regex.replaceAll("<fileExtension>", fileExtension);
-		}
-		
-		// Create the Pattern and a Matcher for it
-		Pattern pattern = Pattern.compile(regex);
-		Matcher matcher = pattern.matcher(actual);
-		
-		// Check if the given string actually matches the formatting
-		return matcher.matches();
 	}
 }

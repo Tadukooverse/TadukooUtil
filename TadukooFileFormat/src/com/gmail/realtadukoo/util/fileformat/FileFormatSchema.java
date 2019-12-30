@@ -11,21 +11,42 @@ import java.util.List;
  * @version 0.1-Alpha-SNAPSHOT
  */
 public class FileFormatSchema{
+	/** The version string of this schema */
+	private String versionString;
+	/** The version number of this schema */
+	private int versionNum;
 	/** The file extension on files using this schema */
 	private String fileExtension;
 	/** The {@link FormatNode}s that define this schema */
 	private List<FormatNode> formatNodes;
 	
 	/**
-	 * Constructs a FileFormatSchema with the given file extensions and 
-	 * {@link FormatNode}s.
+	 * Constructs a FileFormatSchema with the given information.
 	 * 
+	 * @param versionString The version string of this schema
+	 * @param versionNum The version number of this schema
 	 * @param fileExtension The file extension on files using this schema
 	 * @param formatNodes The {@link FormatNode}s that define this schema
 	 */
-	public FileFormatSchema(String fileExtension, List<FormatNode> formatNodes){
+	public FileFormatSchema(String versionString, int versionNum, String fileExtension, List<FormatNode> formatNodes){
+		this.versionString = versionString;
+		this.versionNum = versionNum;
 		this.fileExtension = fileExtension;
 		this.formatNodes = formatNodes;
+	}
+	
+	/**
+	 * @return The version string of this schema
+	 */
+	public String getVersionString(){
+		return versionString;
+	}
+	
+	/**
+	 * @return The version number of this schema
+	 */
+	public int getVersionNum(){
+		return versionNum;
 	}
 	
 	/**

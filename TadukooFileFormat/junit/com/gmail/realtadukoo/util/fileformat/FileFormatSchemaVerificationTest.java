@@ -27,6 +27,6 @@ public class FileFormatSchemaVerificationTest{
 	@Test
 	public void testVerifyFileFormat() throws SecurityException, IOException{
 		Logger logger = LoggerUtil.setupLogger(subfolder, "testVerifyFileFormat");
-		assertTrue(FileFormatSchemaVerification.verifyFileFormat(logger, fileFormat.getSchema("Version 1.0"), filepath));
+		assertTrue(FileFormatSchemaVerification.verifyFileFormat(logger, fileFormat, fileFormat.getSchema("Version 1.0"), filepath));
 	}
 }

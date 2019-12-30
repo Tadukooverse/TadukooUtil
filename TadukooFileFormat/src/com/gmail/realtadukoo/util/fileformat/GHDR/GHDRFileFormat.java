@@ -13,13 +13,14 @@ import com.gmail.realtadukoo.util.fileformat.Node;
 public class GHDRFileFormat extends FileFormat{
 	
 	public GHDRFileFormat(Logger logger){
-		super(logger);
+		super(logger, "GHDR");
 	}
 	
 	@Override
 	protected Map<String, FileFormatSchema> createSchemas(Logger logger){
 		Map<String, FileFormatSchema> schemas = new HashMap<String, FileFormatSchema>();
 		// Version 1.0 File Format Schema
+		String version1 = "Version 1.0";
 		ArrayList<FormatNode> v1Nodes = new ArrayList<FormatNode>();
 		v1Nodes.add(FormatNode.builder()
 								.logger(logger)
@@ -42,8 +43,8 @@ public class GHDRFileFormat extends FileFormat{
 								.nextSiblingName("title")
 								.nullNextSiblingName()
 								.build());
-		FileFormatSchema v1 = new FileFormatSchema(".ghdr", v1Nodes);
-		schemas.put("Version 1.0", v1);
+		FileFormatSchema v1 = new FileFormatSchema(version1, 1, ".ghdr", v1Nodes);
+		schemas.put(version1, v1);
 		return schemas;
 	}
 	
