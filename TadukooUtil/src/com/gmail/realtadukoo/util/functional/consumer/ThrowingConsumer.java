@@ -1,4 +1,4 @@
-package com.gmail.realtadukoo.util.functional.function.consumer;
+package com.gmail.realtadukoo.util.functional.consumer;
 
 import java.util.function.Consumer;
 
