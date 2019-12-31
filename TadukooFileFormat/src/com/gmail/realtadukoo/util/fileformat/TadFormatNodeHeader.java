@@ -12,7 +12,7 @@ import java.util.logging.Logger;
  */
 public class TadFormatNodeHeader{
 	/** The name for the Head Tad Format Node */
-	private static final String HEAD_NAME = "TadFormat";
+	public static final String HEAD_NAME = "TadFormat";
 	/** The name for the Tad Format Version Number Node */
 	private static final String TAD_VERSION_NUMBER = "TadFormat Version Num";
 	/** The name for the File Format Node */

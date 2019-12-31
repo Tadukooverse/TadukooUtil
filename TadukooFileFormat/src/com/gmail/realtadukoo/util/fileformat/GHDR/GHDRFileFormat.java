@@ -9,6 +9,7 @@ import com.gmail.realtadukoo.util.fileformat.FileFormat;
 import com.gmail.realtadukoo.util.fileformat.FileFormatSchema;
 import com.gmail.realtadukoo.util.fileformat.FormatNode;
 import com.gmail.realtadukoo.util.fileformat.Node;
+import com.gmail.realtadukoo.util.fileformat.TadFormatNodeHeader;
 
 public class GHDRFileFormat extends FileFormat{
 	
@@ -24,11 +25,12 @@ public class GHDRFileFormat extends FileFormat{
 		ArrayList<FormatNode> v1Nodes = new ArrayList<FormatNode>();
 		v1Nodes.add(FormatNode.builder()
 								.logger(logger)
-								.name(FormatNode.HEAD_NODE)
+								.name("head")
 								.titleFormat("<fileTitle>")
 								.dataFormat("")
 								.level(0)
 								.childName("title")
+								.prevSiblingName(TadFormatNodeHeader.HEAD_NAME)
 								.build());
 		v1Nodes.add(FormatNode.builder()
 								.logger(logger)
@@ -36,7 +38,7 @@ public class GHDRFileFormat extends FileFormat{
 								.titleFormat("<text>")
 								.dataFormat("<imagefile>[$<#>,<#>,<#>,<#>]")
 								.level(1)
-								.parentName(FormatNode.HEAD_NODE)
+								.parentName("head")
 								.nullParentName()
 								.prevSiblingName("title")
 								.nullPrevSiblingName()

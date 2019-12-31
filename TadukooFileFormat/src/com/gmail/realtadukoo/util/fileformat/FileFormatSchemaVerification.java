@@ -5,8 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import com.gmail.realtadukoo.util.ListUtil;
+import java.util.stream.Collectors;
 
 /**
  * This class is used to verify that files match a particular {@link FileFormatSchema}.
@@ -58,8 +57,15 @@ public class FileFormatSchemaVerification{
 		boolean goodTadFormatNode = TadFormatNodeHeader.verifyTadFormatNode(logger, headNode, format, schema);
 		headNode = headNode.getNextSibling();
 		
+		// Find the FormatNodes that are allowed to be used after the Tad Format Node
+		List<String> headNodeNames = nodes.values().stream()
+													.filter(node -> node.getPrevSiblingNames()
+																		.contains(TadFormatNodeHeader.HEAD_NAME))
+													.map(node -> node.getName())
+													.collect(Collectors.toList());
+		
 		// Check the rest of the Nodes, that they're correct
-		boolean goodNodes = verifyNode(logger, nodes, headNode, ListUtil.createList(FormatNode.HEAD_NODE), filepath);
+		boolean goodNodes = verifyNode(logger, nodes, headNode, headNodeNames, filepath);
 		
 		// Update correctFileFormat to false if the nodes failed
 		correctFileFormat = correctFileFormat && goodTadFormatNode && goodNodes;
