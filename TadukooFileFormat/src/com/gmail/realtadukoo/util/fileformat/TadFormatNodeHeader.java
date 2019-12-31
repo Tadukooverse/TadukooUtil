@@ -168,6 +168,21 @@ public class TadFormatNodeHeader{
 	}
 	
 	/**
+	 * Grabs the Schema version string out of the Tad Format Node Header.
+	 * 
+	 * @param headNode The head Node of the header
+	 * @return The version string used for the schema
+	 */
+	public static String getSchemaVersionString(Node headNode){
+		// TadFormat: (headNode)
+		//   TadFormat Version Num:<#> (headNode.getChild())
+		//   File Format:<Format Name> (headNode.getChild().getNextSibling())
+		//     Schema: (headNode.getChild().getNextSibling().getChild())
+		//       Version:<What we're looking for> (headNode.getChild().getNextSibling().getChild().getChild())
+		return headNode.getChild().getNextSibling().getChild().getChild().getData();
+	}
+	
+	/**
 	 * Verifies that the Tad Format Node is correct at the top of a file.
 	 * 
 	 * @param logger The Logger to use in logging any issues or successes

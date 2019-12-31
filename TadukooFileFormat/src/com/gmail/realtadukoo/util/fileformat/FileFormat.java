@@ -77,6 +77,35 @@ public abstract class FileFormat{
 	public abstract Node updateFile(Node oldFile, String oldVersion, String newVersion);
 	
 	/**
+	 * Loads the file given by the filepath as Nodes, returning the head Node of the 
+	 * actual content of the file (excluding the TadFormat Header). It verifies that 
+	 * the file is of the correct format using the schema version string given in the 
+	 * file itself.
+	 * 
+	 * @param logger The Logger to use in logging any issues
+	 * @param filepath The path to the file to be loaded
+	 * @return The head Node of the file's actual content
+	 */
+	protected final Node loadFile(Logger logger, String filepath){
+		// Load the file as Nodes
+		Node headNode = Node.loadFromFile(filepath);
+		
+		// Find the schema version string
+		String schemaVersion = TadFormatNodeHeader.getSchemaVersionString(headNode);
+		
+		// Grab the schema to be used
+		FileFormatSchema schema = getSchema(schemaVersion);
+		
+		// Verify the format of the loaded file
+		if(!FileFormatSchemaVerification.verifyFileFormat(logger, this, schema, filepath)){
+			throw new IllegalArgumentException("The file doesn't match the expected file format!");
+		}
+		
+		// Return the actual file content to be used by the FileFormat
+		return headNode.getNextSibling();
+	}
+	
+	/**
 	 * Saves the given headNode to the file specified by the given filepath, adding the 
 	 * Tad Format Header at the start of the file using the given schema and current FileFormat. 
 	 * This will also verify that the file appropriately matches the format.
@@ -93,11 +122,8 @@ public abstract class FileFormat{
 		// Set the given head Node as the next sibling to the format header
 		formatHeader.setNextSibling(headNode);
 		
-		// Check that the format is correct prior to saving
-		boolean matchesFormat = FileFormatSchemaVerification.verifyFileFormat(logger, this, schema, filepath, formatHeader);
-		
-		// If format doesn't match, throw an IllegalArgumentException
-		if(!matchesFormat){
+		// Check that the format is correct prior to saving (throw an IllegalArgumentException if it's not)
+		if(!FileFormatSchemaVerification.verifyFileFormat(logger, this, schema, filepath, formatHeader)){
 			throw new IllegalArgumentException("The given Nodes do not match the format!");
 		}
 		
@@ -108,11 +134,8 @@ public abstract class FileFormat{
 			e.printStackTrace();
 		}
 		
-		// Check that the format is correct of the saved file
-		matchesFormat = FileFormatSchemaVerification.verifyFileFormat(logger, this, schema, filepath);
-		
-		// If format doesn't match, throw an IllegalArgumentException
-		if(!matchesFormat){
+		// Check that the format is correct of the saved file (if it's not, throw an IllegalArgumentException)
+		if(!FileFormatSchemaVerification.verifyFileFormat(logger, this, schema, filepath)){
 			throw new IllegalArgumentException("The saved file doesn't match the format!");
 		}
 	}
