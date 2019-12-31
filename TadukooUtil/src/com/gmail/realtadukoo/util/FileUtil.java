@@ -43,6 +43,31 @@ public final class FileUtil{
 	}
 	
 	/**
+	 * Creates a file at the given filepath, including any directories necessary, 
+	 * and returns the {@link File} object to be used.
+	 * 
+	 * @param filepath The path for the File to be created
+	 * @return The newly created File
+	 */
+	public static final File createFile(String filepath) throws IOException{
+		// Create a File object from the given filepath
+		File file = new File(filepath);
+		
+		// If a directory is specified, create it if it doesn't exist
+		File parentFile = file.getParentFile();
+		if(parentFile != null && !parentFile.exists()){
+			file.getParentFile().mkdirs();
+		}
+		
+		// If the file doesn't exist, create it
+		if(!file.exists()){
+			file.createNewFile();
+		}
+		
+		return file;
+	}
+	
+	/**
 	 * Creates a List of Strings for each line in the file being read in the 
 	 * given {@link Reader}.
 	 * 
@@ -76,19 +101,8 @@ public final class FileUtil{
 	 * @param content The content of the file to be written
 	 */
 	public static final void writeFile(String filepath, String content) throws IOException{
-		// Create a File object from the given filepath
-		File file = new File(filepath);
-		
-		// If a directory is specified, create it if it doesn't exist
-		File parentFile = file.getParentFile();
-		if(parentFile != null && !parentFile.exists()){
-			file.getParentFile().mkdirs();
-		}
-		
-		// If the file doesn't exist, create it
-		if(!file.exists()){
-			file.createNewFile();
-		}
+		// Create the File
+		File file = createFile(filepath);
 		
 		// Actually write to the file using a FileWriter
 		writeFile(new FileWriter(file), content);
