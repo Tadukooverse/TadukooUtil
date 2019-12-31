@@ -6,7 +6,7 @@ package com.gmail.realtadukoo.util;
  * @author Logan Ferree (Tadukoo)
  * @version 0.1-Alpha-SNAPSHOT
  */
-public class BooleanUtil{
+public final class BooleanUtil{
 	
 	// Not allowed to create a BooleanUtil
 	private BooleanUtil(){ }
@@ -18,7 +18,7 @@ public class BooleanUtil{
 	 * @param bool The Boolean to check
 	 * @return If the Boolean is true
 	 */
-	public static boolean isTrue(Boolean bool){
+	public static final boolean isTrue(Boolean bool){
 		return bool != null && bool;
 	}
 	
@@ -29,7 +29,7 @@ public class BooleanUtil{
 	 * @param bool The Boolean to check
 	 * @return If the Boolean is false
 	 */
-	public static boolean isFalse(Boolean bool){
+	public static final boolean isFalse(Boolean bool){
 		return bool != null && !bool;
 	}
 	
@@ -40,7 +40,7 @@ public class BooleanUtil{
 	 * @param bool The Boolean to check
 	 * @return If the Boolean is not true
 	 */
-	public static boolean isNotTrue(Boolean bool){
+	public static final boolean isNotTrue(Boolean bool){
 		return bool == null || !bool;
 	}
 	
@@ -51,7 +51,7 @@ public class BooleanUtil{
 	 * @param bool The Boolean to check
 	 * @return If the Boolean is not false
 	 */
-	public static boolean isNotFalse(Boolean bool){
+	public static final boolean isNotFalse(Boolean bool){
 		return bool == null || bool;
 	}
 }

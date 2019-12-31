@@ -1,7 +1,10 @@
 package com.gmail.realtadukoo.util.fileformat;
 
+import java.io.IOException;
 import java.util.Map;
 import java.util.logging.Logger;
+
+import com.gmail.realtadukoo.util.FileUtil;
 
 /**
  * A class representing a defined File Format, including multiple versions 
@@ -72,4 +75,45 @@ public abstract class FileFormat{
 	 * @return The head {@link Node} of the converted file
 	 */
 	public abstract Node updateFile(Node oldFile, String oldVersion, String newVersion);
+	
+	/**
+	 * Saves the given headNode to the file specified by the given filepath, adding the 
+	 * Tad Format Header at the start of the file using the given schema and current FileFormat. 
+	 * This will also verify that the file appropriately matches the format.
+	 * 
+	 * @param logger The Logger to use in logging any messages
+	 * @param filepath The path to save the file at
+	 * @param headNode The Head content Node
+	 * @param schema The FileFormatSchema used to create the Nodes (to be used in Tad Format header)
+	 */
+	protected final void saveFile(Logger logger, String filepath, Node headNode, FileFormatSchema schema){
+		// Generate the format header for this file format + schema
+		Node formatHeader = TadFormatNodeHeader.createHeader(this, schema);
+		
+		// Set the given head Node as the next sibling to the format header
+		formatHeader.setNextSibling(headNode);
+		
+		// Check that the format is correct prior to saving
+		boolean matchesFormat = FileFormatSchemaVerification.verifyFileFormat(logger, this, schema, filepath, formatHeader);
+		
+		// If format doesn't match, throw an IllegalArgumentException
+		if(!matchesFormat){
+			throw new IllegalArgumentException("The given Nodes do not match the format!");
+		}
+		
+		// Actually save the file
+		try{
+			FileUtil.writeFile(filepath, formatHeader.fullToString());
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+		
+		// Check that the format is correct of the saved file
+		matchesFormat = FileFormatSchemaVerification.verifyFileFormat(logger, this, schema, filepath);
+		
+		// If format doesn't match, throw an IllegalArgumentException
+		if(!matchesFormat){
+			throw new IllegalArgumentException("The saved file doesn't match the format!");
+		}
+	}
 }

@@ -11,7 +11,7 @@ import java.util.List;
  * @version 0.1-Alpha-SNAPSHOT
  * @since Pre-Alpha
  */
-public class StringUtil{
+public final class StringUtil{
 	
 	// Not allowed to create a StringUtil
 	private StringUtil(){ }
@@ -29,7 +29,7 @@ public class StringUtil{
 	 * @param separator The character to put in-between the strings
 	 * @return A String of the given collection with the separator between each of them
 	 */
-	public static String buildStringWithSeparator(Collection<String> items, String separator){
+	public static final String buildStringWithSeparator(Collection<String> items, String separator){
 		// Start the string
 		String fullString = "";
 		
@@ -55,7 +55,7 @@ public class StringUtil{
 	 * @param lines The lines to make into a single string
 	 * @return A String of the given lines each on a newline
 	 */
-	public static String buildStringWithNewLines(Collection<String> lines){
+	public static final String buildStringWithNewLines(Collection<String> lines){
 		return buildStringWithSeparator(lines, "\n");
 	}
 	
@@ -71,7 +71,7 @@ public class StringUtil{
 	 * @param lines The lines to make into a single string
 	 * @return A String of the given lines as a comma-separated string
 	 */
-	public static String buildCommaSeparatedString(Collection<String> lines){
+	public static final String buildCommaSeparatedString(Collection<String> lines){
 		return buildStringWithSeparator(lines, ",");
 	}
 	
@@ -84,7 +84,7 @@ public class StringUtil{
 	 * @param trim Whether to trim any whitespace off the resulting strings
 	 * @return The resulting List of Strings
 	 */
-	public static List<String> parseListFromStringWithSeparator(String text, String separator, boolean trim){
+	public static final List<String> parseListFromStringWithSeparator(String text, String separator, boolean trim){
 		List<String> strings = new ArrayList<>();
 		
 		// If there is no instance of the separator string, just make a list with the text
@@ -109,7 +109,7 @@ public class StringUtil{
 	 * @param text The text to convert into a List of Strings
 	 * @return The List of Strings produced by parsing the text
 	 */
-	public static List<String> parseCommaSeparatedListFromString(String text){
+	public static final List<String> parseCommaSeparatedListFromString(String text){
 		return parseListFromStringWithSeparator(text, ",", true);
 	}
 }

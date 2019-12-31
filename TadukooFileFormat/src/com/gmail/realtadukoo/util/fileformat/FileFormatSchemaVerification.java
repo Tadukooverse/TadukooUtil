@@ -7,6 +7,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
+import com.gmail.realtadukoo.util.FileUtil;
+
 /**
  * This class is used to verify that files match a particular {@link FileFormatSchema}.
  * 
@@ -29,16 +31,33 @@ public class FileFormatSchemaVerification{
 	 * @return If the file matches the formatting or not
 	 */
 	public static boolean verifyFileFormat(Logger logger, FileFormat format, FileFormatSchema schema, String filepath){
+		// Load the file
+		Node headNode = Node.loadFromFile(filepath);
+		
+		return verifyFileFormat(logger, format, schema, filepath, headNode);
+	}
+	
+	/**
+	 * Checks if the given Nodes (given via the head Node) located (or to be located) 
+	 * at the given file path matches the given {@link FileFormatSchema} or not.
+	 * <br>
+	 * This version allows for checking Nodes before they're saved.
+	 * 
+	 * @param logger The Logger to log any messages
+	 * @param format The FileFormat to use for checking against
+	 * @param schema The FileFormatSchema to use for checking against
+	 * @param filepath The path to the file to be checked
+	 * @param headNode The head Node of those to be checked
+	 * @return If the file (/Nodes) matches the formatting or not
+	 */
+	public static boolean verifyFileFormat(Logger logger, FileFormat format, FileFormatSchema schema, String filepath,
+			Node headNode){
 		logger.log(Level.INFO, "Starting verification of file " + filepath + "...");
 		// This will be the return value. It gets set false on any failure to match the FileFormatSchema
 		boolean correctFileFormat = true;
 		
-		// Grab filename off the file path
-		String[] filepathPieces = filepath.split("/");
-		String filename = filepathPieces[filepathPieces.length - 1];
 		// Grab the file extension off the file name
-		int periodIndex = filename.indexOf('.');
-		String fileExtension = filename.substring(periodIndex);
+		String fileExtension = FileUtil.getFileExtension(filepath);
 		
 		// Verify that the FileFormatSchema's fileExtension matches the one on the actual file
 		if(!schema.getFileExtension().equalsIgnoreCase(fileExtension)){
@@ -49,9 +68,6 @@ public class FileFormatSchemaVerification{
 		
 		// Convert the List of nodes from FileFormatSchema to a Map for easier access to a particularly named FormatNode
 		Map<String, FormatNode> nodes = getFormatNodesMap(schema);
-		
-		// Load the file
-		Node headNode = Node.loadFromFile(filepath);
 		
 		// Check the Tad Format Node at the start of the file
 		boolean goodTadFormatNode = TadFormatNodeHeader.verifyTadFormatNode(logger, headNode, format, schema);

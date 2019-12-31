@@ -12,7 +12,7 @@ import java.io.StringWriter;
  * @author Logan Ferree (Tadukoo)
  * @version Pre-Alpha
  */
-public class ExceptionUtil{
+public final class ExceptionUtil{
 	
 	// Not allowed to create an ExceptionUtil
 	private ExceptionUtil(){ }
@@ -24,7 +24,7 @@ public class ExceptionUtil{
 	 * @param t The Throwable to get the stack trace of
 	 * @return A String of the stack trace
 	 */
-	public static String getStackTraceAsString(Throwable t){
+	public static final String getStackTraceAsString(Throwable t){
 		// Setup a StringWriter to write the stack trace to
 		StringWriter sw = new StringWriter();
 		// Create PrintWriter for the StringWriter so it can actually be written to

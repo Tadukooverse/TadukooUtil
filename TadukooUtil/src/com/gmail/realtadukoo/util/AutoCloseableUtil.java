@@ -6,7 +6,7 @@ package com.gmail.realtadukoo.util;
  * @author Logan Ferree (Tadukoo)
  * @version 0.1-Alpha-SNAPSHOT
  */
-public class AutoCloseableUtil{
+public final class AutoCloseableUtil{
 	
 	// Not allowed to create an AutoCloseableUtil
 	private AutoCloseableUtil(){ }

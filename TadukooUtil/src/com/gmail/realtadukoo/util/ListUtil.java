@@ -10,7 +10,7 @@ import java.util.List;
  * @author Logan Ferree (Tadukoo)
  * @version 0.1-Alpha-SNAPSHOT
  */
-public class ListUtil{
+public final class ListUtil{
 	
 	// Not allowed to create a ListUtil
 	private ListUtil(){ }
@@ -26,7 +26,7 @@ public class ListUtil{
 	 * @return A List containing the given variables
 	 */
 	@SafeVarargs
-	public static <T> List<T> createList(T ... t){
+	public static final <T> List<T> createList(T ... t){
 		return new ArrayList<>(Arrays.asList(t));
 	}
 }

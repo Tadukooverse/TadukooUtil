@@ -17,8 +17,10 @@ public class TadFormatRegexConverterTest{
 	
 	@BeforeEach
 	public void setup(){
-		formatString = "<filename>/<fileTitle>.<fileExtension>/<text>/<imagefile>[$<#>,<#>,<#>,<#>]<boolean>";
-		regexString = "<filename>/<fileTitle>\\.<fileExtension>/.*/.*\\.jpg(\\$(\\d)*,(\\d)*,(\\d)*,(\\d)*)?(true|false)";
+		formatString = "<filename>/<fileTitle>.<fileExtension>/<text>/<imagefile>"
+				+ "[$<#>,<#>,<#>,<#>]<boolean><Boolean>";
+		regexString = "<filename>/<fileTitle>\\.<fileExtension>/.*/.*\\.jpg"
+				+ "(\\$(\\d)*,(\\d)*,(\\d)*,(\\d)*)?(true|false)(true|false|null)";
 	}
 	
 	@Test

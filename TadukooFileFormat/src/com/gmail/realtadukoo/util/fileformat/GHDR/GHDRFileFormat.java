@@ -45,7 +45,7 @@ public class GHDRFileFormat extends FileFormat{
 								.nextSiblingName("title")
 								.nullNextSiblingName()
 								.build());
-		FileFormatSchema v1 = new FileFormatSchema(version1, 1, ".ghdr", v1Nodes);
+		FileFormatSchema v1 = new FileFormatSchema(version1, 1, "ghdr", v1Nodes);
 		schemas.put(version1, v1);
 		return schemas;
 	}

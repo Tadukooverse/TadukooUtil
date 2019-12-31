@@ -413,7 +413,7 @@ public class Node{
 		}
 		
 		// Add the title and (optional) data
-		text += title + ":" + data == null?"":data;
+		text += title + ":" + (data == null?"":data);
 		
 		return text;
 	}
@@ -427,13 +427,8 @@ public class Node{
 	public String fullToString(){
 		String text = "";
 		
-		// Add any leading space (based on level)
-		for(int i = 0; i < level; i++){
-			text += "  ";
-		}
-		
-		// Add the title and (optional) data
-		text += title + ":" + data == null?"":data;
+		// Add this Node's text
+		text += toString();
 		
 		// Add the full child's string
 		if(child != null){
