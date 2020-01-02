@@ -174,6 +174,9 @@ public class Node{
 				}
 				// Remove the closing parenthesis from the end of the data
 				data = data.substring(0, data.length() - 1);
+			}else if(data.startsWith("\\(")){
+				// If data starts with an escaped parenthesis, remove the escape character
+				data = data.substring(1);
 			}
 		}else{
 			// If empty data section, set it as empty string
@@ -230,6 +233,9 @@ public class Node{
 					}
 					// Remove the parenthesis from the end of the data
 					data = data.substring(0, data.length() - 1);
+				}else if(data.startsWith("\\(")){
+					// If data starts with an escaped parenthesis, remove the escape character
+					data = data.substring(1);
 				}
 			}else{
 				// If empty data section, set it as empty string
