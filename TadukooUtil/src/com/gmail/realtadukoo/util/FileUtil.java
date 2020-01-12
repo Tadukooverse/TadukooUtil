@@ -7,9 +7,12 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Util functions for dealing with Files.
@@ -40,6 +43,31 @@ public final class FileUtil{
 			// If we found a dot, return whatever's after it
 			return filepath.substring(lastDotIndex + 1);
 		}
+	}
+	
+	/**
+	 * Creates a List of all Files in the given directory and any of 
+	 * its sub-directories.
+	 * 
+	 * @param directoryPath The path to the directory to check
+	 * @return A List of all Files in the directory and its sub-directories
+	 */
+	public static final List<File> listAllFiles(String directoryPath) throws IOException{
+		return Files.walk(Paths.get(directoryPath))
+				.filter(Files::isRegularFile)
+				.map(path -> path.toFile())
+				.collect(Collectors.toList());
+	}
+	
+	/**
+	 * Creates a List of all Files in the given directory and any of its 
+	 * sub-directories.
+	 * 
+	 * @param directory The directory (as a File) to check
+	 * @return A List of all Files in the directory and its sub-directories
+	 */
+	public static final List<File> listAllFiles(File directory) throws IOException{
+		return listAllFiles(directory.getPath());
 	}
 	
 	/**
