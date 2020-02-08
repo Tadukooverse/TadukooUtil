@@ -112,4 +112,179 @@ public final class StringUtil{
 	public static final List<String> parseCommaSeparatedListFromString(String text){
 		return parseListFromStringWithSeparator(text, ",", true);
 	}
+	
+	/**
+	 * Checks if the given string is blank (either null or the empty string).
+	 * 
+	 * @param text The string to check
+	 * @return true if the string is null or the empty string
+	 */
+	public static final boolean isBlank(String text){
+		return text == null || text.equals("");
+	}
+	
+	/**
+	 * Checks if the given string is NOT blank (blank = either null or the empty string).
+	 * 
+	 * @param text The string to check
+	 * @return true if the string is not null and not the empty string
+	 */
+	public static final boolean isNotBlank(String text){
+		return !isBlank(text);
+	}
+	
+	/**
+	 * Checks if the two strings are equal using String.equals(), but properly 
+	 * handles null (if they're both null, returns true, if one is null and the 
+	 * other isn't, return false instead of throwing an NPE).
+	 * 
+	 * @param actual The actual string being checked
+	 * @param expected The expected string we want
+	 * @return true if actual.equals(expected) or they're both null
+	 */
+	public static final boolean equals(String actual, String expected){
+		if(actual == null && expected == null){
+			// If both null, return true
+			return true;
+		}else if(actual == null || expected == null){
+			// If one is null, and the other isn't, return false
+			return false;
+		}else{
+			// Otherwise check as normal
+			return actual.equals(expected);
+		}
+	}
+	
+	/**
+	 * Checks if the given string is equal to any of the given expected strings 
+	 * using String.equals(), but properly handles null (if the string is null and 
+	 * null is in the expected strings, returns true, if the string is null and the 
+	 * expected strings don't have null, return false instead of throwing an NPE).
+	 * 
+	 * @param actual The actual string being checked
+	 * @param expected The expected strings we want
+	 * @return true if actual.equals({any of the expected}) or they're both null
+	 */
+	public static final boolean equalsAny(String actual, String ... expected){
+		if(actual == null){
+			// If actual string is null, check for null in the expected
+			for(String expect: expected){
+				if(expect == null){
+					return true;
+				}
+			}
+		}else{
+			// If actual string isn't null, check that actual.equals any of the expected
+			for(String expect: expected){
+				if(actual.equals(expect)){
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
+	/**
+	 * Checks if the two strings are equal using String.equalsIgnoreCase(), but properly 
+	 * handles null (if they're both null, returns true, if one is null and the 
+	 * other isn't, return false instead of throwing an NPE).
+	 * 
+	 * @param actual The actual string being checked
+	 * @param expected The expected string we want
+	 * @return true if actual.equalsIgnoreCase(expected) or they're both null
+	 */
+	public static final boolean equalsIgnoreCase(String actual, String expected){
+		if(actual == null && expected == null){
+			// If both null, return true
+			return true;
+		}else if(actual == null || expected == null){
+			// If one is null and the other isn't, return false
+			return false;
+		}else{
+			// Otherwise check as normal
+			return actual.equalsIgnoreCase(expected);
+		}
+	}
+	
+	/**
+	 * Checks if the given string is equal to any of the given expected strings 
+	 * using String.equalsIgnoreCase(), but properly handles null (if the string is null and 
+	 * null is in the expected strings, returns true, if the string is null and the 
+	 * expected strings don't have null, return false instead of throwing an NPE).
+	 * 
+	 * @param actual The actual string being checked
+	 * @param expected The expected strings we want
+	 * @return true if actual.equalsIgnoreCase({any of the expected}) or they're both null
+	 */
+	public static final boolean equalsAnyIgnoreCase(String actual, String ... expected){
+		if(actual == null){
+			// If actual string is null, check for null in the expected
+			for(String expect: expected){
+				if(expect == null){
+					return true;
+				}
+			}
+		}else{
+			// If actual string isn't null, check that actual.equalsIgnoreCase any of the expected
+			for(String expect: expected){
+				if(actual.equalsIgnoreCase(expect)){
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	/**
+	 * Checks if the two strings are NOT equal using String.equals(), but properly 
+	 * handles null (if they're both null, returns false, if one is null and the 
+	 * other isn't, return true instead of throwing an NPE).
+	 * 
+	 * @param actual The actual string being checked
+	 * @param expected The expected string we want
+	 * @return false if actual.equals(expected) or they're both null
+	 */
+	public static final boolean notEquals(String actual, String expected){
+		return !equals(actual, expected);
+	}
+	
+	/**
+	 * Checks if the given string is NOT equal to any of the given expected strings 
+	 * using String.equals(), but properly handles null (if the string is null and 
+	 * null is in the expected strings, returns false, if the string is null and the 
+	 * expected strings don't have null, return true instead of throwing an NPE).
+	 * 
+	 * @param actual The actual string being checked
+	 * @param expected The expected strings we want
+	 * @return false if actual.equals({any of the expected}) or they're both null
+	 */
+	public static final boolean notEqualsAny(String actual, String ... expected){
+		return !equalsAny(actual, expected);
+	}
+	
+	/**
+	 * Checks if the two strings are NOT equal using String.equalsIgnoreCase(), but properly 
+	 * handles null (if they're both null, returns false, if one is null and the 
+	 * other isn't, return true instead of throwing an NPE).
+	 * 
+	 * @param actual The actual string being checked
+	 * @param expected The expected string we want
+	 * @return false if actual.equalsIgnoreCase(expected) or they're both null
+	 */
+	public static final boolean notEqualsIgnoreCase(String actual, String expected){
+		return !equalsIgnoreCase(actual, expected);
+	}
+	
+	/**
+	 * Checks if the given string is NOT equal to any of the given expected strings 
+	 * using String.equalsIgnoreCase(), but properly handles null (if the string is null and 
+	 * null is in the expected strings, returns false, if the string is null and the 
+	 * expected strings don't have null, return true instead of throwing an NPE).
+	 * 
+	 * @param actual The actual string being checked
+	 * @param expected The expected strings we want
+	 * @return false if actual.equalsIgnoreCase({any of the expected}) or they're both null
+	 */
+	public static final boolean notEqualsAnyIgnoreCase(String actual, String ... expected){
+		return !equalsAnyIgnoreCase(actual, expected);
+	}
 }
