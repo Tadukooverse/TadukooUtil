@@ -8,7 +8,6 @@
 		<version>0.1-Alpha-SNAPSHOT</version>
 	</parent>
 	<artifactId>TadukooDatabase</artifactId>
-
 	<dependencies>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
@@ -16,8 +15,6 @@
 			<version>${project.version}</version>
 		</dependency>
 	</dependencies>
-
-
 	<build>
 		<plugins>
 			<plugin>
