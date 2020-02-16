@@ -1,6 +1,5 @@
 package com.gmail.realtadukoo.util.view;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.KeyAdapter;
@@ -25,31 +24,40 @@ import com.gmail.realtadukoo.util.event.view.ViewChangeEventListener;
 public abstract class ViewBase extends JPanel implements ViewChangeEventListener{
 	private static Context context;
 	
-	public ViewBase(){
+	/**
+	 * Constructs a ViewBase using the given {@link ViewBaseParams}.
+	 * 
+	 * @param params A ViewBaseParams pojo containing basic settings
+	 */
+	protected ViewBase(ViewBaseParams params){
 		// Initialize this
 		initialize();
 		
-		// TODO: Change some of the below to be configurable
-		
-		// Set background to blue and size to 1366x768 (my laptop's res)
-		setBackground(Color.BLUE);
-		setPreferredSize(new Dimension(1366, 768));
+		// Set background color and a few other parameters
+		setBackground(params.getBackground());
 		setDoubleBuffered(true);
-		
 		setFocusable(true);
 		
 		// Create a frame to display the view
 		JFrame frame = new JFrame();
-		frame.setTitle("KBWCO");
+		frame.setTitle(params.getTitle());
 		frame.setContentPane(this);
-		frame.setUndecorated(true);
-		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		if(params.isFullscreen()){
+			// Fullscreen mode
+			frame.setUndecorated(true);
+			frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		}else{
+			// Windowed mode
+			frame.setSize(params.getWidth(), params.getHeight());
+			setPreferredSize(new Dimension(params.getWidth(), params.getHeight()));
+			frame.setResizable(false);
+		}
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.pack();
 		frame.setVisible(true);
 	}
 	
-	private void initialize(){
+	private final void initialize(){
 		context = createContext();
 		context.addViewToStack(initFirstView());
 		context.getCurrentView().init(context);
@@ -77,7 +85,7 @@ public abstract class ViewBase extends JPanel implements ViewChangeEventListener
 	/**
 	 * Registers the {@link MouseAdapter} and {@link KeyAdapter} methods for this class.
 	 */
-	private void registerInputListeners(){
+	private final void registerInputListeners(){
 		// Register key event handlers
 		KeyAdapter keyListener = new KeyAdapter(){
 			@Override
@@ -103,11 +111,14 @@ public abstract class ViewBase extends JPanel implements ViewChangeEventListener
 	}
 	
 	@Override
-	public void handleEvent(ViewChangeEvent e){
+	public final void handleEvent(ViewChangeEvent e){
+		// Close any views being removed from the stack
 		List<View> oldViews = e.getOldViews();
 		if(oldViews != null){
 			oldViews.forEach(view -> view.close());
 		}
+		
+		// Initialize any views being added to the stack
 		List<View> newViews = e.getNewViews();
 		if(newViews != null){
 			newViews.forEach(view -> view.init(context));
@@ -115,7 +126,7 @@ public abstract class ViewBase extends JPanel implements ViewChangeEventListener
 	}
 	
 	// Event handler for key released events
-	protected void handleKeyTyped(KeyEvent e){
+	protected final void handleKeyTyped(KeyEvent e){
 		// TODO: Potentially setup a way for multiple layers to be able to be used?
 		View view = context.getCurrentView();
 		if(view.handleKeyTyped(e)){
@@ -125,7 +136,7 @@ public abstract class ViewBase extends JPanel implements ViewChangeEventListener
 	}
 	
 	// Event handler for key released events
-	protected void handleKeyReleased(KeyEvent e){
+	protected final void handleKeyReleased(KeyEvent e){
 		// TODO: Potentially setup a way for multiple layers to be able to be used?
 		View view = context.getCurrentView();
 		if(view.handleKeyReleased(e)){
@@ -135,7 +146,7 @@ public abstract class ViewBase extends JPanel implements ViewChangeEventListener
 	}
 	
 	// Event handler for mouse released events
-	protected void handleMouseReleased(MouseEvent e){
+	protected final void handleMouseReleased(MouseEvent e){
 		// TODO: Potentially setup a way for multiple layers to be able to be used?
 		View view = context.getCurrentView();
 		if(view.handleMouseReleased(e)){
@@ -145,9 +156,11 @@ public abstract class ViewBase extends JPanel implements ViewChangeEventListener
 	}
 	
 	@Override
-	protected void paintComponent(Graphics g){
-		super.paintComponent(g); // Draw the background.
+	protected final void paintComponent(Graphics g){
+		// Draw the background
+		super.paintComponent(g);
 		
+		// Draw the current View stack
 		for(View view: context.getCurrentViewStack()){
 			view.draw(g);
 		}
