@@ -121,7 +121,7 @@ public abstract class View implements ViewChangeEventListener{
 	 * 
 	 * @param e The KeyEvent to handle
 	 */
-	public boolean handleKeyReleased(KeyEvent e){ // TODO: Change to final
+	public final boolean handleKeyReleased(KeyEvent e){
 		if(focus != null && focus instanceof TextInput){
 			TextInput input = (TextInput) focus;
 			boolean removeFocus = false;
