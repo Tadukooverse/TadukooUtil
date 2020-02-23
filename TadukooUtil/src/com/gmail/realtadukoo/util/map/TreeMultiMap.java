@@ -289,7 +289,7 @@ public class TreeMultiMap<K, V> extends MultiMap<K, V>{
 	}
 	
 	/**
-	 * @param toKey  high end point of the keys in the returned map
+	 * @param toKey high end point of the keys in the returned map
 	 * @param inclusive true if the high end point is to be included in the returned view
 	 * @return A view of the portion of this multiMap whose keys are less than (or equal to, if inclusive is true) toKey
 	 * @see TreeMap#headMap(Object, boolean)
@@ -299,7 +299,7 @@ public class TreeMultiMap<K, V> extends MultiMap<K, V>{
 	}
 	
 	/**
-	 * @param fromKey  low end point (inclusive) of the keys in the returned map
+	 * @param fromKey low end point (inclusive) of the keys in the returned map
 	 * @return A view of the portion of this multiMap whose keys are greater than or equal to fromKey
 	 * @see TreeMap#tailMap(Object)
 	 */

@@ -132,8 +132,8 @@ public class Image extends Drawable{
 			}
 			
 			/*
-			 *  Either specify both width + height to alter it, or specify neither to use 
-			 *  the loaded image's dimensions
+			 * Either specify both width + height to alter it, or specify neither to use 
+			 * the loaded image's dimensions
 			 */
 			if((width != -1 && height == -1) || (width == -1 && height != -1)){
 				errors.add("Must either specify BOTH width and height OR specify neither");

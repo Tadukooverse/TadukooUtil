@@ -143,7 +143,7 @@ public class Node{
 		String title = "", data = "";
 		// If line doesn't contain a colon, we got issues
 		if(!line.contains(":")){
-			throw new IllegalArgumentException("Line '" + line +  "' doesn't have colon! "
+			throw new IllegalArgumentException("Line '" + line + "' doesn't have colon! "
 					+ "Not proper Tadukoo File Format!");
 		}
 		// Grab title as before the 1st colon
@@ -204,7 +204,7 @@ public class Node{
 			line = lines.get(i);
 			// If line doesn't contain a colon, we got issues
 			if(!line.contains(":")){
-				throw new IllegalArgumentException("Line '" + line +  "' doesn't have colon! "
+				throw new IllegalArgumentException("Line '" + line + "' doesn't have colon! "
 						+ "Not proper Tadukoo File Format!");
 			}
 			// Grab the title from the line as before the 1st colon

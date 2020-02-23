@@ -14,7 +14,7 @@ public class LoggerUtil{
 		new File(filepath).mkdirs();
 		FileHandler fh = new FileHandler(filepath + file + ".log");
 		SimpleFormatter formatter = new SimpleFormatter();
-        fh.setFormatter(formatter);
+		fh.setFormatter(formatter);
 		Logger logger = Logger.getLogger(file);
 		logger.setLevel(Level.FINEST);
 		logger.addHandler(fh);

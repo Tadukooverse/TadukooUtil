@@ -32,9 +32,9 @@ public final class LoggerUtil{
 		// Setup a FileHandler for the File with a SimpleFormatter
 		FileHandler fh = new FileHandler(filepath);
 		SimpleFormatter formatter = new SimpleFormatter();
-        fh.setFormatter(formatter);
-        
-        // Create the Logger with the given level and the created FileHandler
+		fh.setFormatter(formatter);
+		
+		// Create the Logger with the given level and the created FileHandler
 		Logger logger = Logger.getLogger(filepath);
 		logger.setLevel(level);
 		logger.addHandler(fh);

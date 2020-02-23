@@ -14,7 +14,7 @@ import java.awt.Graphics;
 public abstract class Drawable{
 	/** Represents whether this object's orientation has been calculated or not */
 	private boolean oriented = true;
-	/**  Represents whether this object should be drawn to the screen or not */
+	/** Represents whether this object should be drawn to the screen or not */
 	private boolean visible = true;
 	
 	/**

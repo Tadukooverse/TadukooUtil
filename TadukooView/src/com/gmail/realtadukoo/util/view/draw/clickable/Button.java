@@ -247,9 +247,9 @@ public class Button extends Clickable{
 		buttons.put(SIZE.SMALL.toString() + COLOR.RED.toString(), Draw.loadImage(basePath + "smallRed.png"));
 		buttons.put(SIZE.SMALL.toString() + COLOR.YELLOW.toString(), Draw.loadImage(basePath + "smallYellow.png"));
 		// Load the tiny buttons
-		buttons.put(SIZE.TINY.toString() +  COLOR.GREEN.toString(), Draw.loadImage(basePath + "tinyGreen.png"));
-		buttons.put(SIZE.TINY.toString() +  COLOR.RED.toString(), Draw.loadImage(basePath + "tinyRed.png"));
-		buttons.put(SIZE.TINY.toString() +  COLOR.YELLOW.toString(), Draw.loadImage(basePath + "tinyYellow.png"));
+		buttons.put(SIZE.TINY.toString() + COLOR.GREEN.toString(), Draw.loadImage(basePath + "tinyGreen.png"));
+		buttons.put(SIZE.TINY.toString() + COLOR.RED.toString(), Draw.loadImage(basePath + "tinyRed.png"));
+		buttons.put(SIZE.TINY.toString() + COLOR.YELLOW.toString(), Draw.loadImage(basePath + "tinyYellow.png"));
 	}
 	
 	/** The first line of text on the button */
