@@ -25,6 +25,13 @@
 				<configuration>
 					<source>1.8</source>
 					<target>1.8</target>
+					<annotationProcessorPaths>
+						<annotationProcessorPath>
+							<groupId>${project.groupId}</groupId>
+							<artifactId>${project.artifactId}</artifactId>
+							<version>${project.version}</version>
+						</annotationProcessorPath>
+					</annotationProcessorPaths>
 				</configuration>
 			</plugin>
 		</plugins>

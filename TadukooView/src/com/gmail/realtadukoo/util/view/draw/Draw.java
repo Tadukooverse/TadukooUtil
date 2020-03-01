@@ -137,9 +137,9 @@ public class Draw{
 		g.drawImage(image, x, y, width, height, null);
 	}
 	
-	public static void drawText(Graphics g, String text, int x, int y, Font font){
+	public static void drawText(Graphics g, String text, int x, int y, Font font, Color color){
 		g.setFont(font);
-		g.setColor(Color.BLACK);
+		g.setColor(color);
 		g.drawString(text, x, y);
 	}
 }
