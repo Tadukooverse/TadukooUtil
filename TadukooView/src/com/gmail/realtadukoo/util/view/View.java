@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.gmail.realtadukoo.util.event.Event;
 import com.gmail.realtadukoo.util.event.EventListener;
 import com.gmail.realtadukoo.util.event.view.ViewChangeEventListener;
 import com.gmail.realtadukoo.util.map.HashMultiMap;

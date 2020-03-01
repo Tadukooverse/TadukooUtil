@@ -8,6 +8,7 @@
 		<version>0.1-Alpha-SNAPSHOT</version>
 	</parent>
 	<artifactId>TadukooView</artifactId>
+	
 	<dependencies>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
@@ -15,6 +16,7 @@
 			<version>${project.version}</version>
 		</dependency>
 	</dependencies>
+	
 	<build>
 		<sourceDirectory>src</sourceDirectory>
 		<plugins>
