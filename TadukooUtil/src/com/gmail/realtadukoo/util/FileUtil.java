@@ -161,6 +161,6 @@ public final class FileUtil{
 	 * @param lines The content of the file to be written
 	 */
 	public static final void writeFile(Writer writer, Collection<String> lines) throws IOException{
-		writeFile(writer, StringUtil.buildStringWithNewLines(lines));
+		writeFile(writer, StringBuilderUtil.buildStringWithNewLines(lines));
 	}
 }
