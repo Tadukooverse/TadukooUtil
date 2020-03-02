@@ -55,6 +55,7 @@ public abstract class ViewBase extends JPanel implements ViewChangeEventListener
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.pack();
 		frame.setVisible(true);
+		setFocusTraversalKeysEnabled(false);
 	}
 	
 	private final void initialize(){

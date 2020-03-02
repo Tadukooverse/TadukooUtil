@@ -102,6 +102,10 @@ public abstract class View implements ViewChangeEventListener{
 		clickables.put(layer, clickable);
 	}
 	
+	public final void handleKeyPressed(KeyEvent e){
+		// TODO: Use for key combos
+	}
+	
 	/**
 	 * Handles a key typed event. Usually this is for when a user is typing in a text box.
 	 * 
@@ -110,7 +114,30 @@ public abstract class View implements ViewChangeEventListener{
 	public final boolean handleKeyTyped(KeyEvent e){
 		if(focus != null && focus instanceof TextInput){
 			TextInput input = (TextInput) focus;
-			input.handleKeyType(e.getKeyChar());
+			boolean removeFocus = false;
+			switch(e.getKeyChar()){
+				case KeyEvent.VK_BACK_SPACE:
+					input.handleBackspace();
+					break;
+				case KeyEvent.VK_DELETE:
+					input.handleDelete();
+					break;
+				case KeyEvent.VK_ESCAPE:
+					removeFocus = input.handleEscape();
+					break;
+				case KeyEvent.VK_TAB:
+					removeFocus = input.handleTab();
+					break;
+				case KeyEvent.VK_ENTER:
+					removeFocus = input.handleEnter();
+					break;
+				default:
+					input.handleKeyType(e.getKeyChar());
+					break;
+			}
+			if(removeFocus){
+				focus = null;
+			}
 			return true;
 		}
 		return false;
@@ -127,20 +154,17 @@ public abstract class View implements ViewChangeEventListener{
 			TextInput input = (TextInput) focus;
 			boolean removeFocus = false;
 			switch(e.getKeyCode()){
-				case KeyEvent.VK_BACK_SPACE:
-					input.handleBackspace();
+				case KeyEvent.VK_LEFT:
+					input.handleLeft();
 					break;
-				case KeyEvent.VK_DELETE:
-					input.handleDelete();
+				case KeyEvent.VK_RIGHT:
+					input.handleRight();
 					break;
-				case KeyEvent.VK_ESCAPE:
-					removeFocus = input.handleEscape();
+				case KeyEvent.VK_UP:
+					input.handleUp();
 					break;
-				case KeyEvent.VK_TAB:
-					removeFocus = input.handleTab();
-					break;
-				case KeyEvent.VK_ENTER:
-					removeFocus = input.handleEnter();
+				case KeyEvent.VK_DOWN:
+					input.handleDown();
 					break;
 			}
 			

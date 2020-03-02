@@ -33,7 +33,7 @@ public class Button extends Clickable{
 	 * </ul>
 	 * Defaults are:
 	 * <ul>
-	 * <li>orientation - {@link Draw.ORIENTATION#TOP_LEFT TOP_LEFT}</li>
+	 * <li>orientation - {@link ORIENTATION#TOP_LEFT TOP_LEFT}</li>
 	 * <li>size - {@link SIZE#NORMAL}</li>
 	 * <li>color - {@link COLOR#GREEN}</li>
 	 * <li>onClick - nothing (though not recommended to leave as doing nothing)</li>
@@ -52,7 +52,7 @@ public class Button extends Clickable{
 		/** The y coordinate for the Button - must be specified */
 		private int y = -1;
 		/** The orientation of the Button - default TOP_LEFT */
-		private Draw.ORIENTATION orientation = Draw.ORIENTATION.TOP_LEFT;
+		private ORIENTATION orientation = ORIENTATION.TOP_LEFT;
 		/** The size of the Button - default NORMAL */
 		private SIZE size = SIZE.NORMAL;
 		/** The color of the Button - default GREEN */
@@ -108,7 +108,7 @@ public class Button extends Clickable{
 		 * 
 		 * @param orientation The orientation for the Button object
 		 */
-		public ButtonBuilder orientation(Draw.ORIENTATION orientation){
+		public ButtonBuilder orientation(ORIENTATION orientation){
 			this.orientation = orientation;
 			return this;
 		}
@@ -261,7 +261,7 @@ public class Button extends Clickable{
 	/** The y coordinate of the button (meaning determined by {@link ORIENTATION}) */
 	private int originalY;
 	/** The {@link ORIENTATION} of the button in relation to the given coordinate */
-	private Draw.ORIENTATION orientation;
+	private ORIENTATION orientation;
 	/** The {@link SIZE} of the button */
 	private SIZE size;
 	/** The {@link COLOR} of the button */
@@ -284,7 +284,7 @@ public class Button extends Clickable{
 	 * @param color The {@link COLOR} of the button
 	 * @param onClick The on-click action for the button
 	 */
-	private Button(String line1, String line2, int x, int y, Draw.ORIENTATION orientation, SIZE size, 
+	private Button(String line1, String line2, int x, int y, ORIENTATION orientation, SIZE size, 
 			COLOR color, Consumer<Context> onClick){
 		this.line1 = line1;
 		this.line2 = line2;

@@ -316,6 +316,7 @@ public class Text extends Drawable{
 	 * 
 	 * @param g The Graphics to use in orienting
 	 */
+	@Override
 	protected void orient(Graphics g){
 		Point newPoint = Draw.orientText(g, font, text, originalX, originalY, orientation);
 		x = (int) newPoint.getX();

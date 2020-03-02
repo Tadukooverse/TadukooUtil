@@ -83,11 +83,21 @@ public class Draw{
 	
 	public static int fontSizeFitToBox(Graphics g, Font font, String text, int width, int height){
 		FontMetrics metrics = g.getFontMetrics(font);
-		int stringWidth = metrics.stringWidth(text);
+		
+		// Calculate size to fit height-wise
 		int stringHeight = metrics.getHeight();
-		float widthFitSize = (float) width / (float) stringWidth * font.getSize();
 		float heightFitSize = (float) height / (float) stringHeight * font.getSize();
-		return (int) Math.min(widthFitSize, heightFitSize);
+		
+		// Check if text has content
+		if(text.length() > 0){
+			// If text isn't empty, calculate size to fit width-wise
+			int stringWidth = metrics.stringWidth(text);
+			float widthFitSize = (float) width / (float) stringWidth * font.getSize();
+			return (int) Math.min(widthFitSize, heightFitSize);
+		}else{
+			// If text is empty, we're using the height
+			return (int) heightFitSize;
+		}
 	}
 	
 	public static Point orient(int x, int y, int width, int height, ORIENTATION orientation){
