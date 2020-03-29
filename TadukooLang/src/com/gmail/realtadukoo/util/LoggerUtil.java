@@ -25,7 +25,7 @@ public final class LoggerUtil{
 	 * @param level The Level to log messages at
 	 * @return The created Logger
 	 */
-	public static final Logger createFileLogger(String filepath, Level level) throws IOException{
+	public static Logger createFileLogger(String filepath, Level level) throws IOException{
 		// Create the file
 		FileUtil.createFile(filepath);
 		

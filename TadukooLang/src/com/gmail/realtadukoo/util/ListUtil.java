@@ -26,7 +26,7 @@ public final class ListUtil{
 	 * @return A List containing the given variables
 	 */
 	@SafeVarargs
-	public static final <T> List<T> createList(T ... t){
+	public static <T> List<T> createList(T ... t){
 		return new ArrayList<>(Arrays.asList(t));
 	}
 }

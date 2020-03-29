@@ -26,7 +26,7 @@ public final class StringBuilderUtil{
 	 * @param separator The character to put in-between the strings
 	 * @return A String of the given collection with the separator between each of them
 	 */
-	public static final String buildStringWithSeparator(Collection<String> items, String separator){
+	public static String buildStringWithSeparator(Collection<String> items, String separator){
 		// Start the string
 		String fullString = "";
 		
@@ -52,7 +52,7 @@ public final class StringBuilderUtil{
 	 * @param lines The lines to make into a single string
 	 * @return A String of the given lines each on a newline
 	 */
-	public static final String buildStringWithNewLines(Collection<String> lines){
+	public static String buildStringWithNewLines(Collection<String> lines){
 		return buildStringWithSeparator(lines, "\n");
 	}
 	
@@ -68,7 +68,7 @@ public final class StringBuilderUtil{
 	 * @param lines The lines to make into a single string
 	 * @return A String of the given lines as a comma-separated string
 	 */
-	public static final String buildCommaSeparatedString(Collection<String> lines){
+	public static String buildCommaSeparatedString(Collection<String> lines){
 		return buildStringWithSeparator(lines, ",");
 	}
 }

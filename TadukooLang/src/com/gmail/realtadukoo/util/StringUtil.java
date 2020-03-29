@@ -24,7 +24,7 @@ public final class StringUtil{
 	 * @param text The string to check
 	 * @return true if the string is null or the empty string
 	 */
-	public static final boolean isBlank(String text){
+	public static boolean isBlank(String text){
 		return text == null || text.equals("");
 	}
 	
@@ -34,7 +34,7 @@ public final class StringUtil{
 	 * @param text The string to check
 	 * @return true if the string is not null and not the empty string
 	 */
-	public static final boolean isNotBlank(String text){
+	public static boolean isNotBlank(String text){
 		return !isBlank(text);
 	}
 	
@@ -47,7 +47,7 @@ public final class StringUtil{
 	 * @param expected The expected string we want
 	 * @return true if actual.equals(expected) or they're both null
 	 */
-	public static final boolean equals(String actual, String expected){
+	public static boolean equals(String actual, String expected){
 		if(actual == null && expected == null){
 			// If both null, return true
 			return true;
@@ -70,7 +70,7 @@ public final class StringUtil{
 	 * @param expected The expected strings we want
 	 * @return true if actual.equals({any of the expected}) or they're both null
 	 */
-	public static final boolean equalsAny(String actual, String ... expected){
+	public static boolean equalsAny(String actual, String ... expected){
 		if(actual == null){
 			// If actual string is null, check for null in the expected
 			for(String expect: expected){
@@ -98,7 +98,7 @@ public final class StringUtil{
 	 * @param expected The expected string we want
 	 * @return true if actual.equalsIgnoreCase(expected) or they're both null
 	 */
-	public static final boolean equalsIgnoreCase(String actual, String expected){
+	public static boolean equalsIgnoreCase(String actual, String expected){
 		if(actual == null && expected == null){
 			// If both null, return true
 			return true;
@@ -121,7 +121,7 @@ public final class StringUtil{
 	 * @param expected The expected strings we want
 	 * @return true if actual.equalsIgnoreCase({any of the expected}) or they're both null
 	 */
-	public static final boolean equalsAnyIgnoreCase(String actual, String ... expected){
+	public static boolean equalsAnyIgnoreCase(String actual, String ... expected){
 		if(actual == null){
 			// If actual string is null, check for null in the expected
 			for(String expect: expected){
@@ -148,7 +148,7 @@ public final class StringUtil{
 	 * @param expected The expected string we want
 	 * @return false if actual.equals(expected) or they're both null
 	 */
-	public static final boolean notEquals(String actual, String expected){
+	public static boolean notEquals(String actual, String expected){
 		return !equals(actual, expected);
 	}
 	
@@ -162,7 +162,7 @@ public final class StringUtil{
 	 * @param expected The expected strings we want
 	 * @return false if actual.equals({any of the expected}) or they're both null
 	 */
-	public static final boolean notEqualsAny(String actual, String ... expected){
+	public static boolean notEqualsAny(String actual, String ... expected){
 		return !equalsAny(actual, expected);
 	}
 	
@@ -175,7 +175,7 @@ public final class StringUtil{
 	 * @param expected The expected string we want
 	 * @return false if actual.equalsIgnoreCase(expected) or they're both null
 	 */
-	public static final boolean notEqualsIgnoreCase(String actual, String expected){
+	public static boolean notEqualsIgnoreCase(String actual, String expected){
 		return !equalsIgnoreCase(actual, expected);
 	}
 	
@@ -189,7 +189,7 @@ public final class StringUtil{
 	 * @param expected The expected strings we want
 	 * @return false if actual.equalsIgnoreCase({any of the expected}) or they're both null
 	 */
-	public static final boolean notEqualsAnyIgnoreCase(String actual, String ... expected){
+	public static boolean notEqualsAnyIgnoreCase(String actual, String ... expected){
 		return !equalsAnyIgnoreCase(actual, expected);
 	}
 	
@@ -202,7 +202,7 @@ public final class StringUtil{
 	 * @param trim Whether to trim any whitespace off the resulting strings
 	 * @return The resulting List of Strings
 	 */
-	public static final List<String> parseListFromStringWithSeparator(String text, String separator, boolean trim){
+	public static List<String> parseListFromStringWithSeparator(String text, String separator, boolean trim){
 		List<String> strings = new ArrayList<>();
 		
 		// If there is no instance of the separator string, just make a list with the text
@@ -227,7 +227,7 @@ public final class StringUtil{
 	 * @param text The text to convert into a List of Strings
 	 * @return The List of Strings produced by parsing the text
 	 */
-	public static final List<String> parseCommaSeparatedListFromString(String text){
+	public static List<String> parseCommaSeparatedListFromString(String text){
 		return parseListFromStringWithSeparator(text, ",", true);
 	}
 }

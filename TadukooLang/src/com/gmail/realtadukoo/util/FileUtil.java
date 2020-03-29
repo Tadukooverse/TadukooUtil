@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -32,7 +33,7 @@ public final class FileUtil{
 	 * @param filepath The filepath to grab the extension for
 	 * @return The found file extension, or null
 	 */
-	public static final String getFileExtension(String filepath){
+	public static String getFileExtension(String filepath){
 		// Find the last dot in the filepath
 		int lastDotIndex = filepath.lastIndexOf('.');
 		
@@ -52,10 +53,10 @@ public final class FileUtil{
 	 * @param directoryPath The path to the directory to check
 	 * @return A List of all Files in the directory and its sub-directories
 	 */
-	public static final List<File> listAllFiles(String directoryPath) throws IOException{
+	public static List<File> listAllFiles(String directoryPath) throws IOException{
 		return Files.walk(Paths.get(directoryPath))
 				.filter(Files::isRegularFile)
-				.map(path -> path.toFile())
+				.map(Path::toFile)
 				.collect(Collectors.toList());
 	}
 	
@@ -66,7 +67,7 @@ public final class FileUtil{
 	 * @param directory The directory (as a File) to check
 	 * @return A List of all Files in the directory and its sub-directories
 	 */
-	public static final List<File> listAllFiles(File directory) throws IOException{
+	public static List<File> listAllFiles(File directory) throws IOException{
 		return listAllFiles(directory.getPath());
 	}
 	
@@ -77,7 +78,7 @@ public final class FileUtil{
 	 * @param filepath The path for the File to be created
 	 * @return The newly created File
 	 */
-	public static final File createFile(String filepath) throws IOException{
+	public static File createFile(String filepath) throws IOException{
 		// Create a File object from the given filepath
 		File file = new File(filepath);
 		
@@ -102,11 +103,11 @@ public final class FileUtil{
 	 * @param reader The Reader to use in reading
 	 * @return A List of lines in the file
 	 */
-	public static final List<String> getLinesAsList(Reader reader) throws IOException{
+	public static List<String> getLinesAsList(Reader reader) throws IOException{
 		// Make a BufferedReader out of the given Reader
 		BufferedReader buffReader = new BufferedReader(reader);
 		// Create a List of Strings to store the lines
-		List<String> lines = new ArrayList<String>();
+		List<String> lines = new ArrayList<>();
 		
 		// Read the first line of the file
 		String line = buffReader.readLine();
@@ -128,7 +129,7 @@ public final class FileUtil{
 	 * @param filepath The path to save the file to
 	 * @param content The content of the file to be written
 	 */
-	public static final void writeFile(String filepath, String content) throws IOException{
+	public static void writeFile(String filepath, String content) throws IOException{
 		// Create the File
 		File file = createFile(filepath);
 		
@@ -142,7 +143,7 @@ public final class FileUtil{
 	 * @param writer The Writer to use in writing
 	 * @param content The content of the file to be written
 	 */
-	public static final void writeFile(Writer writer, String content) throws IOException{
+	public static void writeFile(Writer writer, String content) throws IOException{
 		// Make a BufferedWriter out of the given Writer
 		BufferedWriter buffWriter = new BufferedWriter(writer);
 		
@@ -160,7 +161,7 @@ public final class FileUtil{
 	 * @param writer The Writer to use in writing
 	 * @param lines The content of the file to be written
 	 */
-	public static final void writeFile(Writer writer, Collection<String> lines) throws IOException{
+	public static void writeFile(Writer writer, Collection<String> lines) throws IOException{
 		writeFile(writer, StringBuilderUtil.buildStringWithNewLines(lines));
 	}
 }

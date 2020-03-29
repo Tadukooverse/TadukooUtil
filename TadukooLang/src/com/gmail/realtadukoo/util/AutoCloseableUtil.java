@@ -16,7 +16,7 @@ public final class AutoCloseableUtil{
 	 * 
 	 * @param autoCloseable The AutoCloseable to close
 	 */
-	public static final void closeQuietly(AutoCloseable autoCloseable){
+	public static void closeQuietly(AutoCloseable autoCloseable){
 		if(autoCloseable != null){
 			try{
 				autoCloseable.close();
