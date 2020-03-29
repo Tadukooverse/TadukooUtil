@@ -12,5 +12,11 @@
 		<module>TadukooDatabase</module>
 		<module>TadukooFileFormat</module>
 		<module>TadukooView</module>
+		<module>TadukooAnnotationProcessor</module>
+		<module>TadukooLang</module>
 	</modules>
+	<properties>
+		<java.source.version>14</java.source.version>
+		<java.target.version>14</java.target.version>
+	</properties>
 </project>
