@@ -8,10 +8,6 @@
 		<version>0.1-Alpha-SNAPSHOT</version>
 	</parent>
 	<artifactId>TadukooFileFormat</artifactId>
-	<properties>
-		<junit.jupiter.version>5.5.2</junit.jupiter.version>
-		<junit.platform.version>1.5.2</junit.platform.version>
-	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>${project.groupId}</groupId>

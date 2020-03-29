@@ -18,6 +18,8 @@
 	<properties>
 		<java.source.version>14</java.source.version>
 		<java.target.version>14</java.target.version>
+		<junit.jupiter.version>5.5.2</junit.jupiter.version>
+		<junit.platform.version>1.5.2</junit.platform.version>
 		<directory.source>src</directory.source>
 		<directory.test>junit</directory.test>
 		<directory.resource>resource</directory.resource>

@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import com.gmail.realtadukoo.util.ListUtil;
-import com.gmail.realtadukoo.util.StringBuilderUtil;
 import com.gmail.realtadukoo.util.StringUtil;
 
 /**
@@ -684,19 +683,19 @@ public class FormatNode{
 		Node levelNode = new Node("Level", String.valueOf(level), 1, null, null, dataFormatNode, null);
 		dataFormatNode.setNextSibling(levelNode);
 		// The parents Node = "Parents" + parentNames
-		Node parentsNode = new Node("Parents", StringBuilderUtil.buildCommaSeparatedString(parentNames), 1, null, null, 
+		Node parentsNode = new Node("Parents", StringUtil.buildCommaSeparatedString(parentNames), 1, null, null,
 				levelNode, null);
 		levelNode.setNextSibling(parentsNode);
 		// The children Node = "Children" + childNames
-		Node childrenNode = new Node("Children", StringBuilderUtil.buildCommaSeparatedString(childNames), 1, null, null, 
+		Node childrenNode = new Node("Children", StringUtil.buildCommaSeparatedString(childNames), 1, null, null,
 				parentsNode, null);
 		parentsNode.setNextSibling(childrenNode);
 		// The previous sibling Node = "PrevSiblings" + prevSiblingNames
-		Node prevSiblingNode = new Node("PrevSiblings", StringBuilderUtil.buildCommaSeparatedString(prevSiblingNames), 1, 
+		Node prevSiblingNode = new Node("PrevSiblings", StringUtil.buildCommaSeparatedString(prevSiblingNames), 1,
 				null, null, childrenNode, null);
 		childrenNode.setNextSibling(prevSiblingNode);
 		// The next sibling Node = "NextSiblings" + nextSiblingNames
-		Node nextSiblingNode = new Node("NextSiblings", StringBuilderUtil.buildCommaSeparatedString(nextSiblingNames), 1, 
+		Node nextSiblingNode = new Node("NextSiblings", StringUtil.buildCommaSeparatedString(nextSiblingNames), 1,
 				null, null, prevSiblingNode, null);
 		prevSiblingNode.setNextSibling(nextSiblingNode);
 		
