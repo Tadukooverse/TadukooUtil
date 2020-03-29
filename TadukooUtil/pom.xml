@@ -16,10 +16,10 @@
 		</dependency>
 	</dependencies>
 	<build>
-		<sourceDirectory>src</sourceDirectory>
+		<sourceDirectory>${directory.source}</sourceDirectory>
 		<resources>
 			<resource>
-				<directory>.apt_generated</directory>
+				<directory>${directory.eclipse.annotationprocessing}</directory>
 				<excludes>
 					<exclude>**/*.java</exclude>
 				</excludes>

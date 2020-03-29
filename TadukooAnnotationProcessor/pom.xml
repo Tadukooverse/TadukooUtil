@@ -17,10 +17,10 @@
         </dependency>
     </dependencies>
     <build>
-        <sourceDirectory>src</sourceDirectory>
+        <sourceDirectory>${directory.source}</sourceDirectory>
         <resources>
             <resource>
-                <directory>resource</directory>
+                <directory>${directory.resource}</directory>
             </resource>
         </resources>
         <plugins>

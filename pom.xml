@@ -18,5 +18,9 @@
 	<properties>
 		<java.source.version>14</java.source.version>
 		<java.target.version>14</java.target.version>
+		<directory.source>src</directory.source>
+		<directory.test>junit</directory.test>
+		<directory.resource>resource</directory.resource>
+		<directory.eclipse.annotationprocessing>.apt_generated</directory.eclipse.annotationprocessing>
 	</properties>
 </project>

@@ -10,7 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>TadukooLang</artifactId>
     <build>
-        <sourceDirectory>src</sourceDirectory>
+        <sourceDirectory>${directory.source}</sourceDirectory>
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
