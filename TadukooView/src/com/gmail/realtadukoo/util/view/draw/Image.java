@@ -3,8 +3,11 @@ package com.gmail.realtadukoo.util.view.draw;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.gmail.realtadukoo.util.view.draw.Draw.ORIENTATION;
 
 /**
  * Drawable class used for drawing a simple image.
@@ -27,7 +30,7 @@ public class Image extends Drawable{
 	 * <ul>
 	 * <li>width - set based on the loaded image's width</li>
 	 * <li>height - set based on the loaded image's height</li>
-	 * <li>orientation - {@link Draw.ORIENTATION#TOP_LEFT TOP_LEFT}</li>
+	 * <li>orientation - {@link ORIENTATION#TOP_LEFT TOP_LEFT}</li>
 	 * </ul>
 	 * 
 	 * @author Logan Ferree (Tadukoo)
@@ -45,7 +48,7 @@ public class Image extends Drawable{
 		/** The height for the Image - defaults to size of loaded image */
 		private int height = -1;
 		/** The orientation of the Image - default TOP_LEFT */
-		private Draw.ORIENTATION orientation = Draw.ORIENTATION.TOP_LEFT;
+		private ORIENTATION orientation = ORIENTATION.TOP_LEFT;
 		
 		// Cannot create ImageBuilder outside of Image
 		private ImageBuilder(){ }
@@ -108,7 +111,7 @@ public class Image extends Drawable{
 		 * 
 		 * @param orientation The orientation for the Image object
 		 */
-		public ImageBuilder orientation(Draw.ORIENTATION orientation){
+		public ImageBuilder orientation(ORIENTATION orientation){
 			this.orientation = orientation;
 			return this;
 		}
@@ -117,7 +120,7 @@ public class Image extends Drawable{
 		 * Checks for errors with the current settings for the Image object
 		 */
 		private void checkForErrors(){
-			List<String> errors = new ArrayList<String>();
+			List<String> errors = new ArrayList<>();
 			// Image file path is required
 			if(imgFile == null){
 				errors.add("Must specify imgFile");
@@ -177,20 +180,20 @@ public class Image extends Drawable{
 	/** The height of the image */
 	private int height;
 	/** The {@link ORIENTATION} of the image in relation to the given coordinate */
-	private Draw.ORIENTATION orientation;
+	private ORIENTATION orientation;
 	
 	/**
 	 * Creates an Image object with the given image with the specified 
 	 * coordinates, size, and orientation.
 	 * 
-	 * @param imgFile The file path to the image
+	 * @param image The image
 	 * @param x The x coordinate of the image
 	 * @param y The y coordinate of the image
 	 * @param width The width of the image
 	 * @param height The height of the image
 	 * @param orientation The orientation of the image
 	 */
-	private Image(BufferedImage image, int x, int y, int width, int height, Draw.ORIENTATION orientation){
+	private Image(BufferedImage image, int x, int y, int width, int height, ORIENTATION orientation){
 		this.image = image;
 		originalX = x;
 		originalY = y;

@@ -48,17 +48,17 @@ public class Draw{
 		BOTTOM_RIGHT(VERTICAL.BOTTOM, HORIZONTAL.RIGHT);
 		
 		private enum VERTICAL{
-			TOP, CENTER, BOTTOM;
+			TOP, CENTER, BOTTOM
 		}
 		
 		private enum HORIZONTAL{
-			LEFT, CENTER, RIGHT;
+			LEFT, CENTER, RIGHT
 		}
 		
 		private VERTICAL ver;
 		private HORIZONTAL hor;
 		
-		private ORIENTATION(VERTICAL ver, HORIZONTAL hor){
+		ORIENTATION(VERTICAL ver, HORIZONTAL hor){
 			this.ver = ver;
 			this.hor = hor;
 		}

@@ -196,7 +196,7 @@ public class Text extends Drawable{
 		 * Checks for errors with the current settings for the Text object
 		 */
 		private void checkForErrors(){
-			List<String> errors = new ArrayList<String>();
+			List<String> errors = new ArrayList<>();
 			// Text is required
 			if(text == null){
 				errors.add("Text must be specified");

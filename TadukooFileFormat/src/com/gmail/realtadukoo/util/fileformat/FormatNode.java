@@ -52,10 +52,10 @@ public class FormatNode{
 	 * </ul>
 	 * Defaults are:
 	 * <ul>
-	 * <li>parentNames - List with {@link NULL_NODE} - meaning no parent nodes allowed</li>
-	 * <li>childNames - List with {@link NULL_NODE} - meaning no child nodes allowed</li>
-	 * <li>prevSiblingNames - List with {@link NULL_NODE} - meaning no previous siblings allowed</li>
-	 * <li>nextSiblingNames - List with {@link NULL_NODE} - meaning no next siblings allowed</li>
+	 * <li>parentNames - List with {@link #NULL_NODE} - meaning no parent nodes allowed</li>
+	 * <li>childNames - List with {@link #NULL_NODE} - meaning no child nodes allowed</li>
+	 * <li>prevSiblingNames - List with {@link #NULL_NODE} - meaning no previous siblings allowed</li>
+	 * <li>nextSiblingNames - List with {@link #NULL_NODE} - meaning no next siblings allowed</li>
 	 * </ul>
 	 * <b>Notes:</b>
 	 * <ul>
@@ -511,7 +511,7 @@ public class FormatNode{
 		}
 		
 		/**
-		 * Creates a List of strings that only contains the {@link NULL_NODE} string, 
+		 * Creates a List of strings that only contains the {@link #NULL_NODE} string,
 		 * to allow a null parent/child/sibling reference.
 		 * 
 		 * @return A List with the NULL_NODE string in it
@@ -593,7 +593,7 @@ public class FormatNode{
 	 * 
 	 * @return A new FormatNodeBuilder
 	 */
-	public static final FormatNodeBuilder builder(){
+	public static FormatNodeBuilder builder(){
 		return new FormatNodeBuilder();
 	}
 	

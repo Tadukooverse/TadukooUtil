@@ -19,10 +19,10 @@ public class GHDRFileFormat extends FileFormat{
 	
 	@Override
 	protected Map<String, FileFormatSchema> createSchemas(Logger logger){
-		Map<String, FileFormatSchema> schemas = new HashMap<String, FileFormatSchema>();
+		Map<String, FileFormatSchema> schemas = new HashMap<>();
 		// Version 1.0 File Format Schema
 		String version1 = "Version 1.0";
-		ArrayList<FormatNode> v1Nodes = new ArrayList<FormatNode>();
+		ArrayList<FormatNode> v1Nodes = new ArrayList<>();
 		v1Nodes.add(FormatNode.builder()
 								.logger(logger)
 								.name("head")

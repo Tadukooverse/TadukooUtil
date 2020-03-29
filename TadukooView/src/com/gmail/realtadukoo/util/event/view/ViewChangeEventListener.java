@@ -20,5 +20,5 @@ public interface ViewChangeEventListener extends EventListener<ViewChangeEvent>{
 	 * @param e The ViewChangeEvent to handle
 	 */
 	@Override
-	public abstract void handleEvent(ViewChangeEvent e);
+	void handleEvent(ViewChangeEvent e);
 }

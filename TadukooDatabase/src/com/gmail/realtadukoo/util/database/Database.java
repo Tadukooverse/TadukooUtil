@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import com.gmail.realtadukoo.util.database.DBUtil.InsertAndGetID;
@@ -153,12 +154,14 @@ public class Database{
 		for(int i = 0; searchAll && i < intValues.length; i++){
 			if(intValues[i] != -1){
 				searchAll = false;
+				break;
 			}
 		}
 		for(int i = 0; searchAll && i < stringValues.length; i++){
 			String s = stringValues[i];
 			if(s != null && !s.equalsIgnoreCase("")){
 				searchAll = false;
+				break;
 			}
 		}
 		if(searchAll){
@@ -174,11 +177,11 @@ public class Database{
 				}
 			}
 			for(int i = 0; i < intValues.length; i++){
-				prevSet = (DBUtil.addConditionalIntToQuery(prevSet, name, sql, intArgs[i], intValues[i]))?true:prevSet;
+				prevSet = (DBUtil.addConditionalIntToQuery(prevSet, name, sql, intArgs[i], intValues[i])) || prevSet;
 			}
 			for(int i = 0; i < stringValues.length; i++){
-				prevSet = (DBUtil.addConditionalStringToQuery(prevSet, name, sql, partialStrings[i], 
-						stringArgs[i], stringValues[i]))?true:prevSet;
+				prevSet = (DBUtil.addConditionalStringToQuery(prevSet, name, sql, partialStrings[i],
+						stringArgs[i], stringValues[i])) || prevSet;
 			}
 		}
 		
@@ -216,12 +219,12 @@ public class Database{
 	 * {@link #executeUpdates(List, List) the plural version} to create the 
 	 * {@link Updates} object.
 	 * 
-	 * @param names The name to use for the update (optional - used for debugging)
-	 * @param sqls The sql update statement to run
+	 * @param name The name to use for the update (optional - used for debugging)
+	 * @param sql The sql update statement to run
 	 * @return If it succeeded or not
 	 */
 	public boolean executeUpdate(String name, String sql) throws SQLException{
-		return executeUpdates(Arrays.asList(name), Arrays.asList(sql));
+		return executeUpdates(Collections.singletonList(name), Collections.singletonList(sql));
 	}
 	
 	public void insert(String table, String[] args, String[] values) throws SQLException{

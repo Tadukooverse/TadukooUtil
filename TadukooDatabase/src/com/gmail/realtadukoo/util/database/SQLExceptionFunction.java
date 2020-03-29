@@ -27,5 +27,5 @@ public interface SQLExceptionFunction<S, R> extends ExceptionFunction<S, R>{
 	 * @throws SQLException
 	 */
 	@Override
-	public R apply(S obj) throws SQLException;
+	R apply(S s) throws SQLException;
 }

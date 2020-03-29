@@ -184,7 +184,7 @@ public class TextInputPrompt extends FocusableTextInput{
 		 * Checks for errors with the current settings for the TextInputPrompt object
 		 */
 		private void checkForErrors(){
-			List<String> errors = new ArrayList<String>();
+			List<String> errors = new ArrayList<>();
 			
 			if(x == -1){
 				errors.add("Must specify x coordinate");
@@ -249,8 +249,8 @@ public class TextInputPrompt extends FocusableTextInput{
 	 * Creates a text input prompt to be drawn to the screen at the given coordinates with the 
 	 * given orientation and dimensions.
 	 * 
-	 * @param x The x coordinate of the text input prompt (meaning determined by orientation)
-	 * @param y The y coordinate of the text input prompt (meaning determined by orientation)
+	 * @param originalX The x coordinate of the text input prompt (meaning determined by orientation)
+	 * @param originalY The y coordinate of the text input prompt (meaning determined by orientation)
 	 * @param width The width of the text input prompt
 	 * @param height The height of the text input prompt
 	 * @param orientation The {@link ORIENTATION} of the text input prompt

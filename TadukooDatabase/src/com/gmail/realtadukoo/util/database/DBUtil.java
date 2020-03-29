@@ -71,7 +71,7 @@ public class DBUtil{
 		public abstract List<String> getSQLs();
 
 		public Boolean executeUpdates(Connection conn) throws SQLException{
-			ArrayList<Statement> stmts = new ArrayList<Statement>();
+			ArrayList<Statement> stmts = new ArrayList<>();
 			List<String> names = getNames();
 			List<String> sqls = getSQLs();
 			try{

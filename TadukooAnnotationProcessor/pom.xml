@@ -20,7 +20,7 @@
         <sourceDirectory>src</sourceDirectory>
         <resources>
             <resource>
-                <directory>resources</directory>
+                <directory>resource</directory>
             </resource>
         </resources>
         <plugins>

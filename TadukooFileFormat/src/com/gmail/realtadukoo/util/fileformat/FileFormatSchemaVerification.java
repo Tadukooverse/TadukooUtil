@@ -77,7 +77,7 @@ public class FileFormatSchemaVerification{
 		List<String> headNodeNames = nodes.values().stream()
 													.filter(node -> node.getPrevSiblingNames()
 																		.contains(TadFormatNodeHeader.HEAD_NAME))
-													.map(node -> node.getName())
+													.map(FormatNode::getName)
 													.collect(Collectors.toList());
 		
 		// Check the rest of the Nodes, that they're correct
@@ -108,7 +108,7 @@ public class FileFormatSchemaVerification{
 		List<FormatNode> nodes = schema.getFormatNodes();
 		
 		// Make a Map of the Nodes' names to the Nodes themselves
-		Map<String, FormatNode> nodesMap = new HashMap<String, FormatNode>();
+		Map<String, FormatNode> nodesMap = new HashMap<>();
 		for(FormatNode node: nodes){
 			nodesMap.put(node.getName(), node);
 		}

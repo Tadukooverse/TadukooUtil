@@ -3,6 +3,7 @@ package com.gmail.realtadukoo.util.view;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -61,9 +62,9 @@ public abstract class View implements ViewChangeEventListener{
 		// Register this as a ViewChangeEventListener
 		context.getViewChangeEventHandler().registerListener(this);
 		// Initialize the drawables MultiMap
-		drawables = new HashMultiMap<Integer, Drawable>();
+		drawables = new HashMultiMap<>();
 		// Initialize the clickables MultiMap
-		clickables = new HashMultiMap<Integer, Clickable>();
+		clickables = new HashMultiMap<>();
 	}
 	
 	/**
@@ -205,9 +206,9 @@ public abstract class View implements ViewChangeEventListener{
 	 * @param y The y position of the mouse
 	 * @return Whether an action happened, so the {@link ViewBase} knows to repaint
 	 */
-	private final boolean handleClick(int x, int y){
+	private boolean handleClick(int x, int y){
 		// Get all the layers specified in the MultiMap and sort them in descending order
-		List<Integer> layers = clickables.keySet().stream().collect(Collectors.toList());
+		List<Integer> layers = new ArrayList<>(clickables.keySet());
 		layers.sort(Collections.reverseOrder());
 		
 		// Whether a Clickable action happened or not
@@ -248,7 +249,7 @@ public abstract class View implements ViewChangeEventListener{
 	 */
 	public final void draw(Graphics g){
 		// Get all the layers specified in the MultiMap and sort them in ascending order
-		List<Integer> layers = drawables.keySet().stream().collect(Collectors.toList());
+		List<Integer> layers = new ArrayList<>(drawables.keySet());
 		Collections.sort(layers);
 		
 		// Draw the drawables on each layer in increasing order

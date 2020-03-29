@@ -147,7 +147,7 @@ public class Button extends Clickable{
 		 * Checks for errors with the current settings for the Button object
 		 */
 		private void checkForErrors(){
-			List<String> errors = new ArrayList<String>();
+			List<String> errors = new ArrayList<>();
 			
 			if(line1 == null){
 				errors.add("Must specify at least 1 line of text");
@@ -205,7 +205,7 @@ public class Button extends Clickable{
 		 * @param width The width to use for the button
 		 * @param height The height to use for the button
 		 */
-		private SIZE(int width, int height){
+		SIZE(int width, int height){
 			this.width = width;
 			this.height = height;
 		}
@@ -229,7 +229,7 @@ public class Button extends Clickable{
 	}
 	
 	/** A Map of the different button images by their size and color */
-	private static final Map<String, BufferedImage> buttons = new HashMap<String, BufferedImage>();
+	private static final Map<String, BufferedImage> buttons = new HashMap<>();
 	static{
 		// Create the buttons Map
 		// Base path where all the buttons are stored
