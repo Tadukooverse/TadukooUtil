@@ -85,7 +85,7 @@ public class TadFormatRegexConverter{
 		// Brackets represent optionals in TadFormatting
 		if(TadFormat.contains("[")){
 			TadFormat = TadFormat.replaceAll("\\[", "(");
-			TadFormat = TadFormat.replaceAll("\\]", ")?");
+			TadFormat = TadFormat.replaceAll("]", ")?");
 			logger.log(Level.FINEST, "* Found [\n"
 					+ "* TadFormat changed to " + TadFormat);
 		}

@@ -251,17 +251,17 @@ public class Text extends Drawable{
 	}
 	
 	/** The {@link Font} to use */
-	private Font font;
+	private final Font font;
 	/** The {@link Color} to use */
-	private Color color;
+	private final Color color;
 	/** The text to draw to the screen */
 	private String text;
 	/** The x coordinate of the text (meaning determined by {@link ORIENTATION}) */
-	private int originalX;
+	private final int originalX;
 	/** The y coordinate of the text (meaning determined by {@link ORIENTATION}) */
-	private int originalY;
+	private final int originalY;
 	/** The {@link ORIENTATION} of the text in relation to the given coordinate */
-	private ORIENTATION orientation;
+	private final ORIENTATION orientation;
 	/** The actual x coordinate of the text, after being oriented */
 	private int x;
 	/** The actual y coordinate of the text, after being oriented */

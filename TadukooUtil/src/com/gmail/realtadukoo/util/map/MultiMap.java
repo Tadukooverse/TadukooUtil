@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
  */
 public abstract class MultiMap<K, V>{
 	/** Underlying Map used to store the key-value pairs */
-	private Map<K, List<V>> theMap;
+	private final Map<K, List<V>> theMap;
 	
 	/**
 	 * Sets the backing {@link Map} for this MultiMap.

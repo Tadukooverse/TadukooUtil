@@ -20,9 +20,9 @@ import com.gmail.realtadukoo.util.event.view.ViewChangeEventHandler;
  */
 public abstract class Context{
 	/** The {@link View Views} currently being shown, with the topmost one at the final index */
-	private List<View> currentViewStack;
+	private final List<View> currentViewStack;
 	/** The {@link EventHandler EventHandlers} used to handle {@link Event Events} */
-	protected Map<Class<? extends EventHandler<?, ?>>, EventHandler<?, ?>> eventHandlers;
+	protected final Map<Class<? extends EventHandler<?, ?>>, EventHandler<?, ?>> eventHandlers;
 	
 	/**
 	 * Constructs a new {@link Context}, initializing the various stuff it holds.

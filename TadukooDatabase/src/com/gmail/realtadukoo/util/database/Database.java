@@ -88,6 +88,7 @@ public class Database{
 				success = true;
 			}catch(SQLException e){
 				// TODO: Log error
+				attempts++;
 			}
 		}
 		
@@ -146,7 +147,7 @@ public class Database{
 		boolean prevSet = false;
 		if(otherTables != null && otherTables.size() > 0){
 			for(String table: otherTables){
-				sql.append(", " + table);
+				sql.append(", ").append(table);
 			}
 		}
 		boolean searchAll = junctions == null || junctions.size() == 0;
@@ -164,9 +165,9 @@ public class Database{
 			}
 		}
 		if(searchAll){
-			name.append("Get all " + mainTable + "s");
+			name.append("Get all ").append(mainTable).append("s");
 		}else{
-			name.append("Get " + mainTable + "s with ");
+			name.append("Get ").append(mainTable).append("s with ");
 			sql.append(" where ");
 			
 			if(junctions != null){

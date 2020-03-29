@@ -140,7 +140,8 @@ public class Node{
 		/*
 		 * Create the head Node
 		 */
-		String title, data;
+		String title;
+		StringBuilder data;
 		// If line doesn't contain a colon, we got issues
 		if(!line.contains(":")){
 			throw new IllegalArgumentException("Line '" + line + "' doesn't have colon! "
@@ -152,35 +153,35 @@ public class Node{
 		int i = 1;
 		if(line.split(":").length > 1){
 			// If line contains at least 1 colon, set the data
-			data = line.split(":")[1];
+			data = new StringBuilder(line.split(":")[1]);
 			
 			// If line contains extra colons, add on to the data
 			if(line.split(":").length > 2){
 				for(int j = 2; j < line.split(":").length; j++){
-					data += ":" + line.split(":")[j];
+					data.append(":").append(line.split(":")[j]);
 				}
 			}
 			
 			// If the data starts with an opening parenthesis, it's multi-line data
-			if(data.startsWith("(")){
+			if(data.toString().startsWith("(")){
 				// Remove the parenthesis from the start of the data
-				data = data.substring(1);
+				data = new StringBuilder(data.substring(1));
 				// Keep adding new lines to the data until we get the closing parenthesis
-				while(!data.endsWith(")")){
+				while(!data.toString().endsWith(")")){
 					// Add the next line to the data
-					data += "\n" + lines.get(i);
+					data.append("\n").append(lines.get(i));
 					// Increment what line we're on
 					i++;
 				}
 				// Remove the closing parenthesis from the end of the data
-				data = data.substring(0, data.length() - 1);
-			}else if(data.startsWith("\\(")){
+				data = new StringBuilder(data.substring(0, data.length() - 1));
+			}else if(data.toString().startsWith("\\(")){
 				// If data starts with an escaped parenthesis, remove the escape character
-				data = data.substring(1);
+				data = new StringBuilder(data.substring(1));
 			}
 		}else{
 			// If empty data section, set it as empty string
-			data = "";
+			data = new StringBuilder();
 		}
 		
 		// Get the level of this Node - default 0
@@ -192,7 +193,7 @@ public class Node{
 		}
 		
 		// Create the head Node and add it to the List of Nodes
-		nodes.add(new Node(title, data, level, null, null, null, null));
+		nodes.add(new Node(title, data.toString(), level, null, null, null, null));
 		// Increment the current Node number
 		nodeNum++;
 		
@@ -211,35 +212,35 @@ public class Node{
 			title = line.split(":")[0];
 			if(line.split(":").length > 1){
 				// If the line contains at least 1 colon, set the data
-				data = line.split(":")[1];
+				data = new StringBuilder(line.split(":")[1]);
 				
 				// If line contains extra colons, add on to the data
 				if(line.split(":").length > 2){
 					for(int j = 2; j < line.split(":").length; j++){
-						data += ":" + line.split(":")[j];
+						data.append(":").append(line.split(":")[j]);
 					}
 				}
 				
 				// If the data starts with an opening parenthesis, it's multi-line data
-				if(data.startsWith("(")){
+				if(data.toString().startsWith("(")){
 					// Remove the parenthesis from the start of the data
-					data = data.substring(1);
+					data = new StringBuilder(data.substring(1));
 					// Keep adding new lines to the data until we get the closing parenthesis
-					while(!data.endsWith(")")){
+					while(!data.toString().endsWith(")")){
 						// Increment what line we're on
 						i++;
 						// Add the next line to the data
-						data += "\n" + lines.get(i);
+						data.append("\n").append(lines.get(i));
 					}
 					// Remove the parenthesis from the end of the data
-					data = data.substring(0, data.length() - 1);
-				}else if(data.startsWith("\\(")){
+					data = new StringBuilder(data.substring(0, data.length() - 1));
+				}else if(data.toString().startsWith("\\(")){
 					// If data starts with an escaped parenthesis, remove the escape character
-					data = data.substring(1);
+					data = new StringBuilder(data.substring(1));
 				}
 			}else{
 				// If empty data section, set it as empty string
-				data = "";
+				data = new StringBuilder();
 			}
 			
 			// Get the level of this Node - default 0
@@ -251,7 +252,7 @@ public class Node{
 			}
 			
 			// Create the new Node and add it to the list of Nodes
-			nodes.add(new Node(title, data, level, null, null, null, null));
+			nodes.add(new Node(title, data.toString(), level, null, null, null, null));
 			
 			/*
 			 * Determine where to attach the new Node
@@ -411,17 +412,10 @@ public class Node{
 	 */
 	@Override
 	public String toString(){
-		String text = "";
-		
 		// Add any leading space (based on level)
-		for(int i = 0; i < level; i++){
-			text += "  ";
-		}
-		
-		// Add the title and (optional) data
-		text += title + ":" + (data == null?"":data);
-		
-		return text;
+		return "  ".repeat(level) +
+				// Add the title and (optional) data
+				title + ":" + (data == null?"":data);
 	}
 	
 	/**

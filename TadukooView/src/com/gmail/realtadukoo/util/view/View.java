@@ -189,6 +189,8 @@ public abstract class View implements ViewChangeEventListener{
 		switch(e.getButton()){
 			case MouseEvent.BUTTON1:
 				return handleClick(e.getX(), e.getY());
+			case MouseEvent.BUTTON2:
+				// TODO: Allow for right-click logic
 			default:
 				return false;
 		}

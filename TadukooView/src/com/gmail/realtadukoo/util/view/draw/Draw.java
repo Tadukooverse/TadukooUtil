@@ -55,8 +55,8 @@ public class Draw{
 			LEFT, CENTER, RIGHT
 		}
 		
-		private VERTICAL ver;
-		private HORIZONTAL hor;
+		private final VERTICAL ver;
+		private final HORIZONTAL hor;
 		
 		ORIENTATION(VERTICAL ver, HORIZONTAL hor){
 			this.ver = ver;

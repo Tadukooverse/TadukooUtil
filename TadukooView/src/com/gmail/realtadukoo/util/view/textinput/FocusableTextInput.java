@@ -3,7 +3,7 @@ package com.gmail.realtadukoo.util.view.textinput;
 import com.gmail.realtadukoo.util.view.draw.clickable.Clickable;
 
 public abstract class FocusableTextInput extends Clickable implements TextInput{
-	private StringBuilder text;
+	private final StringBuilder text;
 	private int cursor;
 	
 	public FocusableTextInput(){

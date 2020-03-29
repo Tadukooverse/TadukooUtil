@@ -22,9 +22,9 @@ public abstract class FileFormat{
 	 */
 	public static final int TAD_FORMAT_VERSION_NUM = 1;
 	/** The name of this file format */
-	private String name;
+	private final String name;
 	/** A mapping of version strings to {@link FileFormatSchema}s */
-	private Map<String, FileFormatSchema> schemas;
+	private final Map<String, FileFormatSchema> schemas;
 	
 	/**
 	 * Constructs a FileFormat. Sends the given {@link Logger} to 

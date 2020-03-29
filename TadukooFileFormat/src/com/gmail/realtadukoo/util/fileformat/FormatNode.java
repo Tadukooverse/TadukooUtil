@@ -20,21 +20,21 @@ public class FormatNode{
 	public static final String NULL_NODE = "<null>";
 	
 	/** The name of the Node - used to distinguish in parent/child/sibling requirements */
-	private String name;
+	private final String name;
 	/** The regex used to ensure the title is of the correct format */
-	private String titleRegex;
+	private final String titleRegex;
 	/** The regex used to ensure the data is of the correct format */
-	private String dataRegex;
+	private final String dataRegex;
 	/** The required level of the Node */
-	private int level;
+	private final int level;
 	/** Names of allowed parents of the Node */
-	private List<String> parentNames;
+	private final List<String> parentNames;
 	/** Names of allowed children of the Node */
-	private List<String> childNames;
+	private final List<String> childNames;
 	/** Names of allowed previous siblings of the Node */
-	private List<String> prevSiblingNames;
+	private final List<String> prevSiblingNames;
 	/** Names of allowed next siblings of the Node */
-	private List<String> nextSiblingNames;
+	private final List<String> nextSiblingNames;
 	
 	/**
 	 * Builder for constructing a {@link FormatNode} object.

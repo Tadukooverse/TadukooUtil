@@ -241,29 +241,29 @@ public class FormatNodeVerification{
 		}
 		
 		/** The Logger to use in logging messages */
-		private Logger logger;
+		private final Logger logger;
 		/** The path to the file - used in some formatting */
-		private String filepath;
+		private final String filepath;
 		/** The Node to be checked */
-		private Node node;
+		private final Node node;
 		/** The FormatNode that defines the expected format */
-		private FormatNode format;
+		private final FormatNode format;
 		/** Whether to check that the parent is null or not */
-		private boolean nullParent;
+		private final boolean nullParent;
 		/** Whether to check that the child is null or not */
-		private boolean nullChild;
+		private final boolean nullChild;
 		/** Whether to check that the previous sibling is null or not */
-		private boolean nullPrevSibling;
+		private final boolean nullPrevSibling;
 		/** Whether to check that the next sibling is null or not */
-		private boolean nullNextSibling;
+		private final boolean nullNextSibling;
 		/** The expected parent for the Node */
-		private Node parent;
+		private final Node parent;
 		/** The expected child for the Node */
-		private Node child;
+		private final Node child;
 		/** The expected previous sibling for the Node */
-		private Node prevSibling;
+		private final Node prevSibling;
 		/** The expected next sibling for the Node */
-		private Node nextSibling;
+		private final Node nextSibling;
 		
 		// Constructs a SingleNodeVerifyParams object
 		private SingleNodeVerifyParams(Logger logger, String filepath, Node node, FormatNode format,

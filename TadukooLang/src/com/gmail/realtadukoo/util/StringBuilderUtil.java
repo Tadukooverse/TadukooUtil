@@ -28,15 +28,26 @@ public final class StringBuilderUtil{
 	 */
 	public static String buildStringWithSeparator(Collection<String> items, String separator){
 		// Start the string
-		String fullString = "";
+		StringBuilder fullString = new StringBuilder();
 		
 		// Add each string and the separator after it
 		for(String item: items){
-			fullString += item + separator;
+			fullString.append(item).append(separator);
 		}
 		
 		// Remove the last separator from the end of the string
 		return fullString.substring(0, fullString.length()-separator.length());
+	}
+	
+	/**
+	 * Builds a string from the given collection of Strings with no
+	 * separator between them.
+	 *
+	 * @param items The strings to combine into a single String
+	 * @return A String of all the given items
+	 */
+	public static String buildString(Collection<String> items){
+		return buildStringWithSeparator(items, "");
 	}
 	
 	/**
@@ -65,10 +76,10 @@ public final class StringBuilderUtil{
 	 * <br>
 	 * "foo,bar,baz"
 	 * 
-	 * @param lines The lines to make into a single string
-	 * @return A String of the given lines as a comma-separated string
+	 * @param items The items to make into a single string
+	 * @return A String of the given items as a comma-separated string
 	 */
-	public static String buildCommaSeparatedString(Collection<String> lines){
-		return buildStringWithSeparator(lines, ",");
+	public static String buildCommaSeparatedString(Collection<String> items){
+		return buildStringWithSeparator(items, ",");
 	}
 }

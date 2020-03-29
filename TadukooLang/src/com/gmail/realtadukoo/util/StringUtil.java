@@ -1,6 +1,7 @@
 package com.gmail.realtadukoo.util;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -191,6 +192,44 @@ public final class StringUtil{
 	 */
 	public static boolean notEqualsAnyIgnoreCase(String actual, String ... expected){
 		return !equalsAnyIgnoreCase(actual, expected);
+	}
+	
+	/**
+	 * Converts the given Object to a String, including proper
+	 * null handling.
+	 *
+	 * @param obj The Object to convert to a String
+	 * @return null if obj is null, or a String representing the Object
+	 */
+	public static String convertToString(Object obj){
+		// If obj is null, just return null
+		if(obj == null){
+			return null;
+		}
+		
+		// If obj is a String, cast it to a String
+		if(obj instanceof String){
+			return (String) obj;
+		}
+		
+		// Otherwise just use String.valueOf
+		return String.valueOf(obj);
+	}
+	
+	/**
+	 * Converts an entire Collection of items to strings, and
+	 * returns them as a List.
+	 *
+	 * @param items The Collection of items to convert to strings
+	 * @param <T> The type of the items in the collection
+	 * @return A List of the given items converted to Strings
+	 */
+	public static <T> List<String> convertCollectionToStrings(Collection<T> items){
+		List<String> strings = new ArrayList<>();
+		for(T item: items){
+			strings.add(convertToString(item));
+		}
+		return strings;
 	}
 	
 	/**

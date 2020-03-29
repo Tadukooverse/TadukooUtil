@@ -22,9 +22,9 @@ import java.util.function.BiConsumer;
  */
 public abstract class ManyToManyMap<K, V>{
 	/** The backing keys to values {@link MultiMap} */
-	private MultiMap<K, V> keysToValues;
+	private final MultiMap<K, V> keysToValues;
 	/** The backing values to keys {@link MultiMap} */
-	private MultiMap<V, K> valuesToKeys;
+	private final MultiMap<V, K> valuesToKeys;
 	
 	/**
 	 * Sets the backing {@link MultiMap}s for this ManyToManyMap.

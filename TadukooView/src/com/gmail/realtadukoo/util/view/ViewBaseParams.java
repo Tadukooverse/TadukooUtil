@@ -136,15 +136,15 @@ public class ViewBaseParams{
 	}
 	
 	/** Title to be used on the window */
-	private String title;
+	private final String title;
 	/** Whether to be in fullscreen (true) or windowed (false) mode */
-	private boolean fullscreen;
+	private final boolean fullscreen;
 	/** The width of the window if in windowed mode */
-	private int width;
+	private final int width;
 	/** The height of the window if in windowed mode */
-	private int height;
+	private final int height;
 	/** The background color of the window */
-	private Color background;
+	private final Color background;
 	
 	/**
 	 * Constructs a ViewBaseParams object with the given values.

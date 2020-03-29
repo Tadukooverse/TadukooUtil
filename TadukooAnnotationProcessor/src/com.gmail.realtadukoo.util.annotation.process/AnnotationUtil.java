@@ -27,13 +27,13 @@ public class AnnotationUtil{
 	public static final String ANNOTATION_PROCESSOR_FILE = "META-INF/services/javax.annotation.processing.Processor";
 	
 	/** The {@link Elements Element Util} for util methods related to {@link Element Elements} */
-	private Elements elementUtil;
+	private final Elements elementUtil;
 	/** The {@link Types Type Util} for util methods related to {@link TypeMirror Types} */
-	private Types typeUtil;
+	private final Types typeUtil;
 	/** The {@link Messager} for sending messages to the compiler */
-	private Messager messager;
+	private final Messager messager;
 	/** The {@link Filer} for creating and editing files */
-	private Filer filer;
+	private final Filer filer;
 	
 	/**
 	 * Grabs the {@link #elementUtil}, {@link #typeUtil}, {@link #messager}, and 

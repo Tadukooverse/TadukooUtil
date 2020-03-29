@@ -225,25 +225,25 @@ public class TextInputPrompt extends FocusableTextInput{
 	}
 	
 	/** The x coordinate of the text input prompt (meaning determined by {@link ORIENTATION}) */
-	private int originalX;
+	private final int originalX;
 	/** The y coordinate of the text input prompt (meaning determined by {@link ORIENTATION}) */
-	private int originalY;
+	private final int originalY;
 	/** The {@link ORIENTATION} of the text input prompt in relation to the given coordinate */
-	private ORIENTATION orientation;
+	private final ORIENTATION orientation;
 	/** The x coordinate of the Text object (within the prompt box, meaning determined by {@link ORIENTATION}) */
-	private int textX;
+	private final int textX;
 	/** The y coordinate of the Text object (within the prompt box, meaning determined by {@link ORIENTATION}) */
-	private int textY;
+	private final int textY;
 	/** The {@link ORIENTATION} of the Text object */
-	private ORIENTATION textOrientation;
+	private final ORIENTATION textOrientation;
 	/** The {@link Text} object for the text in the prompt */
 	private Text text;
 	/** The font name of the {@link Font} for the Text object */
-	private String fontName;
+	private final String fontName;
 	/** The font style of the {@link Font} for the Text object */
-	private int fontStyle;
+	private final int fontStyle;
 	/** The {@link Color} for the Text object */
-	private Color textColor;
+	private final Color textColor;
 	
 	/**
 	 * Creates a text input prompt to be drawn to the screen at the given coordinates with the 

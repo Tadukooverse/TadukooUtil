@@ -165,21 +165,21 @@ public class Image extends Drawable{
 	}
 	
 	/** The image to draw */
-	private BufferedImage image;
+	private final BufferedImage image;
 	/** The x coordinate of the image (meaning determined by {@link ORIENTATION}) */
-	private int originalX;
+	private final int originalX;
 	/** The y coordinate of the image (meaning determined by {@link ORIENTATION}) */
-	private int originalY;
+	private final int originalY;
 	/** The x coordinate of the image (left edge) */
 	private int x;
 	/** The y coordinate of the image (top edge) */
 	private int y;
 	/** The width of the image */
-	private int width;
+	private final int width;
 	/** The height of the image */
-	private int height;
+	private final int height;
 	/** The {@link ORIENTATION} of the image in relation to the given coordinate */
-	private ORIENTATION orientation;
+	private final ORIENTATION orientation;
 	
 	/**
 	 * Creates an Image object with the given image with the specified 

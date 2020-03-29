@@ -195,9 +195,9 @@ public class Button extends Clickable{
 		TINY(100, 30);
 		
 		/** The width to use for the button */
-		private int width;
+		private final int width;
 		/** The height to use for the button */
-		private int height;
+		private final int height;
 		
 		/**
 		 * Constructor for a SIZE. Sets the width and height.

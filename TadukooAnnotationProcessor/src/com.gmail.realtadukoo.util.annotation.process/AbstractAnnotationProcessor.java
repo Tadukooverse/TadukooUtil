@@ -27,7 +27,7 @@ public abstract class AbstractAnnotationProcessor extends AbstractProcessor{
 	protected AnnotationUtil annotationUtil;
 	
 	/** The Annotation class this processor is used for */
-	private Class<? extends Annotation> annotation;
+	private final Class<? extends Annotation> annotation;
 	
 	/**
 	 * Calls the AbstractProcessor constructor and sets the Annotation class this 
