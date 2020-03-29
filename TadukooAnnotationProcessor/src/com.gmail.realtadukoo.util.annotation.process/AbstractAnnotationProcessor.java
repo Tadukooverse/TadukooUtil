@@ -60,7 +60,7 @@ public abstract class AbstractAnnotationProcessor extends AbstractProcessor{
 	 */
 	@Override
 	public final Set<String> getSupportedAnnotationTypes(){
-		Set<String> annotations = new HashSet<String>();
+		Set<String> annotations = new HashSet<>();
 		annotations.add(annotation.getCanonicalName());
 		return annotations;
 	}

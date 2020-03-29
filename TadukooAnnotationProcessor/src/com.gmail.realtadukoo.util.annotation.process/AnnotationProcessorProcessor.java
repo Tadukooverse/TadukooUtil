@@ -20,7 +20,6 @@ import com.gmail.realtadukoo.util.annotation.AnnotationProcessor;
  * @author Logan Ferree (Tadukoo)
  * @version Pre-Alpha
  */
-@AnnotationProcessor
 public class AnnotationProcessorProcessor extends AbstractAnnotationProcessor{
 	
 	/**
@@ -46,10 +45,10 @@ public class AnnotationProcessorProcessor extends AbstractAnnotationProcessor{
 		Set<String> processors;
 		try{
 			// Try to load from file
-			processors = FileUtil.getLinesAsList(annotationUtil.getFileReader(filename)).stream().collect(Collectors.toSet());
+			processors = new HashSet<>(FileUtil.getLinesAsList(annotationUtil.getFileReader(filename)));
 		}catch(IOException e){
 			// If file loading fails, create empty Set
-			processors = new HashSet<String>();
+			processors = new HashSet<>();
 		}
 		
 		// Process the elements
