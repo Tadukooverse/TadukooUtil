@@ -24,7 +24,7 @@ public interface ThrowingConsumer2<S, T>{
 	 * 
 	 * @param s The 1st argument
 	 * @param t The 2nd argument
-	 * @throws Throwable
+	 * @throws Throwable Determined by the consumer, not required
 	 */
 	void accept(S s, T t) throws Throwable;
 	

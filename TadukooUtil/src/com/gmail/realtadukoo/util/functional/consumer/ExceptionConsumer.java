@@ -18,7 +18,7 @@ public interface ExceptionConsumer<S> extends ThrowingConsumer<S>{
 	 * Takes a single argument and consumes it.
 	 * 
 	 * @param s The argument
-	 * @throws Exception
+	 * @throws Exception Determined by the consumer, not required
 	 */
 	@Override
 	void accept(S s) throws Exception;

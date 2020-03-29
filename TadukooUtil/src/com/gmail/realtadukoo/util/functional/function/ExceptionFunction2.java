@@ -22,7 +22,7 @@ public interface ExceptionFunction2<S, T, R> extends ThrowingFunction2<S, T, R>{
 	 * @param s The 1st argument
 	 * @param t The 2nd argument
 	 * @return A result
-	 * @throws Exception
+	 * @throws Exception Determined by the function, not required
 	 */
 	@Override
 	R apply(S s, T t) throws Exception;

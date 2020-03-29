@@ -21,7 +21,7 @@ public interface ExceptionPredicate<S> extends ThrowingPredicate<S>{
 	 * 
 	 * @param s The argument
 	 * @return A boolean
-	 * @throws Exception
+	 * @throws Exception Determined by the predicate, not required
 	 */
 	boolean test(S s) throws Exception;
 	

@@ -23,7 +23,7 @@ public interface ExceptionPredicate3<S, T, U> extends ThrowingPredicate3<S, T, U
 	 * @param t The 2nd argument
 	 * @param u The 3rd argument
 	 * @return A boolean
-	 * @throws Exception
+	 * @throws Exception Determined by the predicate, not required
 	 */
 	boolean test(S s, T t, U u) throws Exception;
 	

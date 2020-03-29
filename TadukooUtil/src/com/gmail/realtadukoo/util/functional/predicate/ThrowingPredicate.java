@@ -24,7 +24,7 @@ public interface ThrowingPredicate<S>{
 	 * 
 	 * @param s The argument
 	 * @return A boolean
-	 * @throws Throwable
+	 * @throws Throwable Determined by the predicate, not required
 	 */
 	boolean test(S s) throws Throwable;
 	

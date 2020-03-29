@@ -21,7 +21,7 @@ public interface ExceptionPredicate2<S, T> extends ThrowingPredicate2<S, T>{
 	 * @param s The 1st argument
 	 * @param t The 2nd argument
 	 * @return A boolean
-	 * @throws Exception
+	 * @throws Exception Determined by the predicate, not required
 	 */
 	boolean test(S s, T t) throws Exception;
 	

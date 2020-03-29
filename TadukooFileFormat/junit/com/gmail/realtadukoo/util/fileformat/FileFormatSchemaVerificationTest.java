@@ -8,9 +8,7 @@ import java.util.logging.Logger;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import com.gmail.realtadukoo.util.fileformat.FileFormat;
-import com.gmail.realtadukoo.util.fileformat.FileFormatSchemaVerification;
-import com.gmail.realtadukoo.util.fileformat.GHDR.GHDRFileFormat;
+import com.gmail.realtadukoo.util.fileformat.ghdr.GHDRFileFormat;
 
 public class FileFormatSchemaVerificationTest{
 	private static final String subfolder = "FileFormatSchemaVerificationTest";

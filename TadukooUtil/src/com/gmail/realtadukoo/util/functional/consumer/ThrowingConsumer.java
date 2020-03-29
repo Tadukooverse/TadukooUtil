@@ -22,7 +22,7 @@ public interface ThrowingConsumer<S>{
 	 * Takes a single argument and consumes it.
 	 * 
 	 * @param s The argument
-	 * @throws Throwable
+	 * @throws Throwable Determined by the consumer, not required
 	 */
 	void accept(S s) throws Throwable;
 	

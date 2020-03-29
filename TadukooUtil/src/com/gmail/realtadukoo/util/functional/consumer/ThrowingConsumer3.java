@@ -20,7 +20,7 @@ public interface ThrowingConsumer3<S, T, U>{
 	 * @param s The 1st argument
 	 * @param t The 2nd argument
 	 * @param u The 3rd argument
-	 * @throws Throwable
+	 * @throws Throwable Determined by the consumer, not required
 	 */
 	void accept(S s, T t, U u) throws Throwable;
 	

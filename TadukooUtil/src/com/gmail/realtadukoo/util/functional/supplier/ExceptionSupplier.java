@@ -17,7 +17,7 @@ public interface ExceptionSupplier<R> extends ThrowingSupplier<R>{
 	 * Returns a result.
 	 * 
 	 * @return A result
-	 * @throws Exception
+	 * @throws Exception Determined by the supplier, not required
 	 */
 	@Override
 	R get() throws Exception;

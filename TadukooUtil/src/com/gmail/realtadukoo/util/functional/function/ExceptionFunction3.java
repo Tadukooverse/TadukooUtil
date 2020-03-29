@@ -24,7 +24,7 @@ public interface ExceptionFunction3<S, T, U, R> extends ThrowingFunction3<S, T, 
 	 * @param t The 2nd argument
 	 * @param u The 3rd argument
 	 * @return A result
-	 * @throws Exception
+	 * @throws Exception Determined by the function, not required
 	 */
 	@Override
 	R apply(S s, T t, U u) throws Exception;

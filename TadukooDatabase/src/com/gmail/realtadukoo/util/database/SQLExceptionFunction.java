@@ -24,7 +24,7 @@ public interface SQLExceptionFunction<S, R> extends ExceptionFunction<S, R>{
 	 * 
 	 * @param s The argument
 	 * @return A result
-	 * @throws SQLException
+	 * @throws SQLException Determined by the function, not required
 	 */
 	@Override
 	R apply(S s) throws SQLException;

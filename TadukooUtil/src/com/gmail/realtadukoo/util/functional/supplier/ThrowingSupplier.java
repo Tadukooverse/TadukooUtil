@@ -22,7 +22,7 @@ public interface ThrowingSupplier<R>{
 	 * Returns a result.
 	 * 
 	 * @return A result
-	 * @throws Throwable
+	 * @throws Throwable Determined by the supplier, not required
 	 */
 	R get() throws Throwable;
 }

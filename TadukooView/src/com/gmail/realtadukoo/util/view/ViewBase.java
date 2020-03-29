@@ -20,7 +20,6 @@ import com.gmail.realtadukoo.util.event.view.ViewChangeEventListener;
  * @author Logan Ferree (Tadukoo)
  * @version 0.1-Alpha-SNAPSHOT
  */
-@SuppressWarnings("serial")
 public abstract class ViewBase extends JPanel implements ViewChangeEventListener{
 	private static Context context;
 	

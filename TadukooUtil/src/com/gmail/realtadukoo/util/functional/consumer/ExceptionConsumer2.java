@@ -20,7 +20,7 @@ public interface ExceptionConsumer2<S, T> extends ThrowingConsumer2<S, T>{
 	 * 
 	 * @param s The 1st argument
 	 * @param t The 2nd argument
-	 * @throws Exception
+	 * @throws Exception Determined by the consumer, not required
 	 */
 	@Override
 	void accept(S s, T t) throws Exception;

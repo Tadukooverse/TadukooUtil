@@ -1,4 +1,4 @@
-package com.gmail.realtadukoo.util.fileformat.GHDR;
+package com.gmail.realtadukoo.util.fileformat.ghdr;
 
 import java.util.ArrayList;
 import java.util.HashMap;

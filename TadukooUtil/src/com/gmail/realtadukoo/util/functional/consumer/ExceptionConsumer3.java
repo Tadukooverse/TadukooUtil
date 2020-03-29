@@ -22,7 +22,7 @@ public interface ExceptionConsumer3<S, T, U> extends ThrowingConsumer3<S, T, U>{
 	 * @param s The 1st argument
 	 * @param t The 2nd argument
 	 * @param u The 3rd argument
-	 * @throws Exception
+	 * @throws Exception Determined by the consumer, not required
 	 */
 	@Override
 	void accept(S s, T t, U u) throws Exception;

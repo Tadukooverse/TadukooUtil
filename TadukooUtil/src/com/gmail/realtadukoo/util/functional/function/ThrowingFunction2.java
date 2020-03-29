@@ -26,7 +26,7 @@ public interface ThrowingFunction2<S, T, R>{
 	 * @param s The 1st argument
 	 * @param t The 2nd argument
 	 * @return A result
-	 * @throws Throwable
+	 * @throws Throwable Determined by the function, not required
 	 */
 	R apply(S s, T t) throws Throwable;
 	

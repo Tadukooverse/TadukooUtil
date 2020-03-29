@@ -22,7 +22,7 @@ public interface ThrowingFunction3<S, T, U, R>{
 	 * @param t The 2nd argument
 	 * @param u The 3rd argument
 	 * @return A result
-	 * @throws Throwable
+	 * @throws Throwable Determined by the function, not required
 	 */
 	R apply(S s, T t, U u) throws Throwable;
 	
