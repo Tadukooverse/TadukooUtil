@@ -24,5 +24,5 @@ public interface ThrowingSupplier<R>{
 	 * @return A result
 	 * @throws Throwable
 	 */
-	public abstract R get() throws Throwable;
+	R get() throws Throwable;
 }

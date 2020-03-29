@@ -26,7 +26,7 @@ public interface ThrowingFunction<S, R>{
 	 * @return A result
 	 * @throws Throwable
 	 */
-	public abstract R apply(S s) throws Throwable;
+	R apply(S s) throws Throwable;
 	
 	/**
 	 * Creates a ThrowingFunction that runs the given ThrowingFunction and puts the result 
@@ -36,7 +36,7 @@ public interface ThrowingFunction<S, R>{
 	 * @param before The ThrowingFunction to run before this one, and put the result into this one
 	 * @return The ThrowingFunction made from composing this one and the given one
 	 */
-	public default <V> ThrowingFunction<V, R> compose(ThrowingFunction<? super V, ? extends S> before){
+	default <V> ThrowingFunction<V, R> compose(ThrowingFunction<? super V, ? extends S> before){
 		return v -> this.apply(before.apply(v));
 	}
 	
@@ -48,7 +48,7 @@ public interface ThrowingFunction<S, R>{
 	 * @param after A 2nd ThrowingFunction to put the result of this one into
 	 * @return The ThrowingFunction made from composing this one and the given one
 	 */
-	public default <V> ThrowingFunction<S, V> andThen(ThrowingFunction<? super R, ? extends V> after){
+	default <V> ThrowingFunction<S, V> andThen(ThrowingFunction<? super R, ? extends V> after){
 		return s -> after.apply(this.apply(s));
 	}
 	
@@ -58,9 +58,7 @@ public interface ThrowingFunction<S, R>{
 	 * @param <S> The type of argument
 	 * @return A ThrowingFunction that always returns its input argument
 	 */
-	public static <S> ThrowingFunction<S, S> identity(){
-		return s -> {
-						return s;
-					};
+	static <S> ThrowingFunction<S, S> identity(){
+		return s -> s;
 	}
 }

@@ -23,7 +23,7 @@ public interface ExceptionPredicate<S> extends ThrowingPredicate<S>{
 	 * @return A boolean
 	 * @throws Exception
 	 */
-	public abstract boolean test(S s) throws Exception;
+	boolean test(S s) throws Exception;
 	
 	/**
 	 * Creates an ExceptionPredicate that will test the argument with this ExceptionPredicate 
@@ -32,7 +32,7 @@ public interface ExceptionPredicate<S> extends ThrowingPredicate<S>{
 	 * @param other The other ExceptionPredicate to test the argument on
 	 * @return The ExceptionPredicate that results from composing this one and the given one
 	 */
-	public default ExceptionPredicate<S> and(ExceptionPredicate<? super S> other){
+	default ExceptionPredicate<S> and(ExceptionPredicate<? super S> other){
 		return s -> this.test(s) && other.test(s);
 	}
 	
@@ -43,7 +43,7 @@ public interface ExceptionPredicate<S> extends ThrowingPredicate<S>{
 	 * @param other The other ExceptionPredicate to test the argument on
 	 * @return The ExceptionPredicate that results from composing this one and the given one
 	 */
-	public default ExceptionPredicate<S> or(ExceptionPredicate<? super S> other){
+	default ExceptionPredicate<S> or(ExceptionPredicate<? super S> other){
 		return s -> this.test(s) || other.test(s);
 	}
 	
@@ -52,7 +52,7 @@ public interface ExceptionPredicate<S> extends ThrowingPredicate<S>{
 	 * 
 	 * @return A negated version of this ExceptionPredicate
 	 */
-	public default ExceptionPredicate<S> negate(){
+	default ExceptionPredicate<S> negate(){
 		return s -> !this.test(s);
 	}
 	
@@ -64,7 +64,7 @@ public interface ExceptionPredicate<S> extends ThrowingPredicate<S>{
 	 * @param obj The object to test against
 	 * @return An ExceptionPredicate that tests if two objects are equal
 	 */
-	public static <S> ExceptionPredicate<S> isEqual(Object obj){
+	static <S> ExceptionPredicate<S> isEqual(Object obj){
 		return s -> Objects.equals(obj, s);
 	}
 }

@@ -165,7 +165,7 @@ public abstract class MultiMap<K, V>{
 		
 		// If a list doesn't exist for this key, create a new one
 		if(list == null){
-			list = new ArrayList<V>();
+			list = new ArrayList<>();
 		}
 		
 		// Add the value to the list
@@ -192,7 +192,7 @@ public abstract class MultiMap<K, V>{
 	 * @param map The map whose mappings should be added to this
 	 */
 	public final void putAll(Map<K, V> map){
-		map.forEach((key, value) -> put(key, value));
+		map.forEach(this::put);
 	}
 	
 	/**
@@ -202,7 +202,7 @@ public abstract class MultiMap<K, V>{
 	 * @param map The MulitMap whose mappings should be added to this one
 	 */
 	public final void putAll(MultiMap<K, V> map){
-		map.forEach((key, value) -> put(key, value));
+		map.forEach(this::put);
 	}
 	
 	/**

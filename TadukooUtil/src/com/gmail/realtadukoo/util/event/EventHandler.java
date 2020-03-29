@@ -15,13 +15,13 @@ import java.util.List;
  */
 public abstract class EventHandler<EventType extends Event, Listener extends EventListener<EventType>>{
 	/** The registered {@link EventListener EventListeners} to be notified of {@link Event Events} */
-	private final List<Listener> listeners = new ArrayList<Listener>();
+	private final List<Listener> listeners = new ArrayList<>();
 	/** Whether this EventHandler is currently handling {@link Event Events} */
 	private boolean inProcess = false;
 	/** {@link EventListener EventListeners} to be added once the EventHandler is no longer in process */
-	private final List<Listener> listenerAddQueue = new ArrayList<Listener>();
+	private final List<Listener> listenerAddQueue = new ArrayList<>();
 	/** {@link EventListener EventListeners} to be removed once the EventHandler is no longer in process */
-	private final List<Listener> listenerRemoveQueue = new ArrayList<Listener>();
+	private final List<Listener> listenerRemoveQueue = new ArrayList<>();
 	
 	/**
 	 * Register a {@link EventListener} so it will be notified of {@link Event Events} 

@@ -24,7 +24,7 @@ public interface ThrowingFunction3<S, T, U, R>{
 	 * @return A result
 	 * @throws Throwable
 	 */
-	public abstract R apply(S s, T t, U u) throws Throwable;
+	R apply(S s, T t, U u) throws Throwable;
 	
 	/**
 	 * Creates a ThrowingFunction3 that runs this ThrowingFunction3 and 
@@ -34,7 +34,7 @@ public interface ThrowingFunction3<S, T, U, R>{
 	 * @param after A {@link ThrowingFunction} to put the result of this ThrowingFunction3 into
 	 * @return The ThrowingFunction3 made from composing this one and the given {@link ThrowingFunction}
 	 */
-	public default <V> ThrowingFunction3<S, T, U, V> andThen(ThrowingFunction<? super R, ? extends V> after){
+	default <V> ThrowingFunction3<S, T, U, V> andThen(ThrowingFunction<? super R, ? extends V> after){
 		return (s, t, u) -> after.apply(this.apply(s, t, u));
 	}
 }

@@ -8,6 +8,13 @@
 		<version>0.1-Alpha-SNAPSHOT</version>
 	</parent>
 	<artifactId>TadukooUtil</artifactId>
+	<dependencies>
+		<dependency>
+			<groupId>com.gmail.realtadukoo.util</groupId>
+			<artifactId>TadukooAnnotationProcessor</artifactId>
+			<version>0.1-Alpha-SNAPSHOT</version>
+		</dependency>
+	</dependencies>
 	<build>
 		<sourceDirectory>src</sourceDirectory>
 		<resources>
@@ -23,12 +30,12 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.8.0</version>
 				<configuration>
-					<source>1.8</source>
-					<target>1.8</target>
+					<source>${java.source.version}</source>
+					<target>${java.target.version}</target>
 					<annotationProcessorPaths>
 						<annotationProcessorPath>
 							<groupId>${project.groupId}</groupId>
-							<artifactId>${project.artifactId}</artifactId>
+							<artifactId>TadukooAnnotationProcessor</artifactId>
 							<version>${project.version}</version>
 						</annotationProcessorPath>
 					</annotationProcessorPaths>

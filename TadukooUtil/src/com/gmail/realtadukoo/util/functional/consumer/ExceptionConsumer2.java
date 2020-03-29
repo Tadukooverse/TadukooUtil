@@ -23,7 +23,7 @@ public interface ExceptionConsumer2<S, T> extends ThrowingConsumer2<S, T>{
 	 * @throws Exception
 	 */
 	@Override
-	public abstract void accept(S s, T t) throws Exception;
+	void accept(S s, T t) throws Exception;
 	
 	/**
 	 * Creates an ExceptionConsumer2 that runs this ExceptionConsumer2 and then also runs the 
@@ -32,7 +32,7 @@ public interface ExceptionConsumer2<S, T> extends ThrowingConsumer2<S, T>{
 	 * @param after A 2nd ExceptionConsumer2 to run the arguments on after this one
 	 * @return The ExceptionConsumer2 made from composing this one and the given one
 	 */
-	public default ExceptionConsumer2<S, T> andThen(ExceptionConsumer2<? super S, ? super T> after){
+	default ExceptionConsumer2<S, T> andThen(ExceptionConsumer2<? super S, ? super T> after){
 		return (s, t) -> {
 							this.accept(s, t);
 							after.accept(s, t);

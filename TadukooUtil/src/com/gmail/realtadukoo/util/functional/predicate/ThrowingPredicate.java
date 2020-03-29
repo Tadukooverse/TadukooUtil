@@ -26,7 +26,7 @@ public interface ThrowingPredicate<S>{
 	 * @return A boolean
 	 * @throws Throwable
 	 */
-	public abstract boolean test(S s) throws Throwable;
+	boolean test(S s) throws Throwable;
 	
 	/**
 	 * Creates a ThrowingPredicate that will test the argument with this ThrowingPredicate 
@@ -35,7 +35,7 @@ public interface ThrowingPredicate<S>{
 	 * @param other The other ThrowingPredicate to test the argument on
 	 * @return The ThrowingPredicate that results from composing this one and the given one
 	 */
-	public default ThrowingPredicate<S> and(ThrowingPredicate<? super S> other){
+	default ThrowingPredicate<S> and(ThrowingPredicate<? super S> other){
 		return s -> this.test(s) && other.test(s);
 	}
 	
@@ -46,7 +46,7 @@ public interface ThrowingPredicate<S>{
 	 * @param other The other ThrowingPredicate to test the argument on
 	 * @return The ThrowingPredicate that results from composing this one and the given one
 	 */
-	public default ThrowingPredicate<S> or(ThrowingPredicate<? super S> other){
+	default ThrowingPredicate<S> or(ThrowingPredicate<? super S> other){
 		return s -> this.test(s) || other.test(s);
 	}
 	
@@ -55,7 +55,7 @@ public interface ThrowingPredicate<S>{
 	 * 
 	 * @return A negated version of this ThrowingPredicate
 	 */
-	public default ThrowingPredicate<S> negate(){
+	default ThrowingPredicate<S> negate(){
 		return s -> !this.test(s);
 	}
 	
@@ -67,7 +67,7 @@ public interface ThrowingPredicate<S>{
 	 * @param obj The object to test against
 	 * @return A ThrowingPredicate that tests if two objects are equal
 	 */
-	public static <S> ThrowingPredicate<S> isEqual(Object obj){
+	static <S> ThrowingPredicate<S> isEqual(Object obj){
 		return s -> Objects.equals(obj, s);
 	}
 }

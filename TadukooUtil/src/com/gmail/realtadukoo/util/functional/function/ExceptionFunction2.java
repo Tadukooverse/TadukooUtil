@@ -25,7 +25,7 @@ public interface ExceptionFunction2<S, T, R> extends ThrowingFunction2<S, T, R>{
 	 * @throws Exception
 	 */
 	@Override
-	public abstract R apply(S s, T t) throws Exception;
+	R apply(S s, T t) throws Exception;
 	
 	/**
 	 * Creates an ExceptionFunction2 that runs this ExceptionFunction2 and 
@@ -35,7 +35,7 @@ public interface ExceptionFunction2<S, T, R> extends ThrowingFunction2<S, T, R>{
 	 * @param after An {@link ExceptionFunction} to put the result of this ExceptionFunction2 into
 	 * @return The ExceptionFunction2 made from composing this one and the given {@link ExceptionFunction}
 	 */
-	public default <V> ExceptionFunction2<S, T, V> andThen(ExceptionFunction<? super R, ? extends V> after){
+	default <V> ExceptionFunction2<S, T, V> andThen(ExceptionFunction<? super R, ? extends V> after){
 		return (s, t) -> after.apply(this.apply(s, t));
 	}
 }

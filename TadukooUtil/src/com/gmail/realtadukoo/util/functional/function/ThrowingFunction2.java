@@ -7,7 +7,7 @@ import java.util.function.BiFunction;
  * allows for the functions to throw anything. Using this requires 
  * you to check whatever may be thrown, but this class can be 
  * extended to allow for more specific throwing functions. 
- * See {@link ExceptionBiFunction} as an example of a more 
+ * See {@link ExceptionFunction2} as an example of a more
  * fine-tuned extension.
  *
  * @param <S> The 1st input argument type for the function
@@ -28,7 +28,7 @@ public interface ThrowingFunction2<S, T, R>{
 	 * @return A result
 	 * @throws Throwable
 	 */
-	public abstract R apply(S s, T t) throws Throwable;
+	R apply(S s, T t) throws Throwable;
 	
 	/**
 	 * Creates a ThrowingFunction2 that runs this ThrowingFunction2 and 
@@ -38,7 +38,7 @@ public interface ThrowingFunction2<S, T, R>{
 	 * @param after A {@link ThrowingFunction} to put the result of this ThrowingFunction2 into
 	 * @return The ThrowingFunction2 made from composing this one and the given {@link ThrowingFunction}
 	 */
-	public default <V> ThrowingFunction2<S, T, V> andThen(ThrowingFunction<? super R, ? extends V> after){
+	default <V> ThrowingFunction2<S, T, V> andThen(ThrowingFunction<? super R, ? extends V> after){
 		return (s, t) -> after.apply(this.apply(s, t));
 	}
 }

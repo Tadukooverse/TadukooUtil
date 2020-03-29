@@ -23,7 +23,7 @@ public interface ExceptionPredicate2<S, T> extends ThrowingPredicate2<S, T>{
 	 * @return A boolean
 	 * @throws Exception
 	 */
-	public abstract boolean test(S s, T t) throws Exception;
+	boolean test(S s, T t) throws Exception;
 	
 	/**
 	 * Creates an ExceptionPredicate2 that will test the arguments with this ExceptionPredicate2 
@@ -32,7 +32,7 @@ public interface ExceptionPredicate2<S, T> extends ThrowingPredicate2<S, T>{
 	 * @param other The other ExceptionPredicate2 to test the arguments on
 	 * @return The ExceptionPredicate2 that results from composing this one and the given one
 	 */
-	public default ExceptionPredicate2<S, T> and(ExceptionPredicate2<? super S, ? super T> other){
+	default ExceptionPredicate2<S, T> and(ExceptionPredicate2<? super S, ? super T> other){
 		return (s, t) -> this.test(s, t) && other.test(s, t);
 	}
 	
@@ -43,7 +43,7 @@ public interface ExceptionPredicate2<S, T> extends ThrowingPredicate2<S, T>{
 	 * @param other The other ExceptionPredicate2 to test the arguments on
 	 * @return The ExceptionPredicate2 that results from composing this one and the given one
 	 */
-	public default ExceptionPredicate2<S, T> or(ExceptionPredicate2<? super S, ? super T> other){
+	default ExceptionPredicate2<S, T> or(ExceptionPredicate2<? super S, ? super T> other){
 		return (s, t) -> this.test(s, t) || other.test(s, t);
 	}
 	
@@ -52,7 +52,7 @@ public interface ExceptionPredicate2<S, T> extends ThrowingPredicate2<S, T>{
 	 * 
 	 * @return A negated version of this ExceptionPredicate2
 	 */
-	public default ExceptionPredicate2<S, T> negate(){
+	default ExceptionPredicate2<S, T> negate(){
 		return (s, t) -> !this.test(s, t);
 	}
 }

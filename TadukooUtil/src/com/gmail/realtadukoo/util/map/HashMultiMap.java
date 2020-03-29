@@ -17,7 +17,7 @@ public class HashMultiMap<K, V> extends MultiMap<K, V>{
 	 * the default initial capacity (16) and the default load factor (0.75).
 	 */
 	public HashMultiMap(){
-		super(new HashMap<K, List<V>>());
+		super(new HashMap<>());
 	}
 	
 	/**
@@ -27,7 +27,7 @@ public class HashMultiMap<K, V> extends MultiMap<K, V>{
 	 * @param initialCapacity The initial capacity of the backing HashMap
 	 */
 	public HashMultiMap(int initialCapacity){
-		super(new HashMap<K, List<V>>(initialCapacity));
+		super(new HashMap<>(initialCapacity));
 	}
 	
 	/**
@@ -38,7 +38,7 @@ public class HashMultiMap<K, V> extends MultiMap<K, V>{
 	 * @param loadFactor The load factor of the backing HashMap
 	 */
 	public HashMultiMap(int initialCapacity, float loadFactor){
-		super(new HashMap<K, List<V>>(initialCapacity, loadFactor));
+		super(new HashMap<>(initialCapacity, loadFactor));
 	}
 	
 	/**
@@ -50,7 +50,7 @@ public class HashMultiMap<K, V> extends MultiMap<K, V>{
 	 * @param map The Map whose mappings are to be placed in the backing HashMap
 	 */
 	public HashMultiMap(Map<K, V> map){
-		super(new HashMap<K, List<V>>(), map);
+		super(new HashMap<>(), map);
 	}
 	
 	/**
@@ -63,7 +63,7 @@ public class HashMultiMap<K, V> extends MultiMap<K, V>{
 	 * @param multiMap The MultiMap whose mappings are to be placed in this MultiMap
 	 */
 	public HashMultiMap(MultiMap<K, V> multiMap){
-		super(new HashMap<K, List<V>>(), multiMap);
+		super(new HashMap<>(), multiMap);
 	}
 	
 	/**

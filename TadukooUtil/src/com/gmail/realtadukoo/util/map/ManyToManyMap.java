@@ -93,7 +93,7 @@ public abstract class ManyToManyMap<K, V>{
 	
 	/**
 	 * Compares the given object with this ManyToManyMap for equality. 
-	 * Returns true if the given object is also a ManyToManyMap and their underlying {@link MultiMaps} 
+	 * Returns true if the given object is also a ManyToManyMap and their underlying {@link MultiMap MultiMaps}
 	 * represent the same mappings.
 	 * If they're both ManyToManyMaps, it will run the {@link MultiMap#equals} method on their underlying 
 	 * MultiMaps to compare their mappings.
@@ -308,7 +308,7 @@ public abstract class ManyToManyMap<K, V>{
 	 * @param map The ManyToManyMap whose mappings should be added to this
 	 */
 	public final void putAllKeyValMappings(ManyToManyMap<K, V> map){
-		map.forEach((key, value) -> put(key, value));
+		map.forEach(this::put);
 	}
 	
 	/**

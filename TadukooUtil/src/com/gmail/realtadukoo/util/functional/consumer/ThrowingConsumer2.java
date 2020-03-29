@@ -26,7 +26,7 @@ public interface ThrowingConsumer2<S, T>{
 	 * @param t The 2nd argument
 	 * @throws Throwable
 	 */
-	public abstract void accept(S s, T t) throws Throwable;
+	void accept(S s, T t) throws Throwable;
 	
 	/**
 	 * Creates a ThrowingConsumer2 that runs this ThrowingConsumer2 and then also runs the 
@@ -35,7 +35,7 @@ public interface ThrowingConsumer2<S, T>{
 	 * @param after A 2nd ThrowingConsumer2 to run the arguments on after this one
 	 * @return The ThrowingConsumer2 made from composing this one and the given one
 	 */
-	public default ThrowingConsumer2<S, T> andThen(ThrowingConsumer2<? super S, ? super T> after){
+	default ThrowingConsumer2<S, T> andThen(ThrowingConsumer2<? super S, ? super T> after){
 		return (s, t) -> {
 							this.accept(s, t);
 							after.accept(s, t);

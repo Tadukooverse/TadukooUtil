@@ -24,7 +24,7 @@ public interface ThrowingConsumer<S>{
 	 * @param s The argument
 	 * @throws Throwable
 	 */
-	public abstract void accept(S s) throws Throwable;
+	void accept(S s) throws Throwable;
 	
 	/**
 	 * Creates a ThrowingConsumer that runs this ThrowingConsumer and then also runs the 
@@ -33,7 +33,7 @@ public interface ThrowingConsumer<S>{
 	 * @param after A 2nd ThrowingConsumer to run the argument on after this one
 	 * @return The ThrowingConsumer made from composing this one and the given one
 	 */
-	public default ThrowingConsumer<S> andThen(ThrowingConsumer<? super S> after){
+	default ThrowingConsumer<S> andThen(ThrowingConsumer<? super S> after){
 		return s -> {
 						this.accept(s);
 						after.accept(s);

@@ -25,7 +25,7 @@ public interface ExceptionPredicate3<S, T, U> extends ThrowingPredicate3<S, T, U
 	 * @return A boolean
 	 * @throws Exception
 	 */
-	public abstract boolean test(S s, T t, U u) throws Exception;
+	boolean test(S s, T t, U u) throws Exception;
 	
 	/**
 	 * Creates an ExceptionPredicate3 that will test the arguments with this ExceptionPredicate3 
@@ -34,7 +34,7 @@ public interface ExceptionPredicate3<S, T, U> extends ThrowingPredicate3<S, T, U
 	 * @param other The other ExceptionPredicate3 to test the arguments on
 	 * @return The ExceptionPredicate3 that results from composing this one and the given one
 	 */
-	public default ExceptionPredicate3<S, T, U> and(ExceptionPredicate3<? super S, ? super T, ? super U> other){
+	default ExceptionPredicate3<S, T, U> and(ExceptionPredicate3<? super S, ? super T, ? super U> other){
 		return (s, t, u) -> this.test(s, t, u) && other.test(s, t, u);
 	}
 	
@@ -45,7 +45,7 @@ public interface ExceptionPredicate3<S, T, U> extends ThrowingPredicate3<S, T, U
 	 * @param other The other ExceptionPredicate3 to test the arguments on
 	 * @return The ExceptionPredicate3 that results from composing this one and the given one
 	 */
-	public default ExceptionPredicate3<S, T, U> or(ExceptionPredicate3<? super S, ? super T, ? super U> other){
+	default ExceptionPredicate3<S, T, U> or(ExceptionPredicate3<? super S, ? super T, ? super U> other){
 		return (s, t, u) -> this.test(s, t, u) || other.test(s, t, u);
 	}
 	
@@ -54,7 +54,7 @@ public interface ExceptionPredicate3<S, T, U> extends ThrowingPredicate3<S, T, U
 	 * 
 	 * @return A negated version of this ExceptionPredicate3
 	 */
-	public default ExceptionPredicate3<S, T, U> negate(){
+	default ExceptionPredicate3<S, T, U> negate(){
 		return (s, t, u) -> !this.test(s, t, u);
 	}
 }

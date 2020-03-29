@@ -20,5 +20,5 @@ public interface ExceptionSupplier<R> extends ThrowingSupplier<R>{
 	 * @throws Exception
 	 */
 	@Override
-	public abstract R get() throws Exception;
+	R get() throws Exception;
 }

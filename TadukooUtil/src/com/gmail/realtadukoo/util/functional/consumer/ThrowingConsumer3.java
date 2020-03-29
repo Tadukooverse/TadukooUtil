@@ -22,7 +22,7 @@ public interface ThrowingConsumer3<S, T, U>{
 	 * @param u The 3rd argument
 	 * @throws Throwable
 	 */
-	public abstract void accept(S s, T t, U u) throws Throwable;
+	void accept(S s, T t, U u) throws Throwable;
 	
 	/**
 	 * Creates a ThrowingConsumer3 that runs this ThrowingConsumer3 and then also runs the 
@@ -31,7 +31,7 @@ public interface ThrowingConsumer3<S, T, U>{
 	 * @param after A 2nd ThrowingConsumer3 to run the arguments on after this one
 	 * @return The ThrowingConsumer3 made from composing this one and the given one
 	 */
-	public default ThrowingConsumer3<S, T, U> andThen(ThrowingConsumer3<? super S, ? super T, ? super U> after){
+	default ThrowingConsumer3<S, T, U> andThen(ThrowingConsumer3<? super S, ? super T, ? super U> after){
 		return (s, t, u) -> {
 								this.accept(s, t, u);
 								after.accept(s, t, u);

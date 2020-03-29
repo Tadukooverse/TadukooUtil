@@ -26,7 +26,7 @@ public interface ThrowingPredicate2<S, T>{
 	 * @return A boolean
 	 * @throws Throwable
 	 */
-	public abstract boolean test(S s, T t) throws Throwable;
+	boolean test(S s, T t) throws Throwable;
 	
 	/**
 	 * Creates a ThrowingPredicate2 that will test the arguments with this ThrowingPredicate2 
@@ -35,7 +35,7 @@ public interface ThrowingPredicate2<S, T>{
 	 * @param other The other ThrowingPredicate2 to test the arguments on
 	 * @return The ThrowingPredicate2 that results from composing this one and the given one
 	 */
-	public default ThrowingPredicate2<S, T> and(ThrowingPredicate2<? super S, ? super T> other){
+	default ThrowingPredicate2<S, T> and(ThrowingPredicate2<? super S, ? super T> other){
 		return (s, t) -> this.test(s, t) && other.test(s, t);
 	}
 	
@@ -46,7 +46,7 @@ public interface ThrowingPredicate2<S, T>{
 	 * @param other The other ThrowingPredicate2 to test the arguments on
 	 * @return The ThrowingPredicate2 that results from composing this one and the given one
 	 */
-	public default ThrowingPredicate2<S, T> or(ThrowingPredicate2<? super S, ? super T> other){
+	default ThrowingPredicate2<S, T> or(ThrowingPredicate2<? super S, ? super T> other){
 		return (s, t) -> this.test(s, t) || other.test(s, t);
 	}
 	
@@ -55,7 +55,7 @@ public interface ThrowingPredicate2<S, T>{
 	 * 
 	 * @return A negated version of this ThrowingPredicate2
 	 */
-	public default ThrowingPredicate2<S, T> negate(){
+	default ThrowingPredicate2<S, T> negate(){
 		return (s, t) -> !this.test(s, t);
 	}
 }

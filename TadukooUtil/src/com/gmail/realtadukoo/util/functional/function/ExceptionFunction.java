@@ -23,7 +23,7 @@ public interface ExceptionFunction<S, R> extends ThrowingFunction<S, R>{
 	 * @throws Exception
 	 */
 	@Override
-	public abstract R apply(S s) throws Exception;
+	R apply(S s) throws Exception;
 	
 	/**
 	 * Creates an ExceptionFunction that runs the given ExceptionFunction and puts the result 
@@ -33,7 +33,7 @@ public interface ExceptionFunction<S, R> extends ThrowingFunction<S, R>{
 	 * @param before The ExceptionFunction to run before this one, and put the result into this one
 	 * @return The ExceptionFunction made from composing this one and the given one
 	 */
-	public default <V> ExceptionFunction<V, R> compose(ExceptionFunction<? super V, ? extends S> before){
+	default <V> ExceptionFunction<V, R> compose(ExceptionFunction<? super V, ? extends S> before){
 		return v -> this.apply(before.apply(v));
 	}
 	
@@ -45,7 +45,7 @@ public interface ExceptionFunction<S, R> extends ThrowingFunction<S, R>{
 	 * @param after A 2nd ExceptionFunction to put the result of this one into
 	 * @return The ExceptionFunction made from composing this one and the given one
 	 */
-	public default <V> ExceptionFunction<S, V> andThen(ExceptionFunction<? super R, ? extends V> after){
+	default <V> ExceptionFunction<S, V> andThen(ExceptionFunction<? super R, ? extends V> after){
 		return s -> after.apply(this.apply(s));
 	}
 	
@@ -55,9 +55,7 @@ public interface ExceptionFunction<S, R> extends ThrowingFunction<S, R>{
 	 * @param <S> The type of argument
 	 * @return An ExceptionFunction that always returns its input argument
 	 */
-	public static <S> ExceptionFunction<S, S> identity(){
-		return s -> {
-						return s;
-					};
+	static <S> ExceptionFunction<S, S> identity(){
+		return s -> s;
 	}
 }

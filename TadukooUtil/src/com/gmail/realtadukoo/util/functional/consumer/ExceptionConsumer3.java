@@ -25,7 +25,7 @@ public interface ExceptionConsumer3<S, T, U> extends ThrowingConsumer3<S, T, U>{
 	 * @throws Exception
 	 */
 	@Override
-	public abstract void accept(S s, T t, U u) throws Exception;
+	void accept(S s, T t, U u) throws Exception;
 	
 	/**
 	 * Creates an ExceptionConsumer3 that runs this ExceptionConsumer3 and then also runs the 
@@ -34,7 +34,7 @@ public interface ExceptionConsumer3<S, T, U> extends ThrowingConsumer3<S, T, U>{
 	 * @param after A 2nd ExceptionConsumer3 to run the arguments on after this one
 	 * @return The ExceptionConsumer3 made from composing this one and the given one
 	 */
-	public default ExceptionConsumer3<S, T, U> andThen(ExceptionConsumer3<? super S, ? super T, ? super U> after){
+	default ExceptionConsumer3<S, T, U> andThen(ExceptionConsumer3<? super S, ? super T, ? super U> after){
 		return (s, t, u) -> {
 							this.accept(s, t, u);
 							after.accept(s, t, u);

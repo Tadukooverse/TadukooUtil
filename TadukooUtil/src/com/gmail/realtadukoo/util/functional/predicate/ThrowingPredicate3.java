@@ -23,7 +23,7 @@ public interface ThrowingPredicate3<S, T, U>{
 	 * @return A boolean
 	 * @throws Throwable
 	 */
-	public abstract boolean test(S s, T t, U u) throws Throwable;
+	boolean test(S s, T t, U u) throws Throwable;
 	
 	/**
 	 * Creates a ThrowingPredicate3 that will test the arguments with this ThrowingPredicate3 
@@ -32,7 +32,7 @@ public interface ThrowingPredicate3<S, T, U>{
 	 * @param other The other ThrowingPredicate3 to test the arguments on
 	 * @return The ThrowingPredicate3 that results from composing this one and the given one
 	 */
-	public default ThrowingPredicate3<S, T, U> and(ThrowingPredicate3<? super S, ? super T, ? super U> other){
+	default ThrowingPredicate3<S, T, U> and(ThrowingPredicate3<? super S, ? super T, ? super U> other){
 		return (s, t, u) -> this.test(s, t, u) && other.test(s, t, u);
 	}
 	
@@ -43,7 +43,7 @@ public interface ThrowingPredicate3<S, T, U>{
 	 * @param other The other ThrowingPredicate3 to test the arguments on
 	 * @return The ThrowingPredicate3 that results from composing this one and the given one
 	 */
-	public default ThrowingPredicate3<S, T, U> or(ThrowingPredicate3<? super S, ? super T, ? super U> other){
+	default ThrowingPredicate3<S, T, U> or(ThrowingPredicate3<? super S, ? super T, ? super U> other){
 		return (s, t, u) -> this.test(s, t, u) || other.test(s, t, u);
 	}
 	
@@ -52,7 +52,7 @@ public interface ThrowingPredicate3<S, T, U>{
 	 * 
 	 * @return A negated version of this ThrowingPredicate3
 	 */
-	public default ThrowingPredicate3<S, T, U> negate(){
+	default ThrowingPredicate3<S, T, U> negate(){
 		return (s, t, u) -> !this.test(s, t, u);
 	}
 }
