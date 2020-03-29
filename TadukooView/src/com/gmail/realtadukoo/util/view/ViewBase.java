@@ -132,7 +132,6 @@ public abstract class ViewBase extends JPanel implements ViewChangeEventListener
 		View view = context.getCurrentView();
 		if(view.handleKeyTyped(e)){
 			repaint();
-			return;
 		}
 	}
 	
@@ -142,7 +141,6 @@ public abstract class ViewBase extends JPanel implements ViewChangeEventListener
 		View view = context.getCurrentView();
 		if(view.handleKeyReleased(e)){
 			repaint();
-			return;
 		}
 	}
 	
@@ -152,7 +150,6 @@ public abstract class ViewBase extends JPanel implements ViewChangeEventListener
 		View view = context.getCurrentView();
 		if(view.handleMouseReleased(e)){
 			repaint();
-			return;
 		}
 	}
 	

@@ -3,7 +3,6 @@ package com.gmail.realtadukoo.util.view.draw;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 

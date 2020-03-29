@@ -140,7 +140,7 @@ public class Node{
 		/*
 		 * Create the head Node
 		 */
-		String title = "", data = "";
+		String title, data;
 		// If line doesn't contain a colon, we got issues
 		if(!line.contains(":")){
 			throw new IllegalArgumentException("Line '" + line + "' doesn't have colon! "
@@ -164,7 +164,7 @@ public class Node{
 			// If the data starts with an opening parenthesis, it's multi-line data
 			if(data.startsWith("(")){
 				// Remove the parenthesis from the start of the data
-				data = data.substring(1, data.length());
+				data = data.substring(1);
 				// Keep adding new lines to the data until we get the closing parenthesis
 				while(!data.endsWith(")")){
 					// Add the next line to the data
@@ -188,7 +188,7 @@ public class Node{
 		while(title.startsWith("  ")){
 			// If the Node has spaces at the start, every 2 spaces = 1 level
 			level++;
-			title = title.substring(2, title.length());
+			title = title.substring(2);
 		}
 		
 		// Create the head Node and add it to the List of Nodes
@@ -223,7 +223,7 @@ public class Node{
 				// If the data starts with an opening parenthesis, it's multi-line data
 				if(data.startsWith("(")){
 					// Remove the parenthesis from the start of the data
-					data = data.substring(1, data.length());
+					data = data.substring(1);
 					// Keep adding new lines to the data until we get the closing parenthesis
 					while(!data.endsWith(")")){
 						// Increment what line we're on
@@ -247,7 +247,7 @@ public class Node{
 			while(title.startsWith("  ")){
 				// If the Node has spaces at the start, every 2 spaces = 1 level
 				level++;
-				title = title.substring(2, title.length());
+				title = title.substring(2);
 			}
 			
 			// Create the new Node and add it to the list of Nodes

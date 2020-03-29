@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -142,7 +141,7 @@ public class Database{
 			throw new IllegalArgumentException("Database.doSearch: partialStrings, stringArgs, and stringValues must be the same "
 					+ "size!");
 		}
-		StringBuilder name = new StringBuilder("");
+		StringBuilder name = new StringBuilder();
 		StringBuilder sql = new StringBuilder("select distinct " + returnPieces + " from " + mainTable);
 		boolean prevSet = false;
 		if(otherTables != null && otherTables.size() > 0){

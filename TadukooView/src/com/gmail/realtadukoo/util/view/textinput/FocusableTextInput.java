@@ -9,7 +9,7 @@ public abstract class FocusableTextInput extends Clickable implements TextInput{
 	public FocusableTextInput(){
 		setFocusable(true);
 		setOnClick(null);
-		text = new StringBuilder("");
+		text = new StringBuilder();
 		cursor = 0;
 	}
 	

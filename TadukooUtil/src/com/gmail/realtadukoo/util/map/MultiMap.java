@@ -199,7 +199,7 @@ public abstract class MultiMap<K, V>{
 	 * Associates all of the key-value mappings from the given MultiMap 
 	 * into this MultiMap.
 	 * 
-	 * @param map The MulitMap whose mappings should be added to this one
+	 * @param map The MultiMap whose mappings should be added to this one
 	 */
 	public final void putAll(MultiMap<K, V> map){
 		map.forEach(this::put);

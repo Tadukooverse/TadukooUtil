@@ -62,7 +62,7 @@ public abstract class EventHandler<EventType extends Event, Listener extends Eve
 		// Set this in process until done
 		inProcess = true;
 		// Send the event to the listeners
-		listeners.forEach(listener -> listener.handleEvent((EventType) e));
+		listeners.forEach(listener -> listener.handleEvent(e));
 		// Set this as no longer in process
 		inProcess = false;
 		

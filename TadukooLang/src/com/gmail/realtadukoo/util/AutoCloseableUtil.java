@@ -20,7 +20,7 @@ public final class AutoCloseableUtil{
 		if(autoCloseable != null){
 			try{
 				autoCloseable.close();
-			}catch(Exception e){
+			}catch(Exception ignored){
 				
 			}
 		}

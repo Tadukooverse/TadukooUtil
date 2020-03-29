@@ -19,7 +19,7 @@ public class DBUtil{
 		public abstract String getSQL();
 
 		public ResultType executeQuery(Connection conn) throws SQLException{
-			Statement stmt = null;
+			Statement stmt;
 			ResultSet resultSet = null;
 			
 			try{
@@ -43,7 +43,7 @@ public class DBUtil{
 	
 	public static <ResultType> Query<ResultType> createQuery(String name, String sql, 
 			SQLExceptionFunction<ResultSet, ResultType> convertFromResultSet){
-		return new Query<ResultType>(){
+		return new Query<>(){
 			
 			@Override
 			public String getName(){

@@ -3,13 +3,11 @@ package com.gmail.realtadukoo.util.annotation.process;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import javax.annotation.processing.AbstractProcessor;
 import javax.lang.model.element.Element;
 
 import com.gmail.realtadukoo.util.FileUtil;
-import com.gmail.realtadukoo.util.annotation.AnnotationProcessor;
 
 /**
  * Annotation Processor for {@link AnnotationProcessor} annotation. Adds the classes with 

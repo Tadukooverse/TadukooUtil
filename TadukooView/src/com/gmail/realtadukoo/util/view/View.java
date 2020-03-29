@@ -6,7 +6,6 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import com.gmail.realtadukoo.util.event.Event;
 import com.gmail.realtadukoo.util.event.EventListener;
