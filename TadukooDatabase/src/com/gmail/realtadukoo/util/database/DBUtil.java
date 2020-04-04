@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.gmail.realtadukoo.util.AutoCloseableUtil;
+import com.gmail.realtadukoo.util.functional.function.ThrowingFunction;
 
 public class DBUtil{
 	public static abstract class Query<ResultType>{
@@ -42,7 +43,7 @@ public class DBUtil{
 	}
 	
 	public static <ResultType> Query<ResultType> createQuery(String name, String sql, 
-			SQLExceptionFunction<ResultSet, ResultType> convertFromResultSet){
+			ThrowingFunction<ResultSet, ResultType, SQLException> convertFromResultSet){
 		return new Query<>(){
 			
 			@Override

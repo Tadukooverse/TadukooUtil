@@ -4,25 +4,23 @@ import java.util.function.Supplier;
 
 /**
  * A better version of Java's {@link Supplier} interface that 
- * allows for the suppliers to throw anything. Using this requires 
- * you to check whatever may be thrown, but this class can be 
- * extended to allow for more specific throwing suppliers. 
- * See {@link ExceptionSupplier} for an example of a 
- * more fine-tuned extension.
+ * allows for the suppliers to throw whatever {@link Throwable}
+ * is specified.
  *
  * @param <R> The output result type to be supplied
+ * @param <T> The type of {@link Throwable} thrown by the supplier
  * 
  * @author Logan Ferree (Tadukoo)
  * @version 0.1-Alpha-SNAPSHOT
  */
 @FunctionalInterface
-public interface ThrowingSupplier<R>{
+public interface ThrowingSupplier<R, T extends Throwable>{
 	
 	/**
 	 * Returns a result.
 	 * 
 	 * @return A result
-	 * @throws Throwable Determined by the supplier, not required
+	 * @throws T Determined by the supplier, not required
 	 */
-	R get() throws Throwable;
+	R get() throws T;
 }

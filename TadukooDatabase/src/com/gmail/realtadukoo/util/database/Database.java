@@ -11,6 +11,7 @@ import java.util.List;
 import com.gmail.realtadukoo.util.database.DBUtil.InsertAndGetID;
 import com.gmail.realtadukoo.util.database.DBUtil.Query;
 import com.gmail.realtadukoo.util.database.DBUtil.Updates;
+import com.gmail.realtadukoo.util.functional.function.ThrowingFunction;
 
 /**
  * A class used to connect to a MySQL database and make queries, 
@@ -70,7 +71,8 @@ public class Database{
 	 * @param transaction The transaction function to run
 	 * @return The result from the transaction function
 	 */
-	public <ResultType> ResultType execute(SQLExceptionFunction<Connection, ResultType> transaction) throws SQLException{
+	public <ResultType> ResultType execute(ThrowingFunction<Connection, ResultType, SQLException> transaction)
+			throws SQLException{
 		// Create the connection
 		Connection conn = connect();
 		
@@ -118,16 +120,16 @@ public class Database{
 	 * @param <ResultType> The type of result to be returned
 	 * @param name The name to use for the query (for debugging purposes - may be null)
 	 * @param sql The sql query string to run
-	 * @param convertFromResultSet The {@link SQLExceptionFunction} to use to run the query
+	 * @param convertFromResultSet The {@link ThrowingFunction} to use to run the query
 	 * @return The result from the query
 	 */
 	public <ResultType> ResultType executeQuery(String name, String sql, 
-			SQLExceptionFunction<ResultSet, ResultType> convertFromResultSet) throws SQLException{
+			ThrowingFunction<ResultSet, ResultType, SQLException> convertFromResultSet) throws SQLException{
 		return executeQuery(DBUtil.createQuery(name, sql, convertFromResultSet));
 	}
 	
 	// TODO: Rework this (Move to DBUtil and such)
-	public<ResultType> ResultType doSearch(SQLExceptionFunction<ResultSet, ResultType> convertFromResultSet, 
+	public<ResultType> ResultType doSearch(ThrowingFunction<ResultSet, ResultType, SQLException> convertFromResultSet,
 			String returnPieces, String mainTable, 
 			Collection<String> otherTables, Collection<String> junctions, 
 			String[] intArgs, int[] intValues, 

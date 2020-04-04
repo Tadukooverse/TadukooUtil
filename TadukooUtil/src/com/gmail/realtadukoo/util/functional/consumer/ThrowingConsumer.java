@@ -4,27 +4,25 @@ import java.util.function.Consumer;
 
 /**
  * A better version of Java's {@link Consumer} interface that 
- * allows for the consumers to throw anything. Using this requires 
- * you to check whatever may be thrown, but this class can be 
- * extended to allow for more specific throwing consumers. 
- * See {@link ExceptionConsumer} for an example of a 
- * more fine-tuned extension.
+ * allows for the consumers to throw whatever {@link Throwable}
+ * is specified.
  *
- * @param <S> The input argument type to be consumed
+ * @param <A> The input argument type to be consumed
+ * @param <T> The type of {@link Throwable} thrown by the consumer
  * 
  * @author Logan Ferree (Tadukoo)
  * @version 0.1-Alpha-SNAPSHOT
  */
 @FunctionalInterface
-public interface ThrowingConsumer<S>{
+public interface ThrowingConsumer<A, T extends Throwable>{
 	
 	/**
 	 * Takes a single argument and consumes it.
 	 * 
-	 * @param s The argument
-	 * @throws Throwable Determined by the consumer, not required
+	 * @param a The argument
+	 * @throws T Determined by the consumer, not required
 	 */
-	void accept(S s) throws Throwable;
+	void accept(A a) throws T;
 	
 	/**
 	 * Creates a ThrowingConsumer that runs this ThrowingConsumer and then also runs the 
@@ -33,10 +31,10 @@ public interface ThrowingConsumer<S>{
 	 * @param after A 2nd ThrowingConsumer to run the argument on after this one
 	 * @return The ThrowingConsumer made from composing this one and the given one
 	 */
-	default ThrowingConsumer<S> andThen(ThrowingConsumer<? super S> after){
-		return s -> {
-						this.accept(s);
-						after.accept(s);
+	default ThrowingConsumer<A, T> andThen(ThrowingConsumer<? super A, ? extends T> after){
+		return a -> {
+						this.accept(a);
+						after.accept(a);
 					};
 	}
 }

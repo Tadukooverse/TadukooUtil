@@ -4,29 +4,27 @@ import java.util.function.BiConsumer;
 
 /**
  * A better version of Java's {@link BiConsumer} interface that 
- * allows for the consumers to throw anything. Using this requires 
- * you to check whatever may be thrown, but this class can be 
- * extended to allow for more specific throwing suppliers. 
- * See {@link ExceptionConsumer2} for an example of a 
- * more fine-tuned extension.
+ * allows for the consumers to throw whater {@link Throwable}
+ * is specified.
  *
- * @param <S> The 1st input argument type to be consumed
- * @param <T> The 2nd input argument type to be consumed
+ * @param <A> The 1st input argument type to be consumed
+ * @param <B> The 2nd input argument type to be consumed
+ * @param <T> The type of {@link Throwable} thrown by the consumer
  * 
  * @author Logan Ferree (Tadukoo)
  * @version 0.1-Alpha-SNAPSHOT
  */
 @FunctionalInterface
-public interface ThrowingConsumer2<S, T>{
+public interface ThrowingConsumer2<A, B, T extends Throwable>{
 	
 	/**
 	 * Takes two arguments and consumes them.
 	 * 
-	 * @param s The 1st argument
-	 * @param t The 2nd argument
-	 * @throws Throwable Determined by the consumer, not required
+	 * @param a The 1st argument
+	 * @param b The 2nd argument
+	 * @throws T Determined by the consumer, not required
 	 */
-	void accept(S s, T t) throws Throwable;
+	void accept(A a, B b) throws T;
 	
 	/**
 	 * Creates a ThrowingConsumer2 that runs this ThrowingConsumer2 and then also runs the 
@@ -35,10 +33,10 @@ public interface ThrowingConsumer2<S, T>{
 	 * @param after A 2nd ThrowingConsumer2 to run the arguments on after this one
 	 * @return The ThrowingConsumer2 made from composing this one and the given one
 	 */
-	default ThrowingConsumer2<S, T> andThen(ThrowingConsumer2<? super S, ? super T> after){
-		return (s, t) -> {
-							this.accept(s, t);
-							after.accept(s, t);
+	default ThrowingConsumer2<A, B, T> andThen(ThrowingConsumer2<? super A, ? super B, ? extends T> after){
+		return (a, b) -> {
+							this.accept(a, b);
+							after.accept(a, b);
 						};
 	}
 }

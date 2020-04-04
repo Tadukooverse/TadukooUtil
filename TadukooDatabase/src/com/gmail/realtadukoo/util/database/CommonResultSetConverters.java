@@ -1,5 +1,7 @@
 package com.gmail.realtadukoo.util.database;
 
+import com.gmail.realtadukoo.util.functional.function.ThrowingFunction;
+
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,7 +16,8 @@ public class CommonResultSetConverters{
 		return resultSet.next();
 	}
 	
-	public static <Type> List<Type> simpleList(ResultSet resultSet, SQLExceptionFunction<Integer, Type> getter) throws SQLException{
+	public static <Type> List<Type> simpleList(ResultSet resultSet, ThrowingFunction<Integer, Type, SQLException> getter)
+			throws SQLException{
 		List<Type> values = new ArrayList<>();
 		while(resultSet.next()){
 			values.add(getter.apply(1));
