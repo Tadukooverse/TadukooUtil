@@ -5,7 +5,7 @@ import java.util.function.Predicate;
 
 /**
  * A better version of Java's {@link Predicate} interface that 
- * allows for the predicates to throw whater {@link Throwable}
+ * allows for the predicates to throw whatever {@link Throwable}
  * is specified.
  *
  * @param <A> The input argument type for the predicate
