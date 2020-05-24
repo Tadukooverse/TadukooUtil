@@ -19,21 +19,21 @@ public class FormatNode{
 	public static final String NULL_NODE = "<null>";
 	
 	/** The name of the Node - used to distinguish in parent/child/sibling requirements */
-	private String name;
+	private final String name;
 	/** The regex used to ensure the title is of the correct format */
-	private String titleRegex;
+	private final String titleRegex;
 	/** The regex used to ensure the data is of the correct format */
-	private String dataRegex;
+	private final String dataRegex;
 	/** The required level of the Node */
-	private int level;
+	private final int level;
 	/** Names of allowed parents of the Node */
-	private List<String> parentNames;
+	private final List<String> parentNames;
 	/** Names of allowed children of the Node */
-	private List<String> childNames;
+	private final List<String> childNames;
 	/** Names of allowed previous siblings of the Node */
-	private List<String> prevSiblingNames;
+	private final List<String> prevSiblingNames;
 	/** Names of allowed next siblings of the Node */
-	private List<String> nextSiblingNames;
+	private final List<String> nextSiblingNames;
 	
 	/**
 	 * Builder for constructing a {@link FormatNode} object.
@@ -51,10 +51,10 @@ public class FormatNode{
 	 * </ul>
 	 * Defaults are:
 	 * <ul>
-	 * <li>parentNames - List with {@link NULL_NODE} - meaning no parent nodes allowed</li>
-	 * <li>childNames - List with {@link NULL_NODE} - meaning no child nodes allowed</li>
-	 * <li>prevSiblingNames - List with {@link NULL_NODE} - meaning no previous siblings allowed</li>
-	 * <li>nextSiblingNames - List with {@link NULL_NODE} - meaning no next siblings allowed</li>
+	 * <li>parentNames - List with {@link #NULL_NODE} - meaning no parent nodes allowed</li>
+	 * <li>childNames - List with {@link #NULL_NODE} - meaning no child nodes allowed</li>
+	 * <li>prevSiblingNames - List with {@link #NULL_NODE} - meaning no previous siblings allowed</li>
+	 * <li>nextSiblingNames - List with {@link #NULL_NODE} - meaning no next siblings allowed</li>
 	 * </ul>
 	 * <b>Notes:</b>
 	 * <ul>
@@ -510,7 +510,7 @@ public class FormatNode{
 		}
 		
 		/**
-		 * Creates a List of strings that only contains the {@link NULL_NODE} string, 
+		 * Creates a List of strings that only contains the {@link #NULL_NODE} string,
 		 * to allow a null parent/child/sibling reference.
 		 * 
 		 * @return A List with the NULL_NODE string in it
@@ -592,7 +592,7 @@ public class FormatNode{
 	 * 
 	 * @return A new FormatNodeBuilder
 	 */
-	public static final FormatNodeBuilder builder(){
+	public static FormatNodeBuilder builder(){
 		return new FormatNodeBuilder();
 	}
 	
@@ -683,20 +683,20 @@ public class FormatNode{
 		Node levelNode = new Node("Level", String.valueOf(level), 1, null, null, dataFormatNode, null);
 		dataFormatNode.setNextSibling(levelNode);
 		// The parents Node = "Parents" + parentNames
-		Node parentsNode = new Node("Parents", StringUtil.buildCommaSeparatedString(parentNames), 1, null, null, 
+		Node parentsNode = new Node("Parents", StringUtil.buildCommaSeparatedString(parentNames), 1, null, null,
 				levelNode, null);
 		levelNode.setNextSibling(parentsNode);
 		// The children Node = "Children" + childNames
-		Node childrenNode = new Node("Children", StringUtil.buildCommaSeparatedString(childNames), 1, null, null, 
+		Node childrenNode = new Node("Children", StringUtil.buildCommaSeparatedString(childNames), 1, null, null,
 				parentsNode, null);
 		parentsNode.setNextSibling(childrenNode);
 		// The previous sibling Node = "PrevSiblings" + prevSiblingNames
-		Node prevSiblingNode = new Node("PrevSiblings", StringUtil.buildCommaSeparatedString(prevSiblingNames), 1, null, null, 
-				childrenNode, null);
+		Node prevSiblingNode = new Node("PrevSiblings", StringUtil.buildCommaSeparatedString(prevSiblingNames), 1,
+				null, null, childrenNode, null);
 		childrenNode.setNextSibling(prevSiblingNode);
 		// The next sibling Node = "NextSiblings" + nextSiblingNames
-		Node nextSiblingNode = new Node("NextSiblings", StringUtil.buildCommaSeparatedString(nextSiblingNames), 1, null, null,
-				prevSiblingNode, null);
+		Node nextSiblingNode = new Node("NextSiblings", StringUtil.buildCommaSeparatedString(nextSiblingNames), 1,
+				null, null, prevSiblingNode, null);
 		prevSiblingNode.setNextSibling(nextSiblingNode);
 		
 		// Convert these Nodes into a string to be returned

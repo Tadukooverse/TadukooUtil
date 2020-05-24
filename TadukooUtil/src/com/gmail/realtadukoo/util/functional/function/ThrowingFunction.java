@@ -4,39 +4,37 @@ import java.util.function.Function;
 
 /**
  * A better version of Java's {@link Function} interface that 
- * allows for the functions to throw anything. Using this requires 
- * you to check whatever may be thrown, but this class can be 
- * extended to allow for more specific throwing functions. 
- * See {@link ExceptionFunction} and SQLFunction (in Tadukoo Database) 
- * for examples of more fine-tuned extensions.
+ * allows for the functions to throw whatever {@link Throwable} is
+ * specified.
  *
- * @param <S> The input argument type for the function
+ * @param <A> The input argument type for the function
  * @param <R> The output result type for the function
+ * @param <T> The type of {@link Throwable} thrown by the function
  * 
  * @author Logan Ferree (Tadukoo)
  * @version 0.1-Alpha-SNAPSHOT
  */
 @FunctionalInterface
-public interface ThrowingFunction<S, R>{
+public interface ThrowingFunction<A, R, T extends Throwable>{
 	
 	/**
 	 * Takes a single argument and returns a result.
 	 * 
-	 * @param s The argument
+	 * @param a The argument
 	 * @return A result
-	 * @throws Throwable
+	 * @throws T Determined by the function, not required
 	 */
-	public abstract R apply(S s) throws Throwable;
+	R apply(A a) throws T;
 	
 	/**
 	 * Creates a ThrowingFunction that runs the given ThrowingFunction and puts the result 
 	 * into this ThrowingFunction.
 	 * 
-	 * @param <V> The input type to the composed ThrowingFunction
+	 * @param <S> The input type to the composed ThrowingFunction
 	 * @param before The ThrowingFunction to run before this one, and put the result into this one
 	 * @return The ThrowingFunction made from composing this one and the given one
 	 */
-	public default <V> ThrowingFunction<V, R> compose(ThrowingFunction<? super V, ? extends S> before){
+	default <S> ThrowingFunction<S, R, T> compose(ThrowingFunction<? super S, ? extends A, ? extends T> before){
 		return v -> this.apply(before.apply(v));
 	}
 	
@@ -44,23 +42,22 @@ public interface ThrowingFunction<S, R>{
 	 * Creates a ThrowingFunction that runs this ThrowingFunction and puts the result 
 	 * into the given ThrowingFunction.
 	 * 
-	 * @param <V> The output type of the 2nd ThrowingFunction
+	 * @param <S> The output type of the 2nd ThrowingFunction
 	 * @param after A 2nd ThrowingFunction to put the result of this one into
 	 * @return The ThrowingFunction made from composing this one and the given one
 	 */
-	public default <V> ThrowingFunction<S, V> andThen(ThrowingFunction<? super R, ? extends V> after){
-		return s -> after.apply(this.apply(s));
+	default <S> ThrowingFunction<A, S, T> andThen(ThrowingFunction<? super R, ? extends S, ? extends T> after){
+		return a -> after.apply(this.apply(a));
 	}
 	
 	/**
 	 * Returns a ThrowingFunction that always returns its input argument
 	 * 
-	 * @param <S> The type of argument
+	 * @param <A> The type of argument
+	 * @param <T> The {@link Throwable} being thrown
 	 * @return A ThrowingFunction that always returns its input argument
 	 */
-	public static <S> ThrowingFunction<S, S> identity(){
-		return s -> {
-						return s;
-					};
+	static <A, T extends Throwable> ThrowingFunction<A, A, T> identity(){
+		return a -> a;
 	}
 }

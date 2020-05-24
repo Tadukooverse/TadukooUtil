@@ -5,28 +5,26 @@ import java.util.function.Predicate;
 
 /**
  * A better version of Java's {@link Predicate} interface that 
- * allows for the predicates to throw anything. Using this requires 
- * you to check whatever may be thrown, but this class can be 
- * extended to allow for more specific throwing predicates. 
- * See {@link ExceptionPredicate} for an example of a more 
- * fine-tuned extension.
+ * allows for the predicates to throw whatever {@link Throwable}
+ * is specified.
  *
- * @param <S> The input argument type for the predicate
+ * @param <A> The input argument type for the predicate
+ * @param <T> The type of {@link Throwable} thrown by the predicate
  * 
  * @author Logan Ferree (Tadukoo)
  * @version 0.1-Alpha-SNAPSHOT
  */
 @FunctionalInterface
-public interface ThrowingPredicate<S>{
+public interface ThrowingPredicate<A, T extends Throwable>{
 	
 	/**
 	 * Takes a single argument and returns a boolean.
 	 * 
-	 * @param s The argument
+	 * @param a The argument
 	 * @return A boolean
-	 * @throws Throwable
+	 * @throws T Determined by the predicate, not required
 	 */
-	public abstract boolean test(S s) throws Throwable;
+	boolean test(A a) throws T;
 	
 	/**
 	 * Creates a ThrowingPredicate that will test the argument with this ThrowingPredicate 
@@ -35,8 +33,8 @@ public interface ThrowingPredicate<S>{
 	 * @param other The other ThrowingPredicate to test the argument on
 	 * @return The ThrowingPredicate that results from composing this one and the given one
 	 */
-	public default ThrowingPredicate<S> and(ThrowingPredicate<? super S> other){
-		return s -> this.test(s) && other.test(s);
+	default ThrowingPredicate<A, T> and(ThrowingPredicate<? super A, ? extends T> other){
+		return a -> this.test(a) && other.test(a);
 	}
 	
 	/**
@@ -46,8 +44,8 @@ public interface ThrowingPredicate<S>{
 	 * @param other The other ThrowingPredicate to test the argument on
 	 * @return The ThrowingPredicate that results from composing this one and the given one
 	 */
-	public default ThrowingPredicate<S> or(ThrowingPredicate<? super S> other){
-		return s -> this.test(s) || other.test(s);
+	default ThrowingPredicate<A, T> or(ThrowingPredicate<? super A, ? extends T> other){
+		return a -> this.test(a) || other.test(a);
 	}
 	
 	/**
@@ -55,19 +53,20 @@ public interface ThrowingPredicate<S>{
 	 * 
 	 * @return A negated version of this ThrowingPredicate
 	 */
-	public default ThrowingPredicate<S> negate(){
-		return s -> !this.test(s);
+	default ThrowingPredicate<A, T> negate(){
+		return a -> !this.test(a);
 	}
 	
 	/**
 	 * Creates a ThrowingPredicate that tests if two arguments are equal according 
 	 * to Objects.equals(Object, Object).
 	 * 
-	 * @param <S> The argument type
+	 * @param <A> The argument type
+	 * @param <T> The {@link Throwable} being thrown
 	 * @param obj The object to test against
 	 * @return A ThrowingPredicate that tests if two objects are equal
 	 */
-	public static <S> ThrowingPredicate<S> isEqual(Object obj){
-		return s -> Objects.equals(obj, s);
+	static <A, T extends Throwable> ThrowingPredicate<A, T> isEqual(Object obj){
+		return a -> Objects.equals(obj, a);
 	}
 }

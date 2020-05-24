@@ -23,7 +23,7 @@ public abstract class Drawable{
 	 * 
 	 * @return Whether this object's orientation has been calculated or not
 	 */
-	private final boolean isOriented(){
+	private boolean isOriented(){
 		return oriented;
 	}
 	
@@ -42,7 +42,7 @@ public abstract class Drawable{
 	 * 
 	 * @return Whether this object should be drawn to the screen or not
 	 */
-	private final boolean isVisible(){
+	private boolean isVisible(){
 		return visible;
 	}
 	

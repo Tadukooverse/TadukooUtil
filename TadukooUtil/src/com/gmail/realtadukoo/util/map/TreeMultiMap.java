@@ -21,7 +21,7 @@ public class TreeMultiMap<K, V> extends MultiMap<K, V>{
 	 * of its keys.
 	 */
 	public TreeMultiMap(){
-		super(new TreeMap<K, List<V>>());
+		super(new TreeMap<>());
 	}
 	
 	/**
@@ -31,7 +31,7 @@ public class TreeMultiMap<K, V> extends MultiMap<K, V>{
 	 * @param comparator The Comparator to use in ordering the keys
 	 */
 	public TreeMultiMap(Comparator<? super K> comparator){
-		super(new TreeMap<K, List<V>>(comparator));
+		super(new TreeMap<>(comparator));
 	}
 	
 	/**
@@ -42,7 +42,7 @@ public class TreeMultiMap<K, V> extends MultiMap<K, V>{
 	 * @param map The Map whose mappings are to be placed in the backing TreeMap
 	 */
 	public TreeMultiMap(Map<K, V> map){
-		super(new TreeMap<K, List<V>>(), map);
+		super(new TreeMap<>(), map);
 	}
 	
 	/**
@@ -53,7 +53,7 @@ public class TreeMultiMap<K, V> extends MultiMap<K, V>{
 	 * @param map The SortedMap whose mappings are to be placed in the backing TreeMap
 	 */
 	public TreeMultiMap(SortedMap<K, V> map){
-		super(new TreeMap<K, List<V>>(map.comparator()), map);
+		super(new TreeMap<>(map.comparator()), map);
 	}
 	
 	/**
@@ -66,7 +66,7 @@ public class TreeMultiMap<K, V> extends MultiMap<K, V>{
 	 * @param multiMap The MultiMap whose mappings are to be placed in this MultiMap
 	 */
 	public TreeMultiMap(MultiMap<K, V> multiMap){
-		super(new TreeMap<K, List<V>>(), multiMap);
+		super(new TreeMap<>(), multiMap);
 	}
 	
 	/**
@@ -80,7 +80,7 @@ public class TreeMultiMap<K, V> extends MultiMap<K, V>{
 	 * @param treeMultiMap The TreeMultiMap whose mappings are to be placed in this MultiMap
 	 */
 	public TreeMultiMap(TreeMultiMap<K, V> treeMultiMap){
-		super(new TreeMap<K, List<V>>(treeMultiMap.comparator()), treeMultiMap);
+		super(new TreeMap<>(treeMultiMap.comparator()), treeMultiMap);
 	}
 	
 	/**

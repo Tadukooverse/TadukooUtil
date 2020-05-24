@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.gmail.realtadukoo.util.AutoCloseableUtil;
+import com.gmail.realtadukoo.util.functional.function.ThrowingFunction;
 
 public class DBUtil{
 	public static abstract class Query<ResultType>{
@@ -19,7 +20,7 @@ public class DBUtil{
 		public abstract String getSQL();
 
 		public ResultType executeQuery(Connection conn) throws SQLException{
-			Statement stmt = null;
+			Statement stmt;
 			ResultSet resultSet = null;
 			
 			try{
@@ -42,8 +43,8 @@ public class DBUtil{
 	}
 	
 	public static <ResultType> Query<ResultType> createQuery(String name, String sql, 
-			SQLExceptionFunction<ResultSet, ResultType> convertFromResultSet){
-		return new Query<ResultType>(){
+			ThrowingFunction<ResultSet, ResultType, SQLException> convertFromResultSet){
+		return new Query<>(){
 			
 			@Override
 			public String getName(){
@@ -71,7 +72,7 @@ public class DBUtil{
 		public abstract List<String> getSQLs();
 
 		public Boolean executeUpdates(Connection conn) throws SQLException{
-			ArrayList<Statement> stmts = new ArrayList<Statement>();
+			ArrayList<Statement> stmts = new ArrayList<>();
 			List<String> names = getNames();
 			List<String> sqls = getSQLs();
 			try{
@@ -186,8 +187,8 @@ public class DBUtil{
 	public static boolean addConditionalIntToQuery(boolean prevSet, StringBuilder name, StringBuilder sql, String arg, int value){
 		if(value != -1){
 			addConditionalAndToQuery(prevSet, name, sql);
-			name.append(arg + " of " + value);
-			sql.append(arg + " = " + value);
+			name.append(arg).append(" of ").append(value);
+			sql.append(arg).append(" = ").append(value);
 			return true;
 		}else{
 			return false;
@@ -199,11 +200,11 @@ public class DBUtil{
 		if(value != null && !value.equalsIgnoreCase("")){
 			addConditionalAndToQuery(prevSet, name, sql);
 			if(partial){
-				name.append(arg + " with " + value);
-				sql.append(arg + " like '%" + value + "%'");
+				name.append(arg).append(" with ").append(value);
+				sql.append(arg).append(" like '%").append(value).append("%'");
 			}else{
-				name.append(arg + " of " + value);
-				sql.append(arg + " = '" + value + "'");
+				name.append(arg).append(" of ").append(value);
+				sql.append(arg).append(" = '").append(value).append("'");
 			}
 			return true;
 		}else{
@@ -219,47 +220,47 @@ public class DBUtil{
 	
 	// TODO: Improve (/Rework doSearch logic into here)
 	public static String formatQuery(String table, String returnPieces, String[] args, String[] values){
-		String selectSQL = "select " + returnPieces + " from " + table + " where ";
+		StringBuilder selectSQL = new StringBuilder("select " + returnPieces + " from " + table + " where ");
 		for(int i = 0; i < args.length; i++){
 			if(!values[i].startsWith("SHA")){
-				selectSQL += args[i] + " = ";
+				selectSQL.append(args[i]).append(" = ");
 				if(values[i].equalsIgnoreCase("true") || values[i].equalsIgnoreCase("false")){
-					selectSQL += values[i];
+					selectSQL.append(values[i]);
 				}else{
-					selectSQL += "'" + values[i] + "'";
+					selectSQL.append("'").append(values[i]).append("'");
 				}
 				if(i != args.length - 1){
-					selectSQL += " and ";
+					selectSQL.append(" and ");
 				}else{
-					selectSQL += ";";
+					selectSQL.append(";");
 				}
 			}
 		}
-		return selectSQL;
+		return selectSQL.toString();
 	}
 	
 	public static String formatInsertStatement(String table, String[] args, String[] values){
-		String insertSQL = "insert into " + table + " (";
+		StringBuilder insertSQL = new StringBuilder("insert into " + table + " (");
 		for(int i = 0; i < args.length; i++){
 			if(i == args.length - 1){
-				insertSQL += args[i] + ") select ";
+				insertSQL.append(args[i]).append(") select ");
 			}else{
-				insertSQL += args[i] + ", ";
+				insertSQL.append(args[i]).append(", ");
 			}
 		}
 		for(int i = 0; i < values.length; i++){
 			if(values[i].equalsIgnoreCase("true") || values[i].equalsIgnoreCase("false") ||
 					values[i].startsWith("SHA")){
-				insertSQL += values[i];
+				insertSQL.append(values[i]);
 			}else{
-				insertSQL += "'" + values[i] + "'";
+				insertSQL.append("'").append(values[i]).append("'");
 			}
 			if(i == values.length - 1){
-				insertSQL += ";";
+				insertSQL.append(";");
 			}else{
-				insertSQL += ", ";
+				insertSQL.append(", ");
 			}
 		}
-		return insertSQL;
+		return insertSQL.toString();
 	}
 }

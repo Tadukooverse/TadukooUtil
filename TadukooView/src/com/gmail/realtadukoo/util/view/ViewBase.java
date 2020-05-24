@@ -20,7 +20,6 @@ import com.gmail.realtadukoo.util.event.view.ViewChangeEventListener;
  * @author Logan Ferree (Tadukoo)
  * @version 0.1-Alpha-SNAPSHOT
  */
-@SuppressWarnings("serial")
 public abstract class ViewBase extends JPanel implements ViewChangeEventListener{
 	private static Context context;
 	
@@ -55,9 +54,10 @@ public abstract class ViewBase extends JPanel implements ViewChangeEventListener
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.pack();
 		frame.setVisible(true);
+		setFocusTraversalKeysEnabled(false);
 	}
 	
-	private final void initialize(){
+	private void initialize(){
 		context = createContext();
 		context.addViewToStack(initFirstView());
 		context.getCurrentView().init(context);
@@ -85,7 +85,7 @@ public abstract class ViewBase extends JPanel implements ViewChangeEventListener
 	/**
 	 * Registers the {@link MouseAdapter} and {@link KeyAdapter} methods for this class.
 	 */
-	private final void registerInputListeners(){
+	private void registerInputListeners(){
 		// Register key event handlers
 		KeyAdapter keyListener = new KeyAdapter(){
 			@Override
@@ -115,7 +115,7 @@ public abstract class ViewBase extends JPanel implements ViewChangeEventListener
 		// Close any views being removed from the stack
 		List<View> oldViews = e.getOldViews();
 		if(oldViews != null){
-			oldViews.forEach(view -> view.close());
+			oldViews.forEach(View::close);
 		}
 		
 		// Initialize any views being added to the stack
@@ -131,7 +131,6 @@ public abstract class ViewBase extends JPanel implements ViewChangeEventListener
 		View view = context.getCurrentView();
 		if(view.handleKeyTyped(e)){
 			repaint();
-			return;
 		}
 	}
 	
@@ -141,7 +140,6 @@ public abstract class ViewBase extends JPanel implements ViewChangeEventListener
 		View view = context.getCurrentView();
 		if(view.handleKeyReleased(e)){
 			repaint();
-			return;
 		}
 	}
 	
@@ -151,7 +149,6 @@ public abstract class ViewBase extends JPanel implements ViewChangeEventListener
 		View view = context.getCurrentView();
 		if(view.handleMouseReleased(e)){
 			repaint();
-			return;
 		}
 	}
 	

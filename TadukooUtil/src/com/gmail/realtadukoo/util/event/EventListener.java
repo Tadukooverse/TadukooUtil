@@ -17,5 +17,5 @@ public interface EventListener<EventType extends Event>{
 	 * 
 	 * @param e The Event for this EventListener to handle
 	 */
-	public abstract void handleEvent(EventType e);
+	void handleEvent(EventType e);
 }

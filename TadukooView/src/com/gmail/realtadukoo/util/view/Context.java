@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.gmail.realtadukoo.util.event.Event;
 import com.gmail.realtadukoo.util.event.EventHandler;
 import com.gmail.realtadukoo.util.event.view.ViewChangeEventHandler;
 
@@ -19,9 +20,9 @@ import com.gmail.realtadukoo.util.event.view.ViewChangeEventHandler;
  */
 public abstract class Context{
 	/** The {@link View Views} currently being shown, with the topmost one at the final index */
-	private List<View> currentViewStack;
+	private final List<View> currentViewStack;
 	/** The {@link EventHandler EventHandlers} used to handle {@link Event Events} */
-	private Map<Class<? extends EventHandler<?, ?>>, EventHandler<?, ?>> eventHandlers;
+	protected final Map<Class<? extends EventHandler<?, ?>>, EventHandler<?, ?>> eventHandlers;
 	
 	/**
 	 * Constructs a new {@link Context}, initializing the various stuff it holds.
@@ -35,8 +36,8 @@ public abstract class Context{
 	 * </ul>
 	 */
 	public Context(){
-		currentViewStack = new ArrayList<View>();
-		eventHandlers = new HashMap<Class<? extends EventHandler<?, ?>>, EventHandler<?, ?>>();
+		currentViewStack = new ArrayList<>();
+		eventHandlers = new HashMap<>();
 		initEventHandlers();
 	}
 	

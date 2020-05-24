@@ -18,9 +18,9 @@ import com.gmail.realtadukoo.util.view.View;
  */
 public class ViewChangeEvent extends Event{
 	/** The {@link View Views} being removed */
-	private List<View> oldViews;
+	private final List<View> oldViews;
 	/** The {@link View Views} being added or switched to */
-	private List<View> newViews;
+	private final List<View> newViews;
 	
 	/**
 	 * Creates a View Change Event for the given old {@link View Views} and new Views.

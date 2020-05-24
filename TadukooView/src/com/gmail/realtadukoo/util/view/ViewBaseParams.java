@@ -59,7 +59,7 @@ public class ViewBaseParams{
 		/**
 		 * Sets whether to be in fullscreen (true) or windowed (false) mode
 		 * 
-		 * @param Whether to be in fullscreen or windowed mode
+		 * @param fullscreen Whether to be in fullscreen or windowed mode
 		 */
 		public ViewBaseParamsBuilder fullscreen(boolean fullscreen){
 			this.fullscreen = fullscreen;
@@ -69,7 +69,7 @@ public class ViewBaseParams{
 		/**
 		 * Sets the width of the window if in windowed mode
 		 * 
-		 * @param The width of the window
+		 * @param width The width of the window
 		 */
 		public ViewBaseParamsBuilder width(int width){
 			this.width = width;
@@ -79,7 +79,7 @@ public class ViewBaseParams{
 		/**
 		 * Sets the height of the window if in windowed mode
 		 * 
-		 * @param The height of the window
+		 * @param height The height of the window
 		 */
 		public ViewBaseParamsBuilder height(int height){
 			this.height = height;
@@ -89,7 +89,7 @@ public class ViewBaseParams{
 		/**
 		 * Sets the background color of the window
 		 * 
-		 * @param The background color of the window
+		 * @param background The background color of the window
 		 */
 		public ViewBaseParamsBuilder background(Color background){
 			this.background = background;
@@ -136,15 +136,15 @@ public class ViewBaseParams{
 	}
 	
 	/** Title to be used on the window */
-	private String title;
+	private final String title;
 	/** Whether to be in fullscreen (true) or windowed (false) mode */
-	private boolean fullscreen;
+	private final boolean fullscreen;
 	/** The width of the window if in windowed mode */
-	private int width;
+	private final int width;
 	/** The height of the window if in windowed mode */
-	private int height;
+	private final int height;
 	/** The background color of the window */
-	private Color background;
+	private final Color background;
 	
 	/**
 	 * Constructs a ViewBaseParams object with the given values.
@@ -168,7 +168,7 @@ public class ViewBaseParams{
 	 * 
 	 * @return A new ViewBaseParamsBuilder
 	 */
-	public static final ViewBaseParamsBuilder builder(){
+	public static ViewBaseParamsBuilder builder(){
 		return new ViewBaseParamsBuilder();
 	}
 	

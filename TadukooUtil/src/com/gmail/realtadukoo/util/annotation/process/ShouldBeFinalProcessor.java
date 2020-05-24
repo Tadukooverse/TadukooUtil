@@ -4,7 +4,6 @@ import java.util.Set;
 
 import javax.lang.model.element.Element;
 
-import com.gmail.realtadukoo.util.annotation.AnnotationProcessor;
 import com.gmail.realtadukoo.util.annotation.ShouldBeFinal;
 
 /**
@@ -31,7 +30,7 @@ public class ShouldBeFinalProcessor extends AbstractAnnotationProcessor{
 	 * @param elements The Elements to process
 	 */
 	@Override
-	protected void processElements(Set<? extends Element> elements) throws Throwable{
+	protected void processElements(Set<? extends Element> elements){
 		for(Element element : elements){
 			annotationUtil.displayCompileWarning(element, "This method should be marked as final soon");
 		}

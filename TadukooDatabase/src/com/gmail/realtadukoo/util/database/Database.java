@@ -4,13 +4,14 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import com.gmail.realtadukoo.util.database.DBUtil.InsertAndGetID;
 import com.gmail.realtadukoo.util.database.DBUtil.Query;
 import com.gmail.realtadukoo.util.database.DBUtil.Updates;
+import com.gmail.realtadukoo.util.functional.function.ThrowingFunction;
 
 /**
  * A class used to connect to a MySQL database and make queries, 
@@ -70,7 +71,8 @@ public class Database{
 	 * @param transaction The transaction function to run
 	 * @return The result from the transaction function
 	 */
-	public <ResultType> ResultType execute(SQLExceptionFunction<Connection, ResultType> transaction) throws SQLException{
+	public <ResultType> ResultType execute(ThrowingFunction<Connection, ResultType, SQLException> transaction)
+			throws SQLException{
 		// Create the connection
 		Connection conn = connect();
 		
@@ -88,6 +90,7 @@ public class Database{
 				success = true;
 			}catch(SQLException e){
 				// TODO: Log error
+				attempts++;
 			}
 		}
 		
@@ -117,16 +120,16 @@ public class Database{
 	 * @param <ResultType> The type of result to be returned
 	 * @param name The name to use for the query (for debugging purposes - may be null)
 	 * @param sql The sql query string to run
-	 * @param convertFromResultSet The {@link SQLExceptionFunction} to use to run the query
+	 * @param convertFromResultSet The {@link ThrowingFunction} to use to run the query
 	 * @return The result from the query
 	 */
 	public <ResultType> ResultType executeQuery(String name, String sql, 
-			SQLExceptionFunction<ResultSet, ResultType> convertFromResultSet) throws SQLException{
+			ThrowingFunction<ResultSet, ResultType, SQLException> convertFromResultSet) throws SQLException{
 		return executeQuery(DBUtil.createQuery(name, sql, convertFromResultSet));
 	}
 	
 	// TODO: Rework this (Move to DBUtil and such)
-	public<ResultType> ResultType doSearch(SQLExceptionFunction<ResultSet, ResultType> convertFromResultSet, 
+	public<ResultType> ResultType doSearch(ThrowingFunction<ResultSet, ResultType, SQLException> convertFromResultSet,
 			String returnPieces, String mainTable, 
 			Collection<String> otherTables, Collection<String> junctions, 
 			String[] intArgs, int[] intValues, 
@@ -141,30 +144,32 @@ public class Database{
 			throw new IllegalArgumentException("Database.doSearch: partialStrings, stringArgs, and stringValues must be the same "
 					+ "size!");
 		}
-		StringBuilder name = new StringBuilder("");
+		StringBuilder name = new StringBuilder();
 		StringBuilder sql = new StringBuilder("select distinct " + returnPieces + " from " + mainTable);
 		boolean prevSet = false;
 		if(otherTables != null && otherTables.size() > 0){
 			for(String table: otherTables){
-				sql.append(", " + table);
+				sql.append(", ").append(table);
 			}
 		}
 		boolean searchAll = junctions == null || junctions.size() == 0;
 		for(int i = 0; searchAll && i < intValues.length; i++){
 			if(intValues[i] != -1){
 				searchAll = false;
+				break;
 			}
 		}
 		for(int i = 0; searchAll && i < stringValues.length; i++){
 			String s = stringValues[i];
 			if(s != null && !s.equalsIgnoreCase("")){
 				searchAll = false;
+				break;
 			}
 		}
 		if(searchAll){
-			name.append("Get all " + mainTable + "s");
+			name.append("Get all ").append(mainTable).append("s");
 		}else{
-			name.append("Get " + mainTable + "s with ");
+			name.append("Get ").append(mainTable).append("s with ");
 			sql.append(" where ");
 			
 			if(junctions != null){
@@ -174,11 +179,11 @@ public class Database{
 				}
 			}
 			for(int i = 0; i < intValues.length; i++){
-				prevSet = (DBUtil.addConditionalIntToQuery(prevSet, name, sql, intArgs[i], intValues[i]))?true:prevSet;
+				prevSet = (DBUtil.addConditionalIntToQuery(prevSet, name, sql, intArgs[i], intValues[i])) || prevSet;
 			}
 			for(int i = 0; i < stringValues.length; i++){
-				prevSet = (DBUtil.addConditionalStringToQuery(prevSet, name, sql, partialStrings[i], 
-						stringArgs[i], stringValues[i]))?true:prevSet;
+				prevSet = (DBUtil.addConditionalStringToQuery(prevSet, name, sql, partialStrings[i],
+						stringArgs[i], stringValues[i])) || prevSet;
 			}
 		}
 		
@@ -216,12 +221,12 @@ public class Database{
 	 * {@link #executeUpdates(List, List) the plural version} to create the 
 	 * {@link Updates} object.
 	 * 
-	 * @param names The name to use for the update (optional - used for debugging)
-	 * @param sqls The sql update statement to run
+	 * @param name The name to use for the update (optional - used for debugging)
+	 * @param sql The sql update statement to run
 	 * @return If it succeeded or not
 	 */
 	public boolean executeUpdate(String name, String sql) throws SQLException{
-		return executeUpdates(Arrays.asList(name), Arrays.asList(sql));
+		return executeUpdates(Collections.singletonList(name), Collections.singletonList(sql));
 	}
 	
 	public void insert(String table, String[] args, String[] values) throws SQLException{

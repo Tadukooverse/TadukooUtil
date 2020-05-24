@@ -3,10 +3,11 @@ package com.gmail.realtadukoo.util.view;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
+import com.gmail.realtadukoo.util.event.Event;
 import com.gmail.realtadukoo.util.event.EventListener;
 import com.gmail.realtadukoo.util.event.view.ViewChangeEventListener;
 import com.gmail.realtadukoo.util.map.HashMultiMap;
@@ -60,9 +61,9 @@ public abstract class View implements ViewChangeEventListener{
 		// Register this as a ViewChangeEventListener
 		context.getViewChangeEventHandler().registerListener(this);
 		// Initialize the drawables MultiMap
-		drawables = new HashMultiMap<Integer, Drawable>();
+		drawables = new HashMultiMap<>();
 		// Initialize the clickables MultiMap
-		clickables = new HashMultiMap<Integer, Clickable>();
+		clickables = new HashMultiMap<>();
 	}
 	
 	/**
@@ -101,6 +102,10 @@ public abstract class View implements ViewChangeEventListener{
 		clickables.put(layer, clickable);
 	}
 	
+	public final void handleKeyPressed(KeyEvent e){
+		// TODO: Use for key combos
+	}
+	
 	/**
 	 * Handles a key typed event. Usually this is for when a user is typing in a text box.
 	 * 
@@ -109,7 +114,30 @@ public abstract class View implements ViewChangeEventListener{
 	public final boolean handleKeyTyped(KeyEvent e){
 		if(focus != null && focus instanceof TextInput){
 			TextInput input = (TextInput) focus;
-			input.handleKeyType(e.getKeyChar());
+			boolean removeFocus = false;
+			switch(e.getKeyChar()){
+				case KeyEvent.VK_BACK_SPACE:
+					input.handleBackspace();
+					break;
+				case KeyEvent.VK_DELETE:
+					input.handleDelete();
+					break;
+				case KeyEvent.VK_ESCAPE:
+					removeFocus = input.handleEscape();
+					break;
+				case KeyEvent.VK_TAB:
+					removeFocus = input.handleTab();
+					break;
+				case KeyEvent.VK_ENTER:
+					removeFocus = input.handleEnter();
+					break;
+				default:
+					input.handleKeyType(e.getKeyChar());
+					break;
+			}
+			if(removeFocus){
+				focus = null;
+			}
 			return true;
 		}
 		return false;
@@ -126,20 +154,17 @@ public abstract class View implements ViewChangeEventListener{
 			TextInput input = (TextInput) focus;
 			boolean removeFocus = false;
 			switch(e.getKeyCode()){
-				case KeyEvent.VK_BACK_SPACE:
-					input.handleBackspace();
+				case KeyEvent.VK_LEFT:
+					input.handleLeft();
 					break;
-				case KeyEvent.VK_DELETE:
-					input.handleDelete();
+				case KeyEvent.VK_RIGHT:
+					input.handleRight();
 					break;
-				case KeyEvent.VK_ESCAPE:
-					removeFocus = input.handleEscape();
+				case KeyEvent.VK_UP:
+					input.handleUp();
 					break;
-				case KeyEvent.VK_TAB:
-					removeFocus = input.handleTab();
-					break;
-				case KeyEvent.VK_ENTER:
-					removeFocus = input.handleEnter();
+				case KeyEvent.VK_DOWN:
+					input.handleDown();
 					break;
 			}
 			
@@ -164,6 +189,8 @@ public abstract class View implements ViewChangeEventListener{
 		switch(e.getButton()){
 			case MouseEvent.BUTTON1:
 				return handleClick(e.getX(), e.getY());
+			case MouseEvent.BUTTON2:
+				// TODO: Allow for right-click logic
 			default:
 				return false;
 		}
@@ -180,9 +207,9 @@ public abstract class View implements ViewChangeEventListener{
 	 * @param y The y position of the mouse
 	 * @return Whether an action happened, so the {@link ViewBase} knows to repaint
 	 */
-	private final boolean handleClick(int x, int y){
+	private boolean handleClick(int x, int y){
 		// Get all the layers specified in the MultiMap and sort them in descending order
-		List<Integer> layers = clickables.keySet().stream().collect(Collectors.toList());
+		List<Integer> layers = new ArrayList<>(clickables.keySet());
 		layers.sort(Collections.reverseOrder());
 		
 		// Whether a Clickable action happened or not
@@ -223,7 +250,7 @@ public abstract class View implements ViewChangeEventListener{
 	 */
 	public final void draw(Graphics g){
 		// Get all the layers specified in the MultiMap and sort them in ascending order
-		List<Integer> layers = drawables.keySet().stream().collect(Collectors.toList());
+		List<Integer> layers = new ArrayList<>(drawables.keySet());
 		Collections.sort(layers);
 		
 		// Draw the drawables on each layer in increasing order

@@ -14,35 +14,35 @@ public interface TextInput{
 	 * 
 	 * @param c The character that was typed
 	 */
-	public abstract void handleKeyType(char c);
+	void handleKeyType(char c);
 	
 	/**
 	 * Handles pressing backspace on this TextInput. 
 	 * Basically it should remove the character immediately before the cursor in 
 	 * the current text in the input.
 	 */
-	public abstract void handleBackspace();
+	void handleBackspace();
 	
 	/**
 	 * Handles pressing delete on this TextInput. 
 	 * Basically it should remove the character immediately after the cursor in 
 	 * the current text in the input.
 	 */
-	public abstract void handleDelete();
+	void handleDelete();
 	
 	/**
 	 * Handles pressing left on this TextInput. 
 	 * Basically it should move the cursor back by one character in the current 
 	 * text in the input.
 	 */
-	public abstract void handleLeft();
+	void handleLeft();
 	
 	/**
 	 * Handles pressing right on this TextInput. 
 	 * Basically it should move the cursor forward by one character in the current 
 	 * text in the input.
 	 */
-	public abstract void handleRight();
+	void handleRight();
 	
 	/**
 	 * Handles pressing up on this TextInput. 
@@ -50,7 +50,7 @@ public interface TextInput{
 	 * input if it's multiple lines, or to the start of the text if it's just a 
 	 * single line.
 	 */
-	public abstract void handleUp();
+	void handleUp();
 	
 	/**
 	 * Handles pressing down on this TextInput. 
@@ -58,7 +58,7 @@ public interface TextInput{
 	 * input if it's multiple lines, or go to the end of the text if it's just a 
 	 * single line.
 	 */
-	public abstract void handleDown();
+	void handleDown();
 	
 	/**
 	 * Handles pressing escape on this TextInput. 
@@ -69,7 +69,7 @@ public interface TextInput{
 	 * 
 	 * @return Whether to unfocus from this TextInput or not
 	 */
-	public abstract boolean handleEscape();
+	boolean handleEscape();
 	
 	/**
 	 * Handles pressing tab on this TextInput. 
@@ -80,7 +80,7 @@ public interface TextInput{
 	 * 
 	 * @return Whether to unfocus from this TextInput or not
 	 */
-	public abstract boolean handleTab();
+	boolean handleTab();
 	
 	/**
 	 * Handles pressing enter on this TextInput. 
@@ -91,5 +91,5 @@ public interface TextInput{
 	 * 
 	 * @return Whether to unfocus from this TextInput or not
 	 */
-	public abstract boolean handleEnter();
+	boolean handleEnter();
 }

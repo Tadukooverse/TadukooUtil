@@ -1,5 +1,6 @@
 package com.gmail.realtadukoo.util.view.draw;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Point;
@@ -31,6 +32,7 @@ public class Text extends Drawable{
 	 * <li>fontName - Calibri</li>
 	 * <li>fontStyle - {@link Font#PLAIN}</li>
 	 * <li>fontSize - 25</li>
+	 * <li>color - {@link Color#BLACK}</li>
 	 * <li>Graphics - null - must be set if orienting or fitting to box on 
 	 * initialization</li>
 	 * <li>orient - false - if Graphics is set, can orient on creation, 
@@ -57,6 +59,8 @@ public class Text extends Drawable{
 		private int fontStyle = Font.PLAIN;
 		/** The font size of the Text - default 25 */
 		private int fontSize = 25;
+		/** The Color of the Text - default BLACK */
+		private Color color = Color.BLACK;
 		/** Graphics to use if orienting or fitting the Text object to a box in the build */
 		private Graphics g = null;
 		/** Whether or not to orient the Text object immediately */
@@ -140,6 +144,16 @@ public class Text extends Drawable{
 		}
 		
 		/**
+		 * Sets the Color to be used for the Text object
+		 * 
+		 * @param color The Color to be used for the Text object
+		 */
+		public TextBuilder color(Color color){
+			this.color = color;
+			return this;
+		}
+		
+		/**
 		 * Sets Graphics to use to orient this object. To be used by objects using 
 		 * Text as part of their more complex object during orientation.
 		 * 
@@ -182,7 +196,7 @@ public class Text extends Drawable{
 		 * Checks for errors with the current settings for the Text object
 		 */
 		private void checkForErrors(){
-			List<String> errors = new ArrayList<String>();
+			List<String> errors = new ArrayList<>();
 			// Text is required
 			if(text == null){
 				errors.add("Text must be specified");
@@ -226,7 +240,7 @@ public class Text extends Drawable{
 			}
 			
 			// Created the Text object
-			Text newText = new Text(new Font(fontName, fontStyle, fontSize), text, x, y, orientation);
+			Text newText = new Text(new Font(fontName, fontStyle, fontSize), color, text, x, y, orientation);
 			
 			// Orient the Text if specified
 			if(orient){
@@ -237,15 +251,17 @@ public class Text extends Drawable{
 	}
 	
 	/** The {@link Font} to use */
-	private Font font;
+	private final Font font;
+	/** The {@link Color} to use */
+	private final Color color;
 	/** The text to draw to the screen */
 	private String text;
 	/** The x coordinate of the text (meaning determined by {@link ORIENTATION}) */
-	private int originalX;
+	private final int originalX;
 	/** The y coordinate of the text (meaning determined by {@link ORIENTATION}) */
-	private int originalY;
+	private final int originalY;
 	/** The {@link ORIENTATION} of the text in relation to the given coordinate */
-	private ORIENTATION orientation;
+	private final ORIENTATION orientation;
 	/** The actual x coordinate of the text, after being oriented */
 	private int x;
 	/** The actual y coordinate of the text, after being oriented */
@@ -262,16 +278,18 @@ public class Text extends Drawable{
 	
 	/**
 	 * Create a text object to be drawn to the screen at the given location using 
-	 * the given {@link ORIENTATION} and {@link Font} information.
+	 * the given {@link Color}, {@link ORIENTATION} and {@link Font} information.
 	 * 
-	 * @param Font the {@link Font} to use
+	 * @param font The {@link Font} to use
+	 * @param color The {@link Color} to use
 	 * @param text The text to draw to the screen
 	 * @param x The x coordinate of the text
 	 * @param y The y coordinate of the text
 	 * @param orientation The {@link ORIENTATION} of the text in relation to the given coordinate
 	 */
-	private Text(Font font, String text, int x, int y, ORIENTATION orientation){
+	private Text(Font font, Color color, String text, int x, int y, ORIENTATION orientation){
 		this.font = font;
+		this.color = color;
 		this.text = text;
 		originalX = x;
 		originalY = y;
@@ -298,6 +316,7 @@ public class Text extends Drawable{
 	 * 
 	 * @param g The Graphics to use in orienting
 	 */
+	@Override
 	protected void orient(Graphics g){
 		Point newPoint = Draw.orientText(g, font, text, originalX, originalY, orientation);
 		x = (int) newPoint.getX();
@@ -306,7 +325,7 @@ public class Text extends Drawable{
 	}
 	
 	/**
-	 * Draws the text to the screen using its coordinates and orientation.
+	 * Draws the text to the screen using its coordinates, orientation, font, and color.
 	 * <br><br>
 	 * Calls {@link Draw#drawText} to actually draw the text.
 	 * 
@@ -315,6 +334,6 @@ public class Text extends Drawable{
 	@Override
 	protected void draw(Graphics g){
 		// Draw the text to the screen
-		Draw.drawText(g, text, x, y, font);
+		Draw.drawText(g, text, x, y, font, color);
 	}
 }

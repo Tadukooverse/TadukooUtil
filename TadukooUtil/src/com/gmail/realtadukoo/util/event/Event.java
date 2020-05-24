@@ -9,9 +9,9 @@ package com.gmail.realtadukoo.util.event;
  */
 public abstract class Event{
 	/** The type of Event */
-	private String type;
+	private final String type;
 	/** The message for the Event */
-	private String message;
+	private final String message;
 	
 	/**
 	 * Creates an {@link Event} for the given type with the given message.

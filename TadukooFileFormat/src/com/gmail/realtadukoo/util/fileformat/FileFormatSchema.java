@@ -12,13 +12,13 @@ import java.util.List;
  */
 public class FileFormatSchema{
 	/** The version string of this schema */
-	private String versionString;
+	private final String versionString;
 	/** The version number of this schema */
-	private int versionNum;
+	private final int versionNum;
 	/** The file extension on files using this schema */
-	private String fileExtension;
+	private final String fileExtension;
 	/** The {@link FormatNode}s that define this schema */
-	private List<FormatNode> formatNodes;
+	private final List<FormatNode> formatNodes;
 	
 	/**
 	 * Constructs a FileFormatSchema with the given information.

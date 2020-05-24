@@ -9,8 +9,8 @@ public class HashManyToManyMap<K, V> extends ManyToManyMap<K, V>{
 	 * the default initial capacity (16) and the default load factor (0.75).
 	 */
 	public HashManyToManyMap(){
-		super(new HashMultiMap<K, V>(), 
-				new HashMultiMap<V, K>());
+		super(new HashMultiMap<>(),
+				new HashMultiMap<>());
 	}
 	
 	/**
@@ -20,8 +20,8 @@ public class HashManyToManyMap<K, V> extends ManyToManyMap<K, V>{
 	 * @param initialCapacity The initial capacity of the backing HashMultiMaps
 	 */
 	public HashManyToManyMap(int initialCapacity){
-		super(new HashMultiMap<K, V>(initialCapacity), 
-				new HashMultiMap<V, K>(initialCapacity));
+		super(new HashMultiMap<>(initialCapacity),
+				new HashMultiMap<>(initialCapacity));
 	}
 	
 	/**
@@ -32,8 +32,8 @@ public class HashManyToManyMap<K, V> extends ManyToManyMap<K, V>{
 	 * @param loadFactor The load factor of the backing HashMultiMaps
 	 */
 	public HashManyToManyMap(int initialCapacity, float loadFactor){
-		super(new HashMultiMap<K, V>(initialCapacity, loadFactor), 
-				new HashMultiMap<V, K>(initialCapacity, loadFactor));
+		super(new HashMultiMap<>(initialCapacity, loadFactor),
+				new HashMultiMap<>(initialCapacity, loadFactor));
 	}
 	
 	/**
@@ -45,7 +45,7 @@ public class HashManyToManyMap<K, V> extends ManyToManyMap<K, V>{
 	 * @param map The Map whose mappings are to be placed in the backing HashMultiMaps
 	 */
 	public HashManyToManyMap(Map<K, V> map){
-		super(new HashMultiMap<K, V>(), new HashMultiMap<V, K>(), map);
+		super(new HashMultiMap<>(), new HashMultiMap<>(), map);
 	}
 	
 	/**
@@ -58,7 +58,7 @@ public class HashManyToManyMap<K, V> extends ManyToManyMap<K, V>{
 	 * @param multiMap The MultiMap whose mappings are to be placed in this ManyToManyMap
 	 */
 	public HashManyToManyMap(MultiMap<K, V> multiMap){
-		super(new HashMultiMap<K, V>(), new HashMultiMap<V, K>(), multiMap);
+		super(new HashMultiMap<>(), new HashMultiMap<>(), multiMap);
 	}
 	
 	/**
@@ -68,10 +68,10 @@ public class HashManyToManyMap<K, V> extends ManyToManyMap<K, V>{
 	 * The ManyToManyMap is then populated with the values present in the specified 
 	 * ManyToManyMap.
 	 * 
-	 * @param manyToMAnyMap The ManyToManyMap whose mappings are to be placed in this ManyToManyMap
+	 * @param manyToManyMap The ManyToManyMap whose mappings are to be placed in this ManyToManyMap
 	 */
 	public HashManyToManyMap(ManyToManyMap<K, V> manyToManyMap){
-		super(new HashMultiMap<K, V>(), new HashMultiMap<V, K>(), manyToManyMap);
+		super(new HashMultiMap<>(), new HashMultiMap<>(), manyToManyMap);
 	}
 	
 	/**
