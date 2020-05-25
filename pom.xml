@@ -3,16 +3,16 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.gmail.realtadukoo.util</groupId>
+	<groupId>com.github.tadukoo.util</groupId>
 	<artifactId>TadukooUtilParent</artifactId>
 	<version>0.1-Alpha-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<modules>
+		<module>TadukooLang</module>
+		<module>TadukooAnnotationProcessor</module>
 		<module>TadukooUtil</module>
 		<module>TadukooDatabase</module>
 		<module>TadukooFileFormat</module>
-		<module>TadukooAnnotationProcessor</module>
-		<module>TadukooLang</module>
 		<module>TadukooLookAndFeel</module>
 	</modules>
 	<properties>

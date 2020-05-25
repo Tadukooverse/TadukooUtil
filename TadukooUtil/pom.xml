@@ -3,16 +3,16 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>com.gmail.realtadukoo.util</groupId>
+		<groupId>com.github.tadukoo.util</groupId>
 		<artifactId>TadukooUtilParent</artifactId>
 		<version>0.1-Alpha-SNAPSHOT</version>
 	</parent>
 	<artifactId>TadukooUtil</artifactId>
 	<dependencies>
 		<dependency>
-			<groupId>com.gmail.realtadukoo.util</groupId>
+			<groupId>${project.groupId}</groupId>
 			<artifactId>TadukooAnnotationProcessor</artifactId>
-			<version>0.1-Alpha-SNAPSHOT</version>
+			<version>${project.version}</version>
 		</dependency>
 	</dependencies>
 	<build>
