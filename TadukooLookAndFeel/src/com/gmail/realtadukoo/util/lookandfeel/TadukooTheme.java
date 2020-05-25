@@ -1,10 +1,11 @@
 package com.gmail.realtadukoo.util.lookandfeel;
 
 import com.gmail.realtadukoo.util.lookandfeel.componentui.TadukooButtonUI;
+import com.gmail.realtadukoo.util.lookandfeel.paintui.ColorPaintUIResource;
+import com.gmail.realtadukoo.util.lookandfeel.paintui.PaintUIResource;
 
 import javax.swing.border.Border;
 import javax.swing.plaf.ButtonUI;
-import javax.swing.plaf.ColorUIResource;
 import javax.swing.plaf.FontUIResource;
 import javax.swing.plaf.metal.OceanTheme;
 import java.awt.*;
@@ -26,12 +27,12 @@ public class TadukooTheme{
 		// TODO: Set defaults for colors
 		
 		// Focus Colors
-		private ColorUIResource defaultFocusColor = new ColorUIResource(Color.YELLOW);
-		private ColorUIResource buttonFocusColor = null;
+		private PaintUIResource defaultFocusPaint = new ColorPaintUIResource(Color.YELLOW);
+		private PaintUIResource buttonFocusPaint = null;
 		
 		// Select Colors
-		private ColorUIResource defaultSelectColor = new ColorUIResource(Color.RED);
-		private ColorUIResource buttonSelectColor = null;
+		private PaintUIResource defaultSelectPaint = new ColorPaintUIResource(Color.RED);
+		private PaintUIResource buttonSelectPaint = null;
 		
 		/// Fonts
 		private FontUIResource defaultFont = new FontUIResource("Calibri", Font.PLAIN, 12);
@@ -56,123 +57,35 @@ public class TadukooTheme{
 		}
 		
 		/*
-		 * Default Focus Color Methods
+		 * Focus Color Methods
 		 */
 		
-		public TadukooThemeBuilder defaultFocusColor(ColorUIResource defaultFocusColor){
-			this.defaultFocusColor = defaultFocusColor;
+		public TadukooThemeBuilder defaultFocusPaint(PaintUIResource defaultFocusPaint){
+			this.defaultFocusPaint = defaultFocusPaint;
 			return this;
 		}
 		
-		public TadukooThemeBuilder defaultFocusColor(Color defaultFocusColor){
-			this.defaultFocusColor = new ColorUIResource(defaultFocusColor);
-			return this;
-		}
-		
-		public TadukooThemeBuilder defaultFocusColorRGB(int defaultFocusColorRGB){
-			this.defaultFocusColor = new ColorUIResource(defaultFocusColorRGB);
-			return this;
-		}
-		
-		public TadukooThemeBuilder defaultFocusColorRGB(int r, int g, int b){
-			this.defaultFocusColor = new ColorUIResource(r, g, b);
-			return this;
-		}
-		
-		public TadukooThemeBuilder defaultFocusColorRGB(float r, float g, float b){
-			this.defaultFocusColor = new ColorUIResource(r, g, b);
+		public TadukooThemeBuilder buttonFocusPaint(PaintUIResource buttonFocusPaint){
+			this.buttonFocusPaint = buttonFocusPaint;
 			return this;
 		}
 		
 		/*
-		 * Button Focus Color Methods
+		 * Select Color Methods
 		 */
 		
-		public TadukooThemeBuilder buttonFocusColor(ColorUIResource buttonFocusColor){
-			this.buttonFocusColor = buttonFocusColor;
+		public TadukooThemeBuilder defaultSelectPaint(PaintUIResource defaultSelectPaint){
+			this.defaultSelectPaint = defaultSelectPaint;
 			return this;
 		}
 		
-		public TadukooThemeBuilder buttonFocusColor(Color buttonFocusColor){
-			this.buttonFocusColor = new ColorUIResource(buttonFocusColor);
-			return this;
-		}
-		
-		public TadukooThemeBuilder buttonFocusColorRGB(int buttonFocusColorRGB){
-			this.buttonFocusColor = new ColorUIResource(buttonFocusColorRGB);
-			return this;
-		}
-		
-		public TadukooThemeBuilder buttonFocusColorRGB(int r, int g, int b){
-			this.buttonFocusColor = new ColorUIResource(r, g, b);
-			return this;
-		}
-		
-		public TadukooThemeBuilder buttonFocusColorRGB(float r, float g, float b){
-			this.buttonFocusColor = new ColorUIResource(r, g, b);
+		public TadukooThemeBuilder buttonSelectPaint(PaintUIResource buttonSelectPaint){
+			this.buttonSelectPaint = buttonSelectPaint;
 			return this;
 		}
 		
 		/*
-		 * Default Select Color Methods
-		 */
-		
-		public TadukooThemeBuilder defaultSelectColor(ColorUIResource defaultSelectColor){
-			this.defaultSelectColor = defaultSelectColor;
-			return this;
-		}
-		
-		public TadukooThemeBuilder defaultSelectColor(Color defaultSelectColor){
-			this.defaultSelectColor = new ColorUIResource(defaultSelectColor);
-			return this;
-		}
-		
-		public TadukooThemeBuilder defaultSelectColorRGB(int defaultSelectColorRGB){
-			this.defaultSelectColor = new ColorUIResource(defaultSelectColorRGB);
-			return this;
-		}
-		
-		public TadukooThemeBuilder defaultSelectColorRGB(int r, int g, int b){
-			this.defaultSelectColor = new ColorUIResource(r, g, b);
-			return this;
-		}
-		
-		public TadukooThemeBuilder defaultSelectColorRGB(float r, float g, float b){
-			this.defaultSelectColor = new ColorUIResource(r, g, b);
-			return this;
-		}
-		
-		/*
-		 * Button Select Color Methods
-		 */
-		
-		public TadukooThemeBuilder buttonSelectColor(ColorUIResource buttonSelectColor){
-			this.buttonSelectColor = buttonSelectColor;
-			return this;
-		}
-		
-		public TadukooThemeBuilder buttonSelectColor(Color buttonSelectColor){
-			this.buttonSelectColor = new ColorUIResource(buttonSelectColor);
-			return this;
-		}
-		
-		public TadukooThemeBuilder buttonSelectColorRGB(int buttonSelectColorRGB){
-			this.buttonSelectColor = new ColorUIResource(buttonSelectColorRGB);
-			return this;
-		}
-		
-		public TadukooThemeBuilder buttonSelectColorRGB(int r, int g, int b){
-			this.buttonSelectColor = new ColorUIResource(r, g, b);
-			return this;
-		}
-		
-		public TadukooThemeBuilder buttonSelectColorRGB(float r, float g, float b){
-			this.buttonSelectColor = new ColorUIResource(r, g, b);
-			return this;
-		}
-		
-		/*
-		 * Default Font Methods
+		 * Font Methods
 		 */
 		
 		public TadukooThemeBuilder defaultFont(FontUIResource defaultFont){
@@ -180,32 +93,8 @@ public class TadukooTheme{
 			return this;
 		}
 		
-		public TadukooThemeBuilder defaultFont(Font defaultFont){
-			this.defaultFont = new FontUIResource(defaultFont);
-			return this;
-		}
-		
-		public TadukooThemeBuilder defaultFont(String fontName, int fontStyle, int fontSize){
-			this.defaultFont = new FontUIResource(fontName, fontStyle, fontSize);
-			return this;
-		}
-		
-		/*
-		 * Button Font Methods
-		 */
-		
 		public TadukooThemeBuilder buttonFont(FontUIResource buttonFont){
 			this.buttonFont = buttonFont;
-			return this;
-		}
-		
-		public TadukooThemeBuilder buttonFont(Font buttonFont){
-			this.buttonFont = new FontUIResource(buttonFont);
-			return this;
-		}
-		
-		public TadukooThemeBuilder buttonFont(String fontName, int fontStyle, int fontSize){
-			this.buttonFont = new FontUIResource(fontName, fontStyle, fontSize);
 			return this;
 		}
 		
@@ -226,12 +115,12 @@ public class TadukooTheme{
 			/*
 			 * Handle Default Colors
 			 */
-			if(buttonFocusColor == null){
-				buttonFocusColor = defaultFocusColor;
+			if(buttonFocusPaint == null){
+				buttonFocusPaint = defaultFocusPaint;
 			}
 			
-			if(buttonSelectColor == null){
-				buttonSelectColor = defaultSelectColor;
+			if(buttonSelectPaint == null){
+				buttonSelectPaint = defaultSelectPaint;
 			}
 			
 			/*
@@ -242,22 +131,22 @@ public class TadukooTheme{
 			}
 			
 			return new TadukooTheme(buttonUI.getCanonicalName(), buttonBorder,
-					buttonFocusColor, buttonSelectColor, buttonFont);
+					buttonFocusPaint, buttonSelectPaint, buttonFont);
 		}
 	}
 	
 	private String buttonUI;
 	private Border buttonBorder;
-	private ColorUIResource buttonFocusColor;
-	private ColorUIResource buttonSelectColor;
+	private PaintUIResource buttonFocusPaint;
+	private PaintUIResource buttonSelectPaint;
 	private FontUIResource buttonFont;
 	
 	private TadukooTheme(String buttonUI, Border buttonBorder,
-	                     ColorUIResource buttonFocusColor, ColorUIResource buttonSelectColor, FontUIResource buttonFont){
+	                     PaintUIResource buttonFocusPaint, PaintUIResource buttonSelectPaint, FontUIResource buttonFont){
 		this.buttonUI = buttonUI;
 		this.buttonBorder = buttonBorder;
-		this.buttonFocusColor = buttonFocusColor;
-		this.buttonSelectColor = buttonSelectColor;
+		this.buttonFocusPaint = buttonFocusPaint;
+		this.buttonSelectPaint = buttonSelectPaint;
 		this.buttonFont = buttonFont;
 	}
 	
@@ -273,12 +162,12 @@ public class TadukooTheme{
 		return buttonBorder;
 	}
 	
-	public ColorUIResource getButtonFocusColor(){
-		return buttonFocusColor;
+	public PaintUIResource getButtonFocusPaint(){
+		return buttonFocusPaint;
 	}
 	
-	public ColorUIResource getButtonSelectColor(){
-		return buttonSelectColor;
+	public PaintUIResource getButtonSelectPaint(){
+		return buttonSelectPaint;
 	}
 	
 	public FontUIResource getButtonFont(){

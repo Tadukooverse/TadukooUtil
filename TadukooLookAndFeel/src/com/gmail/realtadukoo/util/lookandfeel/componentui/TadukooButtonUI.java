@@ -1,6 +1,7 @@
 package com.gmail.realtadukoo.util.lookandfeel.componentui;
 
 import com.gmail.realtadukoo.util.components.Shaped;
+import com.gmail.realtadukoo.util.lookandfeel.paintui.PaintUIResource;
 
 import javax.swing.*;
 import javax.swing.plaf.ComponentUI;
@@ -24,16 +25,9 @@ public class TadukooButtonUI extends MetalButtonUI{
 	protected void paintButtonPressed(Graphics g, AbstractButton b){
 		if(b.isContentAreaFilled()){
 			Dimension size = b.getSize();
-			g.setColor(getSelectColor());
+			PaintUIResource paint = (PaintUIResource) UIManager.get("Button.select.paint");
+			((Graphics2D) g).setPaint(paint.getPaint(size));
 			if(b instanceof Shaped){
-				((Graphics2D) g).setPaint(Color.GREEN);
-				List<?> gradList = (List<?>) UIManager.get("Button.gradient");
-				float mid1 = ((Number) gradList.get(0)).floatValue();
-				float mid2 = ((Number) gradList.get(1)).floatValue();
-				Color c1 = (Color) gradList.get(2);
-				Color c2 = (Color) gradList.get(3);
-				Color c3 = (Color) gradList.get(4);
-				((Graphics2D) g).setPaint(new LinearGradientPaint(0, 0, size.width, 0, new float[]{0, mid1, mid1*2 + mid2, 1}, new Color[]{c1, c2, c1, c3}));
 				g.fillPolygon(((Shaped) b).getShape(0, 0, size.width, size.height));
 			}else{
 				g.fillRect(0, 0, size.width, size.height);
@@ -63,7 +57,8 @@ public class TadukooButtonUI extends MetalButtonUI{
 			focusRect.setBounds( iconRect );
 		}
 		
-		g.setColor(getFocusColor());
+		PaintUIResource paint = (PaintUIResource) UIManager.get("Button.focus.paint");
+		((Graphics2D) g).setPaint(paint.getPaint(focusRect.getSize()));
 		g.drawRect((focusRect.x-1), (focusRect.y-1),
 				focusRect.width+1, focusRect.height+1);
 		

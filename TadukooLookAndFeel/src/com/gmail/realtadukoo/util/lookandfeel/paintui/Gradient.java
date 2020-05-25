@@ -4,7 +4,6 @@ import com.gmail.realtadukoo.util.FloatUtil;
 import com.gmail.realtadukoo.util.StringUtil;
 
 import javax.swing.plaf.ColorUIResource;
-import javax.swing.plaf.UIResource;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
@@ -24,8 +23,8 @@ public class Gradient{
 	private static class GradientBuilder{
 		private boolean uiResource = false;
 		private GradientDirection direction = GradientDirection.HORIZONTAL;
-		private List<Float> fractions = new ArrayList<>();
-		private List<Color> colors = new ArrayList<>();
+		private final List<Float> fractions = new ArrayList<>();
+		private final List<Color> colors = new ArrayList<>();
 		private MultipleGradientPaint.CycleMethod cycleMethod = MultipleGradientPaint.CycleMethod.NO_CYCLE;
 		private MultipleGradientPaint.ColorSpaceType colorSpace = MultipleGradientPaint.ColorSpaceType.SRGB;
 		private AffineTransform gradientTransform = new AffineTransform();
@@ -97,12 +96,12 @@ public class Gradient{
 		}
 	}
 	
-	private GradientDirection direction;
-	private float[] fractions;
-	private Color[] colors;
-	private MultipleGradientPaint.CycleMethod cycleMethod;
-	private MultipleGradientPaint.ColorSpaceType colorSpace;
-	private AffineTransform gradientTransform;
+	protected GradientDirection direction;
+	protected float[] fractions;
+	protected Color[] colors;
+	protected MultipleGradientPaint.CycleMethod cycleMethod;
+	protected MultipleGradientPaint.ColorSpaceType colorSpace;
+	protected AffineTransform gradientTransform;
 	
 	private Gradient(GradientDirection direction, float[] fractions, Color[] colors,
 	                 MultipleGradientPaint.CycleMethod cycleMethod, MultipleGradientPaint.ColorSpaceType colorSpace,
@@ -122,68 +121,78 @@ public class Gradient{
 	public Paint getPaint(Dimension size){
 		float startX = 0, startY = 0, endX = 0, endY = 0;
 		switch(direction){
-			case HORIZONTAL:
-				endX = size.width;
-				break;
-			case VERTICAL:
-				endY = size.height;
-				break;
-			case DIAGONAL_DOWN_RIGHT:
+			case HORIZONTAL -> endX = size.width;
+			case VERTICAL -> endY = size.height;
+			case DIAGONAL_DOWN_RIGHT -> {
 				endX = size.width;
 				endY = size.height;
-				break;
-			case DIAGONAL_DOWN_LEFT:
+			}
+			case DIAGONAL_DOWN_LEFT -> {
 				startX = size.width;
 				endY = size.height;
-				break;
+			}
 		}
 		
 		return new LinearGradientPaint(new Point2D.Float(startX, startY), new Point2D.Float(endX, endY),
 				fractions, colors, cycleMethod, colorSpace, gradientTransform);
 	}
 	
-	/**
-	 * Metal Look and Feel has a trash way of handling gradients. Basically it takes 3 colors and 2 fractions, but
-	 * with the 3 colors, it repeats color 1 and does 1, 2, 1, 3. The fractions represent the 2 middle points,
-	 * but the 2nd point is calculated as mid1 * 2 + mid2.
-	 * <br><br>
-	 * If there are 4 colors or more, we send colors 1, 2, and either 3 or 4. Color 3 is sent if it's different than
-	 * color 1 (because if it's the same, Metal already handles it with its 1, 2, 1, 3 garbage).
-	 * <br>
-	 * 3 colors get sent in their given order, and we can't help that 1 is repeated.
-	 * <br><br>
-	 * If there are 3 fractions or more, we send fraction 2 as midpoint1, and fraction 3 as midpoint2, after
-	 * subtracting midpoint1 * 2 from it.
-	 * <br><br>
-	 * If there are only 2 colors, we send color 1, 2, and 2 again. For the fractions, we send fraction 2 as midpoint 1
-	 * and put in 0 for midpoint 2.
-	 *
-	 * @return The garbage List that Metal Look and Feel expects for gradients that matches best to the one defined here
-	 *
-	 * @deprecated Forever, because I hate how Metal Look and Feel does this, but I'm trying to support it all
-	 */
-	@Deprecated
-	public List<Object> getMetalGradientList(){
-		float mid2 = fractions.length > 2?fractions[2] - fractions[1]*2:0;
-		ColorUIResource color3;
-		if(colors.length > 3 && colors[0].equals(colors[2])){
-			// If colors 1 and 3 are the same, Metal stuff handles it that way already without specifying it twice
-			color3 = new ColorUIResource(colors[3]);
-		}else if(colors.length > 2){
-			color3 = new ColorUIResource(colors[2]);
-		}else{
-			color3 = new ColorUIResource(colors[1]);
-		}
-		return Arrays.asList(
-				new Object[]{fractions[1], mid2,
-				new ColorUIResource(colors[0]), new ColorUIResource(colors[1]), color3});
-	}
 	
-	private static class GradientUIResource extends Gradient implements UIResource{
+	
+	private static class GradientUIResource extends Gradient implements PaintUIResource{
 		private GradientUIResource(GradientDirection direction, float[] fractions, Color[] colors,
 		                           MultipleGradientPaint.CycleMethod cycleMethod,
 		                           MultipleGradientPaint.ColorSpaceType colorSpace, AffineTransform gradientTransform){
 			super(direction, fractions, colors, cycleMethod, colorSpace, gradientTransform);
+		}
+		
+		/**
+		 * Makes a ColorUIResource out of the first Color in this Gradient. There are some UI situations where
+		 * we can't avoid using a Color instead of a general Paint if we want to support everything, so we need to
+		 * return a plain Color in some cases.
+		 *
+		 * @return The first Color in the Gradient as a ColorUIResource
+		 */
+		public ColorUIResource getColorUIResource(){
+			return new ColorUIResource(colors[0]);
+		}
+		
+		/**
+		 * Metal Look and Feel has a trash way of handling gradients. Basically it takes 3 colors and 2 fractions, but
+		 * with the 3 colors, it repeats color 1 and does 1, 2, 1, 3. The fractions represent the 2 middle points,
+		 * but the 2nd point is calculated as mid1 * 2 + mid2.
+		 * <br><br>
+		 * If there are 4 colors or more, we send colors 1, 2, and either 3 or 4. Color 3 is sent if it's different than
+		 * color 1 (because if it's the same, Metal already handles it with its 1, 2, 1, 3 garbage).
+		 * <br>
+		 * 3 colors get sent in their given order, and we can't help that 1 is repeated.
+		 * <br><br>
+		 * If there are 3 fractions or more, we send fraction 2 as midpoint1, and fraction 3 as midpoint2, after
+		 * subtracting midpoint1 * 2 from it.
+		 * <br><br>
+		 * If there are only 2 colors, we send color 1, 2, and 2 again. For the fractions, we send fraction 2 as midpoint 1
+		 * and put in 0 for midpoint 2.
+		 *
+		 * @return The garbage List that Metal Look and Feel expects for gradients that matches best to the one defined here
+		 *
+		 * @deprecated Forever, because I hate how Metal Look and Feel does this, but I'm trying to support it all
+		 */
+		@Deprecated
+		@Override
+		public List<Object> getMetalGradientList(){
+			float mid2 = fractions.length > 2?fractions[2] - fractions[1]*2:0;
+			ColorUIResource color3;
+			if(colors.length > 3 && colors[0].equals(colors[2])){
+				// If colors 1 and 3 are the same, Metal stuff handles it that way already without specifying it twice
+				color3 = new ColorUIResource(colors[3]);
+			}else if(colors.length > 2){
+				color3 = new ColorUIResource(colors[2]);
+			}else{
+				color3 = new ColorUIResource(colors[1]);
+			}
+			return Arrays.asList(
+					new Object[]{fractions[1], mid2,
+							new ColorUIResource(colors[0]), new ColorUIResource(colors[1]), color3});
 		}
 	}
 }
