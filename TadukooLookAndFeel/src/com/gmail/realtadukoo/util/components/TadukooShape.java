@@ -1,4 +1,6 @@
-package com.gmail.realtadukoo.util.lookandfeel;
+package com.gmail.realtadukoo.util.components;
+
+import com.gmail.realtadukoo.util.components.Shaped;
 
 import java.awt.*;
 

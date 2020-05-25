@@ -1,4 +1,4 @@
-package com.gmail.realtadukoo.util.lookandfeel;
+package com.gmail.realtadukoo.util.lookandfeel.paintui;
 
 import com.gmail.realtadukoo.util.FloatUtil;
 import com.gmail.realtadukoo.util.StringUtil;

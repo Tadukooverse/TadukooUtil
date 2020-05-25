@@ -1,5 +1,7 @@
 package com.gmail.realtadukoo.util.lookandfeel;
 
+import com.gmail.realtadukoo.util.lookandfeel.componentui.TadukooButtonUI;
+
 import javax.swing.border.Border;
 import javax.swing.plaf.ButtonUI;
 import javax.swing.plaf.ColorUIResource;

@@ -1,4 +1,4 @@
-package com.gmail.realtadukoo.util.lookandfeel;
+package com.gmail.realtadukoo.util.lookandfeel.paintui;
 
 import javax.swing.plaf.ColorUIResource;
 import javax.swing.plaf.UIResource;

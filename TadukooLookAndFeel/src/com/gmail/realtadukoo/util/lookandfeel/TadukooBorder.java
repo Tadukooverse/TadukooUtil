@@ -1,5 +1,7 @@
 package com.gmail.realtadukoo.util.lookandfeel;
 
+import com.gmail.realtadukoo.util.components.Shaped;
+
 import javax.swing.border.AbstractBorder;
 import javax.swing.plaf.UIResource;
 import java.awt.*;
