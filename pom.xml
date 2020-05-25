@@ -7,6 +7,30 @@
 	<artifactId>TadukooUtilParent</artifactId>
 	<version>0.1-Alpha-SNAPSHOT</version>
 	<packaging>pom</packaging>
+	<name>${project.artifactId}</name>
+	<description>A collection of utilities to be used in various projects</description>
+	<url>http://github.com/Tadukoo/TadukooUtil</url>
+	<developers>
+		<developer>
+			<name>Logan Ferree (Tadukoo)</name>
+		</developer>
+	</developers>
+	<licenses>
+		<license>
+			<name>MIT License</name>
+			<url>https://github.com/Tadukoo/TadukooUtil/blob/master/LICENSE</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+	<scm>
+		<url>https://github.com/Tadukoo/TadukooUtil</url>
+		<connection>
+			scm:git:git://github.com/Tadukoo/TadukooUtil.git
+		</connection>
+		<developerConnection>
+			scm:git:ssh://git@github.com:Tadukoo/TadukooUtil.git
+		</developerConnection>
+	</scm>
 	<modules>
 		<module>TadukooLang</module>
 		<module>TadukooAnnotationProcessor</module>
