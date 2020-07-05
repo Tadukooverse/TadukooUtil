@@ -1,6 +1,5 @@
 package com.github.tadukoo.util;
 
-import com.github.tadukoo.util.ListUtil;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;

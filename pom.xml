@@ -38,13 +38,13 @@
 		<module>TadukooDatabase</module>
 		<module>TadukooFileFormat</module>
 		<module>TadukooLookAndFeel</module>
+		<module>TadukooView</module>
 	</modules>
 	<properties>
-		<!-- Java Versions -->
-		<java.source.version>14</java.source.version>
-		<java.target.version>14</java.target.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		
-		<!-- JUnit Versions -->
+		<!-- Java and JUnit Versions -->
+		<java.version>14</java.version>
 		<junit.jupiter.version>5.5.2</junit.jupiter.version>
 		<junit.platform.version>1.5.2</junit.platform.version>
 		
@@ -67,6 +67,32 @@
 	<build>
 		<pluginManagement>
 			<plugins>
+				<plugin>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>3.8.0</version>
+					<configuration>
+						<release>${java.version}</release>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.jacoco</groupId>
+					<artifactId>jacoco-maven-plugin</artifactId>
+					<version>0.8.5</version>
+					<executions>
+						<execution>
+							<goals>
+								<goal>prepare-agent</goal>
+							</goals>
+						</execution>
+						<execution>
+							<id>report</id>
+							<phase>prepare-package</phase>
+							<goals>
+								<goal>report</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
 				<plugin>
 					<groupId>org.sonatype.plugins</groupId>
 					<artifactId>nexus-staging-maven-plugin</artifactId>

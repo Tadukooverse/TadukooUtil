@@ -28,10 +28,7 @@
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.8.0</version>
 				<configuration>
-					<source>${java.source.version}</source>
-					<target>${java.target.version}</target>
 					<annotationProcessorPaths>
 						<annotationProcessorPath>
 							<groupId>${project.groupId}</groupId>

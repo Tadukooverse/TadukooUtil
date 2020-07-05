@@ -1,7 +1,5 @@
 package com.github.tadukoo.util;
 
-import com.github.tadukoo.util.ListUtil;
-import com.github.tadukoo.util.StringUtil;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
