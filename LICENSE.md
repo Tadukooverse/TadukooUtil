@@ -1,6 +1,6 @@
 MIT License
 
-Copyright (c) 2020 Logan Ferree
+Copyright (c) 2020 Logan Ferree and [the Tadukooverse contributors](https://tadukooverse.github.io/about/contributors.html)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
