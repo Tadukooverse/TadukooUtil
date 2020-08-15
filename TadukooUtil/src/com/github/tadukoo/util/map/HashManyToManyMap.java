@@ -1,7 +1,14 @@
 package com.github.tadukoo.util.map;
 
+import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * A ManyToManyMap class that uses {@link HashMultiMap} as the backing {@link MultiMap} class.
+ *
+ * @author Logan Ferree (Tadukoo)
+ * @version Pre-Alpha
+ */
 public class HashManyToManyMap<K, V> extends ManyToManyMap<K, V>{
 	
 	/**

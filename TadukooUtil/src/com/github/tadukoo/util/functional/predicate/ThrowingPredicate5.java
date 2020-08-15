@@ -18,7 +18,7 @@ package com.github.tadukoo.util.functional.predicate;
 public interface ThrowingPredicate5<A, B, C, D, E, T extends Throwable>{
 	
 	/**
-	 * Takes four arguments and returns a boolean.
+	 * Takes five arguments and returns a boolean.
 	 *
 	 * @param a The 1st argument
 	 * @param b The 2nd argument
