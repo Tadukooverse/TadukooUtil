@@ -1,6 +1,5 @@
 package com.github.tadukoo.util.map;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**

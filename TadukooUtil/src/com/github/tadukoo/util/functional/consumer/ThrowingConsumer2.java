@@ -4,7 +4,7 @@ import java.util.function.BiConsumer;
 
 /**
  * A better version of Java's {@link BiConsumer} interface that 
- * allows for the consumers to throw whater {@link Throwable}
+ * allows for the consumers to throw whatever {@link Throwable}
  * is specified.
  *
  * @param <A> The 1st input argument type to be consumed
