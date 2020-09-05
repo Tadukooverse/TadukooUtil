@@ -77,6 +77,7 @@ public abstract class MultiMap<K, V>{
 	 * @param o The object to be compared for equality with this MultiMap
 	 * @return true if the given object is equivalent to this MultiMap
 	 */
+	@Override
 	public boolean equals(Object o){
 		if(o instanceof MultiMap){
 			return this.asMap().equals(((MultiMap<?, ?>) o).asMap());
@@ -206,17 +207,6 @@ public abstract class MultiMap<K, V>{
 	}
 	
 	/**
-	 * Removes all values associated with the given key from the MultiMap.
-	 * Calls {@link Map#remove(Object)} on the underlying {@link Map}.
-	 * 
-	 * @param key The key whose associations are to be removed
-	 * @return The List of values the key used to be associated with
-	 */
-	public final List<V> remove(K key){
-		return theMap.remove(key);
-	}
-	
-	/**
 	 * Removes the specified value from being associated with the 
 	 * specified key, if it exists.
 	 * <br>
@@ -251,6 +241,17 @@ public abstract class MultiMap<K, V>{
 	}
 	
 	/**
+	 * Removes all values associated with the given key from the MultiMap.
+	 * Calls {@link Map#remove(Object)} on the underlying {@link Map}.
+	 *
+	 * @param key The key whose associations are to be removed
+	 * @return The List of values the key used to be associated with
+	 */
+	public final List<V> removeKey(K key){
+		return theMap.remove(key);
+	}
+	
+	/**
 	 * Removes the given list of values associated with the given key if the 
 	 * list of values matches the current list.
 	 * <br>
@@ -265,27 +266,14 @@ public abstract class MultiMap<K, V>{
 	}
 	
 	/**
-	 * Replaces the current list of values associated with the given key 
-	 * with the given list of values.
-	 * <br>
-	 * Calls {@link Map#replace(K,V)} on the underlying {@link Map}.
-	 * 
-	 * @param key The key to change the associations of
-	 * @param values The values to associate with the given key
-	 * @return The previous list of values associated with the given key
-	 */
-	public final List<V> replaceList(K key, List<V> values){
-		return theMap.replace(key, values);
-	}
-	
-	/**
 	 * Replaces the given old value with the given new value for an 
 	 * association to the given key, if the old value is currently 
 	 * associated with the given key.
 	 * <br>
 	 * Checks if there is an association between the given key and 
 	 * given old value, and if so, replaces it with the given 
-	 * new value.
+	 * new value. The new value is placed at the end of the backing
+	 * List for the given key.
 	 * 
 	 * @param key The key to change the association of
 	 * @param oldValue The old value associated with the given key
@@ -327,6 +315,20 @@ public abstract class MultiMap<K, V>{
 	 */
 	public final boolean replaceEntireList(K key, List<V> oldValues, List<V> newValues){
 		return theMap.replace(key, oldValues, newValues);
+	}
+	
+	/**
+	 * Replaces the current list of values associated with the given key
+	 * with the given list of values.
+	 * <br>
+	 * Calls {@link Map#replace(K,V)} on the underlying {@link Map}.
+	 *
+	 * @param key The key to change the associations of
+	 * @param values The values to associate with the given key
+	 * @return The previous list of values associated with the given key
+	 */
+	public final List<V> replaceEntireList(K key, List<V> values){
+		return theMap.replace(key, values);
 	}
 	
 	/**

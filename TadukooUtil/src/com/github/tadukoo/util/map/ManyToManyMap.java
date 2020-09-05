@@ -32,7 +32,7 @@ public abstract class ManyToManyMap<K, V>{
 	 * @param keysToValues The keysToValues MultiMap to use for this ManyToManyMap
 	 * @param valuesToKeys The valuesToKeys MultiMap to use for this ManyToManyMap
 	 */
-	public ManyToManyMap(MultiMap<K, V> keysToValues, MultiMap<V, K> valuesToKeys){
+	protected ManyToManyMap(MultiMap<K, V> keysToValues, MultiMap<V, K> valuesToKeys){
 		this.keysToValues = keysToValues;
 		this.valuesToKeys = valuesToKeys;
 	}
@@ -45,7 +45,7 @@ public abstract class ManyToManyMap<K, V>{
 	 * @param valuesToKeys The valuesToKeys MultiMap to use for this ManyToManyMap
 	 * @param map A Map containing entries to add to this ManyToManyMap
 	 */
-	public ManyToManyMap(MultiMap<K, V> keysToValues, MultiMap<V, K> valuesToKeys, Map<K, V> map){
+	protected ManyToManyMap(MultiMap<K, V> keysToValues, MultiMap<V, K> valuesToKeys, Map<K, V> map){
 		this.keysToValues = keysToValues;
 		this.valuesToKeys = valuesToKeys;
 		putAllKeyValMappings(map);
@@ -59,7 +59,7 @@ public abstract class ManyToManyMap<K, V>{
 	 * @param valuesToKeys The valuesToKeys MultiMap to use for this ManyToManyMap
 	 * @param multiMap A MultiMap containing entries to add to this ManyToManyMap
 	 */
-	public ManyToManyMap(MultiMap<K, V> keysToValues, MultiMap<V, K> valuesToKeys, 
+	protected ManyToManyMap(MultiMap<K, V> keysToValues, MultiMap<V, K> valuesToKeys,
 			MultiMap<K, V> multiMap){
 		this.keysToValues = keysToValues;
 		this.valuesToKeys = valuesToKeys;
@@ -74,7 +74,7 @@ public abstract class ManyToManyMap<K, V>{
 	 * @param valuesToKeys The valuesToKeys MultiMap to use for this ManyToManyMap
 	 * @param manyToManyMap A ManyToManyMap containing entries to add to this ManyToManyMap
 	 */
-	public ManyToManyMap(MultiMap<K, V> keysToValues, MultiMap<V, K> valuesToKeys, 
+	protected ManyToManyMap(MultiMap<K, V> keysToValues, MultiMap<V, K> valuesToKeys,
 			ManyToManyMap<K, V> manyToManyMap){
 		this.keysToValues = keysToValues;
 		this.valuesToKeys = valuesToKeys;
@@ -326,7 +326,7 @@ public abstract class ManyToManyMap<K, V>{
 	
 	/**
 	 * Removes all values associated with the given key from the ManyToManyMap.
-	 * Calls {@link MultiMap#remove(Object)} on the underlying keysToValues 
+	 * Calls {@link MultiMap#removeKey(Object)} on the underlying keysToValues
 	 * MultiMap and then {@link MultiMap#remove(Object, Object)} on the underlying 
 	 * valuesToKeys MultiMap for each of the former key-value pairs being removed.
 	 * 
@@ -334,14 +334,14 @@ public abstract class ManyToManyMap<K, V>{
 	 * @return The List of values the key used to be associated with
 	 */
 	public final List<V> removeKey(K key){
-		List<V> values = keysToValues.remove(key);
+		List<V> values = keysToValues.removeKey(key);
 		values.forEach(value -> valuesToKeys.remove(value, key));
 		return values;
 	}
 	
 	/**
 	 * Removes all keys associated with the given value from the ManyToManyMap.
-	 * Calls {@link MultiMap#remove(Object)} on the underlying valuesToKeys 
+	 * Calls {@link MultiMap#removeKey(Object)} on the underlying valuesToKeys
 	 * MultiMap and then {@link MultiMap#remove(Object, Object)} on the underlying 
 	 * keysToValues MultiMap for each of the former key-value pairs being removed.
 	 * 
@@ -349,7 +349,7 @@ public abstract class ManyToManyMap<K, V>{
 	 * @return The List of keys the value used to be associated with
 	 */
 	public final List<K> removeValue(V value){
-		List<K> keys = valuesToKeys.remove(value);
+		List<K> keys = valuesToKeys.removeKey(value);
 		keys.forEach(key -> keysToValues.remove(key, value));
 		return keys;
 	}
@@ -380,7 +380,7 @@ public abstract class ManyToManyMap<K, V>{
 	 * Removes the given list of keys associated with the given value if the 
 	 * list of keys matches the current list associated with that value.
 	 * <br>
-	 * Calls {@link MultiMap#removeEntireList} on the underlying valuesToKeys 
+	 * Calls {@link MultiMap#removeEntireList} on the underlying valuesToKeys
 	 * {@link MultiMap}. If that returns true, {@link MultiMap#remove(Object, Object)} 
 	 * is then called on the keysToValues MultiMap for each of the key-value mappings.
 	 * 
@@ -400,7 +400,7 @@ public abstract class ManyToManyMap<K, V>{
 	 * Removes the given list of values associated with the given key if the 
 	 * list of values matches the current list associated with that key.
 	 * <br>
-	 * Calls {@link MultiMap#removeEntireList} on the underlying keysToValues 
+	 * Calls {@link MultiMap#removeEntireList} on the underlying keysToValues
 	 * {@link MultiMap}. If that returns true, {@link MultiMap#remove(Object, Object)} 
 	 * is then called on the valuesToKeys MultiMap for each of the key-value mappings.
 	 * 
@@ -420,7 +420,7 @@ public abstract class ManyToManyMap<K, V>{
 	 * Replaces the current list of keys associated with the given value 
 	 * with the given list of keys.
 	 * <br>
-	 * Calls {@link MultiMap#replaceList(Object, List)} on the underlying 
+	 * Calls {@link MultiMap#replaceEntireList(Object, List)} on the underlying
 	 * valuesToKeys {@link MultiMap} and then 
 	 * {@link MultiMap#remove(Object, Object) removes} the old keys from 
 	 * the keysToValues MultiMap and {@link MultiMap#put puts} the new 
@@ -431,7 +431,7 @@ public abstract class ManyToManyMap<K, V>{
 	 * @return The previous list of keys associated with the given value
 	 */
 	public final List<K> replaceKeyList(V value, List<K> keys){
-		List<K> oldKeys = valuesToKeys.replaceList(value, keys);
+		List<K> oldKeys = valuesToKeys.replaceEntireList(value, keys);
 		oldKeys.forEach(key -> keysToValues.remove(key, value));
 		keys.forEach(key -> keysToValues.put(key, value));
 		return oldKeys;
@@ -441,7 +441,7 @@ public abstract class ManyToManyMap<K, V>{
 	 * Replaces the current list of values associated with the given key 
 	 * with the given list of values.
 	 * <br>
-	 * Calls {@link MultiMap#replaceList(Object, List)} on the underlying 
+	 * Calls {@link MultiMap#replaceEntireList(Object, List)} on the underlying
 	 * keysToValues {@link MultiMap} and then 
 	 * {@link MultiMap#remove(Object, Object) removes} the old values from 
 	 * the valuesToKeys MultiMap and {@link MultiMap#put puts} the new 
@@ -452,7 +452,7 @@ public abstract class ManyToManyMap<K, V>{
 	 * @return The previous list of values associated with the given key
 	 */
 	public final List<V> replaceValueList(K key, List<V> values){
-		List<V> oldValues = keysToValues.replaceList(key, values);
+		List<V> oldValues = keysToValues.replaceEntireList(key, values);
 		oldValues.forEach(value -> valuesToKeys.remove(value, key));
 		values.forEach(value -> valuesToKeys.put(value, key));
 		return oldValues;
@@ -513,7 +513,7 @@ public abstract class ManyToManyMap<K, V>{
 	 * with the given new list of keys if the given old list matches the 
 	 * current list.
 	 * <br>
-	 * Calls {@link MultiMap#replaceEntireList} on the underlying valuesToKeys 
+	 * Calls {@link MultiMap#replaceEntireList} on the underlying valuesToKeys
 	 * {@link MultiMap} and if that returns true, it then 
 	 * {@link MultiMap#remove(Object, Object) removes} the old key-value mappings 
 	 * from the keysToValues MultiMap and {@link MultiMap#put puts} the new 
@@ -538,7 +538,7 @@ public abstract class ManyToManyMap<K, V>{
 	 * with the given new list of values if the given old list matches the 
 	 * current list.
 	 * <br>
-	 * Calls {@link MultiMap#replaceEntireList} on the underlying keysToValues 
+	 * Calls {@link MultiMap#replaceEntireList} on the underlying keysToValues
 	 * {@link MultiMap} and if that returns true, it then 
 	 * {@link MultiMap#remove(Object, Object) removes} the old value-key mappings 
 	 * from the valuesToKeys MultiMap and {@link MultiMap#put puts} the new 

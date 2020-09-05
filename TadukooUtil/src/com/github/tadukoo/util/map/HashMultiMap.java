@@ -75,6 +75,7 @@ public class HashMultiMap<K, V> extends MultiMap<K, V>{
 	 * @param o The object to be compared for equality with this HashMultiMap
 	 * @return true if the given object is equivalent to this HashMultiMap
 	 */
+	@Override
 	public boolean equals(Object o){
 		if(o instanceof HashMultiMap){
 			return super.equals(o);

@@ -150,6 +150,26 @@ public class TreeMultiMap<K, V> extends MultiMap<K, V>{
 	}
 	
 	/**
+	 * Returns the greatest key strictly less than the given key, or null if there is no such key.
+	 *
+	 * @param key The key
+	 * @return The greatest key less than key, or null if there is no such key
+	 */
+	public K lowerKey(K key){
+		return asMap().lowerKey(key);
+	}
+	
+	/**
+	 * Returns the least key strictly greater than the given key, or null if there is no such key.
+	 *
+	 * @param key The key
+	 * @return The least key greater than key, or null if there is no such key
+	 */
+	public K higherKey(K key){
+		return asMap().higherKey(key);
+	}
+	
+	/**
 	 * Returns a key-value mapping associated with the greatest key 
 	 * strictly less than the given key, or null if there is no such key.
 	 * 
@@ -158,16 +178,6 @@ public class TreeMultiMap<K, V> extends MultiMap<K, V>{
 	 */
 	public Map.Entry<K, List<V>> lowerEntry(K key){
 		return asMap().lowerEntry(key);
-	}
-	
-	/**
-	 * Returns the greatest key strictly less than the given key, or null if there is no such key.
-	 * 
-	 * @param key The key
-	 * @return The greatest key less than key, or null if there is no such key
-	 */
-	public K lowerKey(K key){
-		return asMap().lowerKey(key);
 	}
 	
 	/**
@@ -182,13 +192,23 @@ public class TreeMultiMap<K, V> extends MultiMap<K, V>{
 	}
 	
 	/**
-	 * Returns the least key strictly greater than the given key, or null if there is no such key.
-	 * 
+	 * Returns the greatest key less than or equal to the given key, or null if there is no such key.
+	 *
 	 * @param key The key
-	 * @return The least key greater than key, or null if there is no such key
+	 * @return The greatest key less than or equal to key, or null if there is no such key
 	 */
-	public K higherKey(K key){
-		return asMap().higherKey(key);
+	public K floorKey(K key){
+		return asMap().floorKey(key);
+	}
+	
+	/**
+	 * Returns the least key greater than or equal to the given key, or null if there is no such key.
+	 *
+	 * @param key The key
+	 * @return The least key greater than or equal to key, or null if there is no such key
+	 */
+	public K ceilingKey(K key){
+		return asMap().ceilingKey(key);
 	}
 	
 	/**
@@ -203,16 +223,6 @@ public class TreeMultiMap<K, V> extends MultiMap<K, V>{
 	}
 	
 	/**
-	 * Returns the greatest key less than or equal to the given key, or null if there is no such key.
-	 * 
-	 * @param key The key
-	 * @return The greatest key less than or equal to key, or null if there is no such key
-	 */
-	public K floorKey(K key){
-		return asMap().floorKey(key);
-	}
-	
-	/**
 	 * Returns a key-value mapping associated with the least key 
 	 * greater than or equal to the given key, or null if there is no such key.
 	 * 
@@ -221,16 +231,6 @@ public class TreeMultiMap<K, V> extends MultiMap<K, V>{
 	 */
 	public Map.Entry<K, List<V>> ceilingEntry(K key){
 		return asMap().ceilingEntry(key);
-	}
-	
-	/**
-	 * Returns the least key greater than or equal to the given key, or null if there is no such key.
-	 * 
-	 * @param key The key
-	 * @return The least key greater than or equal to key, or null if there is no such key
-	 */
-	public K ceilingKey(K key){
-		return asMap().ceilingKey(key);
 	}
 	
 	/**
@@ -250,7 +250,7 @@ public class TreeMultiMap<K, V> extends MultiMap<K, V>{
 	}
 	
 	/**
-	 * @return R reverse order view of this multiMap
+	 * @return A reverse order view of this multiMap
 	 * @see TreeMap#descendingMap()
 	 */
 	public NavigableMap<K, List<V>> descendingMap(){
