@@ -319,7 +319,8 @@ public abstract class MultiMap<K, V>{
 	
 	/**
 	 * Replaces the current list of values associated with the given key
-	 * with the given list of values.
+	 * with the given list of values, only if it is currently mapped to
+	 * a value.
 	 * <br>
 	 * Calls {@link Map#replace(K,V)} on the underlying {@link Map}.
 	 *

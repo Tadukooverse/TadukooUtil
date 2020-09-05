@@ -101,6 +101,7 @@ public abstract class ManyToManyMap<K, V>{
 	 * @param o The object to be compared for equality with this map
 	 * @return true if the given object is equivalent to this ManyToManyMap
 	 */
+	@Override
 	public boolean equals(Object o){
 		if(o instanceof ManyToManyMap){
 			// If it's a ManyToManyMap, compare their underlying MultiMaps
@@ -335,7 +336,9 @@ public abstract class ManyToManyMap<K, V>{
 	 */
 	public final List<V> removeKey(K key){
 		List<V> values = keysToValues.removeKey(key);
-		values.forEach(value -> valuesToKeys.remove(value, key));
+		if(values != null){
+			values.forEach(value -> valuesToKeys.remove(value, key));
+		}
 		return values;
 	}
 	
@@ -350,7 +353,9 @@ public abstract class ManyToManyMap<K, V>{
 	 */
 	public final List<K> removeValue(V value){
 		List<K> keys = valuesToKeys.removeKey(value);
-		keys.forEach(key -> keysToValues.remove(key, value));
+		if(keys != null){
+			keys.forEach(key -> keysToValues.remove(key, value));
+		}
 		return keys;
 	}
 	
@@ -388,7 +393,7 @@ public abstract class ManyToManyMap<K, V>{
 	 * @param keys The keys of the given value-key association to remove
 	 * @return Whether the list of keys was removed or not
 	 */
-	public final boolean removeKeysList(V value, List<K> keys){
+	public final boolean removeEntireKeysList(V value, List<K> keys){
 		if(valuesToKeys.removeEntireList(value, keys)){
 			keys.forEach(key -> keysToValues.remove(key, value));
 			return true;
@@ -408,7 +413,7 @@ public abstract class ManyToManyMap<K, V>{
 	 * @param values The values of the given key-value association to remove
 	 * @return Whether the list of values was removed or not
 	 */
-	public final boolean removeValuesList(K key, List<V> values){
+	public final boolean removeEntireValuesList(K key, List<V> values){
 		if(keysToValues.removeEntireList(key, values)){
 			values.forEach(value -> valuesToKeys.remove(value, key));
 			return true;
@@ -418,7 +423,8 @@ public abstract class ManyToManyMap<K, V>{
 	
 	/**
 	 * Replaces the current list of keys associated with the given value 
-	 * with the given list of keys.
+	 * with the given list of keys, only if it is currently mapped to a
+	 * value.
 	 * <br>
 	 * Calls {@link MultiMap#replaceEntireList(Object, List)} on the underlying
 	 * valuesToKeys {@link MultiMap} and then 
@@ -430,10 +436,12 @@ public abstract class ManyToManyMap<K, V>{
 	 * @param keys The keys to associate with the given value
 	 * @return The previous list of keys associated with the given value
 	 */
-	public final List<K> replaceKeyList(V value, List<K> keys){
+	public final List<K> replaceEntireKeyList(V value, List<K> keys){
 		List<K> oldKeys = valuesToKeys.replaceEntireList(value, keys);
-		oldKeys.forEach(key -> keysToValues.remove(key, value));
-		keys.forEach(key -> keysToValues.put(key, value));
+		if(oldKeys != null){
+			oldKeys.forEach(key -> keysToValues.remove(key, value));
+			keys.forEach(key -> keysToValues.put(key, value));
+		}
 		return oldKeys;
 	}
 	
@@ -451,10 +459,12 @@ public abstract class ManyToManyMap<K, V>{
 	 * @param values The values to associate with the given key
 	 * @return The previous list of values associated with the given key
 	 */
-	public final List<V> replaceValueList(K key, List<V> values){
+	public final List<V> replaceEntireValueList(K key, List<V> values){
 		List<V> oldValues = keysToValues.replaceEntireList(key, values);
-		oldValues.forEach(value -> valuesToKeys.remove(value, key));
-		values.forEach(value -> valuesToKeys.put(value, key));
+		if(oldValues != null){
+			oldValues.forEach(value -> valuesToKeys.remove(value, key));
+			values.forEach(value -> valuesToKeys.put(value, key));
+		}
 		return oldValues;
 	}
 	
@@ -467,7 +477,7 @@ public abstract class ManyToManyMap<K, V>{
 	 * {@link MultiMap} and if that returns true, it 
 	 * {@link MultiMap#remove(Object, Object) removes} the old key 
 	 * from the keysToValues MultiMap and {@link MultiMap#put puts} 
-	 * the new key in it.
+	 * the new key in it at the end of the list.
 	 * 
 	 * @param value The value to change the association of
 	 * @param oldKey The old key associated with the given value
@@ -492,7 +502,7 @@ public abstract class ManyToManyMap<K, V>{
 	 * {@link MultiMap} and if that returns true, it 
 	 * {@link MultiMap#remove(Object, Object) removes} the old value 
 	 * from the valuesToKeys MultiMap and {@link MultiMap#put puts} 
-	 * the new value in it.
+	 * the new value in it at the end of the list.
 	 * 
 	 * @param key The key to change the association of
 	 * @param oldValue The old value associated with the given key

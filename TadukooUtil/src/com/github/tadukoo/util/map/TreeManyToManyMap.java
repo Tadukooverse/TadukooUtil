@@ -97,6 +97,20 @@ public class TreeManyToManyMap<K, V> extends ManyToManyMap<K, V>{
 	}
 	
 	/**
+	 * @return The keys {@link Comparator} used by the keysToValues TreeMultiMap
+	 */
+	public Comparator<? super K> keyComparator(){
+		return asKeysToValuesMultiMap().comparator();
+	}
+	
+	/**
+	 * @return The values {@link Comparator} used by the valuesToKeys TreeMultiMap
+	 */
+	public Comparator<? super V> valueComparator(){
+		return asValuesToKeysMultiMap().comparator();
+	}
+	
+	/**
 	 * Returns the underlying TreeMultiMap used for keys to values.
 	 *
 	 * @return The underlying TreeMultiMap of keys to values
@@ -112,20 +126,6 @@ public class TreeManyToManyMap<K, V> extends ManyToManyMap<K, V>{
 	 */
 	public TreeMultiMap<V, K> asValuesToKeysMultiMap(){
 		return (TreeMultiMap<V, K>) valuesToKeys();
-	}
-	
-	/**
-	 * @return The keys {@link Comparator} used by the keysToValues TreeMultiMap
-	 */
-	public Comparator<? super K> keyComparator(){
-		return asKeysToValuesMultiMap().comparator();
-	}
-	
-	/**
-	 * @return The values {@link Comparator} used by the valuesToKeys TreeMultiMap
-	 */
-	public Comparator<? super V> valueComparator(){
-		return asValuesToKeysMultiMap().comparator();
 	}
 	
 	/**
@@ -179,17 +179,6 @@ public class TreeManyToManyMap<K, V> extends ManyToManyMap<K, V>{
 	}
 	
 	/**
-	 * Returns a key-value mapping associated with the greatest key
-	 * strictly less than the given key, or null if there is no such key.
-	 *
-	 * @param key The key
-	 * @return An entry with the greatest key less than key, or null if there is no such key
-	 */
-	public Map.Entry<K, List<V>> lowerEntry(K key){
-		return asKeysToValuesMultiMap().lowerEntry(key);
-	}
-	
-	/**
 	 * Returns the greatest key strictly less than the given key, or null if there is no such key.
 	 *
 	 * @param key The key
@@ -197,17 +186,6 @@ public class TreeManyToManyMap<K, V> extends ManyToManyMap<K, V>{
 	 */
 	public K lowerKey(K key){
 		return asKeysToValuesMultiMap().lowerKey(key);
-	}
-	
-	/**
-	 * Returns a key-value mapping associated with the least key
-	 * strictly greater than the given key, or null if there is no such key.
-	 *
-	 * @param key The key
-	 * @return An entry with the least key greater than key, or null if there is no such key
-	 */
-	public Map.Entry<K, List<V>> higherEntry(K key){
-		return asKeysToValuesMultiMap().higherEntry(key);
 	}
 	
 	/**
@@ -222,13 +200,24 @@ public class TreeManyToManyMap<K, V> extends ManyToManyMap<K, V>{
 	
 	/**
 	 * Returns a key-value mapping associated with the greatest key
-	 * less than or equal to the given key, or null if there is no such key.
+	 * strictly less than the given key, or null if there is no such key.
 	 *
 	 * @param key The key
-	 * @return An entry with the greatest key less than or equal to key, or null if there is no such key
+	 * @return An entry with the greatest key less than key, or null if there is no such key
 	 */
-	public Map.Entry<K, List<V>> floorEntry(K key){
-		return asKeysToValuesMultiMap().floorEntry(key);
+	public Map.Entry<K, List<V>> lowerEntry(K key){
+		return asKeysToValuesMultiMap().lowerEntry(key);
+	}
+	
+	/**
+	 * Returns a key-value mapping associated with the least key
+	 * strictly greater than the given key, or null if there is no such key.
+	 *
+	 * @param key The key
+	 * @return An entry with the least key greater than key, or null if there is no such key
+	 */
+	public Map.Entry<K, List<V>> higherEntry(K key){
+		return asKeysToValuesMultiMap().higherEntry(key);
 	}
 	
 	/**
@@ -242,6 +231,27 @@ public class TreeManyToManyMap<K, V> extends ManyToManyMap<K, V>{
 	}
 	
 	/**
+	 * Returns the least key greater than or equal to the given key, or null if there is no such key.
+	 *
+	 * @param key The key
+	 * @return The least key greater than or equal to key, or null if there is no such key
+	 */
+	public K ceilingKey(K key){
+		return asKeysToValuesMultiMap().ceilingKey(key);
+	}
+	
+	/**
+	 * Returns a key-value mapping associated with the greatest key
+	 * less than or equal to the given key, or null if there is no such key.
+	 *
+	 * @param key The key
+	 * @return An entry with the greatest key less than or equal to key, or null if there is no such key
+	 */
+	public Map.Entry<K, List<V>> floorEntry(K key){
+		return asKeysToValuesMultiMap().floorEntry(key);
+	}
+	
+	/**
 	 * Returns a key-value mapping associated with the least key
 	 * greater than or equal to the given key, or null if there is no such key.
 	 *
@@ -250,16 +260,6 @@ public class TreeManyToManyMap<K, V> extends ManyToManyMap<K, V>{
 	 */
 	public Map.Entry<K, List<V>> ceilingEntry(K key){
 		return asKeysToValuesMultiMap().ceilingEntry(key);
-	}
-	
-	/**
-	 * Returns the least key greater than or equal to the given key, or null if there is no such key.
-	 *
-	 * @param key The key
-	 * @return The least key greater than or equal to key, or null if there is no such key
-	 */
-	public K ceilingKey(K key){
-		return asKeysToValuesMultiMap().ceilingKey(key);
 	}
 	
 	/**
