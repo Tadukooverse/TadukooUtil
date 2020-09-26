@@ -9,6 +9,12 @@
 		<version>0.2-Alpha-SNAPSHOT</version>
 	</parent>
 	<artifactId>TadukooView</artifactId>
+	<dependencies>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>TadukooLang</artifactId>
+		</dependency>
+	</dependencies>
 	<build>
 		<sourceDirectory>${directory.source}</sourceDirectory>
 	</build>
