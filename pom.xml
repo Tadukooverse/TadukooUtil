@@ -37,8 +37,8 @@
 		<module>TadukooUtil</module>
 		<module>TadukooDatabase</module>
 		<module>TadukooFileFormat</module>
-		<module>TadukooLookAndFeel</module>
 		<module>TadukooView</module>
+		<module>TadukooLookAndFeel</module>
 	</modules>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
