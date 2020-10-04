@@ -11,8 +11,8 @@
 	<artifactId>TadukooView</artifactId>
 	<dependencies>
 		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>TadukooLang</artifactId>
+			<groupId>com.github.tadukoo.util</groupId>
+			<artifactId>TadukooUtil</artifactId>
 		</dependency>
 	</dependencies>
 	<build>
