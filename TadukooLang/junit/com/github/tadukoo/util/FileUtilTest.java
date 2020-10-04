@@ -99,6 +99,22 @@ public class FileUtilTest{
 	}
 	
 	@Test
+	public void testCreateDirectory(){
+		String folderPath = "target/testCreateDirectory";
+		
+		// Delete folder if it exists
+		File folder = new File(folderPath);
+		if(folder.exists()){
+			assertTrue(folder.delete());
+			assertFalse(folder.exists());
+		}
+		
+		folder = FileUtil.createDirectory(folderPath);
+		assertTrue(folder.exists());
+		assertEquals("testCreateDirectory", folder.getName());
+	}
+	
+	@Test
 	public void testWriteFileWithPath() throws IOException{
 		String filepath = "target/test-files/writeFileWithPath/test.txt";
 		FileUtil.writeFile(filepath, "Test\nDerp\nYes");

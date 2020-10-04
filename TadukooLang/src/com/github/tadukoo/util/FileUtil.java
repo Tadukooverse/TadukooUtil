@@ -94,6 +94,25 @@ public final class FileUtil{
 	}
 	
 	/**
+	 * Creates a directory at the given directoryPath, including any parent directories
+	 * necessary, and returns the {@link File} object to be used.
+	 *
+	 * @param directoryPath The path for the directory to be created
+	 * @return The newly created directory
+	 */
+	public static File createDirectory(String directoryPath){
+		// Create a File object from the given filepath
+		File directory = new File(directoryPath);
+		
+		// Make the directory and its parent folders
+		if(!directory.mkdirs() && !directory.exists()){
+			throw new IllegalStateException("Failed to create folder: " + directoryPath + "!");
+		}
+		
+		return directory;
+	}
+	
+	/**
 	 * Creates a List of Strings for each line in the file being read in the 
 	 * given {@link Reader}.
 	 * 
