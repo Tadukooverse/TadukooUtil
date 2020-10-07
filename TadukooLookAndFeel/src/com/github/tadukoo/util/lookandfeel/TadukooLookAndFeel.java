@@ -4,6 +4,8 @@ import com.github.tadukoo.util.lookandfeel.paintui.PaintUIResource;
 
 import javax.swing.*;
 import javax.swing.plaf.metal.MetalLookAndFeel;
+import java.awt.*;
+import java.io.IOException;
 
 /**
  * Tadukoo Look & Feel is a Look & Feel currently extending {@link MetalLookAndFeel} that allows for easier
@@ -21,7 +23,7 @@ public class TadukooLookAndFeel extends MetalLookAndFeel{
 	/**
 	 * Constructs a Tadukoo Look & Feel with the default {@link TadukooTheme theme}.
 	 */
-	public TadukooLookAndFeel(){
+	public TadukooLookAndFeel() throws IOException, FontFormatException{
 		theme = TadukooThemeFactory.createDefaultTheme();
 	}
 	

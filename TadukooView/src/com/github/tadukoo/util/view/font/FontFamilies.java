@@ -1,6 +1,7 @@
 package com.github.tadukoo.util.view.font;
 
 import com.github.tadukoo.util.ListUtil;
+import com.github.tadukoo.util.StringUtil;
 
 import java.awt.*;
 
@@ -12,7 +13,7 @@ import java.awt.*;
  * @author Logan Ferree (Tadukoo)
  * @version Alpha v.0.2
  */
-public enum Fonts implements FontConstants{
+public enum FontFamilies implements FontConstants{
 	/*
 	 * Logical Fonts Section
 	 */
@@ -137,7 +138,7 @@ public enum Fonts implements FontConstants{
 	 *
 	 * @param family The {@link FontFamily} for this enumeration
 	 */
-	Fonts(FontFamily family){
+	FontFamilies(FontFamily family){
 		this.family = family;
 	}
 	
@@ -146,5 +147,20 @@ public enum Fonts implements FontConstants{
 	 */
 	public FontFamily getFamily(){
 		return family;
+	}
+	
+	/**
+	 * Grab a FontFamily from the enumeration matching the given name
+	 *
+	 * @param name The name of the {@link FontFamily} to find
+	 * @return The found FontFamily enumeration, or null if none was found
+	 */
+	public static FontFamilies fromName(String name){
+		for(FontFamilies family: values()){
+			if(StringUtil.equalsIgnoreCase(family.getFamily().getName(), name)){
+				return family;
+			}
+		}
+		return null;
 	}
 }

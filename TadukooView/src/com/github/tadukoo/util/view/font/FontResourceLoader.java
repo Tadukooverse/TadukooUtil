@@ -17,6 +17,8 @@ import java.util.List;
  * @version Alpha v.0.2
  */
 public class FontResourceLoader implements FontConstants{
+	/** Whether to log warnings or not about unsupported font formats */
+	private final boolean logWarnings;
 	/** The {@link EasyLogger} to use in logging any problems */
 	private final EasyLogger logger;
 	/** The {@link GraphicsEnvironment} to use for the {@link Font}s */
@@ -28,11 +30,14 @@ public class FontResourceLoader implements FontConstants{
 	 * Constructs a new FontResourceLoader with the given {@link EasyLogger}, {@link GraphicsEnvironment}, and
 	 * fonts directory
 	 *
-	 * @param logger The {@link EasyLogger} to use in logging any problems
+	 * @param logWarnings Whether to log warnings or not about unsupported font formats
+	 * @param logger The {@link EasyLogger} to use in logging any problems - may be null if logWarnings = false
 	 * @param graphEnv The {@link GraphicsEnvironment} to use for the {@link Font}s
 	 * @param fontDirectoryPath The path to the directory where the fonts are stored
 	 */
-	public FontResourceLoader(EasyLogger logger, GraphicsEnvironment graphEnv, String fontDirectoryPath){
+	public FontResourceLoader(boolean logWarnings, EasyLogger logger, GraphicsEnvironment graphEnv,
+	                          String fontDirectoryPath){
+		this.logWarnings = logWarnings;
 		this.logger = logger;
 		this.graphEnv = graphEnv;
 		this.fontDirectoryPath = fontDirectoryPath;
@@ -103,13 +108,17 @@ public class FontResourceLoader implements FontConstants{
 				fontFormat = Font.TRUETYPE_FONT;
 			}else if(StringUtil.equalsIgnoreCase(extension, OTF)){
 				// TODO: Find a way to support OpenType format
-				logger.logWarning("Failed to load font at: " + fontFamilyPath + fontFileName +
-						"\nFont Format: OpenType Format not supported");
+				if(logWarnings){
+					logger.logWarning("Failed to load font at: " + fontFamilyPath + fontFileName +
+							"\nFont Format: OpenType Format not supported");
+				}
 				loadedAllFontFiles = false;
 				continue;
 			}else{
-				logger.logWarning("Failed to load font at: " + fontFamilyPath + fontFileName +
-						"\nFont Format: Unknown Format not supported");
+				if(logWarnings){
+					logger.logWarning("Failed to load font at: " + fontFamilyPath + fontFileName +
+							"\nFont Format: Unknown Format not supported");
+				}
 				loadedAllFontFiles = false;
 				continue;
 			}

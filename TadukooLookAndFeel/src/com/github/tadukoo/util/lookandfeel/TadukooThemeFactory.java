@@ -1,8 +1,13 @@
 package com.github.tadukoo.util.lookandfeel;
 
 import com.github.tadukoo.util.lookandfeel.paintui.ColorPaintUIResource;
+import com.github.tadukoo.util.view.font.FontFamilies;
+import com.github.tadukoo.util.view.font.FontFamily;
 
 import javax.swing.plaf.metal.*;
+import java.awt.*;
+import java.io.IOException;
+import java.util.Objects;
 
 /**
  * Tadukoo Theme Factory provides some standard {@link TadukooTheme}s and
@@ -28,7 +33,7 @@ public class TadukooThemeFactory{
 	/**
 	 * @return A {@link TadukooTheme} that has the default customizations
 	 */
-	public static TadukooTheme createDefaultTheme(){
+	public static TadukooTheme createDefaultTheme() throws IOException, FontFormatException{
 		return defaultThemeBuilder().build();
 	}
 	
@@ -48,7 +53,7 @@ public class TadukooThemeFactory{
 	 * {@link javax.swing.plaf.metal.MetalLookAndFeel MetalLookAndFeel} Component UIs and Borders, but uses the
 	 * regular {@link TadukooLookAndFeel} colors and fonts.
 	 */
-	public static TadukooTheme createMetalTheme(){
+	public static TadukooTheme createMetalTheme() throws IOException, FontFormatException{
 		return metalThemeBuilder().build();
 	}
 	
@@ -66,7 +71,7 @@ public class TadukooThemeFactory{
 	 * {@link javax.swing.plaf.metal.MetalLookAndFeel MetalLookAndFeel} Component UIs and Borders and uses the
 	 * {@link DefaultMetalTheme} for colors and fonts.
 	 */
-	public static TadukooTheme createDefaultMetalTheme(){
+	public static TadukooTheme createDefaultMetalTheme() throws IOException, FontFormatException{
 		return defaultMetalThemeBuilder().build();
 	}
 	
@@ -84,7 +89,7 @@ public class TadukooThemeFactory{
 	 * {@link javax.swing.plaf.metal.MetalLookAndFeel MetalLookAndFeel} Component UIs and Borders and uses the
 	 * {@link OceanTheme} for colors and fonts.
 	 */
-	public static TadukooTheme createOceanTheme(){
+	public static TadukooTheme createOceanTheme() throws IOException, FontFormatException{
 		return oceanThemeBuilder().build();
 	}
 	
@@ -103,8 +108,13 @@ public class TadukooThemeFactory{
 	 */
 	public static TadukooTheme.TadukooThemeBuilder copyMetalTheme(TadukooTheme.TadukooThemeBuilder themeBuilder,
 	                                                              MetalTheme metalTheme){
+		// Sort out fonts
+		Font controlTextFont = metalTheme.getControlTextFont();
+		FontFamily controlTextFontFamily = Objects.requireNonNull(
+				FontFamilies.fromName(controlTextFont.getFontName())).getFamily();
+		
 		return themeBuilder.buttonFocusPaint(new ColorPaintUIResource(metalTheme.getFocusColor()))
 					.buttonSelectPaint(new ColorPaintUIResource(metalTheme.getControlShadow()))
-					.buttonFont(metalTheme.getControlTextFont());
+					.buttonFont(controlTextFontFamily, controlTextFont.getStyle(), controlTextFont.getSize());
 	}
 }
