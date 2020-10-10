@@ -8,6 +8,7 @@ import com.github.tadukoo.util.view.ShapeFunction;
 
 import javax.swing.*;
 import javax.swing.plaf.ComponentUI;
+import javax.swing.plaf.UIResource;
 import javax.swing.plaf.metal.MetalButtonUI;
 import java.awt.*;
 
@@ -21,6 +22,26 @@ public class TadukooButtonUI extends MetalButtonUI{
 	 */
 	public static ComponentUI createUI(JComponent c){
 		return new TadukooButtonUI();
+	}
+	
+	public void installDefaults(AbstractButton b) {
+		super.installDefaults(b);
+		// Set the default shape function on the button if it's a Shaped button
+		if(b instanceof Shaped){
+			Shaped s = (Shaped) b;
+			s.setShapeFunc((ShapeFunction) UIManager.get("Button.shape"));
+		}
+	}
+	
+	public void uninstallDefaults(AbstractButton b) {
+		super.uninstallDefaults(b);
+		// Remove shape function if it's a Shaped button and if it's using the default
+		if(b instanceof Shaped){
+			Shaped s = (Shaped) b;
+			if(s.getShapeFunc() instanceof UIResource){
+				s.setShapeFunc(null);
+			}
+		}
 	}
 	
 	@Override

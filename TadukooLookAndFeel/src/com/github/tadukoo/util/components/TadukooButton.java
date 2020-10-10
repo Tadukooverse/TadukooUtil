@@ -1,5 +1,6 @@
 package com.github.tadukoo.util.components;
 
+import com.github.tadukoo.util.lookandfeel.TadukooBorder;
 import com.github.tadukoo.util.view.ShapeFunction;
 
 import javax.swing.*;
@@ -48,7 +49,10 @@ public class TadukooButton extends JButton implements Shaped{
 		if(action != null){
 			setAction(action);
 		}
-		this.shapeFunc = shapeFunc;
+		// We do it this way because in the parent constructor, this is set via installDefaults in the Tadukoo button UI
+		if(shapeFunc != null){
+			setShapeFunc(shapeFunc);
+		}
 	}
 	
 	public static TadukooButtonBuilder builder(){

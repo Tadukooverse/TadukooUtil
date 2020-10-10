@@ -1,6 +1,7 @@
 package com.github.tadukoo.util.lookandfeel;
 
 import com.github.tadukoo.util.components.Shaped;
+import com.github.tadukoo.util.view.ShapeFunction;
 
 import javax.swing.border.AbstractBorder;
 import javax.swing.plaf.UIResource;
@@ -23,13 +24,17 @@ public class TadukooBorder extends AbstractBorder implements UIResource{
 		if(!(c instanceof Shaped)){
 			return;
 		}
+		ShapeFunction shapeFunc = ((Shaped) c).getShapeFunc();
+		if(shapeFunc == null){
+			return;
+		}
 		
-		Shape shape = ((Shaped) c).getShapeFunc().apply(x, y, w, h);
+		Shape shape = shapeFunc.apply(x, y, w, h);
 		
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.setStroke(new BasicStroke(2));
 		
-		g.setColor(Color.RED);
-		((Graphics2D) g).draw(shape);
+		g.setColor(Color.BLACK);
+		g2d.draw(shape);
 	}
 }
