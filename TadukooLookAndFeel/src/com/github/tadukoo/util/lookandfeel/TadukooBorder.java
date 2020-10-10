@@ -24,12 +24,12 @@ public class TadukooBorder extends AbstractBorder implements UIResource{
 			return;
 		}
 		
-		Polygon shape = ((Shaped) c).getShape(x, y, w, h);
+		Shape shape = ((Shaped) c).getShapeFunc().apply(x, y, w, h);
 		
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.setStroke(new BasicStroke(2));
 		
 		g.setColor(Color.RED);
-		g.drawPolygon(shape);
+		((Graphics2D) g).draw(shape);
 	}
 }
