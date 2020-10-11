@@ -39,7 +39,7 @@ public class RadialGradient implements Gradient{
 	 * @author Logan Ferree (Tadukoo)
 	 * @version Alpha v.0.2
 	 */
-	private static class RadialGradientBuilder extends GradientBuilder{
+	public static class RadialGradientBuilder extends GradientBuilder{
 		/** A function taking in the dimension of the space to determine the center, radius, and focus of the circle */
 		private Function<Dimension, Triple<Point2D, Float, Point2D>> circleFunc = size -> {
 			float centerX = (float) size.getWidth()/2;
@@ -47,6 +47,9 @@ public class RadialGradient implements Gradient{
 			Point2D center = new Point2D.Float(centerX, centerY);
 			return Triple.of(center, Math.min(centerX, centerY), center);
 		};
+		
+		// Not allowed to create outside of RadialGradient
+		private RadialGradientBuilder(){ }
 		
 		/**
 		 * @param circleFunc A function taking in the dimension of the space to determine the center, radius, and

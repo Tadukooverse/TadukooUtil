@@ -59,7 +59,7 @@ public class LinearGradient implements Gradient{
 	 * @author Logan Ferree (Tadukoo)
 	 * @version Alpha v.0.2
 	 */
-	private static class LinearGradientBuilder extends GradientBuilder{
+	public static class LinearGradientBuilder extends GradientBuilder{
 		/** The direction for the {@link LinearGradient} to go. This may be ignored by the
 		 * {@link #startAndEndPointsFunc} */
 		private GradientDirection direction = GradientDirection.HORIZONTAL;
@@ -83,6 +83,9 @@ public class LinearGradient implements Gradient{
 			}
 			return Pair.of(new Point2D.Float(startX, startY), new Point2D.Float(endX, endY));
 		};
+		
+		// Not allowed to create outside of LinearGradient
+		private LinearGradientBuilder(){ }
 		
 		/**
 		 * @param direction The direction for the {@link LinearGradient} to go. This may be ignored by the
