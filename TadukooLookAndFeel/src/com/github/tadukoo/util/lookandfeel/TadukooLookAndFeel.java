@@ -90,6 +90,28 @@ public class TadukooLookAndFeel extends MetalLookAndFeel{
 		
 		table.put("ButtonUI", theme.getButtonUI());
 		// TODO: Add other mappings
+		
+		Object[] otherClassDefaults = theme.getClassDefaults();
+		if(otherClassDefaults.length != 0){
+			table.putDefaults(theme.getClassDefaults());
+		}
+	}
+	
+	/**
+	 * Populates {@code table} with system colors. Currently just adds the custom systemColorDefaults from
+	 * {@link TadukooTheme}. In the future, there will be more settings on the theme for here.
+	 *
+	 * @param table the {@code UIDefaults} object the values are added to
+	 * @throws NullPointerException if {@code table} is {@code null}
+	 */
+	@Override
+	protected void initSystemColorDefaults(UIDefaults table){
+		super.initSystemColorDefaults(table);
+		
+		Object[] otherSystemColorDefaults = theme.getSystemColorDefaults();
+		if(otherSystemColorDefaults.length != 0){
+			table.putDefaults(theme.getSystemColorDefaults());
+		}
 	}
 	
 	/**
@@ -119,5 +141,10 @@ public class TadukooLookAndFeel extends MetalLookAndFeel{
 		// TODO: Add other mappings
 		
 		table.putDefaults(defaults);
+		
+		Object[] otherComponentDefaults = theme.getComponentDefaults();
+		if(otherComponentDefaults.length != 0){
+			table.putDefaults(theme.getComponentDefaults());
+		}
 	}
 }
