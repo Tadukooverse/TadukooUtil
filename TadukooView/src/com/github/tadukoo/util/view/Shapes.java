@@ -45,12 +45,12 @@ public enum Shapes{
 	 */
 	RECTANGLE_WITH_CUT_CORNERS_TR_BL((x, y, width, height) -> {
 		Polygon polygon = new Polygon();
-		polygon.addPoint(x + 1, y + 1);
-		polygon.addPoint(x + width - 10, y + 1);
-		polygon.addPoint(x + width - 1, y + 10);
-		polygon.addPoint(x + width - 1, y + height - 1);
-		polygon.addPoint(x + 10, y + height - 1);
-		polygon.addPoint(x + 1, y + height - 10);
+		polygon.addPoint(x, y);
+		polygon.addPoint(x + width - 10, y);
+		polygon.addPoint(x + width, y + 10);
+		polygon.addPoint(x + width, y + height);
+		polygon.addPoint(x + 10, y + height);
+		polygon.addPoint(x, y + height - 10);
 		return polygon;
 	}),
 	
@@ -59,12 +59,12 @@ public enum Shapes{
 	 */
 	RECTANGLE_WITH_CUT_CORNERS_TL_BR((x, y, width, height) -> {
 		Polygon polygon = new Polygon();
-		polygon.addPoint(x + 10, y + 1);
-		polygon.addPoint(x + width - 1, y + 1);
-		polygon.addPoint(x + width - 1, y + height - 10);
-		polygon.addPoint(x + width - 10, y + height - 1);
-		polygon.addPoint(x + 1, y + height - 1);
-		polygon.addPoint(x + 1, y + 10);
+		polygon.addPoint(x + 10, y);
+		polygon.addPoint(x + width, y);
+		polygon.addPoint(x + width, y + height - 10);
+		polygon.addPoint(x + width - 10, y + height);
+		polygon.addPoint(x, y + height);
+		polygon.addPoint(x, y + 10);
 		return polygon;
 	})
 	;
