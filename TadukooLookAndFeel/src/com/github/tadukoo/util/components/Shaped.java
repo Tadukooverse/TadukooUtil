@@ -1,12 +1,10 @@
 package com.github.tadukoo.util.components;
 
-import com.github.tadukoo.util.view.ShapeFunction;
-
-import java.awt.*;
+import com.github.tadukoo.util.view.shapes.ShapeInfo;
 
 public interface Shaped{
 	
-	ShapeFunction getShapeFunc();
+	ShapeInfo getShapeInfo();
 	
-	void setShapeFunc(ShapeFunction shapeFunc);
+	void setShapeInfo(ShapeInfo shapeInfo);
 }

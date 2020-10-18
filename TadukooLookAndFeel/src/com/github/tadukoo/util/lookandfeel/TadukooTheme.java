@@ -1,19 +1,20 @@
 package com.github.tadukoo.util.lookandfeel;
 
 import com.github.tadukoo.util.ListUtil;
-import com.github.tadukoo.util.functional.NoException;
-import com.github.tadukoo.util.functional.function.ThrowingFunction4;
 import com.github.tadukoo.util.logger.EasyLogger;
+import com.github.tadukoo.util.lookandfeel.border.ShapedLineBorder;
 import com.github.tadukoo.util.lookandfeel.componentui.TadukooButtonUI;
 import com.github.tadukoo.util.lookandfeel.paintui.ColorPaintUIResource;
 import com.github.tadukoo.util.lookandfeel.paintui.PaintUIResource;
-import com.github.tadukoo.util.view.ShapeFunction;
-import com.github.tadukoo.util.view.Shapes;
+import com.github.tadukoo.util.view.shapes.ShapeFunction;
+import com.github.tadukoo.util.view.shapes.ShapeInfo;
+import com.github.tadukoo.util.view.shapes.Shapes;
 import com.github.tadukoo.util.view.font.FontFamilies;
 import com.github.tadukoo.util.view.font.FontFamily;
 import com.github.tadukoo.util.view.font.FontResourceLoader;
 
 import javax.swing.border.Border;
+import javax.swing.plaf.BorderUIResource;
 import javax.swing.plaf.ButtonUI;
 import javax.swing.plaf.ColorUIResource;
 import javax.swing.plaf.FontUIResource;
@@ -148,14 +149,14 @@ public class TadukooTheme{
 	 *         <th>Default Value</th>
 	 *     </tr>
 	 *     <tr>
-	 *         <td>defaultShapeFunc</td>
-	 *         <td>The {@link ShapeFunction} to use for all unspecified shapes</td>
+	 *         <td>defaultShapeInfo</td>
+	 *         <td>The {@link ShapeInfo} to use for all unspecified shapes</td>
 	 *         <td>{@link Shapes#RECTANGLE_WITH_CUT_CORNERS_TR_BL}</td>
 	 *     </tr>
 	 *     <tr>
-	 *         <td>buttonShapeFunc</td>
-	 *         <td>The {@link ShapeFunction} to use for Buttons</td>
-	 *         <td>null (defaults to the {@code defaultShapeFunc} value)</td>
+	 *         <td>buttonShapeInfo</td>
+	 *         <td>The {@link ShapeInfo} to use for Buttons</td>
+	 *         <td>null (defaults to the {@code defaultShapeInfo} value)</td>
 	 *     </tr>
 	 * </table>
 	 * <br>
@@ -168,12 +169,12 @@ public class TadukooTheme{
 	 *     </tr>
 	 *     <tr>
 	 *         <td>defaultBorder</td>
-	 *         <td>The {@link Border} to use for all unspecified borders</td>
+	 *         <td>The {@link BorderUIResource} to use for all unspecified borders</td>
 	 *         <td>new TadukooBorder()</td>
 	 *     </tr>
 	 *     <tr>
 	 *         <td>buttonBorder</td>
-	 *         <td>The {@link Border} to use on Buttons</td>
+	 *         <td>The {@link BorderUIResource} to use on Buttons</td>
 	 *         <td>null (defaults to the {@code defaultBorder} value)</td>
 	 *     </tr>
 	 * </table>
@@ -274,18 +275,18 @@ public class TadukooTheme{
 		 * Shapes
 		 */
 		
-		/** The {@link ShapeFunction} to use for unspecified shapes */
-		private ShapeFunction defaultShapeFunc = Shapes.RECTANGLE_WITH_CUT_CORNERS_TR_BL.getShapeFunc();
-		/** The {@link ShapeFunction} to use for Buttons */
-		private ShapeFunction buttonShapeFunc = null;
+		/** The {@link ShapeInfo} to use for unspecified shapes */
+		private ShapeInfo defaultShapeInfo = Shapes.RECTANGLE_WITH_CUT_CORNERS_TR_BL.getShapeInfo();
+		/** The {@link ShapeInfo} to use for Buttons */
+		private ShapeInfo buttonShapeInfo = null;
 		
 		/*
 		 * Borders
 		 */
-		/** The {@link Border} to use for all unspecified borders */
-		private Border defaultBorder = new TadukooBorder();
-		/** The {@link Border} to use on Buttons */
-		private Border buttonBorder = null;
+		/** The {@link BorderUIResource} to use for all unspecified borders */
+		private BorderUIResource defaultBorder = new BorderUIResource(ShapedLineBorder.builder().build());
+		/** The {@link BorderUIResource} to use on Buttons */
+		private BorderUIResource buttonBorder = null;
 		
 		/*
 		 * Other Customizations
@@ -447,20 +448,20 @@ public class TadukooTheme{
 		 */
 		
 		/**
-		 * @param defaultShapeFunc The {@link ShapeFunction} to use for unspecified shapes
+		 * @param defaultShapeInfo The {@link ShapeInfo} to use for unspecified shapes
 		 * @return this, to continue building
 		 */
-		public TadukooThemeBuilder defaultShapeFunc(ShapeFunction defaultShapeFunc){
-			this.defaultShapeFunc = defaultShapeFunc;
+		public TadukooThemeBuilder defaultShapeInfo(ShapeInfo defaultShapeInfo){
+			this.defaultShapeInfo = defaultShapeInfo;
 			return this;
 		}
 		
 		/**
-		 * @param buttonShapeFunc The {@link ShapeFunction} to use for Buttons
+		 * @param buttonShapeInfo The {@link ShapeInfo} to use for Buttons
 		 * @return this, to continue building
 		 */
-		public TadukooThemeBuilder buttonShapeFunc(ShapeFunction buttonShapeFunc){
-			this.buttonShapeFunc = buttonShapeFunc;
+		public TadukooThemeBuilder buttonShapeInfo(ShapeInfo buttonShapeInfo){
+			this.buttonShapeInfo = buttonShapeInfo;
 			return this;
 		}
 		
@@ -472,7 +473,7 @@ public class TadukooTheme{
 		 * @param defaultBorder The {@link Border} to use for all unspecified borders
 		 * @return this, to continue building
 		 */
-		public TadukooThemeBuilder defaultBorder(Border defaultBorder){
+		public TadukooThemeBuilder defaultBorder(BorderUIResource defaultBorder){
 			this.defaultBorder = defaultBorder;
 			return this;
 		}
@@ -481,7 +482,7 @@ public class TadukooTheme{
 		 * @param buttonBorder The {@link Border} to use on Buttons
 		 * @return this, to continue building
 		 */
-		public TadukooThemeBuilder buttonBorder(Border buttonBorder){
+		public TadukooThemeBuilder buttonBorder(BorderUIResource buttonBorder){
 			this.buttonBorder = buttonBorder;
 			return this;
 		}
@@ -608,8 +609,8 @@ public class TadukooTheme{
 			/*
 			 * Handle Default Shapes
 			 */
-			if(buttonShapeFunc == null){
-				buttonShapeFunc = defaultShapeFunc;
+			if(buttonShapeInfo == null){
+				buttonShapeInfo = defaultShapeInfo;
 			}
 			
 			/*
@@ -654,7 +655,8 @@ public class TadukooTheme{
 			}
 			
 			return new TadukooTheme(buttonUI.getCanonicalName(),
-					buttonFocusPaint, buttonSelectPaint, buttonFont, buttonShapeFunc, buttonBorder,
+					buttonFocusPaint, buttonSelectPaint, buttonFont,
+					buttonShapeInfo, buttonBorder,
 					classDefaultsArray, systemColorDefaultsArray, componentDefaultsArray);
 		}
 	}
@@ -667,10 +669,10 @@ public class TadukooTheme{
 	private final PaintUIResource buttonSelectPaint;
 	/** The {@link FontUIResource} to use for Buttons */
 	private final FontUIResource buttonFont;
-	/** The {@link ShapeFunction} to use on Buttons */
-	private final ShapeFunction buttonShapeFunc;
+	/** The {@link ShapeInfo} to use on Buttons */
+	private final ShapeInfo buttonShapeInfo;
 	/** The {@link Border} to use on Buttons */
-	private final Border buttonBorder;
+	private final BorderUIResource buttonBorder;
 	/** Class defaults beyond those specified in the "Component UI Classes" section */
 	private final Object[] classDefaults;
 	/** System Color defaults */
@@ -685,7 +687,7 @@ public class TadukooTheme{
 	 * @param buttonFocusPaint The {@link PaintUIResource} to use for focus on Buttons
 	 * @param buttonSelectPaint The {@link PaintUIResource} to use for select on Buttons
 	 * @param buttonFont The {@link FontUIResource} to use for Buttons
-	 * @param buttonShapeFunc The {@link ShapeFunction} to use on Buttons
+	 * @param buttonShapeInfo The {@link ShapeInfo} to use on Buttons
 	 * @param buttonBorder The {@link Border} to use on Buttons
 	 * @param classDefaults Class defaults beyond those specified in the "Component UI Classes" section
 	 * @param systemColorDefaults System Color defaults
@@ -693,13 +695,13 @@ public class TadukooTheme{
 	 */
 	private TadukooTheme(String buttonUI,
 	                     PaintUIResource buttonFocusPaint, PaintUIResource buttonSelectPaint, FontUIResource buttonFont,
-	                     ShapeFunction buttonShapeFunc, Border buttonBorder,
+	                     ShapeInfo buttonShapeInfo, BorderUIResource buttonBorder,
 	                     Object[] classDefaults, Object[] systemColorDefaults, Object[] componentDefaults){
 		this.buttonUI = buttonUI;
 		this.buttonFocusPaint = buttonFocusPaint;
 		this.buttonSelectPaint = buttonSelectPaint;
 		this.buttonFont = buttonFont;
-		this.buttonShapeFunc = buttonShapeFunc;
+		this.buttonShapeInfo = buttonShapeInfo;
 		this.buttonBorder = buttonBorder;
 		this.classDefaults = classDefaults;
 		this.systemColorDefaults = systemColorDefaults;
@@ -742,16 +744,16 @@ public class TadukooTheme{
 	}
 	
 	/**
-	 * @return The {@link ShapeFunction} to use on Buttons
+	 * @return The {@link ShapeInfo} to use on Buttons
 	 */
-	public ShapeFunction getButtonShapeFunc(){
-		return buttonShapeFunc;
+	public ShapeInfo getButtonShapeInfo(){
+		return buttonShapeInfo;
 	}
 	
 	/**
-	 * @return The {@link Border} to use on Buttons
+	 * @return The {@link BorderUIResource} to use on Buttons
 	 */
-	public Border getButtonBorder(){
+	public BorderUIResource getButtonBorder(){
 		return buttonBorder;
 	}
 	

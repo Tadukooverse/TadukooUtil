@@ -1,10 +1,9 @@
 package com.github.tadukoo.util.lookandfeel.componentui;
 
 import com.github.tadukoo.util.components.Shaped;
-import com.github.tadukoo.util.functional.NoException;
-import com.github.tadukoo.util.functional.function.ThrowingFunction4;
 import com.github.tadukoo.util.lookandfeel.paintui.PaintUIResource;
-import com.github.tadukoo.util.view.ShapeFunction;
+import com.github.tadukoo.util.view.shapes.ShapeFunction;
+import com.github.tadukoo.util.view.shapes.ShapeInfo;
 
 import javax.swing.*;
 import javax.swing.plaf.ComponentUI;
@@ -29,7 +28,7 @@ public class TadukooButtonUI extends MetalButtonUI{
 		// Set the default shape function on the button if it's a Shaped button
 		if(b instanceof Shaped){
 			Shaped s = (Shaped) b;
-			s.setShapeFunc((ShapeFunction) UIManager.get("Button.shape"));
+			s.setShapeInfo((ShapeInfo) UIManager.get("Button.shape"));
 		}
 	}
 	
@@ -38,8 +37,8 @@ public class TadukooButtonUI extends MetalButtonUI{
 		// Remove shape function if it's a Shaped button and if it's using the default
 		if(b instanceof Shaped){
 			Shaped s = (Shaped) b;
-			if(s.getShapeFunc() instanceof UIResource){
-				s.setShapeFunc(null);
+			if(s.getShapeInfo() instanceof UIResource){
+				s.setShapeInfo(null);
 			}
 		}
 	}
@@ -60,10 +59,10 @@ public class TadukooButtonUI extends MetalButtonUI{
 			// Grab the shape function to be used
 			ShapeFunction shapeFunc = null;
 			if(b instanceof Shaped){
-				shapeFunc = ((Shaped) b).getShapeFunc();
+				shapeFunc = ((Shaped) b).getShapeInfo().getShapeFunc();
 			}
 			if(shapeFunc == null){
-				shapeFunc = (ShapeFunction) UIManager.get("Button.shape");
+				shapeFunc = ((ShapeInfo) UIManager.get("Button.shape")).getShapeFunc();
 			}
 			// Fill the shape
 			g2d.fill(shapeFunc.apply(0, 0, size.width, size.height));

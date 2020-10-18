@@ -4,6 +4,7 @@ import com.github.tadukoo.util.lookandfeel.paintui.ColorPaintUIResource;
 import com.github.tadukoo.util.view.font.FontFamilies;
 import com.github.tadukoo.util.view.font.FontFamily;
 
+import javax.swing.plaf.BorderUIResource;
 import javax.swing.plaf.metal.*;
 import java.awt.*;
 import java.io.IOException;
@@ -45,7 +46,7 @@ public class TadukooThemeFactory{
 	public static TadukooTheme.TadukooThemeBuilder metalThemeBuilder(){
 		return TadukooTheme.builder()
 							.buttonUI(MetalButtonUI.class)
-							.buttonBorder(MetalBorders.getButtonBorder());
+							.buttonBorder(new BorderUIResource(MetalBorders.getButtonBorder()));
 	}
 	
 	/**
