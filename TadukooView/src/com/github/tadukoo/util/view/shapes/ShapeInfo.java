@@ -17,20 +17,34 @@ public class ShapeInfo{
 	 */
 	public static ShapeInsetsFunction noInsets = (x, y, width, height) -> new Insets(0, 0, 0, 0);
 	
+	/**
+	 * {@code null} to be used in checks for a missing drawing function (which is allowed in some cases)
+	 */
+	public static ShapeDrawingFunction noDrawFunc = null;
+	
 	/** The {@link ShapeFunction} for constructing a {@link Shape} */
 	private final ShapeFunction shapeFunc;
 	/** The {@link ShapeInsetsFunction} for determining {@link Insets} for the shape */
 	private final ShapeInsetsFunction shapeInsetsFunc;
+	/** A {@link ShapeDrawingFunction} for the top-left half of the shape */
+	private final ShapeDrawingFunction topLeftDrawFunc;
+	/** A {@link ShapeDrawingFunction} for the bottom-right half of the shape */
+	private final ShapeDrawingFunction bottomRightDrawFunc;
 	
 	/**
 	 * Constructs a new ShapeInfo with the given functions
 	 *
 	 * @param shapeFunc The {@link ShapeFunction} for constructing a {@link Shape}
 	 * @param shapeInsetsFunc The {@link ShapeInsetsFunction} for determining {@link Insets} for the shape
+	 * @param topLeftDrawFunc A {@link ShapeDrawingFunction} for the top-left half of the shape
+	 * @param bottomRightDrawFunc A {@link ShapeDrawingFunction} for the bottom-right half of the shape
 	 */
-	public ShapeInfo(ShapeFunction shapeFunc, ShapeInsetsFunction shapeInsetsFunc){
+	public ShapeInfo(ShapeFunction shapeFunc, ShapeInsetsFunction shapeInsetsFunc,
+	                 ShapeDrawingFunction topLeftDrawFunc, ShapeDrawingFunction bottomRightDrawFunc){
 		this.shapeFunc = shapeFunc;
 		this.shapeInsetsFunc = shapeInsetsFunc;
+		this.topLeftDrawFunc = topLeftDrawFunc;
+		this.bottomRightDrawFunc = bottomRightDrawFunc;
 	}
 	
 	/**
@@ -45,5 +59,19 @@ public class ShapeInfo{
 	 */
 	public ShapeInsetsFunction getShapeInsetsFunc(){
 		return shapeInsetsFunc;
+	}
+	
+	/**
+	 * @return A {@link ShapeDrawingFunction} for the top-left half of the shape
+	 */
+	public ShapeDrawingFunction getTopLeftDrawFunc(){
+		return topLeftDrawFunc;
+	}
+	
+	/**
+	 * @return A {@link ShapeDrawingFunction} for the bottom-right half of the shape
+	 */
+	public ShapeDrawingFunction getBottomRightDrawFunc(){
+		return bottomRightDrawFunc;
 	}
 }

@@ -103,26 +103,20 @@ public class ShapedLineBorder extends AbstractBorder{
 		return new ShapedLineBorderBuilder();
 	}
 	
-	/**
-	 * {@inheritDoc}
-	 */
+	/** {@inheritDoc} */
 	@Override
 	public Insets getBorderInsets(Component c){
 		return new Insets(thickness, thickness, thickness, thickness);
 	}
 	
-	/**
-	 * {@inheritDoc}
-	 */
+	/** {@inheritDoc} */
 	@Override
 	public Insets getBorderInsets(Component c, Insets insets){
 		insets.set(thickness, thickness, thickness, thickness);
 		return insets;
 	}
 	
-	/**
-	 * {@inheritDoc}
-	 */
+	/** {@inheritDoc} */
 	@Override
 	public void paintBorder(Component c, Graphics g, int x, int y, int w, int h){
 		if((this.thickness > 0) && (g instanceof Graphics2D)){
