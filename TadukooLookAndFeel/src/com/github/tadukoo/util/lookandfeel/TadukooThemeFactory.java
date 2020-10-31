@@ -116,6 +116,10 @@ public class TadukooThemeFactory{
 		
 		return themeBuilder.buttonFocusPaint(new ColorPaintUIResource(metalTheme.getFocusColor()))
 					.buttonSelectPaint(new ColorPaintUIResource(metalTheme.getControlShadow()))
-					.buttonFont(controlTextFontFamily, controlTextFont.getStyle(), controlTextFont.getSize());
+					.buttonFont(controlTextFontFamily, controlTextFont.getStyle(), controlTextFont.getSize())
+					.titledBorderBorder(new BorderUIResource(
+							new BorderUIResource.LineBorderUIResource(metalTheme.getControlShadow())))
+					.titledBorderFont(controlTextFontFamily, controlTextFont.getStyle(), controlTextFont.getSize())
+					.titledBorderColor(metalTheme.getSystemTextColor());
 	}
 }

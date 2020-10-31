@@ -135,7 +135,12 @@ public class TadukooLookAndFeel extends MetalLookAndFeel{
 				"Button.select.paint", buttonSelectPaint,
 				"Button.font", theme.getButtonFont(),
 				"Button.border", theme.getButtonBorder(),
-				"Button.shape", theme.getButtonShapeInfo()
+				"Button.shape", theme.getButtonShapeInfo(),
+				
+				"TitledBorder.border", theme.getTitledBorderBorder(),
+				"TitledBorder.font", theme.getTitledBorderFont(),
+				"TitledBorder.titleColor", theme.getTitledBorderColor(),
+				"TitledBorder.position", theme.getTitledBorderPosition()
 		};
 		
 		// TODO: Add other mappings

@@ -35,6 +35,42 @@ import java.util.Map;
 public class TadukooTheme{
 	
 	/**
+	 * An enum used for Title Position (for Titled Borders)
+	 *
+	 * @author Logan Ferree (Tadukoo)
+	 * @version Alpha v.0.2
+	 */
+	public enum TitlePosition{
+		/** Position the title above the border's top line. */
+		ABOVE_TOP(1),
+		/** Position the title in the middle of the border's top line. */
+		TOP(2),
+		/** Position the title below the border's top line. */
+		BELOW_TOP(3),
+		/** Position the title above the border's bottom line. */
+		ABOVE_BOTTOM(4),
+		/** Position the title in the middle of the border's bottom line. */
+		BOTTOM(5),
+		/** Position the title below the border's bottom line. */
+		BELOW_BOTTOM(6);
+		
+		/** The value of the Title Position (used in Titled Border class) */
+		private final int value;
+		
+		/** Constructs a new Title Position with the given value */
+		TitlePosition(int value){
+			this.value = value;
+		}
+		
+		/**
+		 * @return The value of the Title Position ( used in Titled Border class)
+		 */
+		public int getValue(){
+			return value;
+		}
+	}
+	
+	/**
 	 * Builder for {@link TadukooTheme}. There are no required fields - all of them will be
 	 * defaulted based on the default Tadukoo Theme. The following fields may be specified:
 	 * <br><br>
@@ -179,6 +215,35 @@ public class TadukooTheme{
 	 *     </tr>
 	 * </table>
 	 * <br>
+	 * <b>Titled Border Parameters</b>
+	 * <table>
+	 *     <tr>
+	 *         <th>Field</th>
+	 *         <th>Description</th>
+	 *         <th>Default Value</th>
+	 *     </tr>
+	 *     <tr>
+	 *         <td>titledBorderBorder</td>
+	 *         <td>The default border to use in Titled Borders</td>
+	 *         <td>null (defaults to the {@code defaultBorder} value)</td>
+	 *     </tr>
+	 *     <tr>
+	 *         <td>titledBorderFont</td>
+	 *         <td>The default font to use in Titled Borders</td>
+	 *         <td>null (defaults to the {@code defaultFont} value)</td>
+	 *     </tr>
+	 *     <tr>
+	 *         <td>titledBorderColor</td>
+	 *         <td>The default color to use in Titled Borders</td>
+	 *         <td>{@link Color#BLACK}</td>
+	 *     </tr>
+	 *     <tr>
+	 *         <td>titledBorderPosition</td>
+	 *         <td>The default position for the title in Titled Borders</td>
+	 *         <td>{@link TitlePosition#TOP}</td>
+	 *     </tr>
+	 * </table>
+	 * <br>
 	 * <b>Other Customizations</b>
 	 * <table>
 	 *     <tr>
@@ -287,6 +352,23 @@ public class TadukooTheme{
 		private BorderUIResource defaultBorder = new BorderUIResource(ShapedLineBorder.builder().build());
 		/** The {@link BorderUIResource} to use on Buttons */
 		private BorderUIResource buttonBorder = null;
+		
+		/*
+		 * Titled Border Parameters
+		 */
+		
+		/** The default {@link BorderUIResource} to use in Titled Borders */
+		private BorderUIResource titledBorderBorder = null;
+		/** The default {@link FontFamily} to use in Titled Borders */
+		private FontFamily titledBorderFontFamily = null;
+		/** The default font style to use in Titled Borders */
+		private int titledBorderFontStyle = -1;
+		/** The default font size to use in Titled Borders */
+		private int titledBorderFontSize = -1;
+		/** The default color to use in Titled Borders */
+		private ColorUIResource titledBorderColor = new ColorUIResource(Color.BLACK);
+		/** The default position for the title in Titled Borders */
+		private TitlePosition titledBorderPosition = TitlePosition.TOP;
 		
 		/*
 		 * Other Customizations
@@ -488,6 +570,53 @@ public class TadukooTheme{
 		}
 		
 		/*
+		 * Titled Border Parameters
+		 */
+		
+		/**
+		 * @param titledBorderBorder The default {@link BorderUIResource} to use in Titled Borders
+		 * @return this, to continue building
+		 */
+		public TadukooThemeBuilder titledBorderBorder(BorderUIResource titledBorderBorder){
+			this.titledBorderBorder = titledBorderBorder;
+			return this;
+		}
+		
+		/**
+		 * Specifies the default font to use for Titled Borders
+		 *
+		 * @param titledBorderFontFamily The {@link FontFamily} to use
+		 * @param titledBorderFontStyle The font style to use
+		 * @param titledBorderFontSize The font size to use
+		 * @return this, to continue building
+		 */
+		public TadukooThemeBuilder titledBorderFont(FontFamily titledBorderFontFamily, int titledBorderFontStyle,
+		                                      int titledBorderFontSize){
+			this.titledBorderFontFamily = titledBorderFontFamily;
+			this.titledBorderFontStyle = titledBorderFontStyle;
+			this.titledBorderFontSize = titledBorderFontSize;
+			return this;
+		}
+		
+		/**
+		 * @param titledBorderColor The default color to use in Titled Borders
+		 * @return this, to continue building
+		 */
+		public TadukooThemeBuilder titledBorderColor(ColorUIResource titledBorderColor){
+			this.titledBorderColor = titledBorderColor;
+			return this;
+		}
+		
+		/**
+		 * @param titledBorderPosition The default position for the title in Titled Borders
+		 * @return this, to continue building
+		 */
+		public TadukooThemeBuilder titledBorderPosition(TitlePosition titledBorderPosition){
+			this.titledBorderPosition = titledBorderPosition;
+			return this;
+		}
+		
+		/*
 		 * Other Customizations
 		 */
 		
@@ -593,6 +722,12 @@ public class TadukooTheme{
 				buttonFontSize = defaultFontSize;
 			}
 			
+			if(titledBorderFontFamily == null){
+				titledBorderFontFamily = defaultFontFamily;
+				titledBorderFontStyle = defaultFontStyle;
+				titledBorderFontSize = defaultFontSize;
+			}
+			
 			// Handle font resource loading
 			if(fontResourceLoader == null){
 				fontResourceLoader = new FontResourceLoader(logFontResourceLoaderWarnings, logger, graphEnv,
@@ -600,11 +735,13 @@ public class TadukooTheme{
 			}
 			
 			// Load fonts
-			List<FontFamily> fontFamilies = ListUtil.createList(buttonFontFamily);
+			List<FontFamily> fontFamilies = ListUtil.createList(buttonFontFamily, titledBorderFontFamily);
 			List<String> foundFonts = fontResourceLoader.loadFonts(fontFamilies, true);
 			
 			// Create the FontUIResources
 			FontUIResource buttonFont = new FontUIResource(foundFonts.get(0), buttonFontStyle, buttonFontSize);
+			FontUIResource titledBorderFont = new FontUIResource(foundFonts.get(1),
+					titledBorderFontStyle, titledBorderFontSize);
 			
 			/*
 			 * Handle Default Shapes
@@ -618,6 +755,10 @@ public class TadukooTheme{
 			 */
 			if(buttonBorder == null){
 				buttonBorder = defaultBorder;
+			}
+			
+			if(titledBorderBorder == null){
+				titledBorderBorder = defaultBorder;
 			}
 			
 			/*
@@ -657,6 +798,7 @@ public class TadukooTheme{
 			return new TadukooTheme(buttonUI.getCanonicalName(),
 					buttonFocusPaint, buttonSelectPaint, buttonFont,
 					buttonShapeInfo, buttonBorder,
+					titledBorderBorder, titledBorderFont, titledBorderColor, titledBorderPosition.getValue(),
 					classDefaultsArray, systemColorDefaultsArray, componentDefaultsArray);
 		}
 	}
@@ -673,6 +815,14 @@ public class TadukooTheme{
 	private final ShapeInfo buttonShapeInfo;
 	/** The {@link Border} to use on Buttons */
 	private final BorderUIResource buttonBorder;
+	/** The default {@link BorderUIResource} to use in Titled Borders */
+	private final BorderUIResource titledBorderBorder;
+	/** The default {@link FontUIResource} to use in Titled Borders */
+	private final FontUIResource titledBorderFont;
+	/** The default color to use in Titled Borders */
+	private final ColorUIResource titledBorderColor;
+	/** The default position for the title in Titled Borders */
+	private final int titledBorderPosition;
 	/** Class defaults beyond those specified in the "Component UI Classes" section */
 	private final Object[] classDefaults;
 	/** System Color defaults */
@@ -689,6 +839,10 @@ public class TadukooTheme{
 	 * @param buttonFont The {@link FontUIResource} to use for Buttons
 	 * @param buttonShapeInfo The {@link ShapeInfo} to use on Buttons
 	 * @param buttonBorder The {@link Border} to use on Buttons
+	 * @param titledBorderBorder The default {@link BorderUIResource} to use in Titled Borders
+	 * @param titledBorderFont The default {@link FontUIResource} to use in Titled Borders
+	 * @param titledBorderColor The default color to use in Titled Borders
+	 * @param titledBorderPosition The default position for the title in Titled Borders
 	 * @param classDefaults Class defaults beyond those specified in the "Component UI Classes" section
 	 * @param systemColorDefaults System Color defaults
 	 * @param componentDefaults Component defaults beyond those specified in the other sections
@@ -696,6 +850,8 @@ public class TadukooTheme{
 	private TadukooTheme(String buttonUI,
 	                     PaintUIResource buttonFocusPaint, PaintUIResource buttonSelectPaint, FontUIResource buttonFont,
 	                     ShapeInfo buttonShapeInfo, BorderUIResource buttonBorder,
+	                     BorderUIResource titledBorderBorder, FontUIResource titledBorderFont,
+	                     ColorUIResource titledBorderColor, int titledBorderPosition,
 	                     Object[] classDefaults, Object[] systemColorDefaults, Object[] componentDefaults){
 		this.buttonUI = buttonUI;
 		this.buttonFocusPaint = buttonFocusPaint;
@@ -703,6 +859,10 @@ public class TadukooTheme{
 		this.buttonFont = buttonFont;
 		this.buttonShapeInfo = buttonShapeInfo;
 		this.buttonBorder = buttonBorder;
+		this.titledBorderBorder = titledBorderBorder;
+		this.titledBorderFont = titledBorderFont;
+		this.titledBorderColor = titledBorderColor;
+		this.titledBorderPosition = titledBorderPosition;
 		this.classDefaults = classDefaults;
 		this.systemColorDefaults = systemColorDefaults;
 		this.componentDefaults = componentDefaults;
@@ -755,6 +915,34 @@ public class TadukooTheme{
 	 */
 	public BorderUIResource getButtonBorder(){
 		return buttonBorder;
+	}
+	
+	/**
+	 * @return The default {@link BorderUIResource} to use in Titled Borders
+	 */
+	public BorderUIResource getTitledBorderBorder(){
+		return titledBorderBorder;
+	}
+	
+	/**
+	 * @return The default {@link FontUIResource} to use in Titled Borders
+	 */
+	public FontUIResource getTitledBorderFont(){
+		return titledBorderFont;
+	}
+	
+	/**
+	 * @return The default color to use in Titled Borders
+	 */
+	public ColorUIResource getTitledBorderColor(){
+		return titledBorderColor;
+	}
+	
+	/**
+	 * @return The default position for the title in Titled Borders
+	 */
+	public int getTitledBorderPosition(){
+		return titledBorderPosition;
 	}
 	
 	/**
