@@ -1,8 +1,10 @@
 package com.github.tadukoo.util.components;
 
-import java.awt.*;
+import com.github.tadukoo.util.view.shapes.ShapeInfo;
 
 public interface Shaped{
 	
-	Polygon getShape(int x, int y, int width, int height);
+	ShapeInfo getShapeInfo();
+	
+	void setShapeInfo(ShapeInfo shapeInfo);
 }

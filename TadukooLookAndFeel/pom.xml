@@ -12,7 +12,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>TadukooLang</artifactId>
+			<artifactId>TadukooView</artifactId>
 		</dependency>
 	</dependencies>
 	<build>

@@ -5,6 +5,16 @@ import javax.swing.plaf.UIResource;
 import java.awt.*;
 import java.util.List;
 
+/**
+ * PaintUIResource is a {@link UIResource} to be used for {@link Paint}s for in
+ * {@link com.github.tadukoo.util.lookandfeel.TadukooLookAndFeel TadukooLookAndFeel}, particularly for use in
+ * {@link com.github.tadukoo.util.lookandfeel.TadukooTheme themes}. It provides methods to get the actual
+ * {@link Paint} or to get a single {@link ColorUIResource} or a {@code List<Object>} for use in supporting
+ * {@link javax.swing.plaf.metal.MetalLookAndFeel} component UI classes.
+ *
+ * @author Logan Ferree (Tadukoo)
+ * @version Alpha v.0.2
+ */
 public interface PaintUIResource extends UIResource{
 	
 	/**
@@ -33,9 +43,6 @@ public interface PaintUIResource extends UIResource{
 	 * code.
 	 *
 	 * @return The garbage List that Metal Look and Feel expects for gradients that matches best to the one defined here
-	 *
-	 * @deprecated Forever, because I hate how Metal Look and Feel does this, but I'm trying to support it all
 	 */
-	@Deprecated
 	List<Object> getMetalGradientList();
 }

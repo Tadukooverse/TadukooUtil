@@ -30,7 +30,7 @@ public final class LoggerUtil{
 		FileUtil.createFile(filepath);
 		
 		// Setup a FileHandler for the File with a SimpleFormatter
-		FileHandler fh = new FileHandler(filepath);
+		FileHandler fh = new FileHandler(filepath, true);
 		SimpleFormatter formatter = new SimpleFormatter();
 		fh.setFormatter(formatter);
 		

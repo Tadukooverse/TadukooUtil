@@ -37,8 +37,8 @@
 		<module>TadukooUtil</module>
 		<module>TadukooDatabase</module>
 		<module>TadukooFileFormat</module>
-		<module>TadukooLookAndFeel</module>
 		<module>TadukooView</module>
+		<module>TadukooLookAndFeel</module>
 	</modules>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -90,6 +90,12 @@
 			<dependency>
 				<groupId>${project.groupId}</groupId>
 				<artifactId>TadukooUtil</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<!-- Tadukoo View -->
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>TadukooView</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<!-- JUnit Dependencies -->

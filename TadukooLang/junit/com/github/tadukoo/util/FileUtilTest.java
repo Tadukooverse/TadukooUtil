@@ -99,6 +99,22 @@ public class FileUtilTest{
 	}
 	
 	@Test
+	public void testCreateDirectory(){
+		String folderPath = "target/testCreateDirectory";
+		
+		// Delete folder if it exists
+		File folder = new File(folderPath);
+		if(folder.exists()){
+			assertTrue(folder.delete());
+			assertFalse(folder.exists());
+		}
+		
+		folder = FileUtil.createDirectory(folderPath);
+		assertTrue(folder.exists());
+		assertEquals("testCreateDirectory", folder.getName());
+	}
+	
+	@Test
 	public void testWriteFileWithPath() throws IOException{
 		String filepath = "target/test-files/writeFileWithPath/test.txt";
 		FileUtil.writeFile(filepath, "Test\nDerp\nYes");
@@ -135,5 +151,107 @@ public class FileUtilTest{
 		assertEquals("Test", lines.get(0));
 		assertEquals("Derp", lines.get(1));
 		assertEquals("Yes", lines.get(2));
+	}
+	
+	@Test
+	public void testZipAndUnzipByFileName() throws IOException{
+		String folder = "target/test-files/zipAndUnzipByFileName/";
+		String filepath = folder + "test.txt";
+		String zipPath = folder + "test.zip";
+		String resultPath = folder + "result/";
+		File resultDir = new File(resultPath);
+		resultDir.mkdirs();
+		File file = FileUtil.createFile(filepath);
+		FileUtil.writeFile(filepath, "Some content");
+		FileUtil.zipFile(filepath, zipPath);
+		FileUtil.unzipFile(zipPath, resultPath);
+		List<File> contents = FileUtil.listAllFiles(resultPath);
+		assertEquals(1, contents.size());
+		File resultFile = contents.get(0);
+		assertEquals("test.txt", resultFile.getName());
+		List<String> lines = FileUtil.getLinesAsList(new BufferedReader(new FileReader(resultFile)));
+		assertEquals(1, lines.size());
+		assertEquals("Some content", lines.get(0));
+	}
+	
+	@Test
+	public void testZipAndUnzipByDirectoryName() throws IOException{
+		String folder = "target/test-files/zipAndUnzipByDirectoryName/";
+		String dataFolder = folder + "data/";
+		String filepath = dataFolder + "test.txt";
+		String filepath2 = dataFolder + "test2.txt";
+		String zipPath = folder + "test.zip";
+		String resultPath = folder + "result/";
+		File resultDir = new File(resultPath);
+		resultDir.mkdirs();
+		File file = FileUtil.createFile(filepath);
+		File file2 = FileUtil.createFile(filepath2);
+		FileUtil.writeFile(filepath, "Some content");
+		FileUtil.writeFile(filepath2, "Some other content");
+		FileUtil.zipFile(dataFolder, zipPath);
+		FileUtil.unzipFile(zipPath, resultPath);
+		List<File> contents = FileUtil.listAllFiles(resultPath);
+		assertEquals(2, contents.size());
+		File resultFile = contents.get(0);
+		assertEquals("test.txt", resultFile.getName());
+		List<String> lines = FileUtil.getLinesAsList(new BufferedReader(new FileReader(resultFile)));
+		assertEquals(1, lines.size());
+		assertEquals("Some content", lines.get(0));
+		File resultFile2 = contents.get(1);
+		assertEquals("test2.txt", resultFile2.getName());
+		List<String> lines2 = FileUtil.getLinesAsList(new BufferedReader(new FileReader(resultFile2)));
+		assertEquals(1, lines2.size());
+		assertEquals("Some other content", lines2.get(0));
+	}
+	
+	@Test
+	public void testZipAndUnzipByFile() throws IOException{
+		String folder = "target/test-files/zipAndUnzipByFileName/";
+		String filepath = folder + "test.txt";
+		String zipPath = folder + "test.zip";
+		String resultPath = folder + "result/";
+		File resultDir = new File(resultPath);
+		resultDir.mkdirs();
+		File file = FileUtil.createFile(filepath);
+		FileUtil.writeFile(filepath, "Some content");
+		FileUtil.zipFile(file, zipPath);
+		FileUtil.unzipFile(zipPath, resultDir);
+		List<File> contents = FileUtil.listAllFiles(resultPath);
+		assertEquals(1, contents.size());
+		File resultFile = contents.get(0);
+		assertEquals("test.txt", resultFile.getName());
+		List<String> lines = FileUtil.getLinesAsList(new BufferedReader(new FileReader(resultFile)));
+		assertEquals(1, lines.size());
+		assertEquals("Some content", lines.get(0));
+	}
+	
+	@Test
+	public void testZipAndUnzipByDirectoryFile() throws IOException{
+		String folder = "target/test-files/zipAndUnzipByDirectoryName/";
+		String dataFolder = folder + "data/";
+		String filepath = dataFolder + "test.txt";
+		String filepath2 = dataFolder + "test2.txt";
+		String zipPath = folder + "test.zip";
+		String resultPath = folder + "result/";
+		File resultDir = new File(resultPath);
+		resultDir.mkdirs();
+		File file = FileUtil.createFile(filepath);
+		File file2 = FileUtil.createFile(filepath2);
+		FileUtil.writeFile(filepath, "Some content");
+		FileUtil.writeFile(filepath2, "Some other content");
+		FileUtil.zipFile(new File(dataFolder), zipPath);
+		FileUtil.unzipFile(zipPath, resultDir);
+		List<File> contents = FileUtil.listAllFiles(resultPath);
+		assertEquals(2, contents.size());
+		File resultFile = contents.get(0);
+		assertEquals("test.txt", resultFile.getName());
+		List<String> lines = FileUtil.getLinesAsList(new BufferedReader(new FileReader(resultFile)));
+		assertEquals(1, lines.size());
+		assertEquals("Some content", lines.get(0));
+		File resultFile2 = contents.get(1);
+		assertEquals("test2.txt", resultFile2.getName());
+		List<String> lines2 = FileUtil.getLinesAsList(new BufferedReader(new FileReader(resultFile2)));
+		assertEquals(1, lines2.size());
+		assertEquals("Some other content", lines2.get(0));
 	}
 }
