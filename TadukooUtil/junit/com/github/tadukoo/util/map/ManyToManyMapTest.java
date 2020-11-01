@@ -1,5 +1,6 @@
 package com.github.tadukoo.util.map;
 
+import com.github.tadukoo.util.tuple.Pair;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -26,6 +27,22 @@ public class ManyToManyMapTest{
 	public void testDefaultConstructor(){
 		assertNotNull(emptyMap);
 		assertTrue(emptyMap.isEmpty());
+	}
+	
+	@Test
+	public void testPairsConstructor(){
+		emptyMap = new HashManyToManyMap<>(Pair.of("Test", 5), Pair.of("Derp", 24));
+		assertNotNull(emptyMap);
+		assertFalse(emptyMap.isEmpty());
+		assertEquals(2, emptyMap.keySetSize());
+		assertTrue(emptyMap.containsKey("Test"));
+		List<Integer> test = emptyMap.getValues("Test");
+		assertEquals(1, test.size());
+		assertEquals(5, test.get(0));
+		assertTrue(emptyMap.containsKey("Derp"));
+		List<Integer> derp = emptyMap.getValues("Derp");
+		assertEquals(1, derp.size());
+		assertEquals(24, derp.get(0));
 	}
 	
 	@Test
@@ -283,6 +300,52 @@ public class ManyToManyMapTest{
 		List<String> test24 = emptyMap.getKeys(24);
 		assertEquals(1, test24.size());
 		assertEquals("Test", test24.get(0));
+	}
+	
+	@Test
+	public void testPutAllKeyValMappingsPairs(){
+		emptyMap.putAllKeyValMappings(Pair.of("Test", 5), Pair.of("Derp", 24));
+		assertFalse(emptyMap.isEmpty());
+		assertEquals(2, emptyMap.keySetSize());
+		assertTrue(emptyMap.containsKey("Test"));
+		List<Integer> test = emptyMap.getValues("Test");
+		assertEquals(1, test.size());
+		assertEquals(5, test.get(0));
+		assertTrue(emptyMap.containsKey("Derp"));
+		List<Integer> derp = emptyMap.getValues("Derp");
+		assertEquals(1, derp.size());
+		assertEquals(24, derp.get(0));
+		assertTrue(emptyMap.containsValue(5));
+		List<String> test5 = emptyMap.getKeys(5);
+		assertEquals(1, test5.size());
+		assertEquals("Test", test5.get(0));
+		assertTrue(emptyMap.containsValue(24));
+		List<String> test24 = emptyMap.getKeys(24);
+		assertEquals(1, test24.size());
+		assertEquals("Derp", test24.get(0));
+	}
+	
+	@Test
+	public void testPutAllValKeyMappingsPairs(){
+		emptyMap.putAllValKeyMappings(Pair.of(5, "Test"), Pair.of(24, "Derp"));
+		assertFalse(emptyMap.isEmpty());
+		assertEquals(2, emptyMap.keySetSize());
+		assertTrue(emptyMap.containsKey("Test"));
+		List<Integer> test = emptyMap.getValues("Test");
+		assertEquals(1, test.size());
+		assertEquals(5, test.get(0));
+		assertTrue(emptyMap.containsKey("Derp"));
+		List<Integer> derp = emptyMap.getValues("Derp");
+		assertEquals(1, derp.size());
+		assertEquals(24, derp.get(0));
+		assertTrue(emptyMap.containsValue(5));
+		List<String> test5 = emptyMap.getKeys(5);
+		assertEquals(1, test5.size());
+		assertEquals("Test", test5.get(0));
+		assertTrue(emptyMap.containsValue(24));
+		List<String> test24 = emptyMap.getKeys(24);
+		assertEquals(1, test24.size());
+		assertEquals("Derp", test24.get(0));
 	}
 	
 	@Test
