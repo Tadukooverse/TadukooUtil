@@ -1,5 +1,6 @@
 package com.github.tadukoo.util.map;
 
+import com.github.tadukoo.util.tuple.Pair;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -25,6 +26,20 @@ public class MultiMapTest{
 	public void testDefaultConstructor(){
 		assertNotNull(emptyMap);
 		assertTrue(emptyMap.isEmpty());
+	}
+	
+	@Test
+	public void testPairsConstructor(){
+		emptyMap = new HashMultiMap<>(Pair.of("Test", 0), Pair.of("Plop", 5));
+		assertNotNull(emptyMap);
+		assertFalse(emptyMap.isEmpty());
+		assertEquals(2, emptyMap.keySetSize());
+		List<Integer> test = emptyMap.get("Test");
+		assertEquals(1, test.size());
+		assertEquals(0, test.get(0));
+		List<Integer> plop = emptyMap.get("Plop");
+		assertEquals(1, plop.size());
+		assertEquals(5, plop.get(0));
 	}
 	
 	@Test
@@ -224,6 +239,34 @@ public class MultiMapTest{
 		assertEquals(15, test.get(2));
 		assertEquals(28, test.get(3));
 		assertEquals(75, test.get(4));
+	}
+	
+	@Test
+	public void testPutAllPairsEmpty(){
+		emptyMap.putAll(Pair.of("Test", 98), Pair.of("Test2", 192));
+		assertEquals(2, emptyMap.keySetSize());
+		assertTrue(emptyMap.containsKey("Test"));
+		assertTrue(emptyMap.containsKey("Test2"));
+		List<Integer> test = emptyMap.get("Test");
+		assertEquals(1, test.size());
+		assertEquals(98, test.get(0));
+		List<Integer> test2 = emptyMap.get("Test2");
+		assertEquals(1, test2.size());
+		assertEquals(192, test2.get(0));
+	}
+	
+	@Test
+	public void testPutAllPairsNonEmpty(){
+		populatedMap.putAll(Pair.of("Test", 98), Pair.of("Test2", 192));
+		assertEquals(2, populatedMap.keySetSize());
+		assertTrue(populatedMap.containsKey("Test"));
+		assertTrue(populatedMap.containsKey("Test2"));
+		List<Integer> test = populatedMap.get("Test");
+		assertEquals(3, test.size());
+		assertEquals(98, test.get(2));
+		List<Integer> test2 = populatedMap.get("Test2");
+		assertEquals(2, test2.size());
+		assertEquals(192, test2.get(1));
 	}
 	
 	@Test

@@ -1,5 +1,7 @@
 package com.github.tadukoo.util.map;
 
+import com.github.tadukoo.util.tuple.Pair;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -16,7 +18,8 @@ import java.util.stream.Collectors;
  * functionality.
  * 
  * @author Logan Ferree (Tadukoo)
- * @version Pre-Alpha
+ * @version Alpha v.0.2
+ * @since Pre-Alpha
  * 
  * @param <K> The type of keys in this MultiMap
  * @param <V> The type of values in this MultiMap
@@ -32,6 +35,19 @@ public abstract class MultiMap<K, V>{
 	 */
 	public MultiMap(Map<K, List<V>> theMap){
 		this.theMap = theMap;
+	}
+	
+	/**
+	 * Sets the backing {@link Map} for this MultiMap and calls
+	 * {@link #putAll(Pair[])} for the given Pair entries.
+	 *
+	 * @param theMap The Map to use for this MultiMap
+	 * @param entries A collection of Pairs to be put in this MultiMap
+	 */
+	@SafeVarargs
+	public MultiMap(Map<K, List<V>> theMap, Pair<K, V>... entries){
+		this.theMap = theMap;
+		putAll(entries);
 	}
 	
 	/**
@@ -184,6 +200,18 @@ public abstract class MultiMap<K, V>{
 	 */
 	public final void putAll(K key, List<V> values){
 		values.forEach(value -> put(key, value));
+	}
+	
+	/**
+	 * Puts all the given Pairs into this MultiMap.
+	 *
+	 * @param entries The entries to put in this MultiMap
+	 */
+	@SafeVarargs
+	public final void putAll(Pair<K, V> ... entries){
+		for(Pair<K, V> entry: entries){
+			put(entry.getKey(), entry.getValue());
+		}
 	}
 	
 	/**
