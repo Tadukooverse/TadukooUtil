@@ -90,4 +90,19 @@ public class TableTest{
 		assertEquals(pojo2, table.getRow(0));
 		assertEquals(pojo1, table.getRow(1));
 	}
+	
+	@Test
+	public void testRemoveRow(){
+		TestMappedPojo pojo1 = new TestMappedPojo();
+		TestMappedPojo pojo2 = new TestMappedPojo();
+		table.addRow(pojo1);
+		table.addRow(pojo2);
+		assertEquals(2, table.getNumRows());
+		assertEquals(pojo1, table.getRow(0));
+		assertEquals(pojo2, table.getRow(1));
+		
+		assertEquals(pojo1, table.removeRow(0));
+		assertEquals(1, table.getNumRows());
+		assertEquals(pojo2, table.getRow(0));
+	}
 }

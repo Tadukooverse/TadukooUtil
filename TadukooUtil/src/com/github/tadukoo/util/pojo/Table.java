@@ -64,4 +64,14 @@ public class Table<Item extends MappedPojo>{
 	public void addRow(int index, Item item){
 		rows.add(index, item);
 	}
+	
+	/**
+	 * Removes the {@link MappedPojo} at the given index from this Table
+	 *
+	 * @param index The index of the {@link MappedPojo} to be removed
+	 * @return The {@link MappedPojo} that was removed from this Table
+	 */
+	public Item removeRow(int index){
+		return rows.remove(index);
+	}
 }
