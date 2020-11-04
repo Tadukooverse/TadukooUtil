@@ -22,6 +22,14 @@ public abstract class AbstractForm extends JPanel implements Form{
 	/** The map of {@link JComponent components} on this form */
 	private final Map<String, JComponent> components;
 	
+	/**
+	 * Initializes the form. Sets the values map to the passed in map (used for forms that need the default values
+	 * while running {@link #setDefaultFields()}), and sets the fields and components maps to new HashMaps.
+	 * <br>
+	 * {@link #setDefaultFields()} and {@link #createComponents()} are then called.
+	 *
+	 * @param defaultValues The default values map, used for forms that need them during {@link #setDefaultFields()}
+	 */
 	protected AbstractForm(Map<String, Object> defaultValues){
 		// Initialize the maps
 		valueMap = defaultValues;
