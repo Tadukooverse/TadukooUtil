@@ -1,5 +1,6 @@
 package com.github.tadukoo.util.view.components;
 
+import com.github.tadukoo.util.view.InsetsUtil;
 import com.github.tadukoo.util.view.shapes.ShapeInfo;
 import com.github.tadukoo.util.view.shapes.Shaped;
 
@@ -154,19 +155,19 @@ public class TadukooButton extends JButton implements Shaped{
 	@Override
 	public Insets getInsets(){
 		Insets insets;
-		if(getBorder() != null || shapeInfo != null){
+		Border border = getBorder();
+		if(border != null || shapeInfo != null){
 			insets = new Insets(0, 0, 0, 0);
 			
 			// Use border insets if we have one
-			if(getBorder() != null){
-				insets = getBorder().getBorderInsets(this);
+			if(border != null){
+				insets = border.getBorderInsets(this);
 			}
 			
 			// Use Shape insets if we have any
 			if(shapeInfo != null){
 				Insets shapeInsets = shapeInfo.getShapeInsetsFunc().apply(getX(), getY(), getWidth(), getHeight());
-				insets.set(insets.top + shapeInsets.top, insets.left + shapeInsets.left,
-						insets.bottom + shapeInsets.bottom, insets.right + shapeInsets.right);
+				insets = InsetsUtil.addInsets(insets, shapeInsets);
 			}
 		}else{
 			insets = super.getInsets();
@@ -178,11 +179,7 @@ public class TadukooButton extends JButton implements Shaped{
 	@Override
 	public Insets getInsets(Insets insets){
 		// Reset insets to 0 before starting
-		if(insets == null){
-			insets = new Insets(0, 0, 0, 0);
-		}else{
-			insets.left = insets.top = insets.right = insets.bottom = 0;
-		}
+		insets = InsetsUtil.zeroInsets(insets);
 		
 		// Add in border insets if we have one
 		Border border = getBorder();
@@ -197,8 +194,7 @@ public class TadukooButton extends JButton implements Shaped{
 		// Add in Shape insets if we have any
 		if(shapeInfo != null){
 			Insets shapeInsets = shapeInfo.getShapeInsetsFunc().apply(getX(), getY(), getWidth(), getHeight());
-			insets.set(insets.top + shapeInsets.top, insets.left + shapeInsets.left,
-					insets.bottom + shapeInsets.bottom, insets.right + shapeInsets.right);
+			insets = InsetsUtil.addInsets(insets, shapeInsets);
 		}
 		
 		return insets;
