@@ -23,6 +23,13 @@ public class Table<Item extends MappedPojo>{
 	}
 	
 	/**
+	 * @return If the Table is empty or not
+	 */
+	public boolean isEmpty(){
+		return rows.size() == 0;
+	}
+	
+	/**
 	 * @return A List of all the {@link MappedPojo}s in this Table
 	 */
 	public List<Item> getAllRows(){

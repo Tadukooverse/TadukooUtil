@@ -4,8 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class TableTest{
 	
@@ -18,6 +17,17 @@ public class TableTest{
 	@Test
 	public void testConstructor(){
 		assertTrue(table.getAllRows().isEmpty());
+	}
+	
+	@Test
+	public void testIsEmpty(){
+		assertTrue(table.isEmpty());
+	}
+	
+	@Test
+	public void testIsEmptyFalse(){
+		table.addRow(new TestMappedPojo());
+		assertFalse(table.isEmpty());
 	}
 	
 	@Test
