@@ -35,7 +35,7 @@ public class ButtonFormField extends FormField<String>{
 	 *     <tr>
 	 *         <td>labelType</td>
 	 *         <td>The {@link LabelType} to use for the field</td>
-	 *         <td>Defaults to {@link LabelType#LABEL}</td>
+	 *         <td>Defaults to {@link LabelType#NONE}</td>
 	 *     </tr>
 	 *     <tr>
 	 *         <td>rowPos</td>
