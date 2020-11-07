@@ -7,6 +7,8 @@ package com.github.tadukoo.util.view.form.field;
  * @version Alpha v.0.2
  */
 public enum FieldType{
+	/** A boolean field */
+	BOOLEAN,
 	/** A string field */
 	STRING,
 	/** A button (not really a field) */
