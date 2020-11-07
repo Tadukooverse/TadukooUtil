@@ -131,7 +131,9 @@ public class TadukooTable extends JScrollPane{
 		DefaultTableModel model = getTableModel();
 		
 		// Reset the columns based on either the key order we have or grab it off a pojo
-		List<String> keys = keyOrder != null?keyOrder:(data != null?data.getRow(0).getKeyOrder():null);
+		List<String> keys = keyOrder != null?
+				keyOrder:
+				(data != null && !data.isEmpty()?data.getRow(0).getKeyOrder():null);
 		model.setColumnCount(0);
 		if(keys != null){
 			for(String key: keys){
@@ -141,7 +143,7 @@ public class TadukooTable extends JScrollPane{
 		
 		// Reset the row data of the table based on the passed in pojos
 		model.setRowCount(0);
-		if(data != null && keys != null){
+		if(data != null && !data.isEmpty() && keys != null){
 			List<OrderedMappedPojo> pojos = data.getAllRows();
 			for(OrderedMappedPojo pojo: pojos){
 				Object[] row = new Object[keys.size()];

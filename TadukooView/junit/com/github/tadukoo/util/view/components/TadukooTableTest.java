@@ -104,10 +104,12 @@ public class TadukooTableTest{
 		Table<OrderedMappedPojo> result = table.updatePojos(null);
 		assertEquals(2, result.getNumRows());
 		OrderedMappedPojo pojo1 = result.getRow(0);
+		assertEquals(keyOrder2, pojo1.getKeyOrder());
 		assertEquals(derpValue, pojo1.getItem("Derp"));
 		assertEquals(testValue, pojo1.getItem("Test"));
 		assertEquals(plopValue, pojo1.getItem("Plop"));
 		OrderedMappedPojo pojo2 = result.getRow(1);
+		assertEquals(keyOrder2, pojo2.getKeyOrder());
 		assertEquals(derpValue, pojo2.getItem("Derp"));
 		assertNull(pojo2.getItem("Test"));
 		assertNull(pojo2.getItem("Plop"));
