@@ -16,6 +16,7 @@ public class DropDownFormField extends FormField<String>{
 	 * Builder to be used to create a {@link DropDownFormField}. It has the following parameters:
 	 *
 	 * <table>
+	 *     <caption>DropDownFormField Parameters</caption>
 	 *     <tr>
 	 *         <th>Name</th>
 	 *         <th>Description</th>

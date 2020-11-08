@@ -16,6 +16,7 @@ public class FormFormField extends FormField<AbstractForm>{
 	 * Builder to be used to create a {@link FormFormField}. It has the following parameters:
 	 *
 	 * <table>
+	 *     <caption>FormFormField Parameters</caption>
 	 *     <tr>
 	 *         <th>Name</th>
 	 *         <th>Description</th>

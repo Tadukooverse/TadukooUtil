@@ -12,7 +12,7 @@ import java.awt.event.ActionListener;
 
 /**
  * Tadukoo Button is an extension of {@link JButton} that allows for specifying more parameters that can be used in
- * Tadukoo Look & Feel, such as {@link ShapeInfo}.
+ * Tadukoo Look &amp; Feel, such as {@link ShapeInfo}.
  *
  * @author Logan Ferree (Tadukoo)
  * @version Alpha v.0.2
@@ -24,6 +24,7 @@ public class TadukooButton extends JButton implements Shaped{
 	 * in subclasses of FormField. It has the following parameters:
 	 *
 	 * <table>
+	 *     <caption>TadukooButton Parameters</caption>
 	 *     <tr>
 	 *         <th>Name</th>
 	 *         <th>Description</th>

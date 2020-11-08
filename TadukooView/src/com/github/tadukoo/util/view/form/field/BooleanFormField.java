@@ -16,6 +16,7 @@ public class BooleanFormField extends FormField<Boolean>{
 	 * Builder to be used to create a {@link BooleanFormField}. It has the following parameters:
 	 *
 	 * <table>
+	 *     <caption>BooleanFormField Parameters</caption>
 	 *     <tr>
 	 *         <th>Name</th>
 	 *         <th>Description</th>

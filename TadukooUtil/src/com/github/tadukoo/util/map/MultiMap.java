@@ -334,7 +334,7 @@ public abstract class MultiMap<K, V>{
 	 * with the given new list of values if the given old list matches the 
 	 * current list.
 	 * <br>
-	 * Calls {@link Map#replace(K,V,V)} on the underlying {@link Map}.
+	 * Calls {@link Map#replace(Object, Object, Object)} on the underlying {@link Map}.
 	 * 
 	 * @param key The key to change the associations of
 	 * @param oldValues The old list of values associated with the given key
@@ -350,7 +350,7 @@ public abstract class MultiMap<K, V>{
 	 * with the given list of values, only if it is currently mapped to
 	 * a value.
 	 * <br>
-	 * Calls {@link Map#replace(K,V)} on the underlying {@link Map}.
+	 * Calls {@link Map#replace(Object, Object)} on the underlying {@link Map}.
 	 *
 	 * @param key The key to change the associations of
 	 * @param values The values to associate with the given key

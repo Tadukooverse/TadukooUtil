@@ -23,6 +23,7 @@ public class TadukooTable extends JScrollPane{
 	 * Builder to be used to create a {@link TadukooTable}. It has the following parameters:
 	 *
 	 * <table>
+	 *     <caption>TadukooTable Parameters</caption>
 	 *     <tr>
 	 *         <th>Name</th>
 	 *         <th>Description</th>
@@ -83,6 +84,7 @@ public class TadukooTable extends JScrollPane{
 	/**
 	 * Creates a new Tadukoo Table using the given parameters
 	 *
+	 * @param keyOrder The order of the keys in the table - can be null to use the pojos in the data
 	 * @param data The data to be put in the table
 	 */
 	private TadukooTable(List<String> keyOrder, Table<OrderedMappedPojo> data){

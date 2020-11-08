@@ -18,6 +18,7 @@ public class TableFormField extends FormField<Table<OrderedMappedPojo>>{
 	 * Builder to be used to create a {@link TableFormField}. It has the following parameters:
 	 *
 	 * <table>
+	 *     <caption>TableFormField Parameters</caption>
 	 *     <tr>
 	 *         <th>Name</th>
 	 *         <th>Description</th>

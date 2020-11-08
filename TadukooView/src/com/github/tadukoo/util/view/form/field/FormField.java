@@ -17,6 +17,7 @@ public abstract class FormField<Type>{
 	 * in subclasses of FormField. It has the following parameters:
 	 *
 	 * <table>
+	 *     <caption>FormField Parameters</caption>
 	 *     <tr>
 	 *         <th>Name</th>
 	 *         <th>Description</th>

@@ -29,6 +29,7 @@ public class StringFormField extends FormField<String>{
 	 * Builder to be used to create a {@link StringFormField}. It has the following parameters:
 	 *
 	 * <table>
+	 *     <caption>StringFormField Parameters</caption>
 	 *     <tr>
 	 *         <th>Name</th>
 	 *         <th>Description</th>

@@ -8,8 +8,8 @@ import java.awt.*;
 import java.io.IOException;
 
 /**
- * Tadukoo Look & Feel is a Look & Feel currently extending {@link MetalLookAndFeel} that allows for easier
- * customization of the Look & Feel. Through the use of specifying a {@link TadukooTheme}, you can customize
+ * Tadukoo Look &amp; Feel is a Look &amp; Feel currently extending {@link MetalLookAndFeel} that allows for easier
+ * customization of the Look &amp; Feel. Through the use of specifying a {@link TadukooTheme}, you can customize
  * paints, fonts, shapes, and borders of components, and even swap out the Component UI classes themselves if
  * that's not custom enough for you.
  *
@@ -17,20 +17,23 @@ import java.io.IOException;
  * @version Alpha v.0.2
  */
 public class TadukooLookAndFeel extends MetalLookAndFeel{
-	/** The {@link TadukooTheme theme} to use in the Look & Feel */
+	/** The {@link TadukooTheme theme} to use in the Look &amp; Feel */
 	private final TadukooTheme theme;
 	
 	/**
-	 * Constructs a Tadukoo Look & Feel with the default {@link TadukooTheme theme}.
+	 * Constructs a Tadukoo Look &amp; Feel with the default {@link TadukooTheme theme}.
+	 *
+	 * @throws IOException If font loading goes wrong in creating default theme
+	 * @throws FontFormatException If font loading goes wrong in creating default theme
 	 */
 	public TadukooLookAndFeel() throws IOException, FontFormatException{
 		theme = TadukooThemeFactory.createDefaultTheme();
 	}
 	
 	/**
-	 * Constructs a Tadukoo Look & Feel with the given {@link TadukooTheme theme}.
+	 * Constructs a Tadukoo Look &amp; Feel with the given {@link TadukooTheme theme}.
 	 *
-	 * @param theme The {@link TadukooTheme theme} to use for the Look & Feel
+	 * @param theme The {@link TadukooTheme theme} to use for the Look &amp; Feel
 	 */
 	public TadukooLookAndFeel(TadukooTheme theme){
 		this.theme = theme;
@@ -78,7 +81,7 @@ public class TadukooLookAndFeel extends MetalLookAndFeel{
 	
 	/**
 	 * Populates the {@link UIDefaults} table with mappings for the Component UI classes to be used
-	 * in the Look & Feel. Tadukoo Look & Feel has its own Component UI classes, but you are able
+	 * in the Look &amp; Feel. Tadukoo Look &amp; Feel has its own Component UI classes, but you are able
 	 * to specify different ones in the {@link TadukooTheme theme} if you pass one in via the
 	 * constructor.
 	 *

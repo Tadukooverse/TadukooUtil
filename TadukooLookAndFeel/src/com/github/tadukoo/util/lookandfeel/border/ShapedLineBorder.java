@@ -46,6 +46,7 @@ public class ShapedLineBorder extends AbstractBorder{
 		
 		/**
 		 * @param shapeInfo The {@link ShapeInfo} to use on the Border (may be null to use the component's shape)
+		 * @return this, to continue building
 		 */
 		public ShapedLineBorderBuilder shapeInfo(ShapeInfo shapeInfo){
 			this.shapeInfo = shapeInfo;
@@ -54,6 +55,7 @@ public class ShapedLineBorder extends AbstractBorder{
 		
 		/**
 		 * @param paintUIResource The {@link PaintUIResource} to use on the Border
+		 * @return this, to continue building
 		 */
 		public ShapedLineBorderBuilder paintUIResource(PaintUIResource paintUIResource){
 			this.paintUIResource = paintUIResource;
@@ -62,6 +64,7 @@ public class ShapedLineBorder extends AbstractBorder{
 		
 		/**
 		 * @param thickness The thickness of the line
+		 * @return this, to continue building
 		 */
 		public ShapedLineBorderBuilder thickness(int thickness){
 			this.thickness = thickness;
