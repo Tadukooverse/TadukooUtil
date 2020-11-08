@@ -171,6 +171,7 @@ public class AnnotationUtil{
 	 * 
 	 * @param filename The file name/path to use
 	 * @return A FileObject for the new file
+	 * @throws IOException If something goes wrong in creating the file
 	 */
 	public FileObject createFile(String filename) throws IOException{
 		return filer.createResource(StandardLocation.SOURCE_OUTPUT, "", filename);
@@ -181,6 +182,7 @@ public class AnnotationUtil{
 	 * 
 	 * @param filename The file name/path to use
 	 * @return A FileObject for the existing file
+	 * @throws IOException If something goes wrong in grabbing the file
 	 */
 	public FileObject getExistingFile(String filename) throws IOException{
 		return filer.getResource(StandardLocation.SOURCE_OUTPUT, "", filename);
@@ -192,6 +194,7 @@ public class AnnotationUtil{
 	 * 
 	 * @param filename The file name/path to use
 	 * @return A Reader for the existing file
+	 * @throws IOException If something goes wrong in either grabbing the file or opening it to read
 	 */
 	public Reader getFileReader(String filename) throws IOException{
 		FileObject file = getExistingFile(filename);
@@ -206,6 +209,7 @@ public class AnnotationUtil{
 	 * 
 	 * @param filename The file name/path to use
 	 * @return A Writer for the newly created file
+	 * @throws IOException If something goes wrong in creating the file or opening it to write
 	 */
 	public Writer getFileWriter(String filename) throws IOException{
 		FileObject file = createFile(filename);

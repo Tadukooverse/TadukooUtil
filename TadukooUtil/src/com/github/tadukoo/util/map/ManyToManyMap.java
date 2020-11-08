@@ -1,5 +1,7 @@
 package com.github.tadukoo.util.map;
 
+import com.github.tadukoo.util.tuple.Pair;
+
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -15,7 +17,8 @@ import java.util.function.BiConsumer;
  * for more specific functionality.
  * 
  * @author Logan Ferree (Tadukoo)
- * @version Pre-Alpha
+ * @version Alpha v.0.2
+ * @since Pre-Alpha
  * 
  * @param <K> The type of keys in this ManyToManyMap
  * @param <V> The type of values in this ManyToManyMap
@@ -35,6 +38,21 @@ public abstract class ManyToManyMap<K, V>{
 	protected ManyToManyMap(MultiMap<K, V> keysToValues, MultiMap<V, K> valuesToKeys){
 		this.keysToValues = keysToValues;
 		this.valuesToKeys = valuesToKeys;
+	}
+	
+	/**
+	 * Sets the backing {@link MultiMap}s for this ManyToManyMap and calls
+	 * {@link #putAllKeyValMappings(Pair[])} for the given key-value Pairs.
+	 *
+	 * @param keysToValues The keysToValues MultiMap to use for this ManyToManyMap
+	 * @param valuesToKeys The valuesToKeys MultiMap to use for this ManyToManyMap
+	 * @param entries A collection of key-value Pairs to be put in this ManyToManyMap
+	 */
+	@SafeVarargs
+	protected ManyToManyMap(MultiMap<K, V> keysToValues, MultiMap<V, K> valuesToKeys, Pair<K, V>... entries){
+		this.keysToValues = keysToValues;
+		this.valuesToKeys = valuesToKeys;
+		putAllKeyValMappings(entries);
 	}
 	
 	/**
@@ -237,6 +255,40 @@ public abstract class ManyToManyMap<K, V>{
 	public final void putAllValues(K key, List<V> values){
 		keysToValues.putAll(key, values);
 		values.forEach(value -> valuesToKeys.put(value, key));
+	}
+	
+	/**
+	 * Puts all the given key-value Pairs into this ManyToManyMap.
+	 * <br>
+	 * Calls {@link MultiMap#putAll(Pair[])} on the underlying keysToValues
+	 * {@link MultiMap} and {@link MultiMap#put} on the underlying
+	 * valuesToKeys MultiMap for each key-value mapping.
+	 *
+	 * @param entries The key-value Pairs to be put in this ManyToManyMap
+	 */
+	@SafeVarargs
+	public final void putAllKeyValMappings(Pair<K, V> ... entries){
+		keysToValues.putAll(entries);
+		for(Pair<K, V> entry: entries){
+			valuesToKeys.put(entry.getValue(), entry.getKey());
+		}
+	}
+	
+	/**
+	 * Puts all the given value-key Pairs into this ManyToManyMap.
+	 * <br>
+	 * Calls {@link MultiMap#putAll(Pair[])} on the underlying valuesToKeys
+	 * {@link MultiMap} and {@link MultiMap#put} on the underlying
+	 * keysToValues MultiMap for each value-key mapping.
+	 *
+	 * @param entries The value-key Pairs to be put in this ManyToManyMap
+	 */
+	@SafeVarargs
+	public final void putAllValKeyMappings(Pair<V, K> ... entries){
+		valuesToKeys.putAll(entries);
+		for(Pair<V, K> entry: entries){
+			keysToValues.put(entry.getValue(), entry.getKey());
+		}
 	}
 	
 	/**

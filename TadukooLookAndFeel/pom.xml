@@ -6,13 +6,13 @@
 	<parent>
 		<groupId>com.github.tadukoo.util</groupId>
 		<artifactId>TadukooUtilParent</artifactId>
-		<version>0.1-Alpha-SNAPSHOT</version>
+		<version>0.2-Alpha-SNAPSHOT</version>
 	</parent>
 	<artifactId>TadukooLookAndFeel</artifactId>
 	<dependencies>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>TadukooLang</artifactId>
+			<artifactId>TadukooView</artifactId>
 		</dependency>
 	</dependencies>
 	<build>

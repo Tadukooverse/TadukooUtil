@@ -1,5 +1,7 @@
 package com.github.tadukoo.util.map;
 
+import com.github.tadukoo.util.tuple.Pair;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,7 +10,8 @@ import java.util.Map;
  * A MultiMap class that uses {@link HashMap} as the backing {@link Map} class.
  * 
  * @author Logan Ferree (Tadukoo)
- * @version Pre-Alpha
+ * @version Alpha v.0.2
+ * @since Pre-Alpha
  */
 public class HashMultiMap<K, V> extends MultiMap<K, V>{
 	
@@ -39,6 +42,17 @@ public class HashMultiMap<K, V> extends MultiMap<K, V>{
 	 */
 	public HashMultiMap(int initialCapacity, float loadFactor){
 		super(new HashMap<>(initialCapacity, loadFactor));
+	}
+	
+	/**
+	 * Creates a new HashMultiMap where the given Pairs are loaded into the
+	 * map right away.
+	 *
+	 * @param entries The Pairs to be placed in this MultiMap
+	 */
+	@SafeVarargs
+	public HashMultiMap(Pair<K, V>... entries){
+		super(new HashMap<>(), entries);
 	}
 	
 	/**

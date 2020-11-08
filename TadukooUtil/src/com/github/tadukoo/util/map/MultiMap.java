@@ -1,5 +1,7 @@
 package com.github.tadukoo.util.map;
 
+import com.github.tadukoo.util.tuple.Pair;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -16,7 +18,8 @@ import java.util.stream.Collectors;
  * functionality.
  * 
  * @author Logan Ferree (Tadukoo)
- * @version Pre-Alpha
+ * @version Alpha v.0.2
+ * @since Pre-Alpha
  * 
  * @param <K> The type of keys in this MultiMap
  * @param <V> The type of values in this MultiMap
@@ -32,6 +35,19 @@ public abstract class MultiMap<K, V>{
 	 */
 	public MultiMap(Map<K, List<V>> theMap){
 		this.theMap = theMap;
+	}
+	
+	/**
+	 * Sets the backing {@link Map} for this MultiMap and calls
+	 * {@link #putAll(Pair[])} for the given Pair entries.
+	 *
+	 * @param theMap The Map to use for this MultiMap
+	 * @param entries A collection of Pairs to be put in this MultiMap
+	 */
+	@SafeVarargs
+	public MultiMap(Map<K, List<V>> theMap, Pair<K, V>... entries){
+		this.theMap = theMap;
+		putAll(entries);
 	}
 	
 	/**
@@ -187,6 +203,18 @@ public abstract class MultiMap<K, V>{
 	}
 	
 	/**
+	 * Puts all the given Pairs into this MultiMap.
+	 *
+	 * @param entries The entries to put in this MultiMap
+	 */
+	@SafeVarargs
+	public final void putAll(Pair<K, V> ... entries){
+		for(Pair<K, V> entry: entries){
+			put(entry.getKey(), entry.getValue());
+		}
+	}
+	
+	/**
 	 * Associates all of the key-value mappings from the given Map 
 	 * into this MultiMap.
 	 * 
@@ -306,7 +334,7 @@ public abstract class MultiMap<K, V>{
 	 * with the given new list of values if the given old list matches the 
 	 * current list.
 	 * <br>
-	 * Calls {@link Map#replace(K,V,V)} on the underlying {@link Map}.
+	 * Calls {@link Map#replace(Object, Object, Object)} on the underlying {@link Map}.
 	 * 
 	 * @param key The key to change the associations of
 	 * @param oldValues The old list of values associated with the given key
@@ -322,7 +350,7 @@ public abstract class MultiMap<K, V>{
 	 * with the given list of values, only if it is currently mapped to
 	 * a value.
 	 * <br>
-	 * Calls {@link Map#replace(K,V)} on the underlying {@link Map}.
+	 * Calls {@link Map#replace(Object, Object)} on the underlying {@link Map}.
 	 *
 	 * @param key The key to change the associations of
 	 * @param values The values to associate with the given key

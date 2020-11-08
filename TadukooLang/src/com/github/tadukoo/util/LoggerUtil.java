@@ -24,13 +24,14 @@ public final class LoggerUtil{
 	 * @param filepath The path to the File to be used as a log
 	 * @param level The Level to log messages at
 	 * @return The created Logger
+	 * @throws IOException If something goes wrong in creating the file logger
 	 */
 	public static Logger createFileLogger(String filepath, Level level) throws IOException{
 		// Create the file
 		FileUtil.createFile(filepath);
 		
 		// Setup a FileHandler for the File with a SimpleFormatter
-		FileHandler fh = new FileHandler(filepath);
+		FileHandler fh = new FileHandler(filepath, true);
 		SimpleFormatter formatter = new SimpleFormatter();
 		fh.setFormatter(formatter);
 		

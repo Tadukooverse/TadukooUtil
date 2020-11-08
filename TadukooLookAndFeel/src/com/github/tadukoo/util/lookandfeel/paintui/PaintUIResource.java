@@ -5,6 +5,16 @@ import javax.swing.plaf.UIResource;
 import java.awt.*;
 import java.util.List;
 
+/**
+ * PaintUIResource is a {@link UIResource} to be used for {@link Paint}s for in
+ * {@link com.github.tadukoo.util.lookandfeel.TadukooLookAndFeel TadukooLookAndFeel}, particularly for use in
+ * {@link com.github.tadukoo.util.lookandfeel.TadukooTheme themes}. It provides methods to get the actual
+ * {@link Paint} or to get a single {@link ColorUIResource} or a {@code List<Object>} for use in supporting
+ * {@link javax.swing.plaf.metal.MetalLookAndFeel} component UI classes.
+ *
+ * @author Logan Ferree (Tadukoo)
+ * @version Alpha v.0.2
+ */
 public interface PaintUIResource extends UIResource{
 	
 	/**
@@ -17,8 +27,8 @@ public interface PaintUIResource extends UIResource{
 	Paint getPaint(Dimension size);
 	
 	/**
-	 * In some cases, we need to return a ColorUIResource to support the Look & Feel properly. I don't like it,
-	 * but it needs to be done for those Look & Feel pieces to work, and I'm trying to support all of them.
+	 * In some cases, we need to return a ColorUIResource to support the Look &amp; Feel properly. I don't like it,
+	 * but it needs to be done for those Look &amp; Feel pieces to work, and I'm trying to support all of them.
 	 *
 	 * @return A ColorUIResource
 	 */
@@ -29,13 +39,10 @@ public interface PaintUIResource extends UIResource{
 	 * with the 3 colors, it repeats color 1 and does 1, 2, 1, 3. The fractions represent the 2 middle points,
 	 * but the 2nd point is calculated as mid1 * 2 + mid2.
 	 * <br><br>
-	 * This method exists for the purpose of appeasing the Metal Look & Feel god who decided this disgusting way of
-	 * code.
+	 * This method exists for the purpose of appeasing the Metal Look &amp; Feel god who decided this disgusting way
+	 * of code.
 	 *
 	 * @return The garbage List that Metal Look and Feel expects for gradients that matches best to the one defined here
-	 *
-	 * @deprecated Forever, because I hate how Metal Look and Feel does this, but I'm trying to support it all
 	 */
-	@Deprecated
 	List<Object> getMetalGradientList();
 }

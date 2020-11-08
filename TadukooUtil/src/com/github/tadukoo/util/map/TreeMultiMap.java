@@ -1,18 +1,15 @@
 package com.github.tadukoo.util.map;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
-import java.util.NavigableMap;
-import java.util.NavigableSet;
-import java.util.SortedMap;
-import java.util.TreeMap;
+import com.github.tadukoo.util.tuple.Pair;
+
+import java.util.*;
 
 /**
  * A MultiMap class that uses {@link TreeMap} as the backing {@link Map} class.
  * 
  * @author Logan Ferree (Tadukoo)
- * @version 0.1-Alpha-SNAPSHOT
+ * @version Alpha v.0.2
+ * @since Alpha v.0.1
  */
 public class TreeMultiMap<K, V> extends MultiMap<K, V>{
 	
@@ -32,6 +29,17 @@ public class TreeMultiMap<K, V> extends MultiMap<K, V>{
 	 */
 	public TreeMultiMap(Comparator<? super K> comparator){
 		super(new TreeMap<>(comparator));
+	}
+	
+	/**
+	 * Creates a new TreeMultiMap where the given Pairs are loaded into the
+	 * map right away.
+	 *
+	 * @param entries The Pairs to be placed in this MultiMap
+	 */
+	@SafeVarargs
+	public TreeMultiMap(Pair<K, V>... entries){
+		super(new TreeMap<>(), entries);
 	}
 	
 	/**

@@ -1,5 +1,6 @@
 package com.github.tadukoo.util.map;
 
+import com.github.tadukoo.util.tuple.Pair;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -40,6 +41,22 @@ public class HashMultiMapTest{
 		assertEquals(2, test2.size());
 		assertEquals("Maybe", test2.get(0));
 		assertEquals("No", test2.get(1));
+	}
+	
+	@Test
+	public void testConstructorWithPairs(){
+		// Initialize HashMultiMap with the Pairs
+		map = new HashMultiMap<>(Pair.of("Test", "Yes"), Pair.of("Test2", "No"));
+		
+		// Verify the contents of the HashMultiMap
+		assertNotNull(map);
+		assertEquals(2, map.size());
+		List<String> test = map.get("Test");
+		assertEquals(1, test.size());
+		assertEquals("Yes", test.get(0));
+		List<String> test2 = map.get("Test2");
+		assertEquals(1, test2.size());
+		assertEquals("No", test2.get(0));
 	}
 	
 	@Test

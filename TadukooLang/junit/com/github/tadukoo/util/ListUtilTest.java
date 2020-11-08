@@ -2,12 +2,63 @@ package com.github.tadukoo.util;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ListUtilTest{
+	
+	/**
+	 * Tests that {@link ListUtil#isBlank(List)} works properly on null
+	 */
+	@Test
+	public void testIsBlankNull(){
+		assertTrue(ListUtil.isBlank(null));
+	}
+	
+	/**
+	 * Tests that {@link ListUtil#isBlank(List)} works properly on an empty List
+	 */
+	@Test
+	public void testIsBlankEmptyList(){
+		assertTrue(ListUtil.isBlank(new ArrayList<>()));
+	}
+	
+	/**
+	 * Tests that {@link ListUtil#isBlank(List)} works properly on a populated List
+	 */
+	@Test
+	public void testIsBlankPopulatedList(){
+		List<String> test = ListUtil.createList("Test");
+		assertFalse(ListUtil.isBlank(test));
+	}
+	
+	/**
+	 * Tests that {@link ListUtil#isNotBlank(List)} works properly on null
+	 */
+	@Test
+	public void testIsNotBlankNull(){
+		assertFalse(ListUtil.isNotBlank(null));
+	}
+	
+	/**
+	 * Tests that {@link ListUtil#isNotBlank(List)} works properly on an empty List
+	 */
+	@Test
+	public void testIsNotBlankEmptyList(){
+		assertFalse(ListUtil.isNotBlank(new ArrayList<>()));
+	}
+	
+	/**
+	 * Tests that {@link ListUtil#isNotBlank(List)} works properly on a populated List
+	 */
+	@Test
+	public void testIsNotBlankPopulatedList(){
+		List<String> test = ListUtil.createList("Test");
+		assertTrue(ListUtil.isNotBlank(test));
+	}
 	
 	/**
 	 * Tests that {@link ListUtil#createList(Object[])} works properly in

@@ -6,10 +6,32 @@
 	<parent>
 		<artifactId>TadukooUtilParent</artifactId>
 		<groupId>com.github.tadukoo.util</groupId>
-		<version>0.1-Alpha-SNAPSHOT</version>
+		<version>0.2-Alpha-SNAPSHOT</version>
 	</parent>
 	<artifactId>TadukooView</artifactId>
+	<dependencies>
+		<dependency>
+			<groupId>com.github.tadukoo.util</groupId>
+			<artifactId>TadukooUtil</artifactId>
+		</dependency>
+		<!-- JUnit Dependencies -->
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-engine</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.platform</groupId>
+			<artifactId>junit-platform-runner</artifactId>
+		</dependency>
+	</dependencies>
 	<build>
 		<sourceDirectory>${directory.source}</sourceDirectory>
+		<testSourceDirectory>${directory.test}</testSourceDirectory>
+		<plugins>
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
 	</build>
 </project>

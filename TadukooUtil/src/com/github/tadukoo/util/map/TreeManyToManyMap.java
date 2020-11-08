@@ -1,12 +1,15 @@
 package com.github.tadukoo.util.map;
 
+import com.github.tadukoo.util.tuple.Pair;
+
 import java.util.*;
 
 /**
  * A ManyToManyMap class that uses {@link TreeMultiMap} as the backing {@link MultiMap} class.
  *
  * @author Logan Ferree (Tadukoo)
- * @version Alpha v.0.1
+ * @version Alpha v.0.2
+ * @since Alpha v.0.1
  */
 public class TreeManyToManyMap<K, V> extends ManyToManyMap<K, V>{
 	
@@ -29,6 +32,17 @@ public class TreeManyToManyMap<K, V> extends ManyToManyMap<K, V>{
 	public TreeManyToManyMap(Comparator<? super K> keyComparator, Comparator<? super V> valueComparator){
 		super(new TreeMultiMap<>(keyComparator),
 				new TreeMultiMap<>(valueComparator));
+	}
+	
+	/**
+	 * Creates a new TreeManyToManyMap where the given Pairs are loaded into the
+	 * map right away.
+	 *
+	 * @param entries A collection of key-value Pairs to be put in this ManyToManyMap
+	 */
+	@SafeVarargs
+	public TreeManyToManyMap(Pair<K, V>... entries){
+		super(new TreeMultiMap<>(), new TreeMultiMap<>(), entries);
 	}
 	
 	/**
