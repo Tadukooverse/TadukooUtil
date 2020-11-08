@@ -11,6 +11,8 @@ public enum FieldType{
 	BOOLEAN,
 	/** A string field */
 	STRING,
+	/** A drop-down field */
+	DROP_DOWN,
 	/** A button (not really a field) */
 	BUTTON,
 	/** A {@link com.github.tadukoo.util.view.form.Form Form} field */
