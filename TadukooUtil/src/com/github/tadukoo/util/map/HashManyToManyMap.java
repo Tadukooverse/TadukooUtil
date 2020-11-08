@@ -1,12 +1,15 @@
 package com.github.tadukoo.util.map;
 
+import com.github.tadukoo.util.tuple.Pair;
+
 import java.util.Map;
 
 /**
  * A ManyToManyMap class that uses {@link HashMultiMap} as the backing {@link MultiMap} class.
  *
  * @author Logan Ferree (Tadukoo)
- * @version Pre-Alpha
+ * @version Alpha v.0.2
+ * @since Pre-Alpha
  */
 public class HashManyToManyMap<K, V> extends ManyToManyMap<K, V>{
 	
@@ -40,6 +43,17 @@ public class HashManyToManyMap<K, V> extends ManyToManyMap<K, V>{
 	public HashManyToManyMap(int initialCapacity, float loadFactor){
 		super(new HashMultiMap<>(initialCapacity, loadFactor),
 				new HashMultiMap<>(initialCapacity, loadFactor));
+	}
+	
+	/**
+	 * Creates a new HashManyToManyMap where the given Pairs are loaded into the
+	 * map right away.
+	 *
+	 * @param entries A collection of key-value Pairs to be put in this ManyToManyMap
+	 */
+	@SafeVarargs
+	public HashManyToManyMap(Pair<K, V>... entries){
+		super(new HashMultiMap<>(), new HashMultiMap<>(), entries);
 	}
 	
 	/**

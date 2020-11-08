@@ -1,5 +1,6 @@
 package com.github.tadukoo.util.map;
 
+import com.github.tadukoo.util.tuple.Pair;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -39,6 +40,22 @@ public class TreeManyToManyMapTest{
 		emptyMap = new TreeManyToManyMap<>(keyComparator, valueComparator);
 		assertEquals(keyComparator, emptyMap.keyComparator());
 		assertEquals(valueComparator, emptyMap.valueComparator());
+	}
+	
+	@Test
+	public void testConstructorWithPairs(){
+		// Initialize TreeMultiMap with the pairs
+		emptyMap = new TreeManyToManyMap<>(Pair.of("Test", 5), Pair.of("Test2", 84));
+		
+		// Verify the contents of the TreeMultiMap
+		assertNotNull(emptyMap);
+		assertEquals(2, emptyMap.size());
+		List<Integer> test = emptyMap.getValues("Test");
+		assertEquals(1, test.size());
+		assertEquals(5, test.get(0));
+		List<Integer> test2 = emptyMap.getValues("Test2");
+		assertEquals(1, test2.size());
+		assertEquals(84, test2.get(0));
 	}
 	
 	@Test

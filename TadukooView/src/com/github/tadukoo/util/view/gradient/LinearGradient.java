@@ -157,20 +157,20 @@ public class LinearGradient implements Gradient{
 	}
 	
 	/** The direction for this LinearGradient to go. This may be ignored by the {@link #startAndEndPointsFunc} */
-	protected GradientDirection direction;
+	protected final GradientDirection direction;
 	/** A function taking in the dimensions of the space and the chosen {@link GradientDirection} to return the
 	 * start and end points in space for this LinearGradient */
-	protected BiFunction<Dimension, GradientDirection, Pair<Point2D, Point2D>> startAndEndPointsFunc;
+	protected final BiFunction<Dimension, GradientDirection, Pair<Point2D, Point2D>> startAndEndPointsFunc;
 	/** The fractions involved in this LinearGradient */
-	protected float[] fractions;
+	protected final float[] fractions;
 	/** The {@link Color}s involved in this LinearGradient */
-	protected Color[] colors;
+	protected final Color[] colors;
 	/** The {@link MultipleGradientPaint.CycleMethod cycle method} involved in this LinearGradient */
-	protected MultipleGradientPaint.CycleMethod cycleMethod;
+	protected final MultipleGradientPaint.CycleMethod cycleMethod;
 	/** The {@link MultipleGradientPaint.ColorSpaceType color space} involved in this LinearGradient */
-	protected MultipleGradientPaint.ColorSpaceType colorSpace;
+	protected final MultipleGradientPaint.ColorSpaceType colorSpace;
 	/** The {@link AffineTransform} involved in this LinearGradient */
-	protected AffineTransform gradientTransform;
+	protected final AffineTransform gradientTransform;
 	
 	/**
 	 * Constructs a new Linear Gradient using the given parameters.

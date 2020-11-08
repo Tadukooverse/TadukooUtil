@@ -6,7 +6,6 @@ import com.github.tadukoo.util.lookandfeel.border.ShapedLineBorder;
 import com.github.tadukoo.util.lookandfeel.componentui.TadukooButtonUI;
 import com.github.tadukoo.util.lookandfeel.paintui.ColorPaintUIResource;
 import com.github.tadukoo.util.lookandfeel.paintui.PaintUIResource;
-import com.github.tadukoo.util.view.shapes.ShapeFunction;
 import com.github.tadukoo.util.view.shapes.ShapeInfo;
 import com.github.tadukoo.util.view.shapes.Shapes;
 import com.github.tadukoo.util.view.font.FontFamilies;
@@ -57,13 +56,17 @@ public class TadukooTheme{
 		/** The value of the Title Position (used in Titled Border class) */
 		private final int value;
 		
-		/** Constructs a new Title Position with the given value */
+		/**
+		 * Constructs a new Title Position with the given value
+		 *
+		 * @param value The value for this Title Position
+		 */
 		TitlePosition(int value){
 			this.value = value;
 		}
 		
 		/**
-		 * @return The value of the Title Position ( used in Titled Border class)
+		 * @return The value of the Title Position (used in Titled Border class)
 		 */
 		public int getValue(){
 			return value;
@@ -75,8 +78,8 @@ public class TadukooTheme{
 	 * defaulted based on the default Tadukoo Theme. The following fields may be specified:
 	 * <br><br>
 	 *
-	 * <b>Component UI Classes</b>
 	 * <table>
+	 *     <caption><b>Component UI Classes</b></caption>
 	 *     <tr>
 	 *         <th>Field</th>
 	 *         <th>Description</th>
@@ -89,8 +92,8 @@ public class TadukooTheme{
 	 *     </tr>
 	 * </table>
 	 * <br>
-	 * <b>Paint Parameters</b>
 	 * <table>
+	 *     <caption><b>Paint Parameters</b></caption>
 	 *     <tr>
 	 *         <th>Field</th>
 	 *         <th>Description</th>
@@ -118,8 +121,8 @@ public class TadukooTheme{
 	 *     </tr>
 	 * </table>
 	 * <br>
-	 * <b>Font Parameters</b>
 	 * <table>
+	 *     <caption><b>Font Parameters</b></caption>
 	 *     <tr>
 	 *         <th>Field</th>
 	 *         <th>Description</th>
@@ -138,8 +141,8 @@ public class TadukooTheme{
 	 *     </tr>
 	 * </table>
 	 * <br>
-	 * <b>Font Resource Loading Parameters</b>
 	 * <table>
+	 *     <caption><b>Font Resource Loading Parameters</b></caption>
 	 *     <tr>
 	 *         <th>Field</th>
 	 *         <th>Description</th>
@@ -177,8 +180,8 @@ public class TadukooTheme{
 	 *     </tr>
 	 * </table>
 	 * <br>
-	 * <b>Shape Parameters</b>
 	 * <table>
+	 *     <caption><b>Shape Parameters</b></caption>
 	 *     <tr>
 	 *         <th>Field</th>
 	 *         <th>Description</th>
@@ -196,8 +199,8 @@ public class TadukooTheme{
 	 *     </tr>
 	 * </table>
 	 * <br>
-	 * <b>Border Parameters</b>
 	 * <table>
+	 *     <caption><b>Border Parameters</b></caption>
 	 *     <tr>
 	 *         <th>Field</th>
 	 *         <th>Description</th>
@@ -215,8 +218,8 @@ public class TadukooTheme{
 	 *     </tr>
 	 * </table>
 	 * <br>
-	 * <b>Titled Border Parameters</b>
 	 * <table>
+	 *     <caption><b>Titled Border Parameters</b></caption>
 	 *     <tr>
 	 *         <th>Field</th>
 	 *         <th>Description</th>
@@ -244,8 +247,8 @@ public class TadukooTheme{
 	 *     </tr>
 	 * </table>
 	 * <br>
-	 * <b>Other Customizations</b>
 	 * <table>
+	 *     <caption><b>Other Customizations</b></caption>
 	 *     <tr>
 	 *         <th>Field</th>
 	 *         <th>Description</th>
@@ -698,6 +701,8 @@ public class TadukooTheme{
 		 * parameters).
 		 *
 		 * @return A new {@link TadukooTheme}
+		 * @throws IOException If something goes wrong in loading fonts
+		 * @throws FontFormatException If something goes wrong in loading fonts
 		 */
 		public TadukooTheme build() throws IOException, FontFormatException{
 			checkForErrors();

@@ -49,6 +49,7 @@ public final class FileUtil{
 	 * 
 	 * @param directoryPath The path to the directory to check
 	 * @return A List of all Files in the directory and its sub-directories
+	 * @throws IOException If something goes wrong in listing the files
 	 */
 	public static List<File> listAllFiles(String directoryPath) throws IOException{
 		return Files.walk(Paths.get(directoryPath))
@@ -63,6 +64,7 @@ public final class FileUtil{
 	 * 
 	 * @param directory The directory (as a File) to check
 	 * @return A List of all Files in the directory and its sub-directories
+	 * @throws IOException If something goes wrong in listing the files
 	 */
 	public static List<File> listAllFiles(File directory) throws IOException{
 		return listAllFiles(directory.getPath());
@@ -74,6 +76,7 @@ public final class FileUtil{
 	 * 
 	 * @param filepath The path for the File to be created
 	 * @return The newly created File
+	 * @throws IOException If something goes wrong in creating the file
 	 */
 	public static File createFile(String filepath) throws IOException{
 		// Create a File object from the given filepath
@@ -118,6 +121,7 @@ public final class FileUtil{
 	 * 
 	 * @param reader The Reader to use in reading
 	 * @return A List of lines in the file
+	 * @throws IOException If something goes wrong in reading the file
 	 */
 	public static List<String> getLinesAsList(Reader reader) throws IOException{
 		// Make a BufferedReader out of the given Reader
@@ -144,6 +148,7 @@ public final class FileUtil{
 	 * 
 	 * @param filepath The path to save the file to
 	 * @param content The content of the file to be written
+	 * @throws IOException If something goes wrong in writing the file
 	 */
 	public static void writeFile(String filepath, String content) throws IOException{
 		// Create the File
@@ -158,6 +163,7 @@ public final class FileUtil{
 	 * 
 	 * @param writer The Writer to use in writing
 	 * @param content The content of the file to be written
+	 * @throws IOException If something goes wrong in writing the file
 	 */
 	public static void writeFile(Writer writer, String content) throws IOException{
 		// Make a BufferedWriter out of the given Writer
@@ -176,6 +182,7 @@ public final class FileUtil{
 	 * 
 	 * @param writer The Writer to use in writing
 	 * @param lines The content of the file to be written
+	 * @throws IOException If something goes wrong in writing the file
 	 */
 	public static void writeFile(Writer writer, Collection<String> lines) throws IOException{
 		writeFile(writer, StringUtil.buildStringWithNewLines(lines));
@@ -186,7 +193,7 @@ public final class FileUtil{
 	 *
 	 * @param pathToZip The path to the file or directory to be zipped
 	 * @param zipPath The path (and name) of the zip file to be created
-	 * @throws IOException If anything goes wrong
+	 * @throws IOException If something goes wrong in zipping the files
 	 */
 	public static void zipFile(String pathToZip, String zipPath) throws IOException{
 		zipFile(new File(pathToZip), zipPath);
@@ -197,7 +204,7 @@ public final class FileUtil{
 	 *
 	 * @param fileToZip The File to be zipped (can be file or directory)
 	 * @param zipPath The path (and name) of the zip file to be created
-	 * @throws IOException If anything goes wrong
+	 * @throws IOException If something goes wrong in zipping the file
 	 */
 	public static void zipFile(File fileToZip, String zipPath) throws IOException{
 		// Setup
@@ -218,7 +225,7 @@ public final class FileUtil{
 	 * @param fileToZip The File to be zipped (can be file or directory)
 	 * @param fileName The name of the file to be zipped
 	 * @param zos The ZipOutputStream to be used in zipping
-	 * @throws IOException If anything goes wrong
+	 * @throws IOException If something goes wrong in zipping the file
 	 */
 	private static void zipFile(File fileToZip, String fileName, ZipOutputStream zos) throws IOException{
 		if(fileToZip.isHidden()){
@@ -266,7 +273,7 @@ public final class FileUtil{
 	 *
 	 * @param zipPath The path to the zip file
 	 * @param destinationPath The path to extract the zip file contents to
-	 * @throws IOException If anything goes wrong
+	 * @throws IOException If something goes wrong in unzipping the file
 	 */
 	public static void unzipFile(String zipPath, String destinationPath) throws IOException{
 		unzipFile(zipPath, new File(destinationPath));
@@ -277,7 +284,7 @@ public final class FileUtil{
 	 *
 	 * @param zipPath The path to the zip file
 	 * @param destDirectory The directory to extract the zip file contents to
-	 * @throws IOException If anything goes wrong
+	 * @throws IOException If something goes wrong in unzipping the file
 	 */
 	public static void unzipFile(String zipPath, File destDirectory) throws IOException{
 		// Setup

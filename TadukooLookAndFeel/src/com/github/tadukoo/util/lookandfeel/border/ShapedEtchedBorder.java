@@ -1,6 +1,6 @@
 package com.github.tadukoo.util.lookandfeel.border;
 
-import com.github.tadukoo.util.components.Shaped;
+import com.github.tadukoo.util.view.shapes.Shaped;
 import com.github.tadukoo.util.lookandfeel.paintui.PaintUIResource;
 import com.github.tadukoo.util.view.shapes.ShapeInfo;
 import com.github.tadukoo.util.view.shapes.Shapes;
@@ -22,7 +22,7 @@ public class ShapedEtchedBorder extends AbstractBorder{
 	 * An enum representing the Etch type to be used (RAISED or LOWERED) for a border
 	 */
 	public enum EtchType{
-		RAISED, LOWERED;
+		RAISED, LOWERED
 	}
 	
 	/**

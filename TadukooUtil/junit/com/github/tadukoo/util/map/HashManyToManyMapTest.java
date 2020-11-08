@@ -1,5 +1,6 @@
 package com.github.tadukoo.util.map;
 
+import com.github.tadukoo.util.tuple.Pair;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -40,6 +41,22 @@ public class HashManyToManyMapTest{
 		assertNotNull(map);
 		assertTrue(map.isEmpty());
 		// No way to check initial capacity or load factor
+	}
+	
+	@Test
+	public void testPairsConstructor(){
+		map = new HashManyToManyMap<>(Pair.of("Test", 5), Pair.of("Derp", 24));
+		assertNotNull(map);
+		assertFalse(map.isEmpty());
+		assertEquals(2, map.keySetSize());
+		assertTrue(map.containsKey("Test"));
+		List<Integer> test = map.getValues("Test");
+		assertEquals(1, test.size());
+		assertEquals(5, test.get(0));
+		assertTrue(map.containsKey("Derp"));
+		List<Integer> derp = map.getValues("Derp");
+		assertEquals(1, derp.size());
+		assertEquals(24, derp.get(0));
 	}
 	
 	@Test

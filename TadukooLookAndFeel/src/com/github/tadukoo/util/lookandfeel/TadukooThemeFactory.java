@@ -33,6 +33,8 @@ public class TadukooThemeFactory{
 	
 	/**
 	 * @return A {@link TadukooTheme} that has the default customizations
+	 * @throws IOException If something goes wrong in loading fonts
+	 * @throws FontFormatException If something goes wrong in loading fonts
 	 */
 	public static TadukooTheme createDefaultTheme() throws IOException, FontFormatException{
 		return defaultThemeBuilder().build();
@@ -53,6 +55,8 @@ public class TadukooThemeFactory{
 	 * @return A {@link TadukooTheme} that uses the
 	 * {@link javax.swing.plaf.metal.MetalLookAndFeel MetalLookAndFeel} Component UIs and Borders, but uses the
 	 * regular {@link TadukooLookAndFeel} colors and fonts.
+	 * @throws IOException If something goes wrong in loading fonts
+	 * @throws FontFormatException If something goes wrong in loading fonts
 	 */
 	public static TadukooTheme createMetalTheme() throws IOException, FontFormatException{
 		return metalThemeBuilder().build();
@@ -71,6 +75,8 @@ public class TadukooThemeFactory{
 	 * @return A {@link TadukooTheme} that uses the
 	 * {@link javax.swing.plaf.metal.MetalLookAndFeel MetalLookAndFeel} Component UIs and Borders and uses the
 	 * {@link DefaultMetalTheme} for colors and fonts.
+	 * @throws IOException If something goes wrong in loading fonts
+	 * @throws FontFormatException If something goes wrong in loading fonts
 	 */
 	public static TadukooTheme createDefaultMetalTheme() throws IOException, FontFormatException{
 		return defaultMetalThemeBuilder().build();
@@ -89,6 +95,8 @@ public class TadukooThemeFactory{
 	 * @return A {@link TadukooTheme} that uses the
 	 * {@link javax.swing.plaf.metal.MetalLookAndFeel MetalLookAndFeel} Component UIs and Borders and uses the
 	 * {@link OceanTheme} for colors and fonts.
+	 * @throws IOException If something goes wrong in loading fonts
+	 * @throws FontFormatException If something goes wrong in loading fonts
 	 */
 	public static TadukooTheme createOceanTheme() throws IOException, FontFormatException{
 		return oceanThemeBuilder().build();

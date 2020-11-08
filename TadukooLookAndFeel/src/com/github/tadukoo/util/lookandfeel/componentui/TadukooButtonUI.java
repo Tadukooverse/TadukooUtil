@@ -1,6 +1,6 @@
 package com.github.tadukoo.util.lookandfeel.componentui;
 
-import com.github.tadukoo.util.components.Shaped;
+import com.github.tadukoo.util.view.shapes.Shaped;
 import com.github.tadukoo.util.lookandfeel.paintui.PaintUIResource;
 import com.github.tadukoo.util.view.shapes.ShapeFunction;
 import com.github.tadukoo.util.view.shapes.ShapeInfo;

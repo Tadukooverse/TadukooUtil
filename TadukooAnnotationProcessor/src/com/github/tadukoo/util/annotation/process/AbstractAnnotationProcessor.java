@@ -95,6 +95,7 @@ public abstract class AbstractAnnotationProcessor extends AbstractProcessor{
 	 * Actually handle processing the given elements for the annotation this handles.
 	 * 
 	 * @param elements The Set of elements to process for the annotation
+	 * @throws Throwable If anything goes wrong, subclasses may throw something
 	 */
 	protected abstract void processElements(Set<? extends Element> elements) throws Throwable;
 }
