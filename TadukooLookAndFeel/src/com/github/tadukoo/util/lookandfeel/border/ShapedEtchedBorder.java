@@ -22,7 +22,7 @@ public class ShapedEtchedBorder extends AbstractBorder{
 	 * An enum representing the Etch type to be used (RAISED or LOWERED) for a border
 	 */
 	public enum EtchType{
-		RAISED, LOWERED;
+		RAISED, LOWERED
 	}
 	
 	/**

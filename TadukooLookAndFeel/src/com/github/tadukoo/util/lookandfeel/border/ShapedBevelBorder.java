@@ -22,7 +22,7 @@ public class ShapedBevelBorder extends AbstractBorder{
 	 * An enum representing the Bevel type to be used (RAISED or LOWERED) for a border
 	 */
 	public enum BevelType{
-		RAISED, LOWERED;
+		RAISED, LOWERED
 	}
 	
 	/**

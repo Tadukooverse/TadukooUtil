@@ -122,7 +122,7 @@ public enum Shapes{
 	 */
 	Shapes(ShapeInfo shapeInfo){
 		this.shapeInfo = shapeInfo;
-	};
+	}
 	
 	/**
 	 * @return The {@link ShapeInfo}

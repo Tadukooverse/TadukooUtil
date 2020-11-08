@@ -6,7 +6,6 @@ import com.github.tadukoo.util.lookandfeel.border.ShapedLineBorder;
 import com.github.tadukoo.util.lookandfeel.componentui.TadukooButtonUI;
 import com.github.tadukoo.util.lookandfeel.paintui.ColorPaintUIResource;
 import com.github.tadukoo.util.lookandfeel.paintui.PaintUIResource;
-import com.github.tadukoo.util.view.shapes.ShapeFunction;
 import com.github.tadukoo.util.view.shapes.ShapeInfo;
 import com.github.tadukoo.util.view.shapes.Shapes;
 import com.github.tadukoo.util.view.font.FontFamilies;

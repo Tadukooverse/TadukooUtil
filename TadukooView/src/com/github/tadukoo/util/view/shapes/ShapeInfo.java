@@ -15,12 +15,12 @@ public class ShapeInfo{
 	/**
 	 * A simple {@link ShapeInsetsFunction} to be used to return an {@link Insets} object with 0 for all sides.
 	 */
-	public static ShapeInsetsFunction noInsets = (x, y, width, height) -> new Insets(0, 0, 0, 0);
+	public static final ShapeInsetsFunction noInsets = (x, y, width, height) -> new Insets(0, 0, 0, 0);
 	
 	/**
 	 * {@code null} to be used in checks for a missing drawing function (which is allowed in some cases)
 	 */
-	public static ShapeDrawingFunction noDrawFunc = null;
+	public static final ShapeDrawingFunction noDrawFunc = null;
 	
 	/** The {@link ShapeFunction} for constructing a {@link Shape} */
 	private final ShapeFunction shapeFunc;
