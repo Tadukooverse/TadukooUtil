@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.tadukoo.util</groupId>
 	<artifactId>TadukooUtilParent</artifactId>
-	<version>0.2-Alpha-SNAPSHOT</version>
+	<version>0.2-Alpha</version>
 	<packaging>pom</packaging>
 	<name>${project.artifactId}</name>
 	<description>A collection of utilities to be used in various projects</description>
@@ -23,12 +23,12 @@
 		</license>
 	</licenses>
 	<scm>
-		<url>https://github.com/Tadukoo/TadukooUtil</url>
+		<url>https://github.com/Tadukooverse/TadukooUtil</url>
 		<connection>
-			scm:git:git://github.com/Tadukoo/TadukooUtil.git
+			scm:git:git://github.com/Tadukooverse/TadukooUtil.git
 		</connection>
 		<developerConnection>
-			scm:git:ssh://git@github.com:Tadukoo/TadukooUtil.git
+			scm:git:ssh://git@github.com:Tadukooverse/TadukooUtil.git
 		</developerConnection>
 	</scm>
 	<modules>
@@ -124,7 +124,6 @@
 					</configuration>
 				</plugin>
 				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-surefire-plugin</artifactId>
 					<version>${maven.surefire.version}</version>
 				</plugin>
@@ -200,5 +199,11 @@
 				</plugin>
 			</plugins>
 		</pluginManagement>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-gpg-plugin</artifactId>
+			</plugin>
+		</plugins>
 	</build>
 </project>
