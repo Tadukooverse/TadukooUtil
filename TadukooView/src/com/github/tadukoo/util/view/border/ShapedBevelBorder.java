@@ -1,7 +1,7 @@
-package com.github.tadukoo.util.lookandfeel.border;
+package com.github.tadukoo.util.view.border;
 
+import com.github.tadukoo.util.view.paint.SizablePaint;
 import com.github.tadukoo.util.view.shapes.Shaped;
-import com.github.tadukoo.util.lookandfeel.paintui.PaintUIResource;
 import com.github.tadukoo.util.view.shapes.ShapeInfo;
 import com.github.tadukoo.util.view.shapes.Shapes;
 
@@ -14,7 +14,8 @@ import java.awt.*;
  * it can have its own {@link ShapeInfo} if desired.
  *
  * @author Logan Ferree (Tadukoo)
- * @version Alpha v.0.2
+ * @version Alpha v.0.2.1
+ * @since Alpha v.0.2
  */
 public class ShapedBevelBorder extends AbstractBorder{
 	
@@ -31,32 +32,33 @@ public class ShapedBevelBorder extends AbstractBorder{
 	 *     <li>shapeInfo - The {@link ShapeInfo} to use on the Border (may be null to use the component's shape) -
 	 *     defaults to null</li>
 	 *     <li>etchType - the {@link BevelType} (RAISED or LOWERED) - defaults to LOWERED</li>
-	 *     <li>highlightInnerPaint - The {@link PaintUIResource} for the inner highlight - defaults to using the
+	 *     <li>highlightInnerPaint - The {@link SizablePaint} for the inner highlight - defaults to using the
 	 *     Component's getBackground().brighter()</li>
-	 *     <li>highlightOuterPaint - The {@link PaintUIResource} for the outer highlight - defaults to using the
+	 *     <li>highlightOuterPaint - The {@link SizablePaint} for the outer highlight - defaults to using the
 	 *     Component's getBackground().brighter().brighter()</li>
-	 *     <li>shadowInnerPaint - The {@link PaintUIResource} for the inner shadow - defaults to using the
+	 *     <li>shadowInnerPaint - The {@link SizablePaint} for the inner shadow - defaults to using the
 	 *     Component's getBackground().darker()</li>
-	 *     <li>shadowOuterPaint - The {@link PaintUIResource} for the outer shadow - defaults to using the
+	 *     <li>shadowOuterPaint - The {@link SizablePaint} for the outer shadow - defaults to using the
 	 *     Component's getBackground().darker()</li>
 	 * </ul>
 	 *
 	 * @author Logan Ferree (Tadukoo)
-	 * @version Alpha v.0.2
+	 * @version Alpha v.0.2.1
+	 * @since Alpha v.0.2
 	 */
 	public static class ShapedBevelBorderBuilder{
 		/** The {@link ShapeInfo} to use on the Border (may be null to use the component's shape) */
 		private ShapeInfo shapeInfo = null;
 		/** The {@link BevelType type of bevel} (RAISED or LOWERED) */
 		private BevelType bevelType = BevelType.LOWERED;
-		/** The {@link PaintUIResource} for the inner highlight */
-		private PaintUIResource highlightInnerPaint = null;
-		/** The {@link PaintUIResource} for the outer highlight */
-		private PaintUIResource highlightOuterPaint = null;
-		/** The {@link PaintUIResource} for the inner shadow */
-		private PaintUIResource shadowInnerPaint = null;
-		/** The {@link PaintUIResource} for the outer shadow */
-		private PaintUIResource shadowOuterPaint = null;
+		/** The {@link SizablePaint} for the inner highlight */
+		private SizablePaint highlightInnerPaint = null;
+		/** The {@link SizablePaint} for the outer highlight */
+		private SizablePaint highlightOuterPaint = null;
+		/** The {@link SizablePaint} for the inner shadow */
+		private SizablePaint shadowInnerPaint = null;
+		/** The {@link SizablePaint} for the outer shadow */
+		private SizablePaint shadowOuterPaint = null;
 		
 		// Can't create outside of ShapedBevelBorder
 		private ShapedBevelBorderBuilder(){ }
@@ -80,37 +82,37 @@ public class ShapedBevelBorder extends AbstractBorder{
 		}
 		
 		/**
-		 * @param highlightInnerPaint The {@link PaintUIResource} for the inner highlight
+		 * @param highlightInnerPaint The {@link SizablePaint} for the inner highlight
 		 * @return this, to continue building
 		 */
-		public ShapedBevelBorderBuilder highlightInnerPaint(PaintUIResource highlightInnerPaint){
+		public ShapedBevelBorderBuilder highlightInnerPaint(SizablePaint highlightInnerPaint){
 			this.highlightInnerPaint = highlightInnerPaint;
 			return this;
 		}
 		
 		/**
-		 * @param highlightOuterPaint The {@link PaintUIResource} for the outer highlight
+		 * @param highlightOuterPaint The {@link SizablePaint} for the outer highlight
 		 * @return this, to continue building
 		 */
-		public ShapedBevelBorderBuilder highlightOuterPaint(PaintUIResource highlightOuterPaint){
+		public ShapedBevelBorderBuilder highlightOuterPaint(SizablePaint highlightOuterPaint){
 			this.highlightOuterPaint = highlightOuterPaint;
 			return this;
 		}
 		
 		/**
-		 * @param shadowInnerPaint The {@link PaintUIResource} for the inner shadow
+		 * @param shadowInnerPaint The {@link SizablePaint} for the inner shadow
 		 * @return this, to continue building
 		 */
-		public ShapedBevelBorderBuilder shadowInnerPaint(PaintUIResource shadowInnerPaint){
+		public ShapedBevelBorderBuilder shadowInnerPaint(SizablePaint shadowInnerPaint){
 			this.shadowInnerPaint = shadowInnerPaint;
 			return this;
 		}
 		
 		/**
-		 * @param shadowOuterPaint The {@link PaintUIResource} for the outer shadow
+		 * @param shadowOuterPaint The {@link SizablePaint} for the outer shadow
 		 * @return this, to continue building
 		 */
-		public ShapedBevelBorderBuilder shadowOuterPaint(PaintUIResource shadowOuterPaint){
+		public ShapedBevelBorderBuilder shadowOuterPaint(SizablePaint shadowOuterPaint){
 			this.shadowOuterPaint = shadowOuterPaint;
 			return this;
 		}
@@ -128,28 +130,28 @@ public class ShapedBevelBorder extends AbstractBorder{
 	private final ShapeInfo shapeInfo;
 	/** The {@link BevelType type of bevel} (RAISED or LOWERED) */
 	private final BevelType bevelType;
-	/** The {@link PaintUIResource} for the inner highlight */
-	private final PaintUIResource highlightInnerPaint;
-	/** The {@link PaintUIResource} for the outer highlight */
-	private final PaintUIResource highlightOuterPaint;
-	/** The {@link PaintUIResource} for the inner shadow */
-	private final PaintUIResource shadowInnerPaint;
-	/** The {@link PaintUIResource} for the outer shadow */
-	private final PaintUIResource shadowOuterPaint;
+	/** The {@link SizablePaint} for the inner highlight */
+	private final SizablePaint highlightInnerPaint;
+	/** The {@link SizablePaint} for the outer highlight */
+	private final SizablePaint highlightOuterPaint;
+	/** The {@link SizablePaint} for the inner shadow */
+	private final SizablePaint shadowInnerPaint;
+	/** The {@link SizablePaint} for the outer shadow */
+	private final SizablePaint shadowOuterPaint;
 	
 	/**
 	 * Creates a new Shaped Bevel Border with the given parameters
 	 *
 	 * @param shapeInfo The {@link ShapeInfo} to use on the Border (may be null to use the component's shape)
 	 * @param bevelType The {@link BevelType type of bevel} (RAISED or LOWERED)
-	 * @param highlightInnerPaint The {@link PaintUIResource} for the inner highlight
-	 * @param highlightOuterPaint The {@link PaintUIResource} for the outer highlight
-	 * @param shadowInnerPaint The {@link PaintUIResource} for the inner shadow
-	 * @param shadowOuterPaint The {@link PaintUIResource} for the outer shadow
+	 * @param highlightInnerPaint The {@link SizablePaint} for the inner highlight
+	 * @param highlightOuterPaint The {@link SizablePaint} for the outer highlight
+	 * @param shadowInnerPaint The {@link SizablePaint} for the inner shadow
+	 * @param shadowOuterPaint The {@link SizablePaint} for the outer shadow
 	 */
 	private ShapedBevelBorder(ShapeInfo shapeInfo, BevelType bevelType,
-	                          PaintUIResource highlightInnerPaint, PaintUIResource highlightOuterPaint,
-	                          PaintUIResource shadowInnerPaint, PaintUIResource shadowOuterPaint){
+	                          SizablePaint highlightInnerPaint, SizablePaint highlightOuterPaint,
+	                          SizablePaint shadowInnerPaint, SizablePaint shadowOuterPaint){
 		this.shapeInfo = shapeInfo;
 		this.bevelType = bevelType;
 		this.highlightInnerPaint = highlightInnerPaint;
