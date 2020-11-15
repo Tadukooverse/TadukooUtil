@@ -2,6 +2,7 @@ package com.github.tadukoo.util.pojo;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -9,11 +10,31 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class MappedPojoTest{
 	
-	MappedPojo pojo = new AbstractMappedPojo(){ };
+	private MappedPojo pojo = new AbstractMappedPojo(){ };
 	
 	@Test
 	public void testConstructor(){
 		assertTrue(pojo.getMap().isEmpty());
+	}
+	
+	@Test
+	public void testPojoConstructor(){
+		MappedPojo otherPojo = new AbstractMappedPojo(){
+			@Override
+			public Map<String, Object> getMap(){
+				Map<String, Object> aMap = new HashMap<>();
+				aMap.put("Test", 50);
+				aMap.put("Derp", "Yep");
+				return aMap;
+			}
+		};
+		pojo = new AbstractMappedPojo(otherPojo){ };
+		Map<String, Object> theMap = pojo.getMap();
+		assertFalse(theMap.isEmpty());
+		assertTrue(theMap.containsKey("Test"));
+		assertEquals(50, theMap.get("Test"));
+		assertTrue(theMap.containsKey("Derp"));
+		assertEquals("Yep", theMap.get("Derp"));
 	}
 	
 	@Test

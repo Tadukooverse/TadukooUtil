@@ -34,6 +34,38 @@ public class FormTest{
 	}
 	
 	@Test
+	public void testFormConstructor(){
+		Form otherForm = new AbstractForm(new HashMap<>()){
+			@Override
+			public void setDefaultFields(){
+			
+			}
+			
+			@Override
+			public Map<String, Object> getMap(){
+				Map<String, Object> aMap = new HashMap<>();
+				aMap.put("Test", 52);
+				return aMap;
+			}
+		};
+		Form form = new AbstractForm(otherForm){
+			@Override
+			public void setDefaultFields(){
+				weSetThoseFields = true;
+				addField(StringFormField.builder()
+						.key("Derp").defaultValue("No")
+						.build());
+			}
+		};
+		Map<String, Object> map = form.getMap();
+		assertFalse(map.isEmpty());
+		assertTrue(map.containsKey("Derp"));
+		assertEquals("No", map.get("Derp"));
+		assertTrue(map.containsKey("Test"));
+		assertEquals(52, map.get("Test"));
+	}
+	
+	@Test
 	public void testHasKeyFalse(){
 		assertFalse(form.hasKey("Test"));
 	}

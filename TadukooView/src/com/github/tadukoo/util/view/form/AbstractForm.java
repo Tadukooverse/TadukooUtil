@@ -12,7 +12,8 @@ import java.util.Set;
  * Abstract Form is the default implementation of {@link Form}.
  *
  * @author Logan Ferree (Tadukoo)
- * @version Alpha v.0.2
+ * @version Alpha v.0.2.1
+ * @since Alpha v.0.2
  */
 public abstract class AbstractForm extends JPanel implements Form{
 	/** The map of actual values on this form */
@@ -33,6 +34,27 @@ public abstract class AbstractForm extends JPanel implements Form{
 	protected AbstractForm(Map<String, Object> defaultValues){
 		// Initialize the maps
 		valueMap = defaultValues;
+		fields = new HashMap<>();
+		components = new HashMap<>();
+		
+		// Initialize fields and components
+		setDefaultFields();
+		createComponents();
+	}
+	
+	/**
+	 * Initializes the form. Sets the values map to the map from the given form (used for forms that need the
+	 * default values while running {@link #setDefaultFields()}), and sets the fields and components maps to
+	 * new HashMaps.
+	 * <br>
+	 * {@link #setDefaultFields()} and {@link #createComponents()} are then called.
+	 *
+	 * @param form The form containing a map, to be used for default values for forms
+	 *                that need them during {@link #setDefaultFields()}
+	 */
+	protected AbstractForm(Form form){
+		// Initialize the maps
+		valueMap = form.getMap();
 		fields = new HashMap<>();
 		components = new HashMap<>();
 		
