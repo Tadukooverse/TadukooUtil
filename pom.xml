@@ -45,8 +45,8 @@
 		
 		<!-- Java and JUnit Versions -->
 		<java.version>14</java.version>
-		<junit.jupiter.version>5.5.2</junit.jupiter.version>
-		<junit.platform.version>1.5.2</junit.platform.version>
+		<junit.jupiter.version>5.7.0</junit.jupiter.version>
+		<junit.platform.version>1.7.0</junit.platform.version>
 		
 		<!-- Maven Plugin Version -->
 		<maven.compiler.version>3.8.0</maven.compiler.version>
@@ -61,6 +61,12 @@
 		<directory.resource>resource</directory.resource>
 		<directory.test-resource>junit-resource</directory.test-resource>
 		<directory.eclipse.annotationprocessing>.apt_generated</directory.eclipse.annotationprocessing>
+		
+		<!-- JUnit Information -->
+		<junit.jupiter.groupID>org.junit.jupiter</junit.jupiter.groupID>
+		<junit.jupiter.artifactID>junit-jupiter-engine</junit.jupiter.artifactID>
+		<junit.platform.groupID>org.junit.platform</junit.platform.groupID>
+		<junit.platform.artifactID>junit-platform-runner</junit.platform.artifactID>
 	</properties>
 	<distributionManagement>
 		<snapshotRepository>
@@ -100,14 +106,14 @@
 			</dependency>
 			<!-- JUnit Dependencies -->
 			<dependency>
-				<groupId>org.junit.jupiter</groupId>
-				<artifactId>junit-jupiter-engine</artifactId>
+				<groupId>${junit.jupiter.groupID}</groupId>
+				<artifactId>${junit.jupiter.artifactID}</artifactId>
 				<version>${junit.jupiter.version}</version>
 				<scope>test</scope>
 			</dependency>
 			<dependency>
-				<groupId>org.junit.platform</groupId>
-				<artifactId>junit-platform-runner</artifactId>
+				<groupId>${junit.platform.groupID}</groupId>
+				<artifactId>${junit.platform.artifactID}</artifactId>
 				<version>${junit.platform.version}</version>
 				<scope>test</scope>
 			</dependency>
