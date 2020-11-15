@@ -103,7 +103,7 @@ public enum FontFamilies implements FontConstants{
 	
 	/** Open Source Font: Leckerli One */
 	LECKERLI_ONE(new FontFamily("Leckerli One", "leckerli-one/",
-			FontFamily.makeRegularList("LeckerliOne", "ttf"))),
+			FontFamily.makeRegularList("LeckerliOne", TTF))),
 	
 	/** Open Source Font: Lobster */
 	LOBSTER(new FontFamily("Lobster", "lobster/", FontFamily.makeRegularList("Lobster", TTF))),
