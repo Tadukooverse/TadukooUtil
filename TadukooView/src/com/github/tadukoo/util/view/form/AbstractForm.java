@@ -1,5 +1,6 @@
 package com.github.tadukoo.util.view.form;
 
+import com.github.tadukoo.util.pojo.MappedPojo;
 import com.github.tadukoo.util.view.form.field.FormField;
 
 import javax.swing.*;
@@ -43,18 +44,18 @@ public abstract class AbstractForm extends JPanel implements Form{
 	}
 	
 	/**
-	 * Initializes the form. Sets the values map to the map from the given form (used for forms that need the
+	 * Initializes the form. Sets the values map to the map from the given pojo (used for forms that need the
 	 * default values while running {@link #setDefaultFields()}), and sets the fields and components maps to
 	 * new HashMaps.
 	 * <br>
 	 * {@link #setDefaultFields()} and {@link #createComponents()} are then called.
 	 *
-	 * @param form The form containing a map, to be used for default values for forms
+	 * @param pojo The pojo containing a map, to be used for default values for forms
 	 *                that need them during {@link #setDefaultFields()}
 	 */
-	protected AbstractForm(Form form){
+	protected AbstractForm(MappedPojo pojo){
 		// Initialize the maps
-		valueMap = form.getMap();
+		valueMap = pojo.getMap();
 		fields = new HashMap<>();
 		components = new HashMap<>();
 		

@@ -1,5 +1,7 @@
 package com.github.tadukoo.util.view.form;
 
+import com.github.tadukoo.util.pojo.AbstractMappedPojo;
+import com.github.tadukoo.util.pojo.MappedPojo;
 import com.github.tadukoo.util.view.form.field.StringFormField;
 import org.junit.jupiter.api.Test;
 
@@ -35,12 +37,7 @@ public class FormTest{
 	
 	@Test
 	public void testFormConstructor(){
-		Form otherForm = new AbstractForm(new HashMap<>()){
-			@Override
-			public void setDefaultFields(){
-			
-			}
-			
+		MappedPojo pojo = new AbstractMappedPojo(){
 			@Override
 			public Map<String, Object> getMap(){
 				Map<String, Object> aMap = new HashMap<>();
@@ -48,7 +45,7 @@ public class FormTest{
 				return aMap;
 			}
 		};
-		Form form = new AbstractForm(otherForm){
+		Form form = new AbstractForm(pojo){
 			@Override
 			public void setDefaultFields(){
 				weSetThoseFields = true;
