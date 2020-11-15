@@ -1,7 +1,7 @@
 package com.github.tadukoo.util.lookandfeel.componentui;
 
+import com.github.tadukoo.util.view.paint.SizablePaint;
 import com.github.tadukoo.util.view.shapes.Shaped;
-import com.github.tadukoo.util.lookandfeel.paintui.PaintUIResource;
 import com.github.tadukoo.util.view.shapes.ShapeFunction;
 import com.github.tadukoo.util.view.shapes.ShapeInfo;
 
@@ -53,7 +53,7 @@ public class TadukooButtonUI extends MetalButtonUI{
 			Dimension size = b.getSize();
 			
 			// Grab the paint to use and set it on the graphics
-			PaintUIResource paint = (PaintUIResource) UIManager.get("Button.select.paint");
+			SizablePaint paint = (SizablePaint) UIManager.get("Button.select.paint");
 			g2d.setPaint(paint.getPaint(size));
 			
 			// Grab the shape function to be used
@@ -91,7 +91,7 @@ public class TadukooButtonUI extends MetalButtonUI{
 			focusRect.setBounds( iconRect );
 		}
 		
-		PaintUIResource paint = (PaintUIResource) UIManager.get("Button.focus.paint");
+		SizablePaint paint = (SizablePaint) UIManager.get("Button.focus.paint");
 		((Graphics2D) g).setPaint(paint.getPaint(focusRect.getSize()));
 		g.drawRect((focusRect.x-1), (focusRect.y-1),
 				focusRect.width+1, focusRect.height+1);

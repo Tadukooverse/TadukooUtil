@@ -1,7 +1,7 @@
 package com.github.tadukoo.util.lookandfeel.paintui;
 
-import com.github.tadukoo.util.view.gradient.Gradient;
-import com.github.tadukoo.util.view.gradient.LinearGradient;
+import com.github.tadukoo.util.view.paint.gradient.Gradient;
+import com.github.tadukoo.util.view.paint.gradient.LinearGradient;
 
 import javax.swing.plaf.ColorUIResource;
 import java.awt.*;

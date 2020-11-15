@@ -1,4 +1,4 @@
-package com.github.tadukoo.util.view.gradient;
+package com.github.tadukoo.util.view.paint.gradient;
 
 import com.github.tadukoo.util.FloatUtil;
 import com.github.tadukoo.util.tuple.Triple;
