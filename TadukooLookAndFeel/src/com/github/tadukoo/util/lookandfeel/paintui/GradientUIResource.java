@@ -5,6 +5,7 @@ import com.github.tadukoo.util.view.paint.gradient.LinearGradient;
 
 import javax.swing.plaf.ColorUIResource;
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.util.Arrays;
 import java.util.List;
 
@@ -14,7 +15,8 @@ import java.util.List;
  * in a {@link com.github.tadukoo.util.lookandfeel.TadukooTheme TadukooTheme}.
  *
  * @author Logan Ferree (Tadukoo)
- * @version Alpha v.0.2
+ * @version Alpha v.0.2.1
+ * @since Alpha v.0.2
  */
 public class GradientUIResource implements PaintUIResource, Gradient{
 	/** The {@link Gradient} contained in this Gradient UI resource */
@@ -39,6 +41,24 @@ public class GradientUIResource implements PaintUIResource, Gradient{
 	@Override
 	public float[] getFractions(){
 		return gradient.getFractions();
+	}
+	
+	/** {@inheritDoc} */
+	@Override
+	public MultipleGradientPaint.CycleMethod getCycleMethod(){
+		return gradient.getCycleMethod();
+	}
+	
+	/** {@inheritDoc} */
+	@Override
+	public MultipleGradientPaint.ColorSpaceType getColorSpace(){
+		return gradient.getColorSpace();
+	}
+	
+	/** {@inheritDoc} */
+	@Override
+	public AffineTransform getGradientTransform(){
+		return gradient.getGradientTransform();
 	}
 	
 	/**
