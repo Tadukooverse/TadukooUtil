@@ -4,11 +4,22 @@ package com.github.tadukoo.util.view.form.field;
  * Field Type is used in {@link FormField} for what type of field it is.
  *
  * @author Logan Ferree (Tadukoo)
- * @version Alpha v.0.2
+ * @version Alpha v.0.2.1
+ * @since Alpha v.0.2
  */
 public enum FieldType{
 	/** A boolean field */
 	BOOLEAN,
+	/** An int field */
+	INT,
+	/** A float field */
+	FLOAT,
+	/** A double field */
+	DOUBLE,
+	/** A short field */
+	SHORT,
+	/** A long field */
+	LONG,
 	/** A string field */
 	STRING,
 	/** A drop-down field */
