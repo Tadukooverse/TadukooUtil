@@ -22,6 +22,8 @@ public enum FieldType{
 	LONG,
 	/** A string field */
 	STRING,
+	/** A Date field */
+	DATE,
 	/** A drop-down field */
 	DROP_DOWN,
 	/** A button (not really a field) */
