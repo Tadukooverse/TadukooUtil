@@ -75,7 +75,7 @@ public interface MappedPojo{
 	 * @throws InstantiationException See {@link java.lang.reflect.Constructor#newInstance(Object...)}
 	 */
 	@SuppressWarnings("unchecked")
-	default <T extends MappedPojo> T getItemAsPojo(String key, Class<T> clazz)
+	default <T extends MappedPojo> T getPojoItem(String key, Class<T> clazz)
 			throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException{
 		// Grab the item
 		Object obj = getItem(key);

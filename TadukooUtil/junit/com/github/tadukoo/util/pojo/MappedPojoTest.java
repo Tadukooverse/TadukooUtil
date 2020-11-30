@@ -158,7 +158,7 @@ public class MappedPojoTest{
 		
 		pojo.setItem("Test", clazz2);
 		
-		TestClass item = pojo.getItemAsPojo("Test", TestClass.class);
+		TestClass item = pojo.getPojoItem("Test", TestClass.class);
 		assertEquals("Yes", item.getDerp());
 		assertEquals(42, item.getPlop());
 	}
@@ -168,7 +168,7 @@ public class MappedPojoTest{
 			throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException{
 		pojo.setItem("Test", null);
 		
-		TestClass item = pojo.getItemAsPojo("Test", TestClass.class);
+		TestClass item = pojo.getPojoItem("Test", TestClass.class);
 		assertNull(item);
 	}
 	
@@ -182,7 +182,7 @@ public class MappedPojoTest{
 		
 		pojo.setItem("Test", clazz2);
 		
-		TestClass item = pojo.getItemAsPojo("Test", TestClass.class);
+		TestClass item = pojo.getPojoItem("Test", TestClass.class);
 		assertEquals("Yes", item.getDerp());
 		assertEquals(42, item.getPlop());
 		
@@ -201,7 +201,7 @@ public class MappedPojoTest{
 		
 		pojo.setItem("Test", clazz2);
 		
-		TestClass item = pojo.getItemAsPojo("Test", TestClass.class);
+		TestClass item = pojo.getPojoItem("Test", TestClass.class);
 		assertEquals("Yes", item.getDerp());
 		assertEquals(42, item.getPlop());
 	}
