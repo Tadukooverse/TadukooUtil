@@ -7,7 +7,7 @@ import javax.swing.*;
 import java.util.Date;
 
 /**
- * An Int Form Field is a {@link FormField} used to store Dates.
+ * A Date Form Field is a {@link FormField} used to store Dates.
  *
  * @author Logan Ferree (Tadukoo)
  * @version Alpha v.0.2.1
@@ -15,7 +15,7 @@ import java.util.Date;
 public class DateFormField extends FormField<Date>{
 	
 	/**
-	 * Builder to be used to create an {@link DateFormField}. It has the following parameters:
+	 * Builder to be used to create a {@link DateFormField}. It has the following parameters:
 	 *
 	 * <table>
 	 *     <caption>FormField Parameters</caption>
@@ -136,6 +136,7 @@ public class DateFormField extends FormField<Date>{
 		
 		/**
 		 * @param minYear The minimum year to allow on the field
+		 * @return this, to continue building
 		 */
 		public DateFormFieldBuilder minYear(int minYear){
 			this.minYear = minYear;
@@ -144,6 +145,7 @@ public class DateFormField extends FormField<Date>{
 		
 		/**
 		 * @param maxYear The maximum year to allow on the field
+		 * @return this, to continue building
 		 */
 		public DateFormFieldBuilder maxYear(int maxYear){
 			this.maxYear = maxYear;

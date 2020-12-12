@@ -17,9 +17,9 @@ import java.util.List;
  */
 public abstract class GradientBuilder<GradientType extends Gradient>{
 	/** The fractions involved in the Gradient */
-	protected List<Float> fractions = new ArrayList<>();
+	protected final List<Float> fractions = new ArrayList<>();
 	/** The {@link Color}s involved in the Gradient */
-	protected List<Color> colors = new ArrayList<>();
+	protected final List<Color> colors = new ArrayList<>();
 	/** The {@link MultipleGradientPaint.CycleMethod cycle method} involved in the Gradient */
 	protected MultipleGradientPaint.CycleMethod cycleMethod = MultipleGradientPaint.CycleMethod.NO_CYCLE;
 	/** The {@link MultipleGradientPaint.ColorSpaceType color space} involved in the Gradient */
@@ -27,7 +27,9 @@ public abstract class GradientBuilder<GradientType extends Gradient>{
 	/** The {@link AffineTransform} involved in the Gradient */
 	protected AffineTransform gradientTransform = new AffineTransform();
 	
-	// Can't create outside of a GradientBuilder
+	/**
+	 * Constructs a new GradientBuilder (to be called in subclasses)
+	 */
 	protected GradientBuilder(){ }
 	
 	/**

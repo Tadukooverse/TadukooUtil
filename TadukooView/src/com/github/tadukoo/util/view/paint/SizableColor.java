@@ -28,8 +28,8 @@ public class SizableColor extends Color implements SizablePaint{
 	}
 	
 	/** {@inheritDoc} */
-	public SizableColor(int rgba, boolean hasalpha){
-		super(rgba, hasalpha);
+	public SizableColor(int rgba, boolean hasAlpha){
+		super(rgba, hasAlpha);
 	}
 	
 	/** {@inheritDoc} */
@@ -43,10 +43,15 @@ public class SizableColor extends Color implements SizablePaint{
 	}
 	
 	/** {@inheritDoc} */
-	public SizableColor(ColorSpace cspace, float[] components, float alpha){
-		super(cspace, components, alpha);
+	public SizableColor(ColorSpace cSpace, float[] components, float alpha){
+		super(cSpace, components, alpha);
 	}
 	
+	/**
+	 * Constructs a new SizableColor using the given {@link Color}
+	 *
+	 * @param color The {@link Color} to use for this SizableColor
+	 */
 	public SizableColor(Color color){
 		this(color.getRGB());
 	}

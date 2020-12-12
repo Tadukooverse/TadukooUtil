@@ -81,7 +81,9 @@ public abstract class FormField<Type>{
 		/** The column span of the field */
 		protected int colSpan = 1;
 		
-		// Can't create FormFieldBuilder outside of FormFields
+		/**
+		 * Constructs a new FormFieldBuilder (to be called in subclasses)
+		 */
 		protected FormFieldBuilder(){ }
 		
 		/**

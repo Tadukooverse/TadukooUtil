@@ -94,7 +94,9 @@ public abstract class NumberFormField<Type extends Number & Comparable<?>> exten
 		/** The increment value for the spinner for the field */
 		protected Type stepSize;
 		
-		// Can't create NumberFormFieldBuilder outside of NumberFormField
+		/**
+		 * Constructs a new NumberFormFieldBuilder (to be called in subclasses)
+		 */
 		protected NumberFormFieldBuilder(){
 			super();
 		}
