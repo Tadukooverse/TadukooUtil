@@ -1,9 +1,11 @@
 package com.github.tadukoo.util.pojo;
 
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -204,5 +206,37 @@ public class MappedPojoTest{
 		TestClass item = pojo.getPojoItem("Test", TestClass.class);
 		assertEquals("Yes", item.getDerp());
 		assertEquals(42, item.getPlop());
+	}
+	
+	@Test
+	public void testGetTableItemNull()
+			throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException{
+		pojo.setItem("Table", null);
+		
+		Table<TestClass> table = pojo.getTableItem("Table", TestClass.class);
+		assertNull(table);
+	}
+	
+	@Test
+	public void testGetTableItem()
+			throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException{
+		Table<MappedPojo> brokenTable = new Table<>();
+		TestClass testClass1 = new TestClass();
+		testClass1.setItem("Derp", "nope");
+		testClass1.setItem("Plop", 5);
+		brokenTable.addRow(testClass1);
+		MappedPojo otherPojo = new AbstractMappedPojo(){ };
+		otherPojo.setItem("Derp", "yep");
+		otherPojo.setItem("Plop", 42);
+		brokenTable.addRow(otherPojo);
+		pojo.setItem("Table", brokenTable);
+		
+		Table<TestClass> table = pojo.getTableItem("Table", TestClass.class);
+		assertEquals(2, table.getNumRows());
+		List<TestClass> rows = table.getAllRows();
+		assertEquals(testClass1, rows.get(0));
+		TestClass testClass2 = rows.get(1);
+		assertEquals("yep", testClass2.getDerp());
+		assertEquals(42, testClass2.getPlop());
 	}
 }
