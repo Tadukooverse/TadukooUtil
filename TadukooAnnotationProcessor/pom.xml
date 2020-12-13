@@ -7,13 +7,13 @@
 	<parent>
 		<groupId>com.github.tadukoo.util</groupId>
 		<artifactId>TadukooUtilParent</artifactId>
-		<version>0.2.1-Alpha-SNAPSHOT</version>
+		<version>0.2.1-Alpha</version>
 	</parent>
 	<dependencies>
 		<dependency>
 			<groupId>com.github.tadukoo.util</groupId>
 			<artifactId>TadukooLang</artifactId>
-			<version>0.2.1-Alpha-SNAPSHOT</version>
+			<version>0.2.1-Alpha</version>
 		</dependency>
 	</dependencies>
 	<build>
