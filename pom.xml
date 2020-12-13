@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.tadukoo.util</groupId>
 	<artifactId>TadukooUtilParent</artifactId>
-	<version>0.2.1-Alpha</version>
+	<version>0.3-Alpha-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>${project.artifactId}</name>
 	<description>A collection of utilities to be used in various projects</description>
@@ -33,7 +33,6 @@
 	</scm>
 	<modules>
 		<module>TadukooLang</module>
-		<module>TadukooAnnotationProcessor</module>
 		<module>TadukooUtil</module>
 		<module>TadukooDatabase</module>
 		<module>TadukooFileFormat</module>

@@ -5,14 +5,10 @@
 	<parent>
 		<groupId>com.github.tadukoo.util</groupId>
 		<artifactId>TadukooUtilParent</artifactId>
-		<version>0.2.1-Alpha</version>
+		<version>0.3-Alpha-SNAPSHOT</version>
 	</parent>
 	<artifactId>TadukooUtil</artifactId>
 	<dependencies>
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>TadukooAnnotationProcessor</artifactId>
-		</dependency>
 		<!-- JUnit Dependencies -->
 		<dependency>
 			<groupId>${junit.jupiter.groupID}</groupId>
@@ -26,28 +22,7 @@
 	<build>
 		<sourceDirectory>${directory.source}</sourceDirectory>
 		<testSourceDirectory>${directory.test}</testSourceDirectory>
-		<resources>
-			<resource>
-				<directory>${directory.eclipse.annotationprocessing}</directory>
-				<excludes>
-					<exclude>**/*.java</exclude>
-				</excludes>
-			</resource>
-		</resources>
 		<plugins>
-			<plugin>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<configuration>
-					<release>${java.version}</release>
-					<annotationProcessorPaths>
-						<annotationProcessorPath>
-							<groupId>${project.groupId}</groupId>
-							<artifactId>TadukooAnnotationProcessor</artifactId>
-							<version>${project.version}</version>
-						</annotationProcessorPath>
-					</annotationProcessorPaths>
-				</configuration>
-			</plugin>
 			<plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
