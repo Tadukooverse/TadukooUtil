@@ -1,5 +1,7 @@
 package com.github.tadukoo.util.lookandfeel.paintui;
 
+import com.github.tadukoo.util.view.paint.SizablePaint;
+
 import javax.swing.plaf.ColorUIResource;
 import javax.swing.plaf.UIResource;
 import java.awt.*;
@@ -13,18 +15,10 @@ import java.util.List;
  * {@link javax.swing.plaf.metal.MetalLookAndFeel} component UI classes.
  *
  * @author Logan Ferree (Tadukoo)
- * @version Alpha v.0.2
+ * @version Alpha v.0.2.1
+ * @since Alpha v.0.2
  */
-public interface PaintUIResource extends UIResource{
-	
-	/**
-	 * Creates a Paint to be used based on the size of the object to be painted. The size is given because in the
-	 * case of Gradients, it determines where the points are placed.
-	 *
-	 * @param size The Dimensions of the object to be painted
-	 * @return A Paint
-	 */
-	Paint getPaint(Dimension size);
+public interface PaintUIResource extends SizablePaint, UIResource{
 	
 	/**
 	 * In some cases, we need to return a ColorUIResource to support the Look &amp; Feel properly. I don't like it,

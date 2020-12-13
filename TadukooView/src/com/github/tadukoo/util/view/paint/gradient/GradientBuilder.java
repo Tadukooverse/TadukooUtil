@@ -1,4 +1,4 @@
-package com.github.tadukoo.util.view.gradient;
+package com.github.tadukoo.util.view.paint.gradient;
 
 import com.github.tadukoo.util.StringUtil;
 
@@ -12,13 +12,14 @@ import java.util.List;
  * specific Gradients, e.g. {@link LinearGradient}.
  *
  * @author Logan Ferree (Tadukoo)
- * @version Alpha v.0.2
+ * @version Alpha v.0.2.1
+ * @since Alpha v.0.2
  */
-public abstract class GradientBuilder{
+public abstract class GradientBuilder<GradientType extends Gradient>{
 	/** The fractions involved in the Gradient */
-	protected List<Float> fractions;
+	protected final List<Float> fractions = new ArrayList<>();
 	/** The {@link Color}s involved in the Gradient */
-	protected List<Color> colors;
+	protected final List<Color> colors = new ArrayList<>();
 	/** The {@link MultipleGradientPaint.CycleMethod cycle method} involved in the Gradient */
 	protected MultipleGradientPaint.CycleMethod cycleMethod = MultipleGradientPaint.CycleMethod.NO_CYCLE;
 	/** The {@link MultipleGradientPaint.ColorSpaceType color space} involved in the Gradient */
@@ -27,11 +28,16 @@ public abstract class GradientBuilder{
 	protected AffineTransform gradientTransform = new AffineTransform();
 	
 	/**
+	 * Constructs a new GradientBuilder (to be called in subclasses)
+	 */
+	protected GradientBuilder(){ }
+	
+	/**
 	 * @param fraction The fraction to use for this color point
 	 * @param color The {@link Color} to use for this color point
 	 * @return this, to continue building
 	 */
-	public GradientBuilder colorPoint(float fraction, Color color){
+	public GradientBuilder<GradientType> colorPoint(float fraction, Color color){
 		fractions.add(fraction);
 		colors.add(color);
 		return this;
@@ -41,7 +47,7 @@ public abstract class GradientBuilder{
 	 * @param cycleMethod The {@link MultipleGradientPaint.CycleMethod cycle method} involved in the Gradient
 	 * @return this, to continue building
 	 */
-	public GradientBuilder cycleMethod(MultipleGradientPaint.CycleMethod cycleMethod){
+	public GradientBuilder<GradientType> cycleMethod(MultipleGradientPaint.CycleMethod cycleMethod){
 		this.cycleMethod = cycleMethod;
 		return this;
 	}
@@ -50,7 +56,7 @@ public abstract class GradientBuilder{
 	 * @param colorSpace The {@link MultipleGradientPaint.ColorSpaceType color space} involved in the Gradient
 	 * @return this, to continue building
 	 */
-	public GradientBuilder colorSpace(MultipleGradientPaint.ColorSpaceType colorSpace){
+	public GradientBuilder<GradientType> colorSpace(MultipleGradientPaint.ColorSpaceType colorSpace){
 		this.colorSpace = colorSpace;
 		return this;
 	}
@@ -59,7 +65,7 @@ public abstract class GradientBuilder{
 	 * @param gradientTransform The {@link AffineTransform} involved in the Gradient
 	 * @return this, to continue building
 	 */
-	public GradientBuilder gradientTransform(AffineTransform gradientTransform){
+	public GradientBuilder<GradientType> gradientTransform(AffineTransform gradientTransform){
 		this.gradientTransform = gradientTransform;
 		return this;
 	}
@@ -101,7 +107,7 @@ public abstract class GradientBuilder{
 	 *
 	 * @return The newly created {@link Gradient}
 	 */
-	public final Gradient build(){
+	public final GradientType build(){
 		checkForErrors();
 		
 		return buildGradient();
@@ -112,5 +118,5 @@ public abstract class GradientBuilder{
 	 *
 	 * @return The newly built {@link Gradient}
 	 */
-	protected abstract Gradient buildGradient();
+	protected abstract GradientType buildGradient();
 }

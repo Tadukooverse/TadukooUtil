@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>com.github.tadukoo.util</groupId>
 		<artifactId>TadukooUtilParent</artifactId>
-		<version>0.2-Alpha</version>
+		<version>0.2.1-Alpha</version>
 	</parent>
 	<artifactId>TadukooUtil</artifactId>
 	<dependencies>
@@ -15,12 +15,12 @@
 		</dependency>
 		<!-- JUnit Dependencies -->
 		<dependency>
-			<groupId>org.junit.jupiter</groupId>
-			<artifactId>junit-jupiter-engine</artifactId>
+			<groupId>${junit.jupiter.groupID}</groupId>
+			<artifactId>${junit.jupiter.artifactID}</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.junit.platform</groupId>
-			<artifactId>junit-platform-runner</artifactId>
+			<groupId>${junit.platform.groupID}</groupId>
+			<artifactId>${junit.platform.artifactID}</artifactId>
 		</dependency>
 	</dependencies>
 	<build>
@@ -38,6 +38,7 @@
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
+					<release>${java.version}</release>
 					<annotationProcessorPaths>
 						<annotationProcessorPath>
 							<groupId>${project.groupId}</groupId>

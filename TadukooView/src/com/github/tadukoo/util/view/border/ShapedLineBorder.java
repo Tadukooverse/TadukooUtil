@@ -1,8 +1,8 @@
-package com.github.tadukoo.util.lookandfeel.border;
+package com.github.tadukoo.util.view.border;
 
+import com.github.tadukoo.util.view.paint.SizableColor;
+import com.github.tadukoo.util.view.paint.SizablePaint;
 import com.github.tadukoo.util.view.shapes.Shaped;
-import com.github.tadukoo.util.lookandfeel.paintui.ColorPaintUIResource;
-import com.github.tadukoo.util.lookandfeel.paintui.PaintUIResource;
 import com.github.tadukoo.util.view.shapes.ShapeFunction;
 import com.github.tadukoo.util.view.shapes.ShapeInfo;
 import com.github.tadukoo.util.view.shapes.Shapes;
@@ -17,7 +17,8 @@ import java.awt.geom.Path2D;
  * it can have its own {@link ShapeInfo} if desired.
  *
  * @author Logan Ferree (Tadukoo)
- * @version Alpha v.0.2
+ * @version Alpha v.0.2.1
+ * @since Alpha v.0.2
  */
 public class ShapedLineBorder extends AbstractBorder{
 	
@@ -26,18 +27,19 @@ public class ShapedLineBorder extends AbstractBorder{
 	 * <ul>
 	 *     <li>shapeInfo - The {@link ShapeInfo} to use on the Border (may be null to use the component's shape) -
 	 *     defaults to null</li>
-	 *     <li>paintUIResource - The {@link PaintUIResource} to use on the Border - defaults to solid black</li>
+	 *     <li>paint - The {@link SizablePaint} to use on the Border - defaults to solid black</li>
 	 *     <li>thickness - the thickness of the line - defaults to 1</li>
 	 * </ul>
 	 *
 	 * @author Logan Ferree (Tadukoo)
-	 * @version Alpha v.0.2
+	 * @version Alpha v.0.2.1
+	 * @since Alpha v.0.2
 	 */
 	public static class ShapedLineBorderBuilder{
 		/** The {@link ShapeInfo} to use on the Border (may be null to use the component's shape) */
 		private ShapeInfo shapeInfo = null;
-		/** The {@link PaintUIResource} to use on the Border */
-		private PaintUIResource paintUIResource = new ColorPaintUIResource(Color.BLACK);
+		/** The {@link SizablePaint} to use on the Border */
+		private SizablePaint paint = new SizableColor(Color.BLACK);
 		/** The thickness of the line */
 		private int thickness = 1;
 		
@@ -54,11 +56,11 @@ public class ShapedLineBorder extends AbstractBorder{
 		}
 		
 		/**
-		 * @param paintUIResource The {@link PaintUIResource} to use on the Border
+		 * @param paint The {@link SizablePaint} to use on the Border
 		 * @return this, to continue building
 		 */
-		public ShapedLineBorderBuilder paintUIResource(PaintUIResource paintUIResource){
-			this.paintUIResource = paintUIResource;
+		public ShapedLineBorderBuilder paint(SizablePaint paint){
+			this.paint = paint;
 			return this;
 		}
 		
@@ -75,14 +77,14 @@ public class ShapedLineBorder extends AbstractBorder{
 		 * @return A newly created {@link ShapedLineBorder} using the set parameters
 		 */
 		public ShapedLineBorder build(){
-			return new ShapedLineBorder(shapeInfo, paintUIResource, thickness);
+			return new ShapedLineBorder(shapeInfo, paint, thickness);
 		}
 	}
 	
 	/** The {@link ShapeInfo} to use on this Border (may be null to use the component's shape) */
 	private final ShapeInfo shapeInfo;
-	/** The {@link PaintUIResource} to use on this Border */
-	private final PaintUIResource paintUIResource;
+	/** The {@link SizablePaint} to use on this Border */
+	private final SizablePaint paint;
 	/** The thickness of the line */
 	private final int thickness;
 	
@@ -90,12 +92,12 @@ public class ShapedLineBorder extends AbstractBorder{
 	 * Constructs a new ShapedLineBorder with the given parameters
 	 *
 	 * @param shapeInfo The {@link ShapeInfo} to use on this Border (may be null to use the component's shape)
-	 * @param paintUIResource The {@link PaintUIResource} to use on this Border
+	 * @param paint The {@link SizablePaint} to use on this Border
 	 * @param thickness The thickness of the line
 	 */
-	private ShapedLineBorder(ShapeInfo shapeInfo, PaintUIResource paintUIResource, int thickness){
+	private ShapedLineBorder(ShapeInfo shapeInfo, SizablePaint paint, int thickness){
 		this.shapeInfo = shapeInfo;
-		this.paintUIResource = paintUIResource;
+		this.paint = paint;
 		this.thickness = thickness;
 	}
 	
@@ -144,7 +146,7 @@ public class ShapedLineBorder extends AbstractBorder{
 			Graphics2D g2d = (Graphics2D) g;
 			
 			// Set the color and draw the border
-			g2d.setPaint(paintUIResource.getPaint(new Dimension(w, h)));
+			g2d.setPaint(paint.getPaint(new Dimension(w, h)));
 			Path2D path = new Path2D.Float(Path2D.WIND_EVEN_ODD);
 			path.append(outer, false);
 			path.append(inner, false);

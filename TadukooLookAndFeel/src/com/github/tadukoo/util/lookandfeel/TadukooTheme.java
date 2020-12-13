@@ -2,7 +2,7 @@ package com.github.tadukoo.util.lookandfeel;
 
 import com.github.tadukoo.util.ListUtil;
 import com.github.tadukoo.util.logger.EasyLogger;
-import com.github.tadukoo.util.lookandfeel.border.ShapedLineBorder;
+import com.github.tadukoo.util.view.border.ShapedLineBorder;
 import com.github.tadukoo.util.lookandfeel.componentui.TadukooButtonUI;
 import com.github.tadukoo.util.lookandfeel.paintui.ColorPaintUIResource;
 import com.github.tadukoo.util.lookandfeel.paintui.PaintUIResource;

@@ -9,7 +9,8 @@ import java.util.Set;
  * HashMap as its backing Map.
  *
  * @author Logan Ferree (Tadukoo)
- * @version Alpha v.0.2
+ * @version Alpha v.0.2.1
+ * @since Alpha v.0.2
  */
 public abstract class AbstractMappedPojo implements MappedPojo{
 	/** The map containing the items in this pojo */
@@ -20,6 +21,15 @@ public abstract class AbstractMappedPojo implements MappedPojo{
 	 */
 	protected AbstractMappedPojo(){
 		map = new HashMap<>();
+	}
+	
+	/**
+	 * Creates a new Mapped Pojo, using the map from the given pojo.
+	 *
+	 * @param pojo The {@link MappedPojo} to copy the map from
+	 */
+	protected AbstractMappedPojo(MappedPojo pojo){
+		map = pojo.getMap();
 	}
 	
 	/** {@inheritDoc} */

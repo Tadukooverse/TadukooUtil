@@ -30,14 +30,24 @@ public enum Orientation{
 	 * Enum used for how to align vertically
 	 */
 	public enum Vertical{
-		TOP, CENTER, BOTTOM
+		/** Orient to the top vertically */
+		TOP,
+		/** Orient to the center vertically */
+		CENTER,
+		/** Orient to the bottom vertically */
+		BOTTOM
 	}
 	
 	/**
 	 * Enum used for how to align horizontally
 	 */
 	public enum Horizontal{
-		LEFT, CENTER, RIGHT
+		/** Orient to the left horizontally */
+		LEFT,
+		/** Orient to the center horizontally */
+		CENTER,
+		/** Orient to the right horizontally */
+		RIGHT
 	}
 	
 	/** The vertical alignment to be used */

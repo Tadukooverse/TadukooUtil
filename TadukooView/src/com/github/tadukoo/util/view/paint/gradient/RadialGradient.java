@@ -1,4 +1,4 @@
-package com.github.tadukoo.util.view.gradient;
+package com.github.tadukoo.util.view.paint.gradient;
 
 import com.github.tadukoo.util.FloatUtil;
 import com.github.tadukoo.util.tuple.Triple;
@@ -14,7 +14,8 @@ import java.util.function.Function;
  * Linear Gradient is used to build a {@link Gradient} object to use for {@link RadialGradientPaint}.
  *
  * @author Logan Ferree (Tadukoo)
- * @version Alpha v.0.2
+ * @version Alpha v.0.2.1
+ * @since Alpha v.0.2
  */
 public class RadialGradient implements Gradient{
 	
@@ -37,9 +38,10 @@ public class RadialGradient implements Gradient{
 	 * </ul>
 	 *
 	 * @author Logan Ferree (Tadukoo)
-	 * @version Alpha v.0.2
+	 * @version Alpha v.0.2.1
+	 * @since Alpha v.0.2
 	 */
-	public static class RadialGradientBuilder extends GradientBuilder{
+	public static class RadialGradientBuilder extends GradientBuilder<RadialGradient>{
 		/** A function taking in the dimension of the space to determine the center, radius, and focus of the circle */
 		private Function<Dimension, Triple<Point2D, Float, Point2D>> circleFunc = size -> {
 			float centerX = (float) size.getWidth()/2;
@@ -103,7 +105,7 @@ public class RadialGradient implements Gradient{
 		
 		/** {@inheritDoc} */
 		@Override
-		protected Gradient buildGradient(){
+		protected RadialGradient buildGradient(){
 			return new RadialGradient(circleFunc, FloatUtil.convertListToArray(fractions),
 					colors.toArray(new Color[0]), cycleMethod, colorSpace, gradientTransform);
 		}
@@ -163,6 +165,31 @@ public class RadialGradient implements Gradient{
 	@Override
 	public Color[] getColors(){
 		return colors;
+	}
+	
+	/** {@inheritDoc} */
+	@Override
+	public MultipleGradientPaint.CycleMethod getCycleMethod(){
+		return cycleMethod;
+	}
+	
+	/** {@inheritDoc} */
+	@Override
+	public MultipleGradientPaint.ColorSpaceType getColorSpace(){
+		return colorSpace;
+	}
+	
+	/** {@inheritDoc} */
+	@Override
+	public AffineTransform getGradientTransform(){
+		return gradientTransform;
+	}
+	
+	/**
+	 * @return A function taking in the dimension of the space to determine the center, radius, and focus of the circle
+	 */
+	public Function<Dimension, Triple<Point2D, Float, Point2D>> getCircleFunc(){
+		return circleFunc;
 	}
 	
 	/**

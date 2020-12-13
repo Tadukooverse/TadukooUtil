@@ -1,7 +1,7 @@
-package com.github.tadukoo.util.lookandfeel.border;
+package com.github.tadukoo.util.view.border;
 
+import com.github.tadukoo.util.view.paint.SizablePaint;
 import com.github.tadukoo.util.view.shapes.Shaped;
-import com.github.tadukoo.util.lookandfeel.paintui.PaintUIResource;
 import com.github.tadukoo.util.view.shapes.ShapeInfo;
 import com.github.tadukoo.util.view.shapes.Shapes;
 
@@ -14,7 +14,8 @@ import java.awt.*;
  * it can have its own {@link ShapeInfo} if desired.
  *
  * @author Logan Ferree (Tadukoo)
- * @version Alpha v.0.2
+ * @version Alpha v.0.2.1
+ * @since Alpha v.0.2
  */
 public class ShapedEtchedBorder extends AbstractBorder{
 	
@@ -22,7 +23,10 @@ public class ShapedEtchedBorder extends AbstractBorder{
 	 * An enum representing the Etch type to be used (RAISED or LOWERED) for a border
 	 */
 	public enum EtchType{
-		RAISED, LOWERED
+		/** Make a raised etch */
+		RAISED,
+		/** Make a lowered etch */
+		LOWERED
 	}
 	
 	/**
@@ -31,24 +35,25 @@ public class ShapedEtchedBorder extends AbstractBorder{
 	 *     <li>shapeInfo - The {@link ShapeInfo} to use on the Border (may be null to use the component's shape) -
 	 *     defaults to null</li>
 	 *     <li>etchType - the {@link EtchType} (RAISED or LOWERED) - defaults to LOWERED</li>
-	 *     <li>highlightPaint - The {@link PaintUIResource} for the highlight - defaults to using the Component's
+	 *     <li>highlightPaint - The {@link SizablePaint} for the highlight - defaults to using the Component's
 	 *     getBackground().brighter()</li>
-	 *     <li>shadowPaint - The {@link PaintUIResource} for the shadow - defaults to using the Component's
+	 *     <li>shadowPaint - The {@link SizablePaint} for the shadow - defaults to using the Component's
 	 *     getBackground().darker()</li>
 	 * </ul>
 	 *
 	 * @author Logan Ferree (Tadukoo)
-	 * @version Alpha v.0.2
+	 * @version Alpha v.0.2.1
+	 * @since Alpha v.0.2
 	 */
 	public static class ShapedEtchedBorderBuilder{
 		/** The {@link ShapeInfo} to use on the Border (may be null to use the component's shape) */
 		private ShapeInfo shapeInfo = null;
 		/** The {@link EtchType type of etching} (RAISED or LOWERED) */
 		private EtchType etchType = EtchType.LOWERED;
-		/** The {@link PaintUIResource} for the highlight */
-		private PaintUIResource highlightPaint = null;
-		/** The {@link PaintUIResource} for the shadow */
-		private PaintUIResource shadowPaint = null;
+		/** The {@link SizablePaint} for the highlight */
+		private SizablePaint highlightPaint = null;
+		/** The {@link SizablePaint} for the shadow */
+		private SizablePaint shadowPaint = null;
 		
 		// Can't create builder outside of ShapedEtchedBorder
 		private ShapedEtchedBorderBuilder(){ }
@@ -72,19 +77,19 @@ public class ShapedEtchedBorder extends AbstractBorder{
 		}
 		
 		/**
-		 * @param highlightPaint The {@link PaintUIResource} for the highlight
+		 * @param highlightPaint The {@link SizablePaint} for the highlight
 		 * @return this, to continue building
 		 */
-		public ShapedEtchedBorderBuilder highlightPaint(PaintUIResource highlightPaint){
+		public ShapedEtchedBorderBuilder highlightPaint(SizablePaint highlightPaint){
 			this.highlightPaint = highlightPaint;
 			return this;
 		}
 		
 		/**
-		 * @param shadowPaint The {@link PaintUIResource} for the shadow
+		 * @param shadowPaint The {@link SizablePaint} for the shadow
 		 * @return this, to continue building
 		 */
-		public ShapedEtchedBorderBuilder shadowPaint(PaintUIResource shadowPaint){
+		public ShapedEtchedBorderBuilder shadowPaint(SizablePaint shadowPaint){
 			this.shadowPaint = shadowPaint;
 			return this;
 		}
@@ -100,21 +105,21 @@ public class ShapedEtchedBorder extends AbstractBorder{
 	private final ShapeInfo shapeInfo;
 	/** The {@link EtchType type of etching} (RAISED or LOWERED) */
 	private final EtchType etchType;
-	/** The {@link PaintUIResource} for the highlight */
-	private final PaintUIResource highlightPaint;
-	/** The {@link PaintUIResource} for the shadow */
-	private final PaintUIResource shadowPaint;
+	/** The {@link SizablePaint} for the highlight */
+	private final SizablePaint highlightPaint;
+	/** The {@link SizablePaint} for the shadow */
+	private final SizablePaint shadowPaint;
 	
 	/**
 	 * Creates a new Shaped Etched Border with the given parameters
 	 *
 	 * @param shapeInfo The {@link ShapeInfo} to use on the Border (may be null to use the component's shape)
 	 * @param etchType The {@link EtchType type of etching} (RAISED or LOWERED)
-	 * @param highlightPaint The {@link PaintUIResource} for the highlight
-	 * @param shadowPaint The {@link PaintUIResource} for the shadow
+	 * @param highlightPaint The {@link SizablePaint} for the highlight
+	 * @param shadowPaint The {@link SizablePaint} for the shadow
 	 */
 	private ShapedEtchedBorder(ShapeInfo shapeInfo, EtchType etchType,
-	                           PaintUIResource highlightPaint, PaintUIResource shadowPaint){
+	                           SizablePaint highlightPaint, SizablePaint shadowPaint){
 		this.shapeInfo = shapeInfo;
 		this.etchType = etchType;
 		this.highlightPaint = highlightPaint;

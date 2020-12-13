@@ -1,5 +1,7 @@
 package com.github.tadukoo.util.view.form;
 
+import com.github.tadukoo.util.pojo.AbstractMappedPojo;
+import com.github.tadukoo.util.pojo.MappedPojo;
 import com.github.tadukoo.util.view.form.field.StringFormField;
 import org.junit.jupiter.api.Test;
 
@@ -31,6 +33,33 @@ public class FormTest{
 		assertFalse(map.isEmpty());
 		assertTrue(map.containsKey("Derp"));
 		assertEquals("No", map.get("Derp"));
+	}
+	
+	@Test
+	public void testFormConstructor(){
+		MappedPojo pojo = new AbstractMappedPojo(){
+			@Override
+			public Map<String, Object> getMap(){
+				Map<String, Object> aMap = new HashMap<>();
+				aMap.put("Test", 52);
+				return aMap;
+			}
+		};
+		Form form = new AbstractForm(pojo){
+			@Override
+			public void setDefaultFields(){
+				weSetThoseFields = true;
+				addField(StringFormField.builder()
+						.key("Derp").defaultValue("No")
+						.build());
+			}
+		};
+		Map<String, Object> map = form.getMap();
+		assertFalse(map.isEmpty());
+		assertTrue(map.containsKey("Derp"));
+		assertEquals("No", map.get("Derp"));
+		assertTrue(map.containsKey("Test"));
+		assertEquals(52, map.get("Test"));
 	}
 	
 	@Test

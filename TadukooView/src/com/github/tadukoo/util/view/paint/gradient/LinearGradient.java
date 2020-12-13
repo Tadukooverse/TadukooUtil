@@ -1,4 +1,4 @@
-package com.github.tadukoo.util.view.gradient;
+package com.github.tadukoo.util.view.paint.gradient;
 
 import com.github.tadukoo.util.FloatUtil;
 import com.github.tadukoo.util.tuple.Pair;
@@ -14,7 +14,8 @@ import java.util.function.BiFunction;
  * Linear Gradient is used to build a {@link Gradient} object to use for {@link LinearGradientPaint}.
  *
  * @author Logan Ferree (Tadukoo)
- * @version Alpha v.0.2
+ * @version Alpha v.0.2.1
+ * @since Alpha v.0.2
  */
 public class LinearGradient implements Gradient{
 	
@@ -23,7 +24,8 @@ public class LinearGradient implements Gradient{
 	 * {@link LinearGradientPaint Linear Gradient}.
 	 *
 	 * @author Logan Ferree (Tadukoo)
-	 * @version Alpha v.0.2
+	 * @version Alpha v.0.2.1
+	 * @since Alpha v.0.2
 	 */
 	public enum GradientDirection{
 		/** Used for a Gradient going left to right */
@@ -57,9 +59,10 @@ public class LinearGradient implements Gradient{
 	 * </ul>
 	 *
 	 * @author Logan Ferree (Tadukoo)
-	 * @version Alpha v.0.2
+	 * @version Alpha v.0.2.1
+	 * @since Alpha v.0.2
 	 */
-	public static class LinearGradientBuilder extends GradientBuilder{
+	public static class LinearGradientBuilder extends GradientBuilder<LinearGradient>{
 		/** The direction for the {@link LinearGradient} to go. This may be ignored by the
 		 * {@link #startAndEndPointsFunc} */
 		private GradientDirection direction = GradientDirection.HORIZONTAL;
@@ -85,7 +88,9 @@ public class LinearGradient implements Gradient{
 		};
 		
 		// Not allowed to create outside of LinearGradient
-		private LinearGradientBuilder(){ }
+		private LinearGradientBuilder(){
+			super();
+		}
 		
 		/**
 		 * @param direction The direction for the {@link LinearGradient} to go. This may be ignored by the
@@ -217,6 +222,39 @@ public class LinearGradient implements Gradient{
 	@Override
 	public float[] getFractions(){
 		return fractions;
+	}
+	
+	/** {@inheritDoc} */
+	@Override
+	public MultipleGradientPaint.CycleMethod getCycleMethod(){
+		return cycleMethod;
+	}
+	
+	/** {@inheritDoc} */
+	@Override
+	public MultipleGradientPaint.ColorSpaceType getColorSpace(){
+		return colorSpace;
+	}
+	
+	/** {@inheritDoc} */
+	@Override
+	public AffineTransform getGradientTransform(){
+		return gradientTransform;
+	}
+	
+	/**
+	 * @return The direction for this LinearGradient to go. This may be ignored by the {@link #startAndEndPointsFunc}
+	 */
+	public GradientDirection getDirection(){
+		return direction;
+	}
+	
+	/**
+	 * @return A function taking in the dimensions of the space and the chosen {@link GradientDirection}
+	 * to return the start and end points in space for this LinearGradient
+	 */
+	public BiFunction<Dimension, GradientDirection, Pair<Point2D, Point2D>> getStartAndEndPointsFunc(){
+		return startAndEndPointsFunc;
 	}
 	
 	/**
