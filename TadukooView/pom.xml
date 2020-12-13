@@ -11,7 +11,11 @@
 	<artifactId>TadukooView</artifactId>
 	<dependencies>
 		<dependency>
-			<groupId>com.github.tadukoo.util</groupId>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>TadukooFunctions</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
 			<artifactId>TadukooUtil</artifactId>
 		</dependency>
 		<!-- JUnit Dependencies -->
