@@ -35,7 +35,6 @@
 		<module>TadukooLang</module>
 		<module>TadukooFunctions</module>
 		<module>TadukooUtil</module>
-		<module>TadukooDatabase</module>
 		<module>TadukooFileFormat</module>
 	</modules>
 	<properties>
