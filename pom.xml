@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.tadukoo.util</groupId>
 	<artifactId>TadukooUtilParent</artifactId>
-	<version>0.2.1-Alpha</version>
+	<version>0.2.2-Alpha</version>
 	<packaging>pom</packaging>
 	<name>${project.artifactId}</name>
 	<description>A collection of utilities to be used in various projects</description>
@@ -33,12 +33,8 @@
 	</scm>
 	<modules>
 		<module>TadukooLang</module>
-		<module>TadukooAnnotationProcessor</module>
+		<module>TadukooFunctions</module>
 		<module>TadukooUtil</module>
-		<module>TadukooDatabase</module>
-		<module>TadukooFileFormat</module>
-		<module>TadukooView</module>
-		<module>TadukooLookAndFeel</module>
 	</modules>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -80,16 +76,16 @@
 	</distributionManagement>
 	<dependencyManagement>
 		<dependencies>
-			<!-- Tadukoo Annotation Processor for annotation processing dependencies -->
-			<dependency>
-				<groupId>${project.groupId}</groupId>
-				<artifactId>TadukooAnnotationProcessor</artifactId>
-				<version>${project.version}</version>
-			</dependency>
 			<!-- Tadukoo Lang -->
 			<dependency>
 				<groupId>${project.groupId}</groupId>
 				<artifactId>TadukooLang</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<!-- Tadukoo Functions -->
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>TadukooFunctions</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<!-- Tadukoo Util -->
