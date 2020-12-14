@@ -35,7 +35,6 @@
 		<module>TadukooLang</module>
 		<module>TadukooFunctions</module>
 		<module>TadukooUtil</module>
-		<module>TadukooFileFormat</module>
 	</modules>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
