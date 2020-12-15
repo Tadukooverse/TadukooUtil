@@ -2,7 +2,13 @@ package com.github.tadukoo.util.map;
 
 import com.github.tadukoo.util.tuple.Pair;
 
-import java.util.*;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
+import java.util.NavigableMap;
+import java.util.NavigableSet;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 /**
  * A MultiMap class that uses {@link TreeMap} as the backing {@link Map} class.

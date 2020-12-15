@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class EasyLoggerTest{
 	// DummyLogger to test EasyLogger
-	private class DummyLogger extends Logger{
+	private static class DummyLogger extends Logger{
 		private Level level = null;
 		private String message = null;
 		private Throwable t = null;
