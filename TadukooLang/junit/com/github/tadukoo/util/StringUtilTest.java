@@ -352,4 +352,153 @@ public class StringUtilTest{
 		assertEquals("plop", result.get(1));
 		assertEquals("derp", result.get(2));
 	}
+	
+	/*
+	 * Handling String Case
+	 */
+	
+	@Test
+	public void testIsPascalCase(){
+		assertTrue(StringUtil.isPascalCase("TestStringHere"));
+	}
+	
+	@Test
+	public void testIsPascalCaseFirstWordNotCapital(){
+		assertFalse(StringUtil.isPascalCase("testStringHere"));
+	}
+	
+	@Test
+	public void testIsPascalCaseContainsSpaces(){
+		assertFalse(StringUtil.isPascalCase("Test String Here"));
+	}
+	
+	@Test
+	public void testIsPascalCaseContainsUnderscores(){
+		assertFalse(StringUtil.isPascalCase("Test_String_Here"));
+	}
+	
+	@Test
+	public void testIsPascalCaseAllConditionsFail(){
+		assertFalse(StringUtil.isPascalCase("test_String Here"));
+	}
+	
+	@Test
+	public void testToPascalCaseAlreadyIsPascalCase(){
+		assertEquals("TestStringHere", StringUtil.toPascalCase("TestStringHere"));
+	}
+	
+	@Test
+	public void testToPascalCaseLowerCaseFirstLetter(){
+		assertEquals("TestStringHere", StringUtil.toPascalCase("testStringHere"));
+	}
+	
+	@Test
+	public void testToPascalCaseContainsSpaces(){
+		assertEquals("TestStringHere", StringUtil.toPascalCase("Test String here"));
+	}
+	
+	@Test
+	public void testToPascalCaseContainsUnderscores(){
+		assertEquals("TestStringHere", StringUtil.toPascalCase("Test_String_here"));
+	}
+	
+	@Test
+	public void testToPascalCaseAllConditionsFail(){
+		assertEquals("TestStringHere", StringUtil.toPascalCase("test_String here"));
+	}
+	
+	@Test
+	public void testIsCamelCase(){
+		assertTrue(StringUtil.isCamelCase("testStringHere"));
+	}
+	
+	@Test
+	public void testIsCamelCaseFirstWordCapital(){
+		assertFalse(StringUtil.isCamelCase("TestStringHere"));
+	}
+	
+	@Test
+	public void testIsCamelCaseContainsSpaces(){
+		assertFalse(StringUtil.isCamelCase("test String Here"));
+	}
+	
+	@Test
+	public void testIsCamelCaseContainsUnderscores(){
+		assertFalse(StringUtil.isCamelCase("test_String_Here"));
+	}
+	
+	@Test
+	public void testIsCamelCaseAllConditionsFail(){
+		assertFalse(StringUtil.isCamelCase("Test_String Here"));
+	}
+	
+	@Test
+	public void testToCamelCaseAlreadyIsCamelCase(){
+		assertEquals("testStringHere", StringUtil.toCamelCase("testStringHere"));
+	}
+	
+	@Test
+	public void testToCamelCaseCapitalFirstLetter(){
+		assertEquals("testStringHere", StringUtil.toCamelCase("TestStringHere"));
+	}
+	
+	@Test
+	public void testToCamelCaseContainsSpaces(){
+		assertEquals("testStringHere", StringUtil.toCamelCase("test String here"));
+	}
+	
+	@Test
+	public void testToCamelCaseContainsUnderscores(){
+		assertEquals("testStringHere", StringUtil.toCamelCase("test_String_here"));
+	}
+	
+	@Test
+	public void testToCamelCaseAllConditionsFail(){
+		assertEquals("testStringHere", StringUtil.toCamelCase("Test_string here"));
+	}
+	
+	@Test
+	public void testIsSnakeCase(){
+		assertTrue(StringUtil.isSnakeCase("test_string_here"));
+	}
+	
+	@Test
+	public void testIsSnakeCaseContainsSpaces(){
+		assertFalse(StringUtil.isSnakeCase("test_string here"));
+	}
+	
+	@Test
+	public void testIsSnakeCaseNoUnderscores(){
+		assertFalse(StringUtil.isSnakeCase("TestStringHere"));
+	}
+	
+	@Test
+	public void testIsSnakeCaseAllConditionsFail(){
+		assertFalse(StringUtil.isSnakeCase("Test String Here"));
+	}
+	
+	@Test
+	public void testToSnakeCaseIsAlreadySnakeCase(){
+		assertEquals("test_string_here", StringUtil.toSnakeCase("test_string_here"));
+	}
+	
+	@Test
+	public void testToSnakeCaseContainsSpaces(){
+		assertEquals("test_string_here", StringUtil.toSnakeCase("test string here"));
+	}
+	
+	@Test
+	public void testToSnakeCaseIsPascalCase(){
+		assertEquals("test_string_here", StringUtil.toSnakeCase("TestStringHere"));
+	}
+	
+	@Test
+	public void testToSnakeCaseIsCamelCase(){
+		assertEquals("test_string_here", StringUtil.toSnakeCase("testStringHere"));
+	}
+	
+	@Test
+	public void testToSnakeCaseDifferent(){
+		assertEquals("test_string_here", StringUtil.toSnakeCase("Test String_here"));
+	}
 }
