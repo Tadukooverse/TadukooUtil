@@ -94,12 +94,6 @@
 				<artifactId>TadukooUtil</artifactId>
 				<version>${project.version}</version>
 			</dependency>
-			<!-- Tadukoo View -->
-			<dependency>
-				<groupId>${project.groupId}</groupId>
-				<artifactId>TadukooView</artifactId>
-				<version>${project.version}</version>
-			</dependency>
 			<!-- JUnit Dependencies -->
 			<dependency>
 				<groupId>${junit.jupiter.groupID}</groupId>
