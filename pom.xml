@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.tadukoo.util</groupId>
 	<artifactId>TadukooUtilParent</artifactId>
-	<version>0.3-Alpha</version>
+	<version>0.3.1-Alpha</version>
 	<packaging>pom</packaging>
 	<name>${project.artifactId}</name>
 	<description>A collection of utilities to be used in various projects</description>
@@ -92,12 +92,6 @@
 			<dependency>
 				<groupId>${project.groupId}</groupId>
 				<artifactId>TadukooUtil</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<!-- Tadukoo View -->
-			<dependency>
-				<groupId>${project.groupId}</groupId>
-				<artifactId>TadukooView</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<!-- JUnit Dependencies -->

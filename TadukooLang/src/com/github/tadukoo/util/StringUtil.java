@@ -8,7 +8,7 @@ import java.util.List;
  * Util functions for dealing with Strings, including building and parsing them.
  *
  * @author Logan Ferree (Tadukoo)
- * @version 0.1-Alpha-SNAPSHOT
+ * @version Alpha v.0.3.1
  * @since Pre-Alpha
  */
 public final class StringUtil{
@@ -343,5 +343,133 @@ public final class StringUtil{
 	 */
 	public static List<String> parseCommaSeparatedListFromString(String text){
 		return parseListFromStringWithSeparator(text, ",", true);
+	}
+	
+	/*
+	 * Handling String Case
+	 */
+	
+	/**
+	 * Checks if the given text is PascalCase or not.
+	 * PascalCase has no underscores or spaces between words and every word is capitalized, including
+	 * the first word.
+	 *
+	 * @param text The text to be checked
+	 * @return true if the text is PascalCase, false otherwise
+	 */
+	public static boolean isPascalCase(String text){
+		return !text.contains("_") && !text.contains(" ") && CharacterUtil.isUpperCase(text.charAt(0));
+	}
+	
+	/**
+	 * Converts the given text to PascalCase.
+	 * It removes any spaces and underscores and capitalizes all words in the text.
+	 *
+	 * @param text The text to be converted
+	 * @return The PascalCase version of the given text
+	 */
+	public static String toPascalCase(String text){
+		// If we have spaces, replace them with underscores (in case we have both, to make it easier)
+		text = text.replaceAll(" ", "_");
+		
+		// If we have snake_case, we need to remove the underscores and do some capitalization
+		StringBuilder newText;
+		if(text.contains("_")){
+			String[] pieces = text.split("_");
+			newText = new StringBuilder();
+			for(String piece: pieces){
+				newText.append(CharacterUtil.toUpperCase(piece.charAt(0))).append(piece.substring(1));
+			}
+		}else{
+			// If we don't have snake_case, we only need to make sure the first character is upper case
+			newText = new StringBuilder(CharacterUtil.toUpperCase(text.charAt(0)) + text.substring(1));
+		}
+		
+		return newText.toString();
+	}
+	
+	/**
+	 * Checks if the given text is camelCase or not.
+	 * camelCase has no underscores or spaces between words and every word is capitalized, excluding
+	 * the first word.
+	 *
+	 * @param text The text to be checked
+	 * @return true if the text is camelCase, false otherwise
+	 */
+	public static boolean isCamelCase(String text){
+		return !text.contains("_") && !text.contains(" ") && CharacterUtil.isLowerCase(text.charAt(0));
+	}
+	
+	/**
+	 * Converts the given text to camelCase.
+	 * It removes any spaces and underscores and capitalizes all words in the text, except for the first word,
+	 * which is made lowercase.
+	 *
+	 * @param text The text to be converted
+	 * @return The camelCase version of the given text
+	 */
+	public static String toCamelCase(String text){
+		// If we have spaces, replace them with underscores (in case we have both, to make it easier)
+		text = text.replaceAll(" ", "_");
+		
+		// If we have snake_case, we need to remove the underscores and do some capitalization
+		String newText = text;
+		if(text.contains("_")){
+			String[] pieces = text.split("_");
+			StringBuilder newTextBuilder = new StringBuilder();
+			for(String piece: pieces){
+				newTextBuilder.append(CharacterUtil.toUpperCase(piece.charAt(0))).append(piece.substring(1));
+			}
+			newText = newTextBuilder.toString();
+		}
+		
+		// Change/Ensure the first character is lower case
+		newText = CharacterUtil.toLowerCase(newText.charAt(0)) + newText.substring(1);
+		
+		return newText;
+	}
+	
+	/**
+	 * Checks if the given text is snake_case or not.
+	 * snake_case has an underscore between words, and there are no spaces.
+	 *
+	 * @param text The text to be checked
+	 * @return true is the text is snake_case, false otherwise
+	 */
+	public static boolean isSnakeCase(String text){
+		return text.contains("_") && !text.contains(" ");
+	}
+	
+	/**
+	 * Converts the given text to snake_case.
+	 * Any spaces are replaced with underscores, underscores are placed between words, and everything
+	 * is made lowercase.
+	 *
+	 * @param text The text to be converted
+	 * @return The snake_case version of the given text
+	 */
+	public static String toSnakeCase(String text){
+		// If we have underscores and no spaces, it's already snake_case
+		if(text.contains("_") && !text.contains(" ")){
+			return text;
+		}else{
+			// Insert an underscore any time there's a capital letter and make it lowercase
+			StringBuilder newText = new StringBuilder();
+			for(char c: text.toCharArray()){
+				if(CharacterUtil.isUpperCase(c)){
+					// Only append an underscore if the previous character is not an underscore
+					if(!newText.toString().equals("") && newText.charAt(newText.length() - 1) != '_'){
+						newText.append('_');
+					}
+					newText.append(CharacterUtil.toLowerCase(c));
+				}else if(c == ' '){
+					// Replace spaces with underscores
+					newText.append('_');
+				}else{
+					newText.append(c);
+				}
+			}
+			return newText.toString();
+		}
 	}
 }
