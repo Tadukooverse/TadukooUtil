@@ -121,10 +121,9 @@ public abstract class ManyToManyMap<K, V>{
 	 */
 	@Override
 	public boolean equals(Object o){
-		if(o instanceof ManyToManyMap){
+		if(o instanceof ManyToManyMap<?, ?> otherMap){
 			// If it's a ManyToManyMap, compare their underlying MultiMaps
-			ManyToManyMap<?, ?> otherMap = (ManyToManyMap<?, ?>) o;
-			return this.keysToValues().equals(otherMap.keysToValues()) && 
+			return this.keysToValues().equals(otherMap.keysToValues()) &&
 					this.valuesToKeys().equals(otherMap.valuesToKeys());
 		}
 		
