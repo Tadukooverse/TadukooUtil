@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.tadukoo.util</groupId>
 	<artifactId>TadukooUtilParent</artifactId>
-	<version>0.3.1-Alpha</version>
+	<version>0.4-Alpha</version>
 	<packaging>pom</packaging>
 	<name>${project.artifactId}</name>
 	<description>A collection of utilities to be used in various projects</description>
@@ -40,7 +40,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		
 		<!-- Java and JUnit Versions -->
-		<java.version>15</java.version>
+		<java.version>16</java.version>
 		<junit.jupiter.version>5.7.0</junit.jupiter.version>
 		<junit.platform.version>1.7.0</junit.platform.version>
 		
