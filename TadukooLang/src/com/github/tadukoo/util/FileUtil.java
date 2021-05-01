@@ -4,7 +4,9 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
@@ -121,6 +123,39 @@ public final class FileUtil{
 		}
 		
 		return directory;
+	}
+	
+	/**
+	 * Creates a new {@link BufferedReader} for the file at the given filepath.
+	 *
+	 * @param filepath The path of the file to be read
+	 * @return A {@link BufferedReader} for the given file
+	 * @throws FileNotFoundException If the file can't be found
+	 */
+	public static BufferedReader setupFileReader(String filepath) throws FileNotFoundException{
+		return new BufferedReader(new FileReader(filepath));
+	}
+	
+	/**
+	 * Creates a new {@link BufferedReader} for the given {@link File}.
+	 *
+	 * @param file The {@link File} to be read
+	 * @return A {@link BufferedReader} for the given {@link File}
+	 * @throws FileNotFoundException If the file can't be found
+	 */
+	public static BufferedReader setupFileReader(File file) throws FileNotFoundException{
+		return new BufferedReader(new FileReader(file));
+	}
+	
+	/**
+	 * Creates a List of Strings for each line in the file being read from the given filepath.
+	 *
+	 * @param filepath The path to the file to be read
+	 * @return A List of lines in the file
+	 * @throws IOException If something goes wrong in reading the file
+	 */
+	public static List<String> getLinesAsList(String filepath) throws IOException{
+		return Files.readAllLines(Paths.get(filepath));
 	}
 	
 	/**
