@@ -125,7 +125,7 @@ public class FileUtilTest{
 		String filepath = "target/test-files/writeFileWithPath/test.txt";
 		FileUtil.writeFile(filepath, "Test\nDerp\nYes");
 		
-		List<String> lines = FileUtil.getLinesAsList(FileUtil.setupFileReader(filepath));
+		List<String> lines = FileUtil.readLinesAsList(FileUtil.setupFileReader(filepath));
 		assertEquals(3, lines.size());
 		assertEquals("Test", lines.get(0));
 		assertEquals("Derp", lines.get(1));
@@ -137,11 +137,41 @@ public class FileUtilTest{
 		String filepath = "target/test-files/writeFileWithPathReadWithPath/test.txt";
 		FileUtil.writeFile(filepath, "Test\nDerp\nYes");
 		
-		List<String> lines = FileUtil.getLinesAsList(filepath);
+		List<String> lines = FileUtil.readLinesAsList(filepath);
 		assertEquals(3, lines.size());
 		assertEquals("Test", lines.get(0));
 		assertEquals("Derp", lines.get(1));
 		assertEquals("Yes", lines.get(2));
+	}
+	
+	@Test
+	public void testWriteFileWithPathReadWithFile() throws IOException{
+		String filepath = "target/test-files/writeFileWithPathReadWithFile/test.txt";
+		FileUtil.writeFile(filepath, "Test\nDerp\nYes");
+		
+		List<String> lines = FileUtil.readLinesAsList(new File(filepath));
+		assertEquals(3, lines.size());
+		assertEquals("Test", lines.get(0));
+		assertEquals("Derp", lines.get(1));
+		assertEquals("Yes", lines.get(2));
+	}
+	
+	@Test
+	public void testWriteFileWithPathReadWithPathAsString() throws IOException{
+		String filepath = "target/test-files/writeFileWithPathReadWithPathAsString/test.txt";
+		FileUtil.writeFile(filepath, "Test\nDerp\nYes");
+		
+		String content = FileUtil.readAsString(filepath);
+		assertEquals("Test\nDerp\nYes", content);
+	}
+	
+	@Test
+	public void testWriteFileWithPathReadWithFileAsString() throws IOException{
+		String filepath = "target/test-files/writeFileWithPathReadWithFileAsString/test.txt";
+		FileUtil.writeFile(filepath, "Test\nDerp\nYes");
+		
+		String content = FileUtil.readAsString(new File(filepath));
+		assertEquals("Test\nDerp\nYes", content);
 	}
 	
 	@Test
@@ -150,7 +180,7 @@ public class FileUtilTest{
 		FileUtil.createFile(filepath);
 		FileUtil.writeFile(new FileWriter(filepath), "Test\nDerp\nYes");
 		
-		List<String> lines = FileUtil.getLinesAsList(FileUtil.setupFileReader(filepath));
+		List<String> lines = FileUtil.readLinesAsList(FileUtil.setupFileReader(filepath));
 		assertEquals(3, lines.size());
 		assertEquals("Test", lines.get(0));
 		assertEquals("Derp", lines.get(1));
@@ -164,7 +194,7 @@ public class FileUtilTest{
 		List<String> inputLines = Arrays.asList("Test", "Derp", "Yes");
 		FileUtil.writeFile(new FileWriter(filepath), inputLines);
 		
-		List<String> lines = FileUtil.getLinesAsList(FileUtil.setupFileReader(filepath));
+		List<String> lines = FileUtil.readLinesAsList(FileUtil.setupFileReader(filepath));
 		assertEquals(3, lines.size());
 		assertEquals("Test", lines.get(0));
 		assertEquals("Derp", lines.get(1));
@@ -187,7 +217,7 @@ public class FileUtilTest{
 		assertEquals(1, contents.size());
 		File resultFile = contents.get(0);
 		assertEquals("test.txt", resultFile.getName());
-		List<String> lines = FileUtil.getLinesAsList(FileUtil.setupFileReader(resultFile));
+		List<String> lines = FileUtil.readLinesAsList(FileUtil.setupFileReader(resultFile));
 		assertEquals(1, lines.size());
 		assertEquals("Some content", lines.get(0));
 	}
@@ -212,12 +242,12 @@ public class FileUtilTest{
 		assertEquals(2, contents.size());
 		File resultFile = contents.get(0);
 		assertEquals("test.txt", resultFile.getName());
-		List<String> lines = FileUtil.getLinesAsList(FileUtil.setupFileReader(resultFile));
+		List<String> lines = FileUtil.readLinesAsList(FileUtil.setupFileReader(resultFile));
 		assertEquals(1, lines.size());
 		assertEquals("Some content", lines.get(0));
 		File resultFile2 = contents.get(1);
 		assertEquals("test2.txt", resultFile2.getName());
-		List<String> lines2 = FileUtil.getLinesAsList(FileUtil.setupFileReader(resultFile2));
+		List<String> lines2 = FileUtil.readLinesAsList(FileUtil.setupFileReader(resultFile2));
 		assertEquals(1, lines2.size());
 		assertEquals("Some other content", lines2.get(0));
 	}
@@ -238,7 +268,7 @@ public class FileUtilTest{
 		assertEquals(1, contents.size());
 		File resultFile = contents.get(0);
 		assertEquals("test.txt", resultFile.getName());
-		List<String> lines = FileUtil.getLinesAsList(FileUtil.setupFileReader(resultFile));
+		List<String> lines = FileUtil.readLinesAsList(FileUtil.setupFileReader(resultFile));
 		assertEquals(1, lines.size());
 		assertEquals("Some content", lines.get(0));
 	}
@@ -263,12 +293,12 @@ public class FileUtilTest{
 		assertEquals(2, contents.size());
 		File resultFile = contents.get(0);
 		assertEquals("test.txt", resultFile.getName());
-		List<String> lines = FileUtil.getLinesAsList(FileUtil.setupFileReader(resultFile));
+		List<String> lines = FileUtil.readLinesAsList(FileUtil.setupFileReader(resultFile));
 		assertEquals(1, lines.size());
 		assertEquals("Some content", lines.get(0));
 		File resultFile2 = contents.get(1);
 		assertEquals("test2.txt", resultFile2.getName());
-		List<String> lines2 = FileUtil.getLinesAsList(FileUtil.setupFileReader(resultFile2));
+		List<String> lines2 = FileUtil.readLinesAsList(FileUtil.setupFileReader(resultFile2));
 		assertEquals(1, lines2.size());
 		assertEquals("Some other content", lines2.get(0));
 	}

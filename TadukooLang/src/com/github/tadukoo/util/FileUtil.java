@@ -148,14 +148,47 @@ public final class FileUtil{
 	}
 	
 	/**
+	 * Reads the file at the given filepath as a String
+	 *
+	 * @param filepath The path of the file to be read
+	 * @return A String representing the contents of the file
+	 * @throws IOException If something goes wrong in reading the file
+	 */
+	public static String readAsString(String filepath) throws IOException{
+		return Files.readString(Paths.get(filepath));
+	}
+	
+	/**
+	 * Reads the given {@link File} as a String
+	 *
+	 * @param file The {@link File} to be read
+	 * @return A String representing the contents of the file
+	 * @throws IOException If something goes wrong in reading the file
+	 */
+	public static String readAsString(File file) throws IOException{
+		return Files.readString(file.toPath());
+	}
+	
+	/**
 	 * Creates a List of Strings for each line in the file being read from the given filepath.
 	 *
 	 * @param filepath The path to the file to be read
 	 * @return A List of lines in the file
 	 * @throws IOException If something goes wrong in reading the file
 	 */
-	public static List<String> getLinesAsList(String filepath) throws IOException{
+	public static List<String> readLinesAsList(String filepath) throws IOException{
 		return Files.readAllLines(Paths.get(filepath));
+	}
+	
+	/**
+	 * Creates a List of Strings for each line in the file being read.
+	 *
+	 * @param file The {@link File} to read
+	 * @return A List of lines in the file
+	 * @throws IOException If something goes wrong in reading the file
+	 */
+	public static List<String> readLinesAsList(File file) throws IOException{
+		return Files.readAllLines(file.toPath());
 	}
 	
 	/**
@@ -166,7 +199,7 @@ public final class FileUtil{
 	 * @return A List of lines in the file
 	 * @throws IOException If something goes wrong in reading the file
 	 */
-	public static List<String> getLinesAsList(Reader reader) throws IOException{
+	public static List<String> readLinesAsList(Reader reader) throws IOException{
 		// Make a BufferedReader out of the given Reader
 		BufferedReader buffReader = new BufferedReader(reader);
 		// Create a List of Strings to store the lines
