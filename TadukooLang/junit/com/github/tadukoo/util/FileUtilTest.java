@@ -121,6 +121,62 @@ public class FileUtilTest{
 	}
 	
 	@Test
+	public void testFileExistsPathTrue() throws IOException{
+		String filepath = "target/testFileExistsPathTrue.txt";
+		FileUtil.writeFile(filepath, "test-content");
+		
+		assertTrue(FileUtil.exists(filepath));
+	}
+	
+	@Test
+	public void testFileExistsPathFalse(){
+		String filepath = "target/testFileExistsPathFalse.txt";
+		assertFalse(FileUtil.exists(filepath));
+	}
+	
+	@Test
+	public void testFileExistsFileTrue() throws IOException{
+		String filepath = "target/testFileExistsFileTrue.txt";
+		FileUtil.writeFile(filepath, "test-content");
+		
+		assertTrue(FileUtil.exists(new File(filepath)));
+	}
+	
+	@Test
+	public void testFileExistsFileFalse(){
+		String filepath = "target/testFileExistsFileFalse.txt";
+		assertFalse(FileUtil.exists(filepath));
+	}
+	
+	@Test
+	public void testFileNotExistsPathTrue(){
+		String filepath = "target/testFileNotExistsPathTrue.txt";
+		assertTrue(FileUtil.notExists(filepath));
+	}
+	
+	@Test
+	public void testFileNotExistsPathFalse() throws IOException{
+		String filepath = "target/testFileNotExistsPathFalse.txt";
+		FileUtil.writeFile(filepath, "test-content");
+		
+		assertFalse(FileUtil.notExists(filepath));
+	}
+	
+	@Test
+	public void testFileNotExistsFileTrue(){
+		String filepath = "target/testFileNotExistsFileTrue.txt";
+		assertTrue(FileUtil.notExists(new File(filepath)));
+	}
+	
+	@Test
+	public void testFileNotExistsFileFalse() throws IOException{
+		String filepath = "target/testFileNotExistsFileFalse.txt";
+		FileUtil.writeFile(filepath, "test-content");
+		
+		assertFalse(FileUtil.notExists(new File(filepath)));
+	}
+	
+	@Test
 	public void testWriteFileWithPath() throws IOException{
 		String filepath = "target/test-files/writeFileWithPath/test.txt";
 		FileUtil.writeFile(filepath, "Test\nDerp\nYes");

@@ -148,6 +148,46 @@ public final class FileUtil{
 	}
 	
 	/**
+	 * Checks if the file at the given filepath exists.
+	 *
+	 * @param filepath The path of the file to be checked
+	 * @return true if the file exists, false if it doesn't
+	 */
+	public static boolean exists(String filepath){
+		return Files.exists(Paths.get(filepath));
+	}
+	
+	/**
+	 * Checks if the given {@link File} exists.
+	 *
+	 * @param file The {@link File} to be checked
+	 * @return true if the file exists, false if it doesn't
+	 */
+	public static boolean exists(File file){
+		return Files.exists(file.toPath());
+	}
+	
+	/**
+	 * Checks if the file at the given filepath does not exist.
+	 *
+	 * @param filepath The path of the file to be checked
+	 * @return false if the file exists, true if it doesn't
+	 */
+	public static boolean notExists(String filepath){
+		return Files.notExists(Paths.get(filepath));
+	}
+	
+	/**
+	 * Checks if the given {@link File} does not exist.
+	 *
+	 * @param file The {@link File} to be checked
+	 * @return false if the file exists, true if it doesn't
+	 */
+	public static boolean notExists(File file){
+		return Files.notExists(file.toPath());
+	}
+	
+	/**
 	 * Reads the file at the given filepath as a String
 	 *
 	 * @param filepath The path of the file to be read
