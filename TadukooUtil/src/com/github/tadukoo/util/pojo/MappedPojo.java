@@ -1,6 +1,8 @@
 package com.github.tadukoo.util.pojo;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -8,7 +10,8 @@ import java.util.Set;
  * Represents a Pojo that holds its values in a Map.
  *
  * @author Logan Ferree (Tadukoo)
- * @version Alpha v.0.2
+ * @version Beta v.0.5
+ * @since Alpha v.0.2
  */
 public interface MappedPojo{
 	
@@ -98,23 +101,23 @@ public interface MappedPojo{
 	}
 	
 	/**
-	 * Helper method to cast an item being stored in this Mapped Pojo as a proper Table object easily.
-	 * The Mapped Pojo class specified for the Table must have a constructor that accepts a Mapped Pojo.
+	 * Helper method to cast an item being stored in this Mapped Pojo as a proper List easily.
+	 * The Mapped Pojo class specified for the List must have a constructor that accepts a Mapped Pojo.
 	 *
 	 * @param key The key of the item to grab
-	 * @param clazz The MappedPojo class to be used in the Table
-	 * @param <T> The class of the pojos in the Table
-	 * @return The item as a proper Table instance, or null
+	 * @param clazz The MappedPojo class to be used in the List
+	 * @param <T> The class of the pojos in the List
+	 * @return The item as a proper List instance, or null
 	 * @throws NoSuchMethodException See {@link java.lang.reflect.Constructor#newInstance(Object...)}
 	 * @throws IllegalAccessException See {@link java.lang.reflect.Constructor#newInstance(Object...)}
 	 * @throws InvocationTargetException See {@link java.lang.reflect.Constructor#newInstance(Object...)}
 	 * @throws InstantiationException See {@link java.lang.reflect.Constructor#newInstance(Object...)}
 	 */
 	@SuppressWarnings("unchecked")
-	default <T extends MappedPojo> Table<T> getTableItem(String key, Class<T> clazz)
+	default <T extends MappedPojo> List<T> getListItem(String key, Class<T> clazz)
 			throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException{
 		// Grab the table
-		Table<MappedPojo> table = (Table<MappedPojo>) getItem(key);
+		List<MappedPojo> table = (List<MappedPojo>) getItem(key);
 		
 		// If it's null, just return null
 		if(table == null){
@@ -122,14 +125,14 @@ public interface MappedPojo{
 		}
 		
 		// Create a corrected Table
-		Table<T> fixedTable = new Table<>();
-		for(MappedPojo pojo: table.getAllRows()){
+		List<T> fixedTable = new ArrayList<>();
+		for(MappedPojo pojo: table){
 			// If the pojo is already an instance of the proper class, just add it to the fixed table
 			if(clazz.isInstance(pojo)){
-				fixedTable.addRow((T) pojo);
+				fixedTable.add((T) pojo);
 			}else{
 				// If it's not the proper class, correct it
-				fixedTable.addRow(clazz.getDeclaredConstructor(MappedPojo.class).newInstance(pojo));
+				fixedTable.add(clazz.getDeclaredConstructor(MappedPojo.class).newInstance(pojo));
 			}
 		}
 		
