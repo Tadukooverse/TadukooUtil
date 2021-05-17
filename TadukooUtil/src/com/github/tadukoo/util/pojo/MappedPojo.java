@@ -21,12 +21,16 @@ public interface MappedPojo{
 	 * @param key The key to look for
 	 * @return If the pojo contains the key or not
 	 */
-	boolean hasKey(String key);
+	default boolean hasKey(String key){
+		return getMap().containsKey(key);
+	}
 	
 	/**
 	 * @return The {@link Set} of keys in the pojo
 	 */
-	Set<String> getKeys();
+	default Set<String> getKeys(){
+		return getMap().keySet();
+	}
 	
 	/**
 	 * Checks whether the pojo has an item for the given key
@@ -34,7 +38,9 @@ public interface MappedPojo{
 	 * @param key The key to look for
 	 * @return Whether the pojo has an item for the given key
 	 */
-	boolean hasItem(String key);
+	default boolean hasItem(String key){
+		return getMap().get(key) != null;
+	}
 	
 	/**
 	 * Grabs the item contained in the pojo with the given key
@@ -42,7 +48,9 @@ public interface MappedPojo{
 	 * @param key The key of the item to grab
 	 * @return The item the pojo has for the given key
 	 */
-	Object getItem(String key);
+	default Object getItem(String key){
+		return getMap().get(key);
+	}
 	
 	/**
 	 * Sets the item in the pojo for the given key
@@ -50,14 +58,18 @@ public interface MappedPojo{
 	 * @param key The key of the item to be set
 	 * @param item The item to set on the pojo
 	 */
-	void setItem(String key, Object item);
+	default void setItem(String key, Object item){
+		getMap().put(key, item);
+	}
 	
 	/**
 	 * Removes the item in the pojo for the given key
 	 *
 	 * @param key The key of the item to be removed
 	 */
-	void removeItem(String key);
+	default void removeItem(String key){
+		getMap().remove(key);
+	}
 	
 	/**
 	 * @return The full Map of items in the pojo
