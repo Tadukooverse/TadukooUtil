@@ -8,7 +8,7 @@ import java.util.Map;
  * HashMap as its backing Map.
  *
  * @author Logan Ferree (Tadukoo)
- * @version Alpha v.0.2.1
+ * @version Beta v.0.5
  * @since Alpha v.0.2
  */
 public abstract class AbstractMappedPojo implements MappedPojo{
