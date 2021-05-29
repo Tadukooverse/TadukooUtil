@@ -3,206 +3,26 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.github.tadukoo.maven</groupId>
+		<artifactId>TadukooMavenLibraryPOM</artifactId>
+		<version>0.1-Alpha</version>
+	</parent>
 	<groupId>com.github.tadukoo.util</groupId>
 	<artifactId>TadukooUtilParent</artifactId>
 	<version>0.5-Beta-SNAPSHOT</version>
 	<packaging>pom</packaging>
-	<name>${project.artifactId}</name>
 	<description>A collection of utilities to be used in various projects</description>
-	<url>http://github.com/Tadukooverse/TadukooUtil</url>
-	<developers>
-		<developer>
-			<name>Logan Ferree (Tadukoo)</name>
-		</developer>
-	</developers>
-	<licenses>
-		<license>
-			<name>MIT License</name>
-			<url>https://github.com/Tadukooverse/TadukooUtil/blob/master/LICENSE</url>
-			<distribution>repo</distribution>
-		</license>
-	</licenses>
-	<scm>
-		<url>https://github.com/Tadukooverse/TadukooUtil</url>
-		<connection>
-			scm:git:git://github.com/Tadukooverse/TadukooUtil.git
-		</connection>
-		<developerConnection>
-			scm:git:ssh://git@github.com:Tadukooverse/TadukooUtil.git
-		</developerConnection>
-	</scm>
 	<modules>
 		<module>TadukooLang</module>
 		<module>TadukooFunctions</module>
 		<module>TadukooUtil</module>
 	</modules>
 	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<!-- Info -->
+		<shortName>TadukooUtil</shortName>
 		
-		<!-- Java and JUnit Versions -->
-		<java.version>16</java.version>
-		<junit.jupiter.version>5.7.0</junit.jupiter.version>
-		<junit.platform.version>1.7.0</junit.platform.version>
-		
-		<!-- Maven Plugin Version -->
-		<maven.compiler.version>3.8.1</maven.compiler.version>
-		<maven.surefire.version>3.0.0-M4</maven.surefire.version>
-		<maven.source.version>3.2.1</maven.source.version>
-		<maven.javadoc.version>3.2.0</maven.javadoc.version>
-		<maven.gpg.version>1.6</maven.gpg.version>
-		
-		<!-- Directories -->
-		<directory.source>src</directory.source>
-		<directory.test>junit</directory.test>
-		<directory.resource>resource</directory.resource>
-		<directory.test-resource>junit-resource</directory.test-resource>
-		<directory.eclipse.annotationprocessing>.apt_generated</directory.eclipse.annotationprocessing>
-		
-		<!-- JUnit Information -->
-		<junit.jupiter.groupID>org.junit.jupiter</junit.jupiter.groupID>
-		<junit.jupiter.artifactID>junit-jupiter-engine</junit.jupiter.artifactID>
-		<junit.platform.groupID>org.junit.platform</junit.platform.groupID>
-		<junit.platform.artifactID>junit-platform-runner</junit.platform.artifactID>
+		<!-- Override Tadukoo Util Version (Since we're in Tadukoo Util) -->
+		<tadukoo.util.version>${project.version}</tadukoo.util.version>
 	</properties>
-	<distributionManagement>
-		<snapshotRepository>
-			<id>ossrh</id>
-			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
-		</snapshotRepository>
-		<repository>
-			<id>ossrh</id>
-			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-		</repository>
-	</distributionManagement>
-	<dependencyManagement>
-		<dependencies>
-			<!-- Tadukoo Lang -->
-			<dependency>
-				<groupId>${project.groupId}</groupId>
-				<artifactId>TadukooLang</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<!-- Tadukoo Functions -->
-			<dependency>
-				<groupId>${project.groupId}</groupId>
-				<artifactId>TadukooFunctions</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<!-- Tadukoo Util -->
-			<dependency>
-				<groupId>${project.groupId}</groupId>
-				<artifactId>TadukooUtil</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<!-- JUnit Dependencies -->
-			<dependency>
-				<groupId>${junit.jupiter.groupID}</groupId>
-				<artifactId>${junit.jupiter.artifactID}</artifactId>
-				<version>${junit.jupiter.version}</version>
-				<scope>test</scope>
-			</dependency>
-			<dependency>
-				<groupId>${junit.platform.groupID}</groupId>
-				<artifactId>${junit.platform.artifactID}</artifactId>
-				<version>${junit.platform.version}</version>
-				<scope>test</scope>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
-	<build>
-		<pluginManagement>
-			<plugins>
-				<plugin>
-					<artifactId>maven-compiler-plugin</artifactId>
-					<version>${maven.compiler.version}</version>
-					<configuration>
-						<release>${java.version}</release>
-					</configuration>
-				</plugin>
-				<plugin>
-					<artifactId>maven-surefire-plugin</artifactId>
-					<version>${maven.surefire.version}</version>
-				</plugin>
-				<plugin>
-					<groupId>org.jacoco</groupId>
-					<artifactId>jacoco-maven-plugin</artifactId>
-					<version>0.8.6</version>
-					<executions>
-						<execution>
-							<goals>
-								<goal>prepare-agent</goal>
-							</goals>
-						</execution>
-						<execution>
-							<id>report</id>
-							<phase>test</phase>
-							<goals>
-								<goal>report</goal>
-							</goals>
-						</execution>
-					</executions>
-				</plugin>
-				<plugin>
-					<groupId>org.sonatype.plugins</groupId>
-					<artifactId>nexus-staging-maven-plugin</artifactId>
-					<version>1.6.8</version>
-					<extensions>true</extensions>
-					<configuration>
-						<serverId>ossrh</serverId>
-						<nexusUrl>https://oss.sonatype.org</nexusUrl>
-						<autoReleaseAfterClose>true</autoReleaseAfterClose>
-					</configuration>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-source-plugin</artifactId>
-					<version>${maven.source.version}</version>
-					<executions>
-						<execution>
-							<id>attach-sources</id>
-							<goals>
-								<goal>jar-no-fork</goal>
-							</goals>
-						</execution>
-					</executions>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-javadoc-plugin</artifactId>
-					<version>${maven.javadoc.version}</version>
-					<configuration>
-						<release>${java.version}</release>
-					</configuration>
-					<executions>
-						<execution>
-							<id>attach-javadocs</id>
-							<goals>
-								<goal>jar</goal>
-							</goals>
-						</execution>
-					</executions>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-gpg-plugin</artifactId>
-					<version>${maven.gpg.version}</version>
-					<executions>
-						<execution>
-							<id>sign-artifacts</id>
-							<phase>verify</phase>
-							<goals>
-								<goal>sign</goal>
-							</goals>
-						</execution>
-					</executions>
-				</plugin>
-			</plugins>
-		</pluginManagement>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-gpg-plugin</artifactId>
-			</plugin>
-		</plugins>
-	</build>
 </project>
