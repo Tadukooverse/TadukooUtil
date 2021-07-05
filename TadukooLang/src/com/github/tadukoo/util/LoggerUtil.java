@@ -14,7 +14,7 @@ import java.util.logging.SimpleFormatter;
  */
 public final class LoggerUtil{
 	
-	// Not allowed to create a LoggerUtil
+	/** Not allowed to create a LoggerUtil */
 	private LoggerUtil(){ }
 	
 	/**

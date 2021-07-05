@@ -13,7 +13,7 @@ import java.util.List;
  */
 public final class ListUtil{
 	
-	// Not allowed to create a ListUtil
+	/** Not allowed to create a ListUtil */
 	private ListUtil(){ }
 	
 	/**

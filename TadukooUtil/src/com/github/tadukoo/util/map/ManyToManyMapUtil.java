@@ -8,7 +8,7 @@ package com.github.tadukoo.util.map;
  */
 public final class ManyToManyMapUtil{
 	
-	// Not allowed to make a ManyToManyMapUtil
+	/** Not allowed to make a ManyToManyMapUtil */
 	private ManyToManyMapUtil(){ }
 	
 	/**

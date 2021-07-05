@@ -14,7 +14,7 @@ import java.util.Locale;
  */
 public final class MonthUtil{
 	
-	// Can't create a MonthUtil
+	/** Can't create a MonthUtil */
 	private MonthUtil(){ }
 	
 	/**

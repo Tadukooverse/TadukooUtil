@@ -13,7 +13,7 @@ import java.util.Date;
  */
 public final class DateUtil{
 	
-	// Not allowed to make a DateUtil
+	/** Not allowed to make a DateUtil */
 	private DateUtil(){ }
 	
 	/**

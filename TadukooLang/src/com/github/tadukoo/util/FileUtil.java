@@ -31,7 +31,7 @@ import java.util.zip.ZipOutputStream;
  */
 public final class FileUtil{
 	
-	// Not allowed to create a FileUtil
+	/** Not allowed to create a FileUtil */
 	private FileUtil(){ }
 	
 	/**

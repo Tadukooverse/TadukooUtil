@@ -6,6 +6,6 @@ package com.github.tadukoo.util.functional;
  */
 public final class NoException extends RuntimeException{
 	
-	// Can't actually create a NoException, as you're not supposed to
+	/** Can't actually create a NoException, as you're not supposed to */
 	private NoException(){ }
 }

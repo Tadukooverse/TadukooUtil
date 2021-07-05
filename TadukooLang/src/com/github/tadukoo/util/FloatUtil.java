@@ -10,7 +10,7 @@ import java.util.List;
  */
 public final class FloatUtil{
 	
-	// Not allowed to create a FileUtil
+	/** Not allowed to create a FloatUtil */
 	private FloatUtil(){ }
 	
 	/**

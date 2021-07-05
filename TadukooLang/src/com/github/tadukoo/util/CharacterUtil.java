@@ -8,7 +8,7 @@ package com.github.tadukoo.util;
  */
 public final class CharacterUtil{
 	
-	// Not allowed to create a CharacterUtil
+	/** Not allowed to create a CharacterUtil */
 	private CharacterUtil(){ }
 	
 	/**
