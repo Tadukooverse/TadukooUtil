@@ -22,7 +22,17 @@ public final class ByteUtil{
 	 * @return A Byte parsed from the given binary String
 	 */
 	public static Byte parseByte(String byteString){
-		return Byte.parseByte(byteString, 2);
+		return (byte) Integer.parseInt(byteString, 2);
+	}
+	
+	/**
+	 * Parse the given byte into a binary string
+	 *
+	 * @param bite The byte to be converted to a binary string
+	 * @return The binary string representation of the byte
+	 */
+	public static String toBinaryString(byte bite){
+		return String.format("%8s", Integer.toBinaryString(bite & 0xFF)).replace(' ', '0');
 	}
 	
 	/**

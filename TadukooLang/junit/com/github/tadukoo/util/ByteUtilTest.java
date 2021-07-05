@@ -14,6 +14,21 @@ public class ByteUtilTest{
 	}
 	
 	@Test
+	public void testParseByteNegative(){
+		assertEquals(-1, ByteUtil.parseByte("11111111").intValue());
+	}
+	
+	@Test
+	public void testToBinaryString(){
+		assertEquals("01010101", ByteUtil.toBinaryString(ByteUtil.parseByte("01010101")));
+	}
+	
+	@Test
+	public void testToBinaryStringNegative(){
+		assertEquals("11111111", ByteUtil.toBinaryString(ByteUtil.parseByte("11111111")));
+	}
+	
+	@Test
 	public void testGetBit0(){
 		byte bite = Byte.parseByte("00000001", 2);
 		assertEquals(1, ByteUtil.getBit(bite, 0));
