@@ -113,4 +113,54 @@ public final class ByteUtil{
 		}
 		return hex.toString();
 	}
+	
+	/**
+	 * Converts the given hex character to an int
+	 *
+	 * @param hexChar The hex character to convert
+	 * @return The int value of the hex character, or -1 if invalid
+	 */
+	public static int hexToInt(char hexChar){
+		if('0' <= hexChar && hexChar <= '9'){
+			return hexChar - '0';
+		}else if('A' <= hexChar && hexChar <= 'F'){
+			return hexChar - 'A' + 10;
+		}else if('a' <= hexChar && hexChar <= 'f'){
+			return hexChar - 'a' + 10;
+		}else{
+			return -1;
+		}
+	}
+	
+	/**
+	 * Convert the given hex string into a byte array
+	 *
+	 * @param hex The hex string to convert
+	 * @return A byte array representing the given hex string
+	 */
+	public static byte[] fromHex(String hex){
+		int size = hex.length();
+		
+		// Check that the size is even
+		if(size % 2 != 0){
+			throw new IllegalArgumentException("hex string must be an even length: " + hex);
+		}
+		
+		// Create byte array to store the bytes in
+		byte[] bites = new byte[size/2];
+		
+		// Iterate over the string, 2 characters at a time
+		for(int i = 0; i < size; i+=2){
+			int highNibble = hexToInt(hex.charAt(i));
+			int lowNibble = hexToInt(hex.charAt(i+1));
+			// If either nibble came out -1, we have an illegal hex character
+			if(highNibble == -1 || lowNibble == -1){
+				throw new IllegalArgumentException("hex string contains an illegal hex character: " + hex);
+			}
+			
+			bites[i/2] = (byte) (highNibble*16 + lowNibble);
+		}
+		
+		return bites;
+	}
 }

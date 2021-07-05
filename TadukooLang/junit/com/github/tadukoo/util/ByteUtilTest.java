@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 public class ByteUtilTest{
 	
@@ -332,5 +333,148 @@ public class ByteUtilTest{
 	public void testToHexArray(){
 		byte[] bytes = {Byte.parseByte("00010011", 2), Byte.parseByte("01111111", 2)};
 		assertEquals("137F", ByteUtil.toHex(bytes));
+	}
+	
+	@Test
+	public void testHexToInt0(){
+		assertEquals(0, ByteUtil.hexToInt('0'));
+	}
+	
+	@Test
+	public void testHexToInt1(){
+		assertEquals(1, ByteUtil.hexToInt('1'));
+	}
+	
+	@Test
+	public void testHexToInt2(){
+		assertEquals(2, ByteUtil.hexToInt('2'));
+	}
+	
+	@Test
+	public void testHexToInt3(){
+		assertEquals(3, ByteUtil.hexToInt('3'));
+	}
+	
+	@Test
+	public void testHexToInt4(){
+		assertEquals(4, ByteUtil.hexToInt('4'));
+	}
+	
+	@Test
+	public void testHexToInt5(){
+		assertEquals(5, ByteUtil.hexToInt('5'));
+	}
+	
+	@Test
+	public void testHexToInt6(){
+		assertEquals(6, ByteUtil.hexToInt('6'));
+	}
+	
+	@Test
+	public void testHexToInt7(){
+		assertEquals(7, ByteUtil.hexToInt('7'));
+	}
+	
+	@Test
+	public void testHexToInt8(){
+		assertEquals(8, ByteUtil.hexToInt('8'));
+	}
+	
+	@Test
+	public void testHexToInt9(){
+		assertEquals(9, ByteUtil.hexToInt('9'));
+	}
+	
+	@Test
+	public void testHexToIntA(){
+		assertEquals(10, ByteUtil.hexToInt('A'));
+	}
+	
+	@Test
+	public void testHexToIntB(){
+		assertEquals(11, ByteUtil.hexToInt('B'));
+	}
+	
+	@Test
+	public void testHexToIntC(){
+		assertEquals(12, ByteUtil.hexToInt('C'));
+	}
+	
+	@Test
+	public void testHexToIntD(){
+		assertEquals(13, ByteUtil.hexToInt('D'));
+	}
+	
+	@Test
+	public void testHexToIntE(){
+		assertEquals(14, ByteUtil.hexToInt('E'));
+	}
+	
+	@Test
+	public void testHexToIntF(){
+		assertEquals(15, ByteUtil.hexToInt('F'));
+	}
+	
+	@Test
+	public void testHexToIntALow(){
+		assertEquals(10, ByteUtil.hexToInt('a'));
+	}
+	
+	@Test
+	public void testHexToIntBLow(){
+		assertEquals(11, ByteUtil.hexToInt('b'));
+	}
+	
+	@Test
+	public void testHexToIntCLow(){
+		assertEquals(12, ByteUtil.hexToInt('c'));
+	}
+	
+	@Test
+	public void testHexToIntDLow(){
+		assertEquals(13, ByteUtil.hexToInt('d'));
+	}
+	
+	@Test
+	public void testHexToIntELow(){
+		assertEquals(14, ByteUtil.hexToInt('e'));
+	}
+	
+	@Test
+	public void testHexToIntFLow(){
+		assertEquals(15, ByteUtil.hexToInt('f'));
+	}
+	
+	@Test
+	public void testHexToIntBad(){
+		assertEquals(-1, ByteUtil.hexToInt('T'));
+	}
+	
+	@Test
+	public void testFromHexNotEven(){
+		try{
+			ByteUtil.fromHex("D");
+			fail();
+		}catch(IllegalArgumentException e){
+			assertEquals("hex string must be an even length: D", e.getMessage());
+		}
+	}
+	
+	@Test
+	public void testFromHexIllegalCharacter(){
+		try{
+			ByteUtil.fromHex("0T");
+			fail();
+		}catch(IllegalArgumentException e){
+			assertEquals("hex string contains an illegal hex character: 0T", e.getMessage());
+		}
+	}
+	
+	@Test
+	public void testFromHexPass(){
+		byte[] bites = ByteUtil.fromHex("FF05");
+		assertEquals(2, bites.length);
+		assertEquals("11111111", ByteUtil.toBinaryString(bites[0]));
+		assertEquals("00000101", ByteUtil.toBinaryString(bites[1]));
 	}
 }
