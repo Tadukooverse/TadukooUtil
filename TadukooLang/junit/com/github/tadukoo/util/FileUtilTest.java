@@ -177,6 +177,40 @@ public class FileUtilTest{
 	}
 	
 	@Test
+	public void testReadAsBytesFilepath() throws IOException{
+		byte[] bytes = FileUtil.readAsBytes("junit-resource/test.txt");
+		assertEquals(11, bytes.length);
+		assertEquals(ByteUtil.parseByte("01110011"), bytes[0]);
+		assertEquals(ByteUtil.parseByte("01101001"), bytes[1]);
+		assertEquals(ByteUtil.parseByte("01101101"), bytes[2]);
+		assertEquals(ByteUtil.parseByte("01110000"), bytes[3]);
+		assertEquals(ByteUtil.parseByte("01101100"), bytes[4]);
+		assertEquals(ByteUtil.parseByte("01100101"), bytes[5]);
+		assertEquals(ByteUtil.parseByte("00100000"), bytes[6]);
+		assertEquals(ByteUtil.parseByte("01110100"), bytes[7]);
+		assertEquals(ByteUtil.parseByte("01100101"), bytes[8]);
+		assertEquals(ByteUtil.parseByte("01110011"), bytes[9]);
+		assertEquals(ByteUtil.parseByte("01110100"), bytes[10]);
+	}
+	
+	@Test
+	public void testReadAsBytesFile() throws IOException{
+		byte[] bytes = FileUtil.readAsBytes(new File("junit-resource/test.txt"));
+		assertEquals(11, bytes.length);
+		assertEquals(ByteUtil.parseByte("01110011"), bytes[0]);
+		assertEquals(ByteUtil.parseByte("01101001"), bytes[1]);
+		assertEquals(ByteUtil.parseByte("01101101"), bytes[2]);
+		assertEquals(ByteUtil.parseByte("01110000"), bytes[3]);
+		assertEquals(ByteUtil.parseByte("01101100"), bytes[4]);
+		assertEquals(ByteUtil.parseByte("01100101"), bytes[5]);
+		assertEquals(ByteUtil.parseByte("00100000"), bytes[6]);
+		assertEquals(ByteUtil.parseByte("01110100"), bytes[7]);
+		assertEquals(ByteUtil.parseByte("01100101"), bytes[8]);
+		assertEquals(ByteUtil.parseByte("01110011"), bytes[9]);
+		assertEquals(ByteUtil.parseByte("01110100"), bytes[10]);
+	}
+	
+	@Test
 	public void testWriteFileWithPath() throws IOException{
 		String filepath = "target/test-files/writeFileWithPath/test.txt";
 		FileUtil.writeFile(filepath, "Test\nDerp\nYes");

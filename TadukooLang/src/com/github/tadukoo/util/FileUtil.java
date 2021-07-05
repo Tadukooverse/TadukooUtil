@@ -26,7 +26,7 @@ import java.util.zip.ZipOutputStream;
  * Util functions for dealing with Files.
  * 
  * @author Logan Ferree (Tadukoo)
- * @version 0.1-Alpha-SNAPSHOT
+ * @version Beta v.0.5
  * @since Pre-Alpha
  */
 public final class FileUtil{
@@ -256,6 +256,28 @@ public final class FileUtil{
 			line = buffReader.readLine();
 		}
 		return lines;
+	}
+	
+	/**
+	 * Reads the file at the given filepath into a byte array.
+	 *
+	 * @param filepath The path of the file to be read
+	 * @return The byte array of the given file
+	 * @throws IOException If something goes wrong in reading the file
+	 */
+	public static byte[] readAsBytes(String filepath) throws IOException{
+		return Files.readAllBytes(Paths.get(filepath));
+	}
+	
+	/**
+	 * Reads the given file into a byte array.
+	 *
+	 * @param file The {@link File} to be read
+	 * @return The byte array of the given file
+	 * @throws IOException If something goes wrong in reading the file
+	 */
+	public static byte[] readAsBytes(File file) throws IOException{
+		return Files.readAllBytes(file.toPath());
 	}
 	
 	/**
