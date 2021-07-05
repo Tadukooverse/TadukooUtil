@@ -91,6 +91,26 @@ public final class ByteUtil{
 	}
 	
 	/**
+	 * Returns the byte as an int, signed (-128 to 127)
+	 *
+	 * @param bite The byte to convert to an int
+	 * @return The int value of the given byte
+	 */
+	public static int toSignedInt(byte bite){
+		return bite;
+	}
+	
+	/**
+	 * Returns the byte as an unsigned int (0 to 255)
+	 *
+	 * @param bite The byte to convert to an int
+	 * @return The int value of the given byte
+	 */
+	public static int toUnsignedInt(byte bite){
+		return Byte.toUnsignedInt(bite);
+	}
+	
+	/**
 	 * Converts the given byte to a 2 digit hex string
 	 *
 	 * @param bite The byte to convert to hex

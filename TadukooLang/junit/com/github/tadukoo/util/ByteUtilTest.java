@@ -312,6 +312,16 @@ public class ByteUtilTest{
 	}
 	
 	@Test
+	public void testToSignedInt(){
+		assertEquals(-1, ByteUtil.toSignedInt(ByteUtil.parseByte("11111111")));
+	}
+	
+	@Test
+	public void testToUnsignedInt(){
+		assertEquals(255, ByteUtil.toUnsignedInt(ByteUtil.parseByte("11111111")));
+	}
+	
+	@Test
 	public void testToHex15(){
 		byte bite = Byte.parseByte("00001111", 2);
 		assertEquals("0F", ByteUtil.toHex(bite));
