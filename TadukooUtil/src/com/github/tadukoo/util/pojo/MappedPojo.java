@@ -235,6 +235,7 @@ public interface MappedPojo{
 	 * This version does not throw any exceptions and will log any errors to the given {@link EasyLogger}, then
 	 * return null if something goes wrong
 	 *
+	 * @param logger The {@link EasyLogger} to log any errors to
 	 * @param key The key of the item to grab
 	 * @param clazz The MappedPojo class to be used in the List
 	 * @param <T> The class of the pojos in the List
