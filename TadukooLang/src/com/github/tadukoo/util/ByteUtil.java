@@ -16,6 +16,16 @@ public final class ByteUtil{
 	private ByteUtil(){ }
 	
 	/**
+	 * Parse the given String into a byte. String should be a binary representation of a byte
+	 *
+	 * @param byteString The binary representation of a byte
+	 * @return A Byte parsed from the given binary String
+	 */
+	public static Byte parseByte(String byteString){
+		return Byte.parseByte(byteString, 2);
+	}
+	
+	/**
 	 * Gets the bit at the given position
 	 *
 	 * @param bite The byte to grab a bit from

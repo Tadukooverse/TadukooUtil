@@ -9,6 +9,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class ByteUtilTest{
 	
 	@Test
+	public void testParseByte(){
+		assertEquals(85, ByteUtil.parseByte("01010101").intValue());
+	}
+	
+	@Test
 	public void testGetBit0(){
 		byte bite = Byte.parseByte("00000001", 2);
 		assertEquals(1, ByteUtil.getBit(bite, 0));
