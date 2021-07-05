@@ -16,26 +16,6 @@ public final class ByteUtil{
 	private ByteUtil(){ }
 	
 	/**
-	 * Parse the given String into a byte. String should be a binary representation of a byte
-	 *
-	 * @param byteString The binary representation of a byte
-	 * @return A Byte parsed from the given binary String
-	 */
-	public static Byte parseByte(String byteString){
-		return (byte) Integer.parseInt(byteString, 2);
-	}
-	
-	/**
-	 * Parse the given byte into a binary string
-	 *
-	 * @param bite The byte to be converted to a binary string
-	 * @return The binary string representation of the byte
-	 */
-	public static String toBinaryString(byte bite){
-		return String.format("%8s", Integer.toBinaryString(bite & 0xFF)).replace(' ', '0');
-	}
-	
-	/**
 	 * Gets the bit at the given position
 	 *
 	 * @param bite The byte to grab a bit from
@@ -88,6 +68,26 @@ public final class ByteUtil{
 	 */
 	public static boolean checkBit(byte bite, int position){
 		return getBit(bite, position) == 1;
+	}
+	
+	/**
+	 * Parse the given byte into a binary string
+	 *
+	 * @param bite The byte to be converted to a binary string
+	 * @return The binary string representation of the byte
+	 */
+	public static String toBinaryString(byte bite){
+		return String.format("%8s", Integer.toBinaryString(bite & 0xFF)).replace(' ', '0');
+	}
+	
+	/**
+	 * Parse the given String into a byte. String should be a binary representation of a byte
+	 *
+	 * @param byteString The binary representation of a byte
+	 * @return A Byte parsed from the given binary String
+	 */
+	public static Byte parseByte(String byteString){
+		return (byte) Integer.parseInt(byteString, 2);
 	}
 	
 	/**
