@@ -8,7 +8,7 @@ package com.github.tadukoo.util.map;
  */
 public final class MultiMapUtil{
 	
-	// Not allowed to make a MultiMapUtil
+	/** Not allowed to make a MultiMapUtil */
 	private MultiMapUtil(){ }
 	
 	/**

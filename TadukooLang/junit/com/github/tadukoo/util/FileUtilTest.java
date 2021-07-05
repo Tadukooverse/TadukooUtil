@@ -2,9 +2,7 @@ package com.github.tadukoo.util;
 
 import org.junit.jupiter.api.Test;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Arrays;
@@ -123,15 +121,147 @@ public class FileUtilTest{
 	}
 	
 	@Test
+	public void testFileExistsPathTrue() throws IOException{
+		String filepath = "target/testFileExistsPathTrue.txt";
+		FileUtil.writeFile(filepath, "test-content");
+		
+		assertTrue(FileUtil.exists(filepath));
+	}
+	
+	@Test
+	public void testFileExistsPathFalse(){
+		String filepath = "target/testFileExistsPathFalse.txt";
+		assertFalse(FileUtil.exists(filepath));
+	}
+	
+	@Test
+	public void testFileExistsFileTrue() throws IOException{
+		String filepath = "target/testFileExistsFileTrue.txt";
+		FileUtil.writeFile(filepath, "test-content");
+		
+		assertTrue(FileUtil.exists(new File(filepath)));
+	}
+	
+	@Test
+	public void testFileExistsFileFalse(){
+		String filepath = "target/testFileExistsFileFalse.txt";
+		assertFalse(FileUtil.exists(filepath));
+	}
+	
+	@Test
+	public void testFileNotExistsPathTrue(){
+		String filepath = "target/testFileNotExistsPathTrue.txt";
+		assertTrue(FileUtil.notExists(filepath));
+	}
+	
+	@Test
+	public void testFileNotExistsPathFalse() throws IOException{
+		String filepath = "target/testFileNotExistsPathFalse.txt";
+		FileUtil.writeFile(filepath, "test-content");
+		
+		assertFalse(FileUtil.notExists(filepath));
+	}
+	
+	@Test
+	public void testFileNotExistsFileTrue(){
+		String filepath = "target/testFileNotExistsFileTrue.txt";
+		assertTrue(FileUtil.notExists(new File(filepath)));
+	}
+	
+	@Test
+	public void testFileNotExistsFileFalse() throws IOException{
+		String filepath = "target/testFileNotExistsFileFalse.txt";
+		FileUtil.writeFile(filepath, "test-content");
+		
+		assertFalse(FileUtil.notExists(new File(filepath)));
+	}
+	
+	@Test
+	public void testReadAsBytesFilepath() throws IOException{
+		byte[] bytes = FileUtil.readAsBytes("junit-resource/test.txt");
+		assertEquals(11, bytes.length);
+		assertEquals(ByteUtil.parseByte("01110011"), bytes[0]);
+		assertEquals(ByteUtil.parseByte("01101001"), bytes[1]);
+		assertEquals(ByteUtil.parseByte("01101101"), bytes[2]);
+		assertEquals(ByteUtil.parseByte("01110000"), bytes[3]);
+		assertEquals(ByteUtil.parseByte("01101100"), bytes[4]);
+		assertEquals(ByteUtil.parseByte("01100101"), bytes[5]);
+		assertEquals(ByteUtil.parseByte("00100000"), bytes[6]);
+		assertEquals(ByteUtil.parseByte("01110100"), bytes[7]);
+		assertEquals(ByteUtil.parseByte("01100101"), bytes[8]);
+		assertEquals(ByteUtil.parseByte("01110011"), bytes[9]);
+		assertEquals(ByteUtil.parseByte("01110100"), bytes[10]);
+	}
+	
+	@Test
+	public void testReadAsBytesFile() throws IOException{
+		byte[] bytes = FileUtil.readAsBytes(new File("junit-resource/test.txt"));
+		assertEquals(11, bytes.length);
+		assertEquals(ByteUtil.parseByte("01110011"), bytes[0]);
+		assertEquals(ByteUtil.parseByte("01101001"), bytes[1]);
+		assertEquals(ByteUtil.parseByte("01101101"), bytes[2]);
+		assertEquals(ByteUtil.parseByte("01110000"), bytes[3]);
+		assertEquals(ByteUtil.parseByte("01101100"), bytes[4]);
+		assertEquals(ByteUtil.parseByte("01100101"), bytes[5]);
+		assertEquals(ByteUtil.parseByte("00100000"), bytes[6]);
+		assertEquals(ByteUtil.parseByte("01110100"), bytes[7]);
+		assertEquals(ByteUtil.parseByte("01100101"), bytes[8]);
+		assertEquals(ByteUtil.parseByte("01110011"), bytes[9]);
+		assertEquals(ByteUtil.parseByte("01110100"), bytes[10]);
+	}
+	
+	@Test
 	public void testWriteFileWithPath() throws IOException{
 		String filepath = "target/test-files/writeFileWithPath/test.txt";
 		FileUtil.writeFile(filepath, "Test\nDerp\nYes");
 		
-		List<String> lines = FileUtil.getLinesAsList(new BufferedReader(new FileReader(filepath)));
+		List<String> lines = FileUtil.readLinesAsList(FileUtil.setupFileReader(filepath));
 		assertEquals(3, lines.size());
 		assertEquals("Test", lines.get(0));
 		assertEquals("Derp", lines.get(1));
 		assertEquals("Yes", lines.get(2));
+	}
+	
+	@Test
+	public void testWriteFileWithPathReadWithPath() throws IOException{
+		String filepath = "target/test-files/writeFileWithPathReadWithPath/test.txt";
+		FileUtil.writeFile(filepath, "Test\nDerp\nYes");
+		
+		List<String> lines = FileUtil.readLinesAsList(filepath);
+		assertEquals(3, lines.size());
+		assertEquals("Test", lines.get(0));
+		assertEquals("Derp", lines.get(1));
+		assertEquals("Yes", lines.get(2));
+	}
+	
+	@Test
+	public void testWriteFileWithPathReadWithFile() throws IOException{
+		String filepath = "target/test-files/writeFileWithPathReadWithFile/test.txt";
+		FileUtil.writeFile(filepath, "Test\nDerp\nYes");
+		
+		List<String> lines = FileUtil.readLinesAsList(new File(filepath));
+		assertEquals(3, lines.size());
+		assertEquals("Test", lines.get(0));
+		assertEquals("Derp", lines.get(1));
+		assertEquals("Yes", lines.get(2));
+	}
+	
+	@Test
+	public void testWriteFileWithPathReadWithPathAsString() throws IOException{
+		String filepath = "target/test-files/writeFileWithPathReadWithPathAsString/test.txt";
+		FileUtil.writeFile(filepath, "Test\nDerp\nYes");
+		
+		String content = FileUtil.readAsString(filepath);
+		assertEquals("Test\nDerp\nYes", content);
+	}
+	
+	@Test
+	public void testWriteFileWithPathReadWithFileAsString() throws IOException{
+		String filepath = "target/test-files/writeFileWithPathReadWithFileAsString/test.txt";
+		FileUtil.writeFile(filepath, "Test\nDerp\nYes");
+		
+		String content = FileUtil.readAsString(new File(filepath));
+		assertEquals("Test\nDerp\nYes", content);
 	}
 	
 	@Test
@@ -140,7 +270,7 @@ public class FileUtilTest{
 		FileUtil.createFile(filepath);
 		FileUtil.writeFile(new FileWriter(filepath), "Test\nDerp\nYes");
 		
-		List<String> lines = FileUtil.getLinesAsList(new BufferedReader(new FileReader(filepath)));
+		List<String> lines = FileUtil.readLinesAsList(FileUtil.setupFileReader(filepath));
 		assertEquals(3, lines.size());
 		assertEquals("Test", lines.get(0));
 		assertEquals("Derp", lines.get(1));
@@ -154,7 +284,7 @@ public class FileUtilTest{
 		List<String> inputLines = Arrays.asList("Test", "Derp", "Yes");
 		FileUtil.writeFile(new FileWriter(filepath), inputLines);
 		
-		List<String> lines = FileUtil.getLinesAsList(new BufferedReader(new FileReader(filepath)));
+		List<String> lines = FileUtil.readLinesAsList(FileUtil.setupFileReader(filepath));
 		assertEquals(3, lines.size());
 		assertEquals("Test", lines.get(0));
 		assertEquals("Derp", lines.get(1));
@@ -177,7 +307,7 @@ public class FileUtilTest{
 		assertEquals(1, contents.size());
 		File resultFile = contents.get(0);
 		assertEquals("test.txt", resultFile.getName());
-		List<String> lines = FileUtil.getLinesAsList(new BufferedReader(new FileReader(resultFile)));
+		List<String> lines = FileUtil.readLinesAsList(FileUtil.setupFileReader(resultFile));
 		assertEquals(1, lines.size());
 		assertEquals("Some content", lines.get(0));
 	}
@@ -202,12 +332,12 @@ public class FileUtilTest{
 		assertEquals(2, contents.size());
 		File resultFile = contents.get(0);
 		assertEquals("test.txt", resultFile.getName());
-		List<String> lines = FileUtil.getLinesAsList(new BufferedReader(new FileReader(resultFile)));
+		List<String> lines = FileUtil.readLinesAsList(FileUtil.setupFileReader(resultFile));
 		assertEquals(1, lines.size());
 		assertEquals("Some content", lines.get(0));
 		File resultFile2 = contents.get(1);
 		assertEquals("test2.txt", resultFile2.getName());
-		List<String> lines2 = FileUtil.getLinesAsList(new BufferedReader(new FileReader(resultFile2)));
+		List<String> lines2 = FileUtil.readLinesAsList(FileUtil.setupFileReader(resultFile2));
 		assertEquals(1, lines2.size());
 		assertEquals("Some other content", lines2.get(0));
 	}
@@ -228,7 +358,7 @@ public class FileUtilTest{
 		assertEquals(1, contents.size());
 		File resultFile = contents.get(0);
 		assertEquals("test.txt", resultFile.getName());
-		List<String> lines = FileUtil.getLinesAsList(new BufferedReader(new FileReader(resultFile)));
+		List<String> lines = FileUtil.readLinesAsList(FileUtil.setupFileReader(resultFile));
 		assertEquals(1, lines.size());
 		assertEquals("Some content", lines.get(0));
 	}
@@ -253,12 +383,12 @@ public class FileUtilTest{
 		assertEquals(2, contents.size());
 		File resultFile = contents.get(0);
 		assertEquals("test.txt", resultFile.getName());
-		List<String> lines = FileUtil.getLinesAsList(new BufferedReader(new FileReader(resultFile)));
+		List<String> lines = FileUtil.readLinesAsList(FileUtil.setupFileReader(resultFile));
 		assertEquals(1, lines.size());
 		assertEquals("Some content", lines.get(0));
 		File resultFile2 = contents.get(1);
 		assertEquals("test2.txt", resultFile2.getName());
-		List<String> lines2 = FileUtil.getLinesAsList(new BufferedReader(new FileReader(resultFile2)));
+		List<String> lines2 = FileUtil.readLinesAsList(FileUtil.setupFileReader(resultFile2));
 		assertEquals(1, lines2.size());
 		assertEquals("Some other content", lines2.get(0));
 	}

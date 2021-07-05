@@ -13,7 +13,7 @@ import java.util.Map;
  */
 public final class MapUtil{
 	
-	// Not allowed to make a MapUtil
+	/** Not allowed to make a MapUtil */
 	private MapUtil(){ }
 	
 	/**

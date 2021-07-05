@@ -3,12 +3,12 @@
 		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<artifactId>TadukooFunctions</artifactId>
 	<parent>
 		<artifactId>TadukooUtilParent</artifactId>
 		<groupId>com.github.tadukoo.util</groupId>
-		<version>0.4-Alpha</version>
+		<version>0.5-Beta</version>
 	</parent>
+	<artifactId>TadukooFunctions</artifactId>
 	<dependencies>
 		<!-- JUnit Dependencies -->
 		<dependency>
@@ -23,23 +23,5 @@
 	<build>
 		<sourceDirectory>${directory.source}</sourceDirectory>
 		<testSourceDirectory>${directory.test}</testSourceDirectory>
-		<plugins>
-			<plugin>
-				<groupId>org.jacoco</groupId>
-				<artifactId>jacoco-maven-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-source-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-javadoc-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-gpg-plugin</artifactId>
-			</plugin>
-		</plugins>
 	</build>
 </project>

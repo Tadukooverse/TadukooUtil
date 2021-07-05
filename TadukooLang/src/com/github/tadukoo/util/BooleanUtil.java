@@ -8,7 +8,7 @@ package com.github.tadukoo.util;
  */
 public final class BooleanUtil{
 	
-	// Not allowed to create a BooleanUtil
+	/** Not allowed to create a BooleanUtil */
 	private BooleanUtil(){ }
 	
 	/**

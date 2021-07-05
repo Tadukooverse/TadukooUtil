@@ -8,7 +8,7 @@ package com.github.tadukoo.util;
  */
 public final class AutoCloseableUtil{
 	
-	// Not allowed to create an AutoCloseableUtil
+	/** Not allowed to create an AutoCloseableUtil */
 	private AutoCloseableUtil(){ }
 	
 	/**

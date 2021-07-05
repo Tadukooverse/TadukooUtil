@@ -1,6 +1,11 @@
 package com.github.tadukoo.util.pojo;
 
+import com.github.tadukoo.util.logger.EasyLogger;
+import com.github.tadukoo.util.map.MapUtil;
+
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -8,9 +13,19 @@ import java.util.Set;
  * Represents a Pojo that holds its values in a Map.
  *
  * @author Logan Ferree (Tadukoo)
- * @version Alpha v.0.2
+ * @version Beta v.0.5
+ * @since Alpha v.0.2
  */
 public interface MappedPojo{
+	
+	/**
+	 * Checks whether the pojo is empty (no keys/values)
+	 *
+	 * @return If the pojo is empty or not
+	 */
+	default boolean isEmpty(){
+		return MapUtil.isBlank(getMap());
+	}
 	
 	/**
 	 * Checks whether the pojo has the given key
@@ -18,12 +33,16 @@ public interface MappedPojo{
 	 * @param key The key to look for
 	 * @return If the pojo contains the key or not
 	 */
-	boolean hasKey(String key);
+	default boolean hasKey(String key){
+		return getMap().containsKey(key);
+	}
 	
 	/**
 	 * @return The {@link Set} of keys in the pojo
 	 */
-	Set<String> getKeys();
+	default Set<String> getKeys(){
+		return getMap().keySet();
+	}
 	
 	/**
 	 * Checks whether the pojo has an item for the given key
@@ -31,7 +50,9 @@ public interface MappedPojo{
 	 * @param key The key to look for
 	 * @return Whether the pojo has an item for the given key
 	 */
-	boolean hasItem(String key);
+	default boolean hasItem(String key){
+		return getMap().get(key) != null;
+	}
 	
 	/**
 	 * Grabs the item contained in the pojo with the given key
@@ -39,7 +60,9 @@ public interface MappedPojo{
 	 * @param key The key of the item to grab
 	 * @return The item the pojo has for the given key
 	 */
-	Object getItem(String key);
+	default Object getItem(String key){
+		return getMap().get(key);
+	}
 	
 	/**
 	 * Sets the item in the pojo for the given key
@@ -47,19 +70,30 @@ public interface MappedPojo{
 	 * @param key The key of the item to be set
 	 * @param item The item to set on the pojo
 	 */
-	void setItem(String key, Object item);
+	default void setItem(String key, Object item){
+		getMap().put(key, item);
+	}
 	
 	/**
 	 * Removes the item in the pojo for the given key
 	 *
 	 * @param key The key of the item to be removed
 	 */
-	void removeItem(String key);
+	default void removeItem(String key){
+		getMap().remove(key);
+	}
 	
 	/**
 	 * @return The full Map of items in the pojo
 	 */
 	Map<String, Object> getMap();
+	
+	/**
+	 * Empties out the items in the pojo
+	 */
+	default void clear(){
+		getMap().clear();
+	}
 	
 	/**
 	 * Helper method to cast an item being stored in this Mapped Pojo as another MappedPojo object easily.
@@ -98,23 +132,63 @@ public interface MappedPojo{
 	}
 	
 	/**
-	 * Helper method to cast an item being stored in this Mapped Pojo as a proper Table object easily.
-	 * The Mapped Pojo class specified for the Table must have a constructor that accepts a Mapped Pojo.
+	 * Helper method to cast an item being stored in this Mapped Pojo as another MappedPojo object easily.
+	 * The other Mapped Pojo object must have a constructor that takes in a MappedPojo.
+	 * <br><br>
+	 * This version does not throw any exceptions and will not log any errors, just return null if something
+	 * goes wrong
 	 *
 	 * @param key The key of the item to grab
-	 * @param clazz The MappedPojo class to be used in the Table
-	 * @param <T> The class of the pojos in the Table
-	 * @return The item as a proper Table instance, or null
+	 * @param clazz The class to cast the item to
+	 * @param <T> The class the item should be cast to
+	 * @return The item as a proper instance of the class, or null
+	 */
+	default <T extends MappedPojo> T getPojoItemNoThrow(String key, Class<T> clazz){
+		return getPojoItemNoThrow(null, key, clazz);
+	}
+	
+	/**
+	 * Helper method to cast an item being stored in this Mapped Pojo as another MappedPojo object easily.
+	 * The other Mapped Pojo object must have a constructor that takes in a MappedPojo.
+	 * <br><br>
+	 * This version does not throw any exceptions and will log any errors to the given {@link EasyLogger}, then
+	 * return null if something goes wrong
+	 *
+	 * @param logger The {@link EasyLogger} to log any errors to
+	 * @param key The key of the item to grab
+	 * @param clazz The class to cast the item to
+	 * @param <T> The class the item should be cast to
+	 * @return The item as a proper instance of the class, or null
+	 */
+	default <T extends MappedPojo> T getPojoItemNoThrow(EasyLogger logger, String key, Class<T> clazz){
+		try{
+			return getPojoItem(key, clazz);
+		}catch(Exception e){
+			if(logger != null){
+				logger.logError("Failed to get pojo item: " + key, e);
+			}
+			return null;
+		}
+	}
+	
+	/**
+	 * Helper method to cast an item being stored in this Mapped Pojo as a proper List easily.
+	 * The Mapped Pojo class specified for the List must have a constructor that accepts a Mapped Pojo.
+	 *
+	 * @param key The key of the item to grab
+	 * @param clazz The MappedPojo class to be used in the List
+	 * @param <T> The class of the pojos in the List
+	 * @return The item as a proper List instance, or null
 	 * @throws NoSuchMethodException See {@link java.lang.reflect.Constructor#newInstance(Object...)}
 	 * @throws IllegalAccessException See {@link java.lang.reflect.Constructor#newInstance(Object...)}
 	 * @throws InvocationTargetException See {@link java.lang.reflect.Constructor#newInstance(Object...)}
 	 * @throws InstantiationException See {@link java.lang.reflect.Constructor#newInstance(Object...)}
 	 */
 	@SuppressWarnings("unchecked")
-	default <T extends MappedPojo> Table<T> getTableItem(String key, Class<T> clazz)
+	default <T extends MappedPojo> List<T> getListItem(String key, Class<T> clazz)
 			throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException{
 		// Grab the table
-		Table<MappedPojo> table = (Table<MappedPojo>) getItem(key);
+		List<MappedPojo> table = (List<MappedPojo>) getItem(key);
 		
 		// If it's null, just return null
 		if(table == null){
@@ -122,19 +196,59 @@ public interface MappedPojo{
 		}
 		
 		// Create a corrected Table
-		Table<T> fixedTable = new Table<>();
-		for(MappedPojo pojo: table.getAllRows()){
+		List<T> fixedTable = new ArrayList<>();
+		for(MappedPojo pojo: table){
 			// If the pojo is already an instance of the proper class, just add it to the fixed table
 			if(clazz.isInstance(pojo)){
-				fixedTable.addRow((T) pojo);
+				fixedTable.add((T) pojo);
 			}else{
 				// If it's not the proper class, correct it
-				fixedTable.addRow(clazz.getDeclaredConstructor(MappedPojo.class).newInstance(pojo));
+				fixedTable.add(clazz.getDeclaredConstructor(MappedPojo.class).newInstance(pojo));
 			}
 		}
 		
 		// Store the fixed table for future use and return it
 		setItem(key, fixedTable);
 		return fixedTable;
+	}
+	
+	/**
+	 * Helper method to cast an item being stored in this Mapped Pojo as a proper List easily.
+	 * The Mapped Pojo class specified for the List must have a constructor that accepts a Mapped Pojo.
+	 * <br><br>
+	 * This version does not throw any exceptions and will not log any errors, just return null if something
+	 * goes wrong
+	 *
+	 * @param key The key of the item to grab
+	 * @param clazz The MappedPojo class to be used in the List
+	 * @param <T> The class of the pojos in the List
+	 * @return The item as a proper List instance, or null
+	 */
+	default <T extends MappedPojo> List<T> getListItemNoThrow(String key, Class<T> clazz){
+		return getListItemNoThrow(null, key, clazz);
+	}
+	
+	/**
+	 * Helper method to cast an item being stored in this Mapped Pojo as a proper List easily.
+	 * The Mapped Pojo class specified for the List must have a constructor that accepts a Mapped Pojo.
+	 * <br><br>
+	 * This version does not throw any exceptions and will log any errors to the given {@link EasyLogger}, then
+	 * return null if something goes wrong
+	 *
+	 * @param logger The {@link EasyLogger} to log any errors to
+	 * @param key The key of the item to grab
+	 * @param clazz The MappedPojo class to be used in the List
+	 * @param <T> The class of the pojos in the List
+	 * @return The item as a proper List instance, or null
+	 */
+	default <T extends MappedPojo> List<T> getListItemNoThrow(EasyLogger logger, String key, Class<T> clazz){
+		try{
+			return getListItem(key, clazz);
+		}catch(Exception e){
+			if(logger != null){
+				logger.logError("Failed to get list item: " + key, e);
+			}
+			return null;
+		}
 	}
 }

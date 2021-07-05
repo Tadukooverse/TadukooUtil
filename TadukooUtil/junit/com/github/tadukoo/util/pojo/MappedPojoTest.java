@@ -1,8 +1,10 @@
 package com.github.tadukoo.util.pojo;
 
+import com.github.tadukoo.util.logger.EasyLogger;
 import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +12,7 @@ import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -20,6 +23,7 @@ public class MappedPojoTest{
 	private static class TestClass extends AbstractMappedPojo{
 		public TestClass(){ }
 		
+		@SuppressWarnings("unused")
 		public TestClass(MappedPojo pojo){
 			super(pojo);
 		}
@@ -30,6 +34,36 @@ public class MappedPojoTest{
 		
 		public int getPlop(){
 			return (int) getItem("Plop");
+		}
+	}
+	
+	private static class TestNullMap implements MappedPojo{
+		@Override
+		public Map<String, Object> getMap(){
+			return null;
+		}
+	}
+	
+	private static class TestEasyLogger extends EasyLogger{
+		private String error = null;
+		private Throwable t = null;
+		
+		public TestEasyLogger(){
+			super(null);
+		}
+		
+		public String getError(){
+			return error;
+		}
+		
+		public Throwable getT(){
+			return t;
+		}
+		
+		@Override
+		public void logError(String error, Throwable t){
+			this.error = error;
+			this.t = t;
 		}
 	}
 	
@@ -56,6 +90,23 @@ public class MappedPojoTest{
 		assertEquals(50, theMap.get("Test"));
 		assertTrue(theMap.containsKey("Derp"));
 		assertEquals("Yep", theMap.get("Derp"));
+	}
+	
+	@Test
+	public void testIsEmptyTrue(){
+		assertTrue(pojo.isEmpty());
+	}
+	
+	@Test
+	public void testIsEmptyFalse(){
+		pojo.setItem("Test", 5);
+		assertFalse(pojo.isEmpty());
+	}
+	
+	@Test
+	public void testIsEmptyNullMap(){
+		TestNullMap test = new TestNullMap();
+		assertTrue(test.isEmpty());
 	}
 	
 	@Test
@@ -154,6 +205,16 @@ public class MappedPojoTest{
 	}
 	
 	@Test
+	public void testClear(){
+		pojo.setItem("Derp", 5);
+		pojo.setItem("Test", "Yes");
+		
+		assertFalse(pojo.isEmpty());
+		pojo.clear();
+		assertTrue(pojo.isEmpty());
+	}
+	
+	@Test
 	public void testGetItemAsPojo()
 			throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException{
 		MappedPojo clazz2 = new AbstractMappedPojo(){ };
@@ -211,34 +272,97 @@ public class MappedPojoTest{
 	}
 	
 	@Test
+	public void testGetPojoItemNoThrowPass(){
+		TestClass clazz2 = new TestClass();
+		clazz2.setItem("Derp", "Yes");
+		clazz2.setItem("Plop", 42);
+		
+		pojo.setItem("Test", clazz2);
+		
+		TestClass item = pojo.getPojoItemNoThrow("Test", TestClass.class);
+		assertEquals("Yes", item.getDerp());
+		assertEquals(42, item.getPlop());
+	}
+	
+	@Test
+	public void testGetPojoItemNoThrow(){
+		pojo.setItem("Test", 5);
+		assertNull(pojo.getPojoItemNoThrow("Test", TestClass.class));
+	}
+	
+	@Test
+	public void testGetPojoItemNoThrowLogger(){
+		pojo.setItem("Test", 5);
+		TestEasyLogger logger = new TestEasyLogger();
+		assertNull(pojo.getPojoItemNoThrow(logger, "Test", TestClass.class));
+		assertEquals("Failed to get pojo item: Test", logger.getError());
+		assertNotNull(logger.getT());
+	}
+	
+	@Test
 	public void testGetTableItemNull()
 			throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException{
 		pojo.setItem("Table", null);
 		
-		Table<TestClass> table = pojo.getTableItem("Table", TestClass.class);
+		List<TestClass> table = pojo.getListItem("Table", TestClass.class);
 		assertNull(table);
 	}
 	
 	@Test
 	public void testGetTableItem()
 			throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException{
-		Table<MappedPojo> brokenTable = new Table<>();
+		List<MappedPojo> brokenTable = new ArrayList<>();
 		TestClass testClass1 = new TestClass();
 		testClass1.setItem("Derp", "nope");
 		testClass1.setItem("Plop", 5);
-		brokenTable.addRow(testClass1);
+		brokenTable.add(testClass1);
 		MappedPojo otherPojo = new AbstractMappedPojo(){ };
 		otherPojo.setItem("Derp", "yep");
 		otherPojo.setItem("Plop", 42);
-		brokenTable.addRow(otherPojo);
+		brokenTable.add(otherPojo);
 		pojo.setItem("Table", brokenTable);
 		
-		Table<TestClass> table = pojo.getTableItem("Table", TestClass.class);
-		assertEquals(2, table.getNumRows());
-		List<TestClass> rows = table.getAllRows();
-		assertEquals(testClass1, rows.get(0));
-		TestClass testClass2 = rows.get(1);
+		List<TestClass> table = pojo.getListItem("Table", TestClass.class);
+		assertEquals(2, table.size());
+		assertEquals(testClass1, table.get(0));
+		TestClass testClass2 = table.get(1);
 		assertEquals("yep", testClass2.getDerp());
 		assertEquals(42, testClass2.getPlop());
+	}
+	
+	@Test
+	public void testGetListItemNoThrowPass(){
+		List<MappedPojo> brokenTable = new ArrayList<>();
+		TestClass testClass1 = new TestClass();
+		testClass1.setItem("Derp", "nope");
+		testClass1.setItem("Plop", 5);
+		brokenTable.add(testClass1);
+		MappedPojo otherPojo = new AbstractMappedPojo(){ };
+		otherPojo.setItem("Derp", "yep");
+		otherPojo.setItem("Plop", 42);
+		brokenTable.add(otherPojo);
+		pojo.setItem("Table", brokenTable);
+		
+		List<TestClass> table = pojo.getListItemNoThrow("Table", TestClass.class);
+		assertEquals(2, table.size());
+		assertEquals(testClass1, table.get(0));
+		TestClass testClass2 = table.get(1);
+		assertEquals("yep", testClass2.getDerp());
+		assertEquals(42, testClass2.getPlop());
+	}
+	
+	@Test
+	public void testGetListItemNoThrow(){
+		pojo.setItem("Test", 5);
+		assertNull(pojo.getListItemNoThrow("Test", TestClass.class));
+	}
+	
+	@Test
+	public void testGetListItemNoThrowLogger(){
+		pojo.setItem("Test", 5);
+		TestEasyLogger logger = new TestEasyLogger();
+		assertNull(pojo.getListItemNoThrow(logger, "Test", TestClass.class));
+		assertEquals("Failed to get list item: Test", logger.getError());
+		assertNotNull(logger.getT());
 	}
 }

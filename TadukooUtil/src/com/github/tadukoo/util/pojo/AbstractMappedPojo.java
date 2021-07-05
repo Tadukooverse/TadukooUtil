@@ -2,14 +2,13 @@ package com.github.tadukoo.util.pojo;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * Abstract Mapped Pojo is a simple implementation of the {@link MappedPojo} interface that uses a
  * HashMap as its backing Map.
  *
  * @author Logan Ferree (Tadukoo)
- * @version Alpha v.0.2.1
+ * @version Beta v.0.5
  * @since Alpha v.0.2
  */
 public abstract class AbstractMappedPojo implements MappedPojo{
@@ -30,42 +29,6 @@ public abstract class AbstractMappedPojo implements MappedPojo{
 	 */
 	protected AbstractMappedPojo(MappedPojo pojo){
 		map = pojo.getMap();
-	}
-	
-	/** {@inheritDoc} */
-	@Override
-	public boolean hasKey(String key){
-		return map.containsKey(key);
-	}
-	
-	/** {@inheritDoc} */
-	@Override
-	public Set<String> getKeys(){
-		return map.keySet();
-	}
-	
-	/** {@inheritDoc} */
-	@Override
-	public boolean hasItem(String key){
-		return map.get(key) != null;
-	}
-	
-	/** {@inheritDoc} */
-	@Override
-	public Object getItem(String key){
-		return map.get(key);
-	}
-	
-	/** {@inheritDoc} */
-	@Override
-	public void setItem(String key, Object item){
-		map.put(key, item);
-	}
-	
-	/** {@inheritDoc} */
-	@Override
-	public void removeItem(String key){
-		map.remove(key);
 	}
 	
 	/** {@inheritDoc} */

@@ -14,7 +14,7 @@ import java.io.StringWriter;
  */
 public final class ExceptionUtil{
 	
-	// Not allowed to create an ExceptionUtil
+	/** Not allowed to create an ExceptionUtil */
 	private ExceptionUtil(){ }
 	
 	/**

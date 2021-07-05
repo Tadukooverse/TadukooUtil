@@ -13,7 +13,7 @@ import java.util.List;
  */
 public final class StringUtil{
 	
-	// Not allowed to create a StringUtil
+	/** Not allowed to create a StringUtil */
 	private StringUtil(){ }
 	
 	/**
