@@ -6,7 +6,7 @@
 	<parent>
 		<artifactId>TadukooUtilParent</artifactId>
 		<groupId>com.github.tadukoo.util</groupId>
-		<version>0.5-Beta</version>
+		<version>0.5.1-Beta</version>
 	</parent>
 	<artifactId>TadukooFunctions</artifactId>
 	<dependencies>
