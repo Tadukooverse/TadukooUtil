@@ -38,7 +38,7 @@ public class SetUtil{
 	/**
 	 * Creates a {@link Set} using the given array of arguments.
 	 *
-	 * @param <T> The {@link Set's} type argument and type of variables passed in
+	 * @param <T> The {@link Set Set's} type argument and type of variables passed in
 	 * @param t The array of variables passed in
 	 * @return A {@link Set} containing the given variables
 	 */
