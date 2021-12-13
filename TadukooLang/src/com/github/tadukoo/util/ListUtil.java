@@ -8,7 +8,7 @@ import java.util.List;
  * Util functions for dealing with {@link List}s.
  * 
  * @author Logan Ferree (Tadukoo)
- * @version Alpha v.0.2
+ * @version Beta v.0.5.2
  * @since Alpha v.0.1
  */
 public final class ListUtil{
@@ -23,7 +23,7 @@ public final class ListUtil{
 	 * @return true if the List is null or empty
 	 */
 	public static boolean isBlank(List<?> list){
-		return list == null || list.isEmpty();
+		return CollectionUtil.isBlank(list);
 	}
 	
 	/**
@@ -33,7 +33,7 @@ public final class ListUtil{
 	 * @return true if the List is not null and not empty
 	 */
 	public static boolean isNotBlank(List<?> list){
-		return !isBlank(list);
+		return CollectionUtil.isNotBlank(list);
 	}
 	
 	/**
