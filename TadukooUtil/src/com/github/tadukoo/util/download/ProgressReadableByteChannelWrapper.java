@@ -67,7 +67,7 @@ public class ProgressReadableByteChannelWrapper implements ReadableByteChannel{
 		int n;
 		double progress;
 		
-		if((n = byteChannel.read(bb)) > 0){
+		if((n = byteChannel.read(bb)) > 0 && listener != null){
 			readSoFar += n;
 			progress = expectedSize > 0 ? (double) readSoFar/(double) expectedSize * 100.0:-1.0;
 			listener.progressUpdate(progress, readSoFar, expectedSize);
