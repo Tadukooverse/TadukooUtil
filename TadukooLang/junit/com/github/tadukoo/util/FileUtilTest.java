@@ -105,6 +105,17 @@ public class FileUtilTest{
 	}
 	
 	@Test
+	public void testDeleteFile() throws IOException{
+		String folder = "target/testDeleteFile";
+		FileUtil.createDirectory(folder);
+		String filepath = folder + "/test.txt";
+		File file = FileUtil.createFile(filepath);
+		assertTrue(file.exists());
+		FileUtil.deleteFile(filepath);
+		assertFalse(file.exists());
+	}
+	
+	@Test
 	public void testCreateDirectory(){
 		String folderPath = "target/testCreateDirectory";
 		
@@ -118,6 +129,21 @@ public class FileUtilTest{
 		folder = FileUtil.createDirectory(folderPath);
 		assertTrue(folder.exists());
 		assertEquals("testCreateDirectory", folder.getName());
+	}
+	
+	@Test
+	public void testDeleteDirectory() throws IOException{
+		String folderPath = "target/testDeleteDirectory";
+		File folder = FileUtil.createDirectory(folderPath);
+		File file1 = FileUtil.createFile(folder + "/test.txt");
+		File file2 = FileUtil.createFile(folder + "/test2.txt");
+		assertTrue(folder.exists());
+		assertTrue(file1.exists());
+		assertTrue(file2.exists());
+		FileUtil.deleteDirectory(folderPath);
+		assertFalse(folder.exists());
+		assertFalse(file1.exists());
+		assertFalse(file2.exists());
 	}
 	
 	@Test
@@ -298,8 +324,9 @@ public class FileUtilTest{
 		String zipPath = folder + "test.zip";
 		String resultPath = folder + "result/";
 		File resultDir = new File(resultPath);
+		//noinspection ResultOfMethodCallIgnored
 		resultDir.mkdirs();
-		File file = FileUtil.createFile(filepath);
+		FileUtil.createFile(filepath);
 		FileUtil.writeFile(filepath, "Some content");
 		FileUtil.zipFile(filepath, zipPath);
 		FileUtil.unzipFile(zipPath, resultPath);
@@ -321,9 +348,10 @@ public class FileUtilTest{
 		String zipPath = folder + "test.zip";
 		String resultPath = folder + "result/";
 		File resultDir = new File(resultPath);
+		//noinspection ResultOfMethodCallIgnored
 		resultDir.mkdirs();
-		File file = FileUtil.createFile(filepath);
-		File file2 = FileUtil.createFile(filepath2);
+		FileUtil.createFile(filepath);
+		FileUtil.createFile(filepath2);
 		FileUtil.writeFile(filepath, "Some content");
 		FileUtil.writeFile(filepath2, "Some other content");
 		FileUtil.zipFile(dataFolder, zipPath);
@@ -349,6 +377,7 @@ public class FileUtilTest{
 		String zipPath = folder + "test.zip";
 		String resultPath = folder + "result/";
 		File resultDir = new File(resultPath);
+		//noinspection ResultOfMethodCallIgnored
 		resultDir.mkdirs();
 		File file = FileUtil.createFile(filepath);
 		FileUtil.writeFile(filepath, "Some content");
@@ -372,9 +401,10 @@ public class FileUtilTest{
 		String zipPath = folder + "test.zip";
 		String resultPath = folder + "result/";
 		File resultDir = new File(resultPath);
+		//noinspection ResultOfMethodCallIgnored
 		resultDir.mkdirs();
-		File file = FileUtil.createFile(filepath);
-		File file2 = FileUtil.createFile(filepath2);
+		FileUtil.createFile(filepath);
+		FileUtil.createFile(filepath2);
 		FileUtil.writeFile(filepath, "Some content");
 		FileUtil.writeFile(filepath2, "Some other content");
 		FileUtil.zipFile(new File(dataFolder), zipPath);

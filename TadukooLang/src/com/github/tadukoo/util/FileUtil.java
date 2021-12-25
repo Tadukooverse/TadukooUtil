@@ -16,6 +16,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.zip.ZipEntry;
@@ -26,7 +27,7 @@ import java.util.zip.ZipOutputStream;
  * Util functions for dealing with Files.
  * 
  * @author Logan Ferree (Tadukoo)
- * @version Beta v.0.5
+ * @version Beta v.0.5.2
  * @since Pre-Alpha
  */
 public final class FileUtil{
@@ -88,6 +89,7 @@ public final class FileUtil{
 	 * @return The newly created File
 	 * @throws IOException If something goes wrong in creating the file
 	 */
+	@SuppressWarnings("ResultOfMethodCallIgnored")
 	public static File createFile(String filepath) throws IOException{
 		// Create a File object from the given filepath
 		File file = new File(filepath);
@@ -107,6 +109,19 @@ public final class FileUtil{
 	}
 	
 	/**
+	 * Deletes the file at the given filepath
+	 *
+	 * @param filepath The path for the File to be deleted
+	 * @return If the file was deleted or not
+	 */
+	public static boolean deleteFile(String filepath){
+		// Create the File object from the given filepath
+		File file = new File(filepath);
+		
+		return file.delete();
+	}
+	
+	/**
 	 * Creates a directory at the given directoryPath, including any parent directories
 	 * necessary, and returns the {@link File} object to be used.
 	 *
@@ -123,6 +138,21 @@ public final class FileUtil{
 		}
 		
 		return directory;
+	}
+	
+	/**
+	 * Deletes the directory at the given directoryPath, including any files contained
+	 * within it.
+	 *
+	 * @param directoryPath The path to the directory to be deleted
+	 * @throws IOException If anything goes wrong
+	 */
+	public static void deleteDirectory(String directoryPath) throws IOException{
+		//noinspection ResultOfMethodCallIgnored
+		Files.walk(Path.of(directoryPath))
+				.sorted(Comparator.reverseOrder())
+				.map(Path::toFile)
+				.forEach(File::delete);
 	}
 	
 	/**
