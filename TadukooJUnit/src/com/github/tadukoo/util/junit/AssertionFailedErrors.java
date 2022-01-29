@@ -1,4 +1,4 @@
-package com.github.tadukoo.util.junit.constant;
+package com.github.tadukoo.util.junit;
 
 import com.github.tadukoo.util.StringUtil;
 
@@ -51,6 +51,32 @@ public enum AssertionFailedErrors{
 	public static String buildAssertError(Object expected, Object actual){
 		return "expected: <" + StringUtil.convertToString(expected) + "> but was: " +
 				"<" + StringUtil.convertToString(actual) + ">";
+	}
+	
+	/**
+	 * Builds an Assertion Failed Error string of the form: {@code <message> ==> <error>}, e.g.
+	 * {@code pojo was empty! ==> expected: <true> but was: <false>}
+	 * This is useful when using an assert method that includes a custom message before the assert error
+	 *
+	 * @param message The message that will appear before the assertion error
+	 * @param error The {@link AssertionFailedErrors assertion error enum} to use for the assertion error
+	 * @return A string representing an Assertion Failed Error string
+	 */
+	public static String buildTwoPartError(String message, AssertionFailedErrors error){
+		return buildTwoPartError(message, error.toString());
+	}
+	
+	/**
+	 * Builds an Assertion Failed Error string of the form: {@code <message> ==> <error>}, e.g.
+	 * {@code pojo was empty! ==> expected: <true> but was: <false>}
+	 * This is useful when using an assert method that includes a custom message before the assert error
+	 *
+	 * @param message The message that will appear before the assertion error
+	 * @param error The assertion error string to use for the assertion error
+	 * @return A string representing an Assertion Failed Error string
+	 */
+	public static String buildTwoPartError(String message, String error){
+		return message + " ==> " + error;
 	}
 	
 	/**

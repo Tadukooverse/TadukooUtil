@@ -7,7 +7,7 @@ import org.opentest4j.AssertionFailedError;
 import java.util.List;
 import java.util.logging.Level;
 
-import static com.github.tadukoo.util.junit.constant.AssertionFailedErrors.buildAssertError;
+import static com.github.tadukoo.util.junit.AssertionFailedErrors.buildAssertError;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class JUnitEasyLoggerAssertEntriesTest{

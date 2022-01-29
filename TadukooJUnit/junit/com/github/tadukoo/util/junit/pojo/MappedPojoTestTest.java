@@ -1,7 +1,8 @@
-package com.github.tadukoo.util.junit;
+package com.github.tadukoo.util.junit.pojo;
 
-import com.github.tadukoo.util.junit.constant.DefaultTestValues;
+import com.github.tadukoo.util.junit.DefaultTestValues;
 import com.github.tadukoo.util.StringUtil;
+import com.github.tadukoo.util.junit.AssertionFailedErrors;
 import com.github.tadukoo.util.map.MapUtil;
 import com.github.tadukoo.util.pojo.MappedPojo;
 import com.github.tadukoo.util.tuple.Pair;
@@ -14,9 +15,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import static com.github.tadukoo.util.junit.constant.AssertionFailedErrors.ASSERT_NOT_NULL_ERROR;
-import static com.github.tadukoo.util.junit.constant.AssertionFailedErrors.ASSERT_TRUE_ERROR;
-import static com.github.tadukoo.util.junit.constant.AssertionFailedErrors.buildAssertError;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -167,6 +165,11 @@ public class MappedPojoTestTest implements DefaultTestValues{
 		
 		public void setTest(String value){
 			setItem(DEFAULT_TEST_KEY, value);
+		}
+		
+		@Override
+		public boolean isEmpty(){
+			return true;
 		}
 		
 		@Override
@@ -1394,7 +1397,8 @@ public class MappedPojoTestTest implements DefaultTestValues{
 			MappedPojoTest.assertEmptyConstructor(BadMappedPojoA.class);
 			fail();
 		}catch(NoSuchMethodException e){
-			assertEquals("com.github.tadukoo.util.junit.MappedPojoTestTest$BadMappedPojoA.<init>()", e.getMessage());
+			assertEquals("com.github.tadukoo.util.junit.pojo.MappedPojoTestTest$BadMappedPojoA.<init>()",
+					e.getMessage());
 		}
 	}
 	
@@ -1442,7 +1446,8 @@ public class MappedPojoTestTest implements DefaultTestValues{
 			MappedPojoTest.assertEmptyConstructor(MappedPojoBadIsEmpty.class);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(ASSERT_TRUE_ERROR.toString(), e.getMessage());
+			assertEquals(AssertionFailedErrors.buildTwoPartError("pojo was non-empty in empty pojo!",
+					AssertionFailedErrors.ASSERT_TRUE_ERROR), e.getMessage());
 		}
 	}
 	
@@ -1453,7 +1458,8 @@ public class MappedPojoTestTest implements DefaultTestValues{
 			MappedPojoTest.assertEmptyConstructor(MappedPojoNullMap.class);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(ASSERT_NOT_NULL_ERROR.toString(), e.getMessage());
+			assertEquals(AssertionFailedErrors.buildTwoPartError("Map was null in empty pojo!",
+					AssertionFailedErrors.ASSERT_NOT_NULL_ERROR), e.getMessage());
 		}
 	}
 	
@@ -1464,7 +1470,8 @@ public class MappedPojoTestTest implements DefaultTestValues{
 			MappedPojoTest.assertEmptyConstructor(MappedPojoNonEmptyMap.class);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(ASSERT_TRUE_ERROR.toString(), e.getMessage());
+			assertEquals(AssertionFailedErrors.buildTwoPartError("Map was non-empty in empty pojo!",
+					AssertionFailedErrors.ASSERT_TRUE_ERROR), e.getMessage());
 		}
 	}
 	
@@ -1475,7 +1482,8 @@ public class MappedPojoTestTest implements DefaultTestValues{
 			MappedPojoTest.assertEmptyConstructor(MappedPojoNullKeys.class);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(ASSERT_NOT_NULL_ERROR.toString(), e.getMessage());
+			assertEquals(AssertionFailedErrors.buildTwoPartError("getKeys() returned null in empty pojo!",
+							AssertionFailedErrors.ASSERT_NOT_NULL_ERROR), e.getMessage());
 		}
 	}
 	
@@ -1486,7 +1494,8 @@ public class MappedPojoTestTest implements DefaultTestValues{
 			MappedPojoTest.assertEmptyConstructor(MappedPojoNonEmptyKeys.class);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(ASSERT_TRUE_ERROR.toString(), e.getMessage());
+			assertEquals(AssertionFailedErrors.buildTwoPartError("getKeys() was not empty in empty pojo!",
+							AssertionFailedErrors.ASSERT_TRUE_ERROR), e.getMessage());
 		}
 	}
 	
@@ -1507,7 +1516,7 @@ public class MappedPojoTestTest implements DefaultTestValues{
 			MappedPojoTest.assertPojoConstructor(BadMappedPojoA2.class);
 			fail();
 		}catch(NoSuchMethodException e){
-			assertEquals("com.github.tadukoo.util.junit.MappedPojoTestTest$BadMappedPojoA2.<init>" +
+			assertEquals("com.github.tadukoo.util.junit.pojo.MappedPojoTestTest$BadMappedPojoA2.<init>" +
 					"(com.github.tadukoo.util.pojo.MappedPojo)", e.getMessage());
 		}
 	}
@@ -1556,7 +1565,8 @@ public class MappedPojoTestTest implements DefaultTestValues{
 			MappedPojoTest.assertPojoConstructor(MappedPojoBadValue1.class);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(buildAssertError(DEFAULT_TEST_DOUBLE, DEFAULT_WRONG_DOUBLE), e.getMessage());
+			assertEquals(AssertionFailedErrors.buildAssertError(DEFAULT_TEST_DOUBLE, DEFAULT_WRONG_DOUBLE),
+					e.getMessage());
 		}
 	}
 	
@@ -1567,7 +1577,8 @@ public class MappedPojoTestTest implements DefaultTestValues{
 			MappedPojoTest.assertPojoConstructor(MappedPojoBadValue2.class);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(buildAssertError(DEFAULT_TEST_STRING, DEFAULT_WRONG_STRING), e.getMessage());
+			assertEquals(AssertionFailedErrors.buildAssertError(DEFAULT_TEST_STRING, DEFAULT_WRONG_STRING),
+					e.getMessage());
 		}
 	}
 	
@@ -1578,7 +1589,7 @@ public class MappedPojoTestTest implements DefaultTestValues{
 			MappedPojoTest.assertPojoConstructor(MappedPojoNullKeys.class);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(ASSERT_NOT_NULL_ERROR.toString(), e.getMessage());
+			assertEquals(AssertionFailedErrors.ASSERT_NOT_NULL_ERROR.toString(), e.getMessage());
 		}
 	}
 	
@@ -1597,7 +1608,8 @@ public class MappedPojoTestTest implements DefaultTestValues{
 			MappedPojoTest.assertEmptyPojo(pojoBadIsEmpty);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(ASSERT_TRUE_ERROR.toString(), e.getMessage());
+			assertEquals(AssertionFailedErrors.buildTwoPartError("pojo was non-empty in empty pojo!",
+					AssertionFailedErrors.ASSERT_TRUE_ERROR), e.getMessage());
 		}
 	}
 	
@@ -1607,7 +1619,8 @@ public class MappedPojoTestTest implements DefaultTestValues{
 			MappedPojoTest.assertEmptyPojo(pojoNullMap);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(ASSERT_NOT_NULL_ERROR.toString(), e.getMessage());
+			assertEquals(AssertionFailedErrors.buildTwoPartError("Map was null in empty pojo!",
+					AssertionFailedErrors.ASSERT_NOT_NULL_ERROR), e.getMessage());
 		}
 	}
 	
@@ -1617,7 +1630,8 @@ public class MappedPojoTestTest implements DefaultTestValues{
 			MappedPojoTest.assertEmptyPojo(pojoNonEmptyMap);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(ASSERT_TRUE_ERROR.toString(), e.getMessage());
+			assertEquals(AssertionFailedErrors.buildTwoPartError("Map was non-empty in empty pojo!",
+					AssertionFailedErrors.ASSERT_TRUE_ERROR), e.getMessage());
 		}
 	}
 	
@@ -1627,7 +1641,8 @@ public class MappedPojoTestTest implements DefaultTestValues{
 			MappedPojoTest.assertEmptyPojo(pojoNullKeys);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(ASSERT_NOT_NULL_ERROR.toString(), e.getMessage());
+			assertEquals(AssertionFailedErrors.buildTwoPartError("getKeys() returned null in empty pojo!",
+							AssertionFailedErrors.ASSERT_NOT_NULL_ERROR), e.getMessage());
 		}
 	}
 	
@@ -1637,7 +1652,8 @@ public class MappedPojoTestTest implements DefaultTestValues{
 			MappedPojoTest.assertEmptyPojo(pojoNonEmptyKeys);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(ASSERT_TRUE_ERROR.toString(), e.getMessage());
+			assertEquals(AssertionFailedErrors.buildTwoPartError("getKeys() was not empty in empty pojo!",
+							AssertionFailedErrors.ASSERT_TRUE_ERROR), e.getMessage());
 		}
 	}
 	
@@ -1657,7 +1673,8 @@ public class MappedPojoTestTest implements DefaultTestValues{
 					DEFAULT_TEST_STRING, DEFAULT_TEST_STRING_2);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(ASSERT_TRUE_ERROR.toString(), e.getMessage());
+			assertEquals(AssertionFailedErrors.buildTwoPartError("pojo was non-empty in empty pojo!",
+					AssertionFailedErrors.ASSERT_TRUE_ERROR), e.getMessage());
 		}
 	}
 	
@@ -1667,7 +1684,8 @@ public class MappedPojoTestTest implements DefaultTestValues{
 			MappedPojoTest.assertValueGetSet(pojoNullMap, DEFAULT_TEST_KEY, DEFAULT_TEST_STRING, DEFAULT_TEST_STRING_2);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(ASSERT_NOT_NULL_ERROR.toString(), e.getMessage());
+			assertEquals(AssertionFailedErrors.buildTwoPartError("Map was null in empty pojo!",
+					AssertionFailedErrors.ASSERT_NOT_NULL_ERROR), e.getMessage());
 		}
 	}
 	
@@ -1678,7 +1696,8 @@ public class MappedPojoTestTest implements DefaultTestValues{
 					DEFAULT_TEST_STRING, DEFAULT_TEST_STRING_2);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(ASSERT_TRUE_ERROR.toString(), e.getMessage());
+			assertEquals(AssertionFailedErrors.buildTwoPartError("Map was non-empty in empty pojo!",
+					AssertionFailedErrors.ASSERT_TRUE_ERROR), e.getMessage());
 		}
 	}
 	
@@ -1689,7 +1708,8 @@ public class MappedPojoTestTest implements DefaultTestValues{
 					DEFAULT_TEST_STRING, DEFAULT_TEST_STRING_2);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(ASSERT_NOT_NULL_ERROR.toString(), e.getMessage());
+			assertEquals(AssertionFailedErrors.buildTwoPartError("getKeys() returned null in empty pojo!",
+							AssertionFailedErrors.ASSERT_NOT_NULL_ERROR), e.getMessage());
 		}
 	}
 	
@@ -1700,7 +1720,8 @@ public class MappedPojoTestTest implements DefaultTestValues{
 					DEFAULT_TEST_STRING, DEFAULT_TEST_STRING_2);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(ASSERT_TRUE_ERROR.toString(), e.getMessage());
+			assertEquals(AssertionFailedErrors.buildTwoPartError("getKeys() was not empty in empty pojo!",
+							AssertionFailedErrors.ASSERT_TRUE_ERROR), e.getMessage());
 		}
 	}
 	
@@ -1711,7 +1732,7 @@ public class MappedPojoTestTest implements DefaultTestValues{
 					DEFAULT_TEST_STRING, DEFAULT_TEST_STRING_2);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(ASSERT_TRUE_ERROR.toString(), e.getMessage());
+			assertEquals(AssertionFailedErrors.ASSERT_TRUE_ERROR.toString(), e.getMessage());
 		}
 	}
 	
@@ -1722,7 +1743,7 @@ public class MappedPojoTestTest implements DefaultTestValues{
 					DEFAULT_TEST_STRING, DEFAULT_TEST_STRING_2);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(ASSERT_TRUE_ERROR.toString(), e.getMessage());
+			assertEquals(AssertionFailedErrors.ASSERT_TRUE_ERROR.toString(), e.getMessage());
 		}
 	}
 	
@@ -1733,7 +1754,8 @@ public class MappedPojoTestTest implements DefaultTestValues{
 					DEFAULT_TEST_STRING, DEFAULT_TEST_STRING_2);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(buildAssertError(DEFAULT_TEST_STRING ,DEFAULT_WRONG_STRING), e.getMessage());
+			assertEquals(AssertionFailedErrors.buildAssertError(DEFAULT_TEST_STRING ,DEFAULT_WRONG_STRING),
+					e.getMessage());
 		}
 	}
 	
@@ -1744,7 +1766,7 @@ public class MappedPojoTestTest implements DefaultTestValues{
 					DEFAULT_TEST_STRING, DEFAULT_TEST_STRING_2);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(ASSERT_NOT_NULL_ERROR.toString(), e.getMessage());
+			assertEquals(AssertionFailedErrors.ASSERT_NOT_NULL_ERROR.toString(), e.getMessage());
 		}
 	}
 	
@@ -1755,7 +1777,7 @@ public class MappedPojoTestTest implements DefaultTestValues{
 					DEFAULT_TEST_STRING, DEFAULT_TEST_STRING_2);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(buildAssertError(1, 2), e.getMessage());
+			assertEquals(AssertionFailedErrors.buildAssertError(1, 2), e.getMessage());
 		}
 	}
 	
@@ -1766,7 +1788,8 @@ public class MappedPojoTestTest implements DefaultTestValues{
 					DEFAULT_TEST_STRING, DEFAULT_TEST_STRING_2);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(buildAssertError(DEFAULT_TEST_KEY, DEFAULT_WRONG_KEY), e.getMessage());
+			assertEquals(AssertionFailedErrors.buildAssertError(DEFAULT_TEST_KEY, DEFAULT_WRONG_KEY),
+					e.getMessage());
 		}
 	}
 	
@@ -1777,7 +1800,7 @@ public class MappedPojoTestTest implements DefaultTestValues{
 					DEFAULT_TEST_STRING, DEFAULT_TEST_STRING_2);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(buildAssertError(1, 2), e.getMessage());
+			assertEquals(AssertionFailedErrors.buildAssertError(1, 2), e.getMessage());
 		}
 	}
 	
@@ -1788,7 +1811,7 @@ public class MappedPojoTestTest implements DefaultTestValues{
 					DEFAULT_TEST_STRING, DEFAULT_TEST_STRING_2);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(ASSERT_TRUE_ERROR.toString(), e.getMessage());
+			assertEquals(AssertionFailedErrors.ASSERT_TRUE_ERROR.toString(), e.getMessage());
 		}
 	}
 	
@@ -1799,7 +1822,8 @@ public class MappedPojoTestTest implements DefaultTestValues{
 					DEFAULT_TEST_STRING, DEFAULT_TEST_STRING_2);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(buildAssertError(DEFAULT_TEST_STRING, DEFAULT_WRONG_STRING), e.getMessage());
+			assertEquals(AssertionFailedErrors.buildAssertError(DEFAULT_TEST_STRING, DEFAULT_WRONG_STRING),
+					e.getMessage());
 		}
 	}
 	
@@ -1810,7 +1834,7 @@ public class MappedPojoTestTest implements DefaultTestValues{
 					DEFAULT_TEST_STRING, DEFAULT_TEST_STRING_2);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(ASSERT_TRUE_ERROR.toString(), e.getMessage());
+			assertEquals(AssertionFailedErrors.ASSERT_TRUE_ERROR.toString(), e.getMessage());
 		}
 	}
 	
@@ -1821,7 +1845,7 @@ public class MappedPojoTestTest implements DefaultTestValues{
 					DEFAULT_TEST_STRING, DEFAULT_TEST_STRING_2);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(ASSERT_TRUE_ERROR.toString(), e.getMessage());
+			assertEquals(AssertionFailedErrors.ASSERT_TRUE_ERROR.toString(), e.getMessage());
 		}
 	}
 	
@@ -1832,7 +1856,8 @@ public class MappedPojoTestTest implements DefaultTestValues{
 					DEFAULT_TEST_STRING, DEFAULT_TEST_STRING_2);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(buildAssertError(DEFAULT_TEST_STRING_2, DEFAULT_WRONG_STRING), e.getMessage());
+			assertEquals(AssertionFailedErrors.buildAssertError(DEFAULT_TEST_STRING_2, DEFAULT_WRONG_STRING),
+					e.getMessage());
 		}
 	}
 	
@@ -1843,7 +1868,7 @@ public class MappedPojoTestTest implements DefaultTestValues{
 					DEFAULT_TEST_STRING, DEFAULT_TEST_STRING_2);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(ASSERT_NOT_NULL_ERROR.toString(), e.getMessage());
+			assertEquals(AssertionFailedErrors.ASSERT_NOT_NULL_ERROR.toString(), e.getMessage());
 		}
 	}
 	
@@ -1854,7 +1879,7 @@ public class MappedPojoTestTest implements DefaultTestValues{
 					DEFAULT_TEST_STRING, DEFAULT_TEST_STRING_2);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(buildAssertError(1, 2), e.getMessage());
+			assertEquals(AssertionFailedErrors.buildAssertError(1, 2), e.getMessage());
 		}
 	}
 	
@@ -1865,7 +1890,8 @@ public class MappedPojoTestTest implements DefaultTestValues{
 					DEFAULT_TEST_STRING, DEFAULT_TEST_STRING_2);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(buildAssertError(DEFAULT_TEST_KEY, DEFAULT_WRONG_KEY), e.getMessage());
+			assertEquals(AssertionFailedErrors.buildAssertError(DEFAULT_TEST_KEY, DEFAULT_WRONG_KEY),
+					e.getMessage());
 		}
 	}
 	
@@ -1876,7 +1902,7 @@ public class MappedPojoTestTest implements DefaultTestValues{
 					DEFAULT_TEST_STRING, DEFAULT_TEST_STRING_2);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(buildAssertError(1, 2), e.getMessage());
+			assertEquals(AssertionFailedErrors.buildAssertError(1, 2), e.getMessage());
 		}
 	}
 	
@@ -1887,7 +1913,7 @@ public class MappedPojoTestTest implements DefaultTestValues{
 					DEFAULT_TEST_STRING, DEFAULT_TEST_STRING_2);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(ASSERT_TRUE_ERROR.toString(), e.getMessage());
+			assertEquals(AssertionFailedErrors.ASSERT_TRUE_ERROR.toString(), e.getMessage());
 		}
 	}
 	
@@ -1898,7 +1924,8 @@ public class MappedPojoTestTest implements DefaultTestValues{
 					DEFAULT_TEST_STRING, DEFAULT_TEST_STRING_2);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(buildAssertError(DEFAULT_TEST_STRING_2, DEFAULT_WRONG_STRING), e.getMessage());
+			assertEquals(AssertionFailedErrors.buildAssertError(DEFAULT_TEST_STRING_2, DEFAULT_WRONG_STRING),
+					e.getMessage());
 		}
 	}
 	
@@ -1918,7 +1945,8 @@ public class MappedPojoTestTest implements DefaultTestValues{
 					DEFAULT_TEST_KEY, DEFAULT_TEST_STRING, DEFAULT_TEST_STRING_2);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(ASSERT_TRUE_ERROR.toString(), e.getMessage());
+			assertEquals(AssertionFailedErrors.buildTwoPartError("pojo was non-empty in empty pojo!",
+					AssertionFailedErrors.ASSERT_TRUE_ERROR), e.getMessage());
 		}
 	}
 	
@@ -1929,7 +1957,8 @@ public class MappedPojoTestTest implements DefaultTestValues{
 					DEFAULT_TEST_KEY, DEFAULT_TEST_STRING, DEFAULT_TEST_STRING_2);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(ASSERT_NOT_NULL_ERROR.toString(), e.getMessage());
+			assertEquals(AssertionFailedErrors.buildTwoPartError("Map was null in empty pojo!",
+					AssertionFailedErrors.ASSERT_NOT_NULL_ERROR), e.getMessage());
 		}
 	}
 	
@@ -1940,7 +1969,8 @@ public class MappedPojoTestTest implements DefaultTestValues{
 					DEFAULT_TEST_KEY, DEFAULT_TEST_STRING, DEFAULT_TEST_STRING_2);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(ASSERT_TRUE_ERROR.toString(), e.getMessage());
+			assertEquals(AssertionFailedErrors.buildTwoPartError("Map was non-empty in empty pojo!",
+					AssertionFailedErrors.ASSERT_TRUE_ERROR), e.getMessage());
 		}
 	}
 	
@@ -1951,7 +1981,8 @@ public class MappedPojoTestTest implements DefaultTestValues{
 					DEFAULT_TEST_KEY, DEFAULT_TEST_STRING, DEFAULT_TEST_STRING_2);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(ASSERT_NOT_NULL_ERROR.toString(), e.getMessage());
+			assertEquals(AssertionFailedErrors.buildTwoPartError("getKeys() returned null in empty pojo!",
+							AssertionFailedErrors.ASSERT_NOT_NULL_ERROR), e.getMessage());
 		}
 	}
 	
@@ -1962,7 +1993,8 @@ public class MappedPojoTestTest implements DefaultTestValues{
 					DEFAULT_TEST_KEY, DEFAULT_TEST_STRING, DEFAULT_TEST_STRING_2);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(ASSERT_TRUE_ERROR.toString(), e.getMessage());
+			assertEquals(AssertionFailedErrors.buildTwoPartError("getKeys() was not empty in empty pojo!",
+							AssertionFailedErrors.ASSERT_TRUE_ERROR), e.getMessage());
 		}
 	}
 	
@@ -1973,7 +2005,7 @@ public class MappedPojoTestTest implements DefaultTestValues{
 					DEFAULT_TEST_KEY, DEFAULT_TEST_STRING, DEFAULT_TEST_STRING_2);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(ASSERT_TRUE_ERROR.toString(), e.getMessage());
+			assertEquals(AssertionFailedErrors.ASSERT_TRUE_ERROR.toString(), e.getMessage());
 		}
 	}
 	
@@ -1984,7 +2016,7 @@ public class MappedPojoTestTest implements DefaultTestValues{
 					DEFAULT_TEST_KEY, DEFAULT_TEST_STRING, DEFAULT_TEST_STRING_2);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(ASSERT_TRUE_ERROR.toString(), e.getMessage());
+			assertEquals(AssertionFailedErrors.ASSERT_TRUE_ERROR.toString(), e.getMessage());
 		}
 	}
 	
@@ -1995,7 +2027,8 @@ public class MappedPojoTestTest implements DefaultTestValues{
 					DEFAULT_TEST_KEY, DEFAULT_TEST_STRING, DEFAULT_TEST_STRING_2);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(buildAssertError(DEFAULT_TEST_STRING ,DEFAULT_WRONG_STRING), e.getMessage());
+			assertEquals(AssertionFailedErrors.buildAssertError(DEFAULT_TEST_STRING ,DEFAULT_WRONG_STRING),
+					e.getMessage());
 		}
 	}
 	
@@ -2006,7 +2039,7 @@ public class MappedPojoTestTest implements DefaultTestValues{
 					DEFAULT_TEST_KEY, DEFAULT_TEST_STRING, DEFAULT_TEST_STRING_2);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(ASSERT_NOT_NULL_ERROR.toString(), e.getMessage());
+			assertEquals(AssertionFailedErrors.ASSERT_NOT_NULL_ERROR.toString(), e.getMessage());
 		}
 	}
 	
@@ -2017,7 +2050,7 @@ public class MappedPojoTestTest implements DefaultTestValues{
 					pojoBadGetKeysExtraKey::setTest, DEFAULT_TEST_KEY, DEFAULT_TEST_STRING, DEFAULT_TEST_STRING_2);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(buildAssertError(1, 2), e.getMessage());
+			assertEquals(AssertionFailedErrors.buildAssertError(1, 2), e.getMessage());
 		}
 	}
 	
@@ -2028,7 +2061,8 @@ public class MappedPojoTestTest implements DefaultTestValues{
 					pojoBadGetKeysWrongKey::setTest, DEFAULT_TEST_KEY, DEFAULT_TEST_STRING, DEFAULT_TEST_STRING_2);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(buildAssertError(DEFAULT_TEST_KEY, DEFAULT_WRONG_KEY), e.getMessage());
+			assertEquals(AssertionFailedErrors.buildAssertError(DEFAULT_TEST_KEY, DEFAULT_WRONG_KEY),
+					e.getMessage());
 		}
 	}
 	
@@ -2039,7 +2073,7 @@ public class MappedPojoTestTest implements DefaultTestValues{
 					pojoBadGetMapExtraItem::setTest, DEFAULT_TEST_KEY, DEFAULT_TEST_STRING, DEFAULT_TEST_STRING_2);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(buildAssertError(1, 2), e.getMessage());
+			assertEquals(AssertionFailedErrors.buildAssertError(1, 2), e.getMessage());
 		}
 	}
 	
@@ -2050,7 +2084,7 @@ public class MappedPojoTestTest implements DefaultTestValues{
 					pojoBadGetMapWrongKey::setTest, DEFAULT_TEST_KEY, DEFAULT_TEST_STRING, DEFAULT_TEST_STRING_2);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(ASSERT_TRUE_ERROR.toString(), e.getMessage());
+			assertEquals(AssertionFailedErrors.ASSERT_TRUE_ERROR.toString(), e.getMessage());
 		}
 	}
 	
@@ -2061,7 +2095,8 @@ public class MappedPojoTestTest implements DefaultTestValues{
 					pojoBadGetMapWrongValue::setTest, DEFAULT_TEST_KEY, DEFAULT_TEST_STRING, DEFAULT_TEST_STRING_2);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(buildAssertError(DEFAULT_TEST_STRING, DEFAULT_WRONG_STRING), e.getMessage());
+			assertEquals(AssertionFailedErrors.buildAssertError(DEFAULT_TEST_STRING, DEFAULT_WRONG_STRING),
+					e.getMessage());
 		}
 	}
 	
@@ -2072,7 +2107,7 @@ public class MappedPojoTestTest implements DefaultTestValues{
 					DEFAULT_TEST_KEY, DEFAULT_TEST_STRING, DEFAULT_TEST_STRING_2);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(ASSERT_TRUE_ERROR.toString(), e.getMessage());
+			assertEquals(AssertionFailedErrors.ASSERT_TRUE_ERROR.toString(), e.getMessage());
 		}
 	}
 	
@@ -2083,7 +2118,7 @@ public class MappedPojoTestTest implements DefaultTestValues{
 					DEFAULT_TEST_KEY, DEFAULT_TEST_STRING, DEFAULT_TEST_STRING_2);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(ASSERT_TRUE_ERROR.toString(), e.getMessage());
+			assertEquals(AssertionFailedErrors.ASSERT_TRUE_ERROR.toString(), e.getMessage());
 		}
 	}
 	
@@ -2094,7 +2129,8 @@ public class MappedPojoTestTest implements DefaultTestValues{
 					DEFAULT_TEST_KEY, DEFAULT_TEST_STRING, DEFAULT_TEST_STRING_2);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(buildAssertError(DEFAULT_TEST_STRING_2, DEFAULT_WRONG_STRING), e.getMessage());
+			assertEquals(AssertionFailedErrors.buildAssertError(DEFAULT_TEST_STRING_2, DEFAULT_WRONG_STRING),
+					e.getMessage());
 		}
 	}
 	
@@ -2105,7 +2141,7 @@ public class MappedPojoTestTest implements DefaultTestValues{
 					DEFAULT_TEST_KEY, DEFAULT_TEST_STRING, DEFAULT_TEST_STRING_2);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(ASSERT_NOT_NULL_ERROR.toString(), e.getMessage());
+			assertEquals(AssertionFailedErrors.ASSERT_NOT_NULL_ERROR.toString(), e.getMessage());
 		}
 	}
 	
@@ -2116,7 +2152,7 @@ public class MappedPojoTestTest implements DefaultTestValues{
 					pojoBadGetKeysExtraKey2::setTest, DEFAULT_TEST_KEY, DEFAULT_TEST_STRING, DEFAULT_TEST_STRING_2);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(buildAssertError(1, 2), e.getMessage());
+			assertEquals(AssertionFailedErrors.buildAssertError(1, 2), e.getMessage());
 		}
 	}
 	
@@ -2127,7 +2163,8 @@ public class MappedPojoTestTest implements DefaultTestValues{
 					pojoBadGetKeysWrongKey2::setTest, DEFAULT_TEST_KEY, DEFAULT_TEST_STRING, DEFAULT_TEST_STRING_2);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(buildAssertError(DEFAULT_TEST_KEY, DEFAULT_WRONG_KEY), e.getMessage());
+			assertEquals(AssertionFailedErrors.buildAssertError(DEFAULT_TEST_KEY, DEFAULT_WRONG_KEY),
+					e.getMessage());
 		}
 	}
 	
@@ -2138,7 +2175,7 @@ public class MappedPojoTestTest implements DefaultTestValues{
 					pojoBadGetMapExtraItem2::setTest, DEFAULT_TEST_KEY, DEFAULT_TEST_STRING, DEFAULT_TEST_STRING_2);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(buildAssertError(1, 2), e.getMessage());
+			assertEquals(AssertionFailedErrors.buildAssertError(1, 2), e.getMessage());
 		}
 	}
 	
@@ -2149,7 +2186,7 @@ public class MappedPojoTestTest implements DefaultTestValues{
 					pojoBadGetMapWrongKey2::setTest, DEFAULT_TEST_KEY, DEFAULT_TEST_STRING, DEFAULT_TEST_STRING_2);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(ASSERT_TRUE_ERROR.toString(), e.getMessage());
+			assertEquals(AssertionFailedErrors.ASSERT_TRUE_ERROR.toString(), e.getMessage());
 		}
 	}
 	
@@ -2160,7 +2197,8 @@ public class MappedPojoTestTest implements DefaultTestValues{
 					pojoBadGetMapWrongValue2::setTest, DEFAULT_TEST_KEY, DEFAULT_TEST_STRING, DEFAULT_TEST_STRING_2);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(buildAssertError(DEFAULT_TEST_STRING_2, DEFAULT_WRONG_STRING), e.getMessage());
+			assertEquals(AssertionFailedErrors.buildAssertError(DEFAULT_TEST_STRING_2, DEFAULT_WRONG_STRING),
+					e.getMessage());
 		}
 	}
 	
@@ -2171,7 +2209,8 @@ public class MappedPojoTestTest implements DefaultTestValues{
 					DEFAULT_TEST_KEY, DEFAULT_TEST_STRING, DEFAULT_TEST_STRING_2);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(ASSERT_TRUE_ERROR.toString(), e.getMessage());
+			assertEquals(AssertionFailedErrors.buildTwoPartError("pojo was non-empty in empty pojo!",
+					AssertionFailedErrors.ASSERT_TRUE_ERROR), e.getMessage());
 		}
 	}
 	
@@ -2182,7 +2221,8 @@ public class MappedPojoTestTest implements DefaultTestValues{
 					DEFAULT_TEST_KEY, DEFAULT_TEST_STRING, DEFAULT_TEST_STRING_2);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(buildAssertError(DEFAULT_TEST_STRING, DEFAULT_WRONG_STRING), e.getMessage());
+			assertEquals(AssertionFailedErrors.buildAssertError(DEFAULT_TEST_STRING, DEFAULT_WRONG_STRING),
+					e.getMessage());
 		}
 	}
 	
@@ -2193,7 +2233,7 @@ public class MappedPojoTestTest implements DefaultTestValues{
 					DEFAULT_TEST_KEY, DEFAULT_TEST_STRING, DEFAULT_TEST_STRING_2);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(ASSERT_TRUE_ERROR.toString(), e.getMessage());
+			assertEquals(AssertionFailedErrors.ASSERT_TRUE_ERROR.toString(), e.getMessage());
 		}
 	}
 	
@@ -2204,7 +2244,7 @@ public class MappedPojoTestTest implements DefaultTestValues{
 					DEFAULT_TEST_KEY, DEFAULT_TEST_STRING, DEFAULT_TEST_STRING_2);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(ASSERT_TRUE_ERROR.toString(), e.getMessage());
+			assertEquals(AssertionFailedErrors.ASSERT_TRUE_ERROR.toString(), e.getMessage());
 		}
 	}
 	
@@ -2215,7 +2255,8 @@ public class MappedPojoTestTest implements DefaultTestValues{
 					DEFAULT_TEST_KEY, DEFAULT_TEST_STRING, DEFAULT_TEST_STRING_2);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(buildAssertError(DEFAULT_TEST_STRING, DEFAULT_WRONG_STRING), e.getMessage());
+			assertEquals(AssertionFailedErrors.buildAssertError(DEFAULT_TEST_STRING, DEFAULT_WRONG_STRING),
+					e.getMessage());
 		}
 	}
 	
@@ -2226,7 +2267,7 @@ public class MappedPojoTestTest implements DefaultTestValues{
 					DEFAULT_TEST_KEY, DEFAULT_TEST_STRING, DEFAULT_TEST_STRING_2);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(ASSERT_NOT_NULL_ERROR.toString(), e.getMessage());
+			assertEquals(AssertionFailedErrors.ASSERT_NOT_NULL_ERROR.toString(), e.getMessage());
 		}
 	}
 	
@@ -2237,7 +2278,7 @@ public class MappedPojoTestTest implements DefaultTestValues{
 					DEFAULT_TEST_KEY, DEFAULT_TEST_STRING, DEFAULT_TEST_STRING_2);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(buildAssertError(1, 2), e.getMessage());
+			assertEquals(AssertionFailedErrors.buildAssertError(1, 2), e.getMessage());
 		}
 	}
 	
@@ -2248,7 +2289,8 @@ public class MappedPojoTestTest implements DefaultTestValues{
 					DEFAULT_TEST_KEY, DEFAULT_TEST_STRING, DEFAULT_TEST_STRING_2);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(buildAssertError(DEFAULT_TEST_KEY, DEFAULT_WRONG_KEY), e.getMessage());
+			assertEquals(AssertionFailedErrors.buildAssertError(DEFAULT_TEST_KEY, DEFAULT_WRONG_KEY),
+					e.getMessage());
 		}
 	}
 	
@@ -2259,7 +2301,7 @@ public class MappedPojoTestTest implements DefaultTestValues{
 					pojoCustomExtraMapKey::setTest, DEFAULT_TEST_KEY, DEFAULT_TEST_STRING, DEFAULT_TEST_STRING_2);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(buildAssertError(1, 2), e.getMessage());
+			assertEquals(AssertionFailedErrors.buildAssertError(1, 2), e.getMessage());
 		}
 	}
 	
@@ -2270,7 +2312,8 @@ public class MappedPojoTestTest implements DefaultTestValues{
 					pojoCustomWrongMapValue::setTest, DEFAULT_TEST_KEY, DEFAULT_TEST_STRING, DEFAULT_TEST_STRING_2);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(buildAssertError(DEFAULT_TEST_STRING, DEFAULT_WRONG_STRING), e.getMessage());
+			assertEquals(AssertionFailedErrors.buildAssertError(DEFAULT_TEST_STRING, DEFAULT_WRONG_STRING),
+					e.getMessage());
 		}
 	}
 	
@@ -2281,7 +2324,8 @@ public class MappedPojoTestTest implements DefaultTestValues{
 					DEFAULT_TEST_KEY, DEFAULT_TEST_STRING, DEFAULT_TEST_STRING_2);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(buildAssertError(DEFAULT_TEST_STRING_2, DEFAULT_WRONG_STRING), e.getMessage());
+			assertEquals(AssertionFailedErrors.buildAssertError(DEFAULT_TEST_STRING_2, DEFAULT_WRONG_STRING),
+					e.getMessage());
 		}
 	}
 	
@@ -2292,7 +2336,7 @@ public class MappedPojoTestTest implements DefaultTestValues{
 					DEFAULT_TEST_KEY, DEFAULT_TEST_STRING, DEFAULT_TEST_STRING_2);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(ASSERT_TRUE_ERROR.toString(), e.getMessage());
+			assertEquals(AssertionFailedErrors.ASSERT_TRUE_ERROR.toString(), e.getMessage());
 		}
 	}
 	
@@ -2303,7 +2347,7 @@ public class MappedPojoTestTest implements DefaultTestValues{
 					DEFAULT_TEST_KEY, DEFAULT_TEST_STRING, DEFAULT_TEST_STRING_2);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(ASSERT_TRUE_ERROR.toString(), e.getMessage());
+			assertEquals(AssertionFailedErrors.ASSERT_TRUE_ERROR.toString(), e.getMessage());
 		}
 	}
 	
@@ -2314,7 +2358,8 @@ public class MappedPojoTestTest implements DefaultTestValues{
 					DEFAULT_TEST_KEY, DEFAULT_TEST_STRING, DEFAULT_TEST_STRING_2);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(buildAssertError(DEFAULT_TEST_STRING_2, DEFAULT_WRONG_STRING), e.getMessage());
+			assertEquals(AssertionFailedErrors.buildAssertError(DEFAULT_TEST_STRING_2, DEFAULT_WRONG_STRING),
+					e.getMessage());
 		}
 	}
 	
@@ -2325,7 +2370,7 @@ public class MappedPojoTestTest implements DefaultTestValues{
 					DEFAULT_TEST_KEY, DEFAULT_TEST_STRING, DEFAULT_TEST_STRING_2);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(ASSERT_NOT_NULL_ERROR.toString(), e.getMessage());
+			assertEquals(AssertionFailedErrors.ASSERT_NOT_NULL_ERROR.toString(), e.getMessage());
 		}
 	}
 	
@@ -2336,7 +2381,7 @@ public class MappedPojoTestTest implements DefaultTestValues{
 					DEFAULT_TEST_KEY, DEFAULT_TEST_STRING, DEFAULT_TEST_STRING_2);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(buildAssertError(1, 2), e.getMessage());
+			assertEquals(AssertionFailedErrors.buildAssertError(1, 2), e.getMessage());
 		}
 	}
 	
@@ -2347,7 +2392,8 @@ public class MappedPojoTestTest implements DefaultTestValues{
 					DEFAULT_TEST_KEY, DEFAULT_TEST_STRING, DEFAULT_TEST_STRING_2);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(buildAssertError(DEFAULT_TEST_KEY, DEFAULT_WRONG_KEY), e.getMessage());
+			assertEquals(AssertionFailedErrors.buildAssertError(DEFAULT_TEST_KEY, DEFAULT_WRONG_KEY),
+					e.getMessage());
 		}
 	}
 	
@@ -2358,7 +2404,7 @@ public class MappedPojoTestTest implements DefaultTestValues{
 					pojoCustomExtraMapKey2::setTest, DEFAULT_TEST_KEY, DEFAULT_TEST_STRING, DEFAULT_TEST_STRING_2);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(buildAssertError(1, 2), e.getMessage());
+			assertEquals(AssertionFailedErrors.buildAssertError(1, 2), e.getMessage());
 		}
 	}
 	
@@ -2369,7 +2415,8 @@ public class MappedPojoTestTest implements DefaultTestValues{
 					pojoCustomWrongMapValue2::setTest, DEFAULT_TEST_KEY, DEFAULT_TEST_STRING, DEFAULT_TEST_STRING_2);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(buildAssertError(DEFAULT_TEST_STRING_2, DEFAULT_WRONG_STRING), e.getMessage());
+			assertEquals(AssertionFailedErrors.buildAssertError(DEFAULT_TEST_STRING_2, DEFAULT_WRONG_STRING),
+					e.getMessage());
 		}
 	}
 }

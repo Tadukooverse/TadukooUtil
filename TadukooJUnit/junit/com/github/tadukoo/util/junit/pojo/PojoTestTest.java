@@ -1,10 +1,10 @@
-package com.github.tadukoo.util.junit;
+package com.github.tadukoo.util.junit.pojo;
 
-import com.github.tadukoo.util.junit.constant.DefaultTestValues;
+import com.github.tadukoo.util.junit.DefaultTestValues;
+import com.github.tadukoo.util.junit.AssertionFailedErrors;
 import org.junit.jupiter.api.Test;
 import org.opentest4j.AssertionFailedError;
 
-import static com.github.tadukoo.util.junit.constant.AssertionFailedErrors.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
@@ -124,7 +124,7 @@ public class PojoTestTest implements DefaultTestValues{
 					DEFAULT_TEST_STRING_2);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(buildAssertError(DEFAULT_TEST_STRING, DEFAULT_WRONG_STRING), e.getMessage());
+			assertEquals(AssertionFailedErrors.buildAssertError(DEFAULT_TEST_STRING, DEFAULT_WRONG_STRING), e.getMessage());
 		}
 	}
 	
@@ -135,7 +135,7 @@ public class PojoTestTest implements DefaultTestValues{
 					DEFAULT_TEST_STRING_2);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(buildAssertError(DEFAULT_TEST_STRING_2, DEFAULT_TEST_STRING), e.getMessage());
+			assertEquals(AssertionFailedErrors.buildAssertError(DEFAULT_TEST_STRING_2, DEFAULT_TEST_STRING), e.getMessage());
 		}
 	}
 	
@@ -172,7 +172,7 @@ public class PojoTestTest implements DefaultTestValues{
 			PojoTest.assertStringGetSet(badPojo::getString, badPojo::setString);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(buildAssertError(DEFAULT_TEST_STRING, DEFAULT_WRONG_STRING), e.getMessage());
+			assertEquals(AssertionFailedErrors.buildAssertError(DEFAULT_TEST_STRING, DEFAULT_WRONG_STRING), e.getMessage());
 		}
 	}
 	
@@ -182,7 +182,7 @@ public class PojoTestTest implements DefaultTestValues{
 			PojoTest.assertStringGetSet(trickyPojo::getString, trickyPojo::setString);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(buildAssertError(DEFAULT_TEST_STRING_2,DEFAULT_TEST_STRING), e.getMessage());
+			assertEquals(AssertionFailedErrors.buildAssertError(DEFAULT_TEST_STRING_2,DEFAULT_TEST_STRING), e.getMessage());
 		}
 	}
 	
@@ -217,7 +217,7 @@ public class PojoTestTest implements DefaultTestValues{
 			PojoTest.assertDoubleGetSet(badPojo::getDouble, badPojo::setDouble);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(buildAssertError(DEFAULT_TEST_DOUBLE, 0.0), e.getMessage());
+			assertEquals(AssertionFailedErrors.buildAssertError(DEFAULT_TEST_DOUBLE, 0.0), e.getMessage());
 		}
 	}
 	
@@ -227,7 +227,7 @@ public class PojoTestTest implements DefaultTestValues{
 			PojoTest.assertDoubleGetSet(trickyPojo::getDouble, trickyPojo::setDouble);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(buildAssertError(DEFAULT_TEST_DOUBLE_2, DEFAULT_TEST_DOUBLE), e.getMessage());
+			assertEquals(AssertionFailedErrors.buildAssertError(DEFAULT_TEST_DOUBLE_2, DEFAULT_TEST_DOUBLE), e.getMessage());
 		}
 	}
 	

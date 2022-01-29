@@ -1,4 +1,4 @@
-package com.github.tadukoo.util.junit;
+package com.github.tadukoo.util.junit.pojo;
 
 import com.github.tadukoo.util.pojo.MappedPojo;
 

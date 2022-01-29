@@ -1,4 +1,4 @@
-package com.github.tadukoo.util.junit.constant;
+package com.github.tadukoo.util.junit;
 
 import org.junit.jupiter.api.Test;
 

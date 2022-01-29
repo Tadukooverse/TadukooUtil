@@ -1,6 +1,6 @@
-package com.github.tadukoo.util.junit;
+package com.github.tadukoo.util.junit.pojo;
 
-import com.github.tadukoo.util.junit.constant.DefaultTestValues;
+import com.github.tadukoo.util.junit.DefaultTestValues;
 
 public class MappedPojoAssertDoubleGetSetCustomTest extends MappedPojoAssertValueGetSetCustomTest<Double>
 		implements DefaultTestValues{

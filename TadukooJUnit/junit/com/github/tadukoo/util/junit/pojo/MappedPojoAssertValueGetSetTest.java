@@ -1,7 +1,8 @@
-package com.github.tadukoo.util.junit;
+package com.github.tadukoo.util.junit.pojo;
 
 import com.github.tadukoo.util.functional.NoException;
 import com.github.tadukoo.util.functional.consumer.ThrowingConsumer2;
+import com.github.tadukoo.util.junit.AssertionFailedErrors;
 import com.github.tadukoo.util.map.MapUtil;
 import com.github.tadukoo.util.pojo.MappedPojo;
 import com.github.tadukoo.util.tuple.Pair;
@@ -13,9 +14,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import static com.github.tadukoo.util.junit.constant.AssertionFailedErrors.ASSERT_NOT_NULL_ERROR;
-import static com.github.tadukoo.util.junit.constant.AssertionFailedErrors.ASSERT_TRUE_ERROR;
-import static com.github.tadukoo.util.junit.constant.AssertionFailedErrors.buildAssertError;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
@@ -99,6 +97,11 @@ public abstract class MappedPojoAssertValueGetSetTest<V>{
 		private final Map<String, Object> map = MapUtil.createMap(Pair.of(defaultWrongKey, defaultWrongValue));
 		
 		public MappedPojoNonEmptyMap(){ }
+		
+		@Override
+		public boolean isEmpty(){
+			return true;
+		}
 		
 		@Override
 		public Map<String, Object> getMap(){
@@ -547,7 +550,7 @@ public abstract class MappedPojoAssertValueGetSetTest<V>{
 			assertValueGetSetFunc.accept(pojoBadIsEmpty, defaultTestKey);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(ASSERT_TRUE_ERROR.toString(), e.getMessage());
+			assertEquals(AssertionFailedErrors.buildTwoPartError("pojo was non-empty in empty pojo!", AssertionFailedErrors.ASSERT_TRUE_ERROR), e.getMessage());
 		}
 	}
 	
@@ -557,7 +560,7 @@ public abstract class MappedPojoAssertValueGetSetTest<V>{
 			assertValueGetSetFunc.accept(pojoNullMap, defaultTestKey);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(ASSERT_NOT_NULL_ERROR.toString(), e.getMessage());
+			assertEquals(AssertionFailedErrors.buildTwoPartError("Map was null in empty pojo!", AssertionFailedErrors.ASSERT_NOT_NULL_ERROR), e.getMessage());
 		}
 	}
 	
@@ -567,7 +570,7 @@ public abstract class MappedPojoAssertValueGetSetTest<V>{
 			assertValueGetSetFunc.accept(pojoNonEmptyMap, defaultTestKey);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(ASSERT_TRUE_ERROR.toString(), e.getMessage());
+			assertEquals(AssertionFailedErrors.buildTwoPartError("Map was non-empty in empty pojo!", AssertionFailedErrors.ASSERT_TRUE_ERROR), e.getMessage());
 		}
 	}
 	
@@ -577,7 +580,8 @@ public abstract class MappedPojoAssertValueGetSetTest<V>{
 			assertValueGetSetFunc.accept(pojoNullKeys, defaultTestKey);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(ASSERT_NOT_NULL_ERROR.toString(), e.getMessage());
+			assertEquals(AssertionFailedErrors.buildTwoPartError("getKeys() returned null in empty pojo!",
+					AssertionFailedErrors.ASSERT_NOT_NULL_ERROR), e.getMessage());
 		}
 	}
 	
@@ -587,7 +591,8 @@ public abstract class MappedPojoAssertValueGetSetTest<V>{
 			assertValueGetSetFunc.accept(pojoNonEmptyKeys, defaultTestKey);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(ASSERT_TRUE_ERROR.toString(), e.getMessage());
+			assertEquals(AssertionFailedErrors.buildTwoPartError("getKeys() was not empty in empty pojo!",
+					AssertionFailedErrors.ASSERT_TRUE_ERROR), e.getMessage());
 		}
 	}
 	
@@ -597,7 +602,7 @@ public abstract class MappedPojoAssertValueGetSetTest<V>{
 			assertValueGetSetFunc.accept(pojoBadHasKey, defaultTestKey);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(ASSERT_TRUE_ERROR.toString(), e.getMessage());
+			assertEquals(AssertionFailedErrors.ASSERT_TRUE_ERROR.toString(), e.getMessage());
 		}
 	}
 	
@@ -607,7 +612,7 @@ public abstract class MappedPojoAssertValueGetSetTest<V>{
 			assertValueGetSetFunc.accept(pojoBadHasItem, defaultTestKey);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(ASSERT_TRUE_ERROR.toString(), e.getMessage());
+			assertEquals(AssertionFailedErrors.ASSERT_TRUE_ERROR.toString(), e.getMessage());
 		}
 	}
 	
@@ -617,7 +622,7 @@ public abstract class MappedPojoAssertValueGetSetTest<V>{
 			assertValueGetSetFunc.accept(pojoBadGetItem, defaultTestKey);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(buildAssertError(defaultTestValue ,defaultWrongValue), e.getMessage());
+			assertEquals(AssertionFailedErrors.buildAssertError(defaultTestValue ,defaultWrongValue), e.getMessage());
 		}
 	}
 	
@@ -627,7 +632,7 @@ public abstract class MappedPojoAssertValueGetSetTest<V>{
 			assertValueGetSetFunc.accept(pojoBadGetKeys, defaultTestKey);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(ASSERT_NOT_NULL_ERROR.toString(), e.getMessage());
+			assertEquals(AssertionFailedErrors.ASSERT_NOT_NULL_ERROR.toString(), e.getMessage());
 		}
 	}
 	
@@ -637,7 +642,7 @@ public abstract class MappedPojoAssertValueGetSetTest<V>{
 			assertValueGetSetFunc.accept(pojoBadGetKeysExtraKey, defaultTestKey);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(buildAssertError(1, 2), e.getMessage());
+			assertEquals(AssertionFailedErrors.buildAssertError(1, 2), e.getMessage());
 		}
 	}
 	
@@ -647,7 +652,7 @@ public abstract class MappedPojoAssertValueGetSetTest<V>{
 			assertValueGetSetFunc.accept(pojoBadGetKeysWrongKey, defaultTestKey);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(buildAssertError(defaultTestKey, defaultWrongKey), e.getMessage());
+			assertEquals(AssertionFailedErrors.buildAssertError(defaultTestKey, defaultWrongKey), e.getMessage());
 		}
 	}
 	
@@ -657,7 +662,7 @@ public abstract class MappedPojoAssertValueGetSetTest<V>{
 			assertValueGetSetFunc.accept(pojoBadGetMapExtraItem, defaultTestKey);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(buildAssertError(1, 2), e.getMessage());
+			assertEquals(AssertionFailedErrors.buildAssertError(1, 2), e.getMessage());
 		}
 	}
 	
@@ -667,7 +672,7 @@ public abstract class MappedPojoAssertValueGetSetTest<V>{
 			assertValueGetSetFunc.accept(pojoBadGetMapWrongKey, defaultTestKey);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(ASSERT_TRUE_ERROR.toString(), e.getMessage());
+			assertEquals(AssertionFailedErrors.ASSERT_TRUE_ERROR.toString(), e.getMessage());
 		}
 	}
 	
@@ -677,7 +682,7 @@ public abstract class MappedPojoAssertValueGetSetTest<V>{
 			assertValueGetSetFunc.accept(pojoBadGetMapWrongValue, defaultTestKey);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(buildAssertError(defaultTestValue, defaultWrongValue), e.getMessage());
+			assertEquals(AssertionFailedErrors.buildAssertError(defaultTestValue, defaultWrongValue), e.getMessage());
 		}
 	}
 	
@@ -687,7 +692,7 @@ public abstract class MappedPojoAssertValueGetSetTest<V>{
 			assertValueGetSetFunc.accept(pojoBadHasKey2, defaultTestKey);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(ASSERT_TRUE_ERROR.toString(), e.getMessage());
+			assertEquals(AssertionFailedErrors.ASSERT_TRUE_ERROR.toString(), e.getMessage());
 		}
 	}
 	
@@ -697,7 +702,7 @@ public abstract class MappedPojoAssertValueGetSetTest<V>{
 			assertValueGetSetFunc.accept(pojoBadHasItem2, defaultTestKey);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(ASSERT_TRUE_ERROR.toString(), e.getMessage());
+			assertEquals(AssertionFailedErrors.ASSERT_TRUE_ERROR.toString(), e.getMessage());
 		}
 	}
 	
@@ -707,7 +712,7 @@ public abstract class MappedPojoAssertValueGetSetTest<V>{
 			assertValueGetSetFunc.accept(pojoBadGetItem2, defaultTestKey);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(buildAssertError(defaultTestValue2, defaultWrongValue), e.getMessage());
+			assertEquals(AssertionFailedErrors.buildAssertError(defaultTestValue2, defaultWrongValue), e.getMessage());
 		}
 	}
 	
@@ -717,7 +722,7 @@ public abstract class MappedPojoAssertValueGetSetTest<V>{
 			assertValueGetSetFunc.accept(pojoBadGetKeys2, defaultTestKey);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(ASSERT_NOT_NULL_ERROR.toString(), e.getMessage());
+			assertEquals(AssertionFailedErrors.ASSERT_NOT_NULL_ERROR.toString(), e.getMessage());
 		}
 	}
 	
@@ -727,7 +732,7 @@ public abstract class MappedPojoAssertValueGetSetTest<V>{
 			assertValueGetSetFunc.accept(pojoBadGetKeysExtraKey2, defaultTestKey);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(buildAssertError(1, 2), e.getMessage());
+			assertEquals(AssertionFailedErrors.buildAssertError(1, 2), e.getMessage());
 		}
 	}
 	
@@ -737,7 +742,7 @@ public abstract class MappedPojoAssertValueGetSetTest<V>{
 			assertValueGetSetFunc.accept(pojoBadGetKeysWrongKey2, defaultTestKey);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(buildAssertError(defaultTestKey, defaultWrongKey), e.getMessage());
+			assertEquals(AssertionFailedErrors.buildAssertError(defaultTestKey, defaultWrongKey), e.getMessage());
 		}
 	}
 	
@@ -747,7 +752,7 @@ public abstract class MappedPojoAssertValueGetSetTest<V>{
 			assertValueGetSetFunc.accept(pojoBadGetMapExtraItem2, defaultTestKey);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(buildAssertError(1, 2), e.getMessage());
+			assertEquals(AssertionFailedErrors.buildAssertError(1, 2), e.getMessage());
 		}
 	}
 	
@@ -757,7 +762,7 @@ public abstract class MappedPojoAssertValueGetSetTest<V>{
 			assertValueGetSetFunc.accept(pojoBadGetMapWrongKey2, defaultTestKey);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(ASSERT_TRUE_ERROR.toString(), e.getMessage());
+			assertEquals(AssertionFailedErrors.ASSERT_TRUE_ERROR.toString(), e.getMessage());
 		}
 	}
 	
@@ -767,7 +772,7 @@ public abstract class MappedPojoAssertValueGetSetTest<V>{
 			assertValueGetSetFunc.accept(pojoBadGetMapWrongValue2, defaultTestKey);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(buildAssertError(defaultTestValue2, defaultWrongValue), e.getMessage());
+			assertEquals(AssertionFailedErrors.buildAssertError(defaultTestValue2, defaultWrongValue), e.getMessage());
 		}
 	}
 }

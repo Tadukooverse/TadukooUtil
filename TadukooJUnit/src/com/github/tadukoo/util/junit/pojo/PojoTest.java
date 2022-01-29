@@ -1,6 +1,6 @@
-package com.github.tadukoo.util.junit;
+package com.github.tadukoo.util.junit.pojo;
 
-import com.github.tadukoo.util.junit.constant.DefaultTestValues;
+import com.github.tadukoo.util.junit.DefaultTestValues;
 import com.github.tadukoo.util.functional.consumer.ThrowingConsumer;
 import com.github.tadukoo.util.functional.supplier.ThrowingSupplier;
 import org.opentest4j.AssertionFailedError;

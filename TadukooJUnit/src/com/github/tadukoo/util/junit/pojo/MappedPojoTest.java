@@ -1,6 +1,6 @@
-package com.github.tadukoo.util.junit;
+package com.github.tadukoo.util.junit.pojo;
 
-import com.github.tadukoo.util.junit.constant.DefaultTestValues;
+import com.github.tadukoo.util.junit.DefaultTestValues;
 import com.github.tadukoo.util.functional.consumer.ThrowingConsumer;
 import com.github.tadukoo.util.functional.supplier.ThrowingSupplier;
 import com.github.tadukoo.util.map.MapUtil;
@@ -114,17 +114,17 @@ public class MappedPojoTest implements DefaultTestValues{
 	 */
 	public static void assertEmptyPojo(MappedPojo pojo){
 		// Test the pojo returns true for its isEmpty method
-		assertTrue(pojo.isEmpty());
+		assertTrue(pojo.isEmpty(), "pojo was non-empty in empty pojo!");
 		
 		// Test the map is empty
 		Map<String, Object> map = pojo.getMap();
-		assertNotNull(map);
-		assertTrue(map.isEmpty());
+		assertNotNull(map, "Map was null in empty pojo!");
+		assertTrue(map.isEmpty(), "Map was non-empty in empty pojo!");
 		
 		// Test the key set is empty
 		Set<String> keys = pojo.getKeys();
-		assertNotNull(keys);
-		assertTrue(keys.isEmpty());
+		assertNotNull(keys, "getKeys() returned null in empty pojo!");
+		assertTrue(keys.isEmpty(), "getKeys() was not empty in empty pojo!");
 	}
 	
 	/*

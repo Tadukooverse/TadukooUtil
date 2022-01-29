@@ -1,4 +1,4 @@
-package com.github.tadukoo.util.junit.constant;
+package com.github.tadukoo.util.junit;
 
 /**
  * Default values to use for testing, so we can have them consistent between the JUnit tests and the actual
