@@ -50,4 +50,9 @@ public class DefaultTestValuesTest implements DefaultTestValues{
 	public void testDEFAULT_WRONG_KEY(){
 		assertEquals("Wrong", DEFAULT_WRONG_KEY);
 	}
+	
+	@Test
+	public void testDEFAULT_CUSTOM_ASSERTION_FAILED_MESSAGE(){
+		assertEquals("Something went wrong!", DEFAULT_CUSTOM_ASSERTION_FAILED_MESSAGE);
+	}
 }

@@ -29,4 +29,7 @@ public interface DefaultTestValues{
 	String DEFAULT_TEST_KEY_2 = "Derp";
 	/** The default string to use for a wrong key: Wrong */
 	String DEFAULT_WRONG_KEY = "Wrong";
+	
+	/** The default string to use for an assertion failed message: Something went wrong! */
+	String DEFAULT_CUSTOM_ASSERTION_FAILED_MESSAGE = "Something went wrong!";
 }

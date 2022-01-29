@@ -7,6 +7,7 @@ import static com.github.tadukoo.util.junit.AssertionFailedErrors.ASSERT_NOT_NUL
 import static com.github.tadukoo.util.junit.AssertionFailedErrors.ASSERT_TRUE_ERROR;
 import static com.github.tadukoo.util.junit.AssertionFailedErrors.buildAssertError;
 import static com.github.tadukoo.util.junit.AssertionFailedErrors.buildAssertErrorNot;
+import static com.github.tadukoo.util.junit.AssertionFailedErrors.buildMultiPartError;
 import static com.github.tadukoo.util.junit.AssertionFailedErrors.buildTwoPartError;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -47,5 +48,11 @@ public class AssertionFailedErrorsTest{
 	public void testBuildTwoPartErrorString(){
 		assertEquals("something bad happened ==> blah blah blah",
 				buildTwoPartError("something bad happened", "blah blah blah"));
+	}
+	
+	@Test
+	public void testBuildMultiPartError(){
+		assertEquals("bad thing ==> something bad ==> yep",
+				buildMultiPartError("bad thing", "something bad", "yep"));
 	}
 }

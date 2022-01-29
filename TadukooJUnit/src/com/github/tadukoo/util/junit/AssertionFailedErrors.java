@@ -80,6 +80,24 @@ public enum AssertionFailedErrors{
 	}
 	
 	/**
+	 * Builds an Assertion Failed Error string of the form {@code <error> ==> <error> ==> ...}, e.g.
+	 * {@code clear() failed! ==> pojo was empty! ==> expected: <true> but was: <false>}
+	 * This is useful when using an assert method that includes multiple custom messages in a chain before
+	 * the assert error (e.g. outer method failed, because inner method failed, because assertion error)
+	 *
+	 * @param errors The errors in order for the message
+	 * @return A string representing an Assertion Failed Error string
+	 */
+	public static String buildMultiPartError(String ... errors){
+		StringBuilder message = new StringBuilder();
+		for(String error: errors){
+			message.append(error).append(" ==> ");
+		}
+		message.delete(message.length()-5, message.length());
+		return message.toString();
+	}
+	
+	/**
 	 * @return The error string
 	 */
 	@Override

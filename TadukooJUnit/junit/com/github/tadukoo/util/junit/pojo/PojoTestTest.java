@@ -1,10 +1,15 @@
 package com.github.tadukoo.util.junit.pojo;
 
 import com.github.tadukoo.util.junit.DefaultTestValues;
-import com.github.tadukoo.util.junit.AssertionFailedErrors;
 import org.junit.jupiter.api.Test;
 import org.opentest4j.AssertionFailedError;
 
+import static com.github.tadukoo.util.junit.AssertionFailedErrors.buildAssertError;
+import static com.github.tadukoo.util.junit.AssertionFailedErrors.buildMultiPartError;
+import static com.github.tadukoo.util.junit.AssertionFailedErrors.buildTwoPartError;
+import static com.github.tadukoo.util.junit.pojo.PojoTest.assertDoubleGetSet;
+import static com.github.tadukoo.util.junit.pojo.PojoTest.assertStringGetSet;
+import static com.github.tadukoo.util.junit.pojo.PojoTest.assertValueGetSet;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
@@ -114,35 +119,37 @@ public class PojoTestTest implements DefaultTestValues{
 	
 	@Test
 	public void testAssertValueGetSetPass(){
-		PojoTest.assertValueGetSet(pojo::getString, pojo::setString, DEFAULT_TEST_STRING, DEFAULT_TEST_STRING_2);
+		assertValueGetSet(pojo::getString, pojo::setString, DEFAULT_TEST_STRING, DEFAULT_TEST_STRING_2);
 	}
 	
 	@Test
-	public void testVAssertalueGetSetFailedAssertion(){
+	public void testAssertValueGetSetFailedAssertion(){
 		try{
-			PojoTest.assertValueGetSet(badPojo::getString, badPojo::setString, DEFAULT_TEST_STRING,
+			assertValueGetSet(badPojo::getString, badPojo::setString, DEFAULT_TEST_STRING,
 					DEFAULT_TEST_STRING_2);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(AssertionFailedErrors.buildAssertError(DEFAULT_TEST_STRING, DEFAULT_WRONG_STRING), e.getMessage());
+			assertEquals(buildTwoPartError("getter failed on first set!",
+					buildAssertError(DEFAULT_TEST_STRING, DEFAULT_WRONG_STRING)), e.getMessage());
 		}
 	}
 	
 	@Test
 	public void testAssertValueGetSetFailedAssertion2(){
 		try{
-			PojoTest.assertValueGetSet(trickyPojo::getString, trickyPojo::setString, DEFAULT_TEST_STRING,
+			assertValueGetSet(trickyPojo::getString, trickyPojo::setString, DEFAULT_TEST_STRING,
 					DEFAULT_TEST_STRING_2);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(AssertionFailedErrors.buildAssertError(DEFAULT_TEST_STRING_2, DEFAULT_TEST_STRING), e.getMessage());
+			assertEquals(buildTwoPartError("getter failed on second set!",
+					buildAssertError(DEFAULT_TEST_STRING_2, DEFAULT_TEST_STRING)), e.getMessage());
 		}
 	}
 	
 	@Test
 	public void testAssertValueGetSetGetterThrows(){
 		try{
-			PojoTest.assertValueGetSet(getThrowPojo::getString, getThrowPojo::setString, DEFAULT_TEST_STRING,
+			assertValueGetSet(getThrowPojo::getString, getThrowPojo::setString, DEFAULT_TEST_STRING,
 					DEFAULT_TEST_STRING_2);
 			fail();
 		}catch(IllegalArgumentException e){
@@ -153,7 +160,7 @@ public class PojoTestTest implements DefaultTestValues{
 	@Test
 	public void testAssertValueGetSetSetterThrows(){
 		try{
-			PojoTest.assertValueGetSet(setThrowPojo::getString, setThrowPojo::setString, DEFAULT_TEST_STRING,
+			assertValueGetSet(setThrowPojo::getString, setThrowPojo::setString, DEFAULT_TEST_STRING,
 					DEFAULT_TEST_STRING_2);
 			fail();
 		}catch(IllegalArgumentException e){
@@ -162,34 +169,60 @@ public class PojoTestTest implements DefaultTestValues{
 	}
 	
 	@Test
+	public void testAssertValueGetSetFailedAssertionCustomMessage(){
+		try{
+			assertValueGetSet(badPojo::getString, badPojo::setString, DEFAULT_TEST_STRING,
+					DEFAULT_TEST_STRING_2, DEFAULT_CUSTOM_ASSERTION_FAILED_MESSAGE);
+			fail();
+		}catch(AssertionFailedError e){
+			assertEquals(buildMultiPartError(DEFAULT_CUSTOM_ASSERTION_FAILED_MESSAGE, "getter failed on first set!",
+					buildAssertError(DEFAULT_TEST_STRING, DEFAULT_WRONG_STRING)), e.getMessage());
+		}
+	}
+	
+	@Test
+	public void testAssertValueGetSetFailedAssertion2CustomMessage(){
+		try{
+			assertValueGetSet(trickyPojo::getString, trickyPojo::setString, DEFAULT_TEST_STRING,
+					DEFAULT_TEST_STRING_2, DEFAULT_CUSTOM_ASSERTION_FAILED_MESSAGE);
+			fail();
+		}catch(AssertionFailedError e){
+			assertEquals(buildMultiPartError(DEFAULT_CUSTOM_ASSERTION_FAILED_MESSAGE, "getter failed on second set!",
+					buildAssertError(DEFAULT_TEST_STRING_2, DEFAULT_TEST_STRING)), e.getMessage());
+		}
+	}
+	
+	@Test
 	public void testAssertStringGetSetPass(){
-		PojoTest.assertStringGetSet(pojo::getString, pojo::setString);
+		assertStringGetSet(pojo::getString, pojo::setString);
 	}
 	
 	@Test
 	public void testAssertStringGetSetFailedAssertion(){
 		try{
-			PojoTest.assertStringGetSet(badPojo::getString, badPojo::setString);
+			assertStringGetSet(badPojo::getString, badPojo::setString);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(AssertionFailedErrors.buildAssertError(DEFAULT_TEST_STRING, DEFAULT_WRONG_STRING), e.getMessage());
+			assertEquals(buildTwoPartError("getter failed on first set!",
+					buildAssertError(DEFAULT_TEST_STRING, DEFAULT_WRONG_STRING)), e.getMessage());
 		}
 	}
 	
 	@Test
 	public void testAssertStringGetSetFailedAssertion2(){
 		try{
-			PojoTest.assertStringGetSet(trickyPojo::getString, trickyPojo::setString);
+			assertStringGetSet(trickyPojo::getString, trickyPojo::setString);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(AssertionFailedErrors.buildAssertError(DEFAULT_TEST_STRING_2,DEFAULT_TEST_STRING), e.getMessage());
+			assertEquals(buildTwoPartError("getter failed on second set!",
+					buildAssertError(DEFAULT_TEST_STRING_2,DEFAULT_TEST_STRING)), e.getMessage());
 		}
 	}
 	
 	@Test
 	public void testAssertStringGetSetGetterThrows(){
 		try{
-			PojoTest.assertStringGetSet(getThrowPojo::getString, getThrowPojo::setString);
+			assertStringGetSet(getThrowPojo::getString, getThrowPojo::setString);
 			fail();
 		}catch(IllegalArgumentException e){
 			assertEquals("I'm a bad getter", e.getMessage());
@@ -199,7 +232,7 @@ public class PojoTestTest implements DefaultTestValues{
 	@Test
 	public void testAssertStringGetSetSetterThrows(){
 		try{
-			PojoTest.assertStringGetSet(setThrowPojo::getString, setThrowPojo::setString);
+			assertStringGetSet(setThrowPojo::getString, setThrowPojo::setString);
 			fail();
 		}catch(IllegalArgumentException e){
 			assertEquals("I'm a bad setter", e.getMessage());
@@ -207,34 +240,58 @@ public class PojoTestTest implements DefaultTestValues{
 	}
 	
 	@Test
+	public void testAssertStringGetSetFailedAssertionCustomMessage(){
+		try{
+			assertStringGetSet(badPojo::getString, badPojo::setString, DEFAULT_CUSTOM_ASSERTION_FAILED_MESSAGE);
+			fail();
+		}catch(AssertionFailedError e){
+			assertEquals(buildMultiPartError(DEFAULT_CUSTOM_ASSERTION_FAILED_MESSAGE, "getter failed on first set!",
+					buildAssertError(DEFAULT_TEST_STRING, DEFAULT_WRONG_STRING)), e.getMessage());
+		}
+	}
+	
+	@Test
+	public void testAssertStringGetSetFailedAssertion2CustomMessage(){
+		try{
+			assertStringGetSet(trickyPojo::getString, trickyPojo::setString, DEFAULT_CUSTOM_ASSERTION_FAILED_MESSAGE);
+			fail();
+		}catch(AssertionFailedError e){
+			assertEquals(buildMultiPartError(DEFAULT_CUSTOM_ASSERTION_FAILED_MESSAGE, "getter failed on second set!",
+					buildAssertError(DEFAULT_TEST_STRING_2,DEFAULT_TEST_STRING)), e.getMessage());
+		}
+	}
+	
+	@Test
 	public void testAssertDoubleGetSetPass(){
-		PojoTest.assertDoubleGetSet(pojo::getDouble, pojo::setDouble);
+		assertDoubleGetSet(pojo::getDouble, pojo::setDouble);
 	}
 	
 	@Test
 	public void testAssertDoubleGetSetFailedAssertion(){
 		try{
-			PojoTest.assertDoubleGetSet(badPojo::getDouble, badPojo::setDouble);
+			assertDoubleGetSet(badPojo::getDouble, badPojo::setDouble);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(AssertionFailedErrors.buildAssertError(DEFAULT_TEST_DOUBLE, 0.0), e.getMessage());
+			assertEquals(buildTwoPartError("getter failed on first set!",
+					buildAssertError(DEFAULT_TEST_DOUBLE, 0.0)), e.getMessage());
 		}
 	}
 	
 	@Test
 	public void testAssertDoubleGetSetFailedAssertion2(){
 		try{
-			PojoTest.assertDoubleGetSet(trickyPojo::getDouble, trickyPojo::setDouble);
+			assertDoubleGetSet(trickyPojo::getDouble, trickyPojo::setDouble);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(AssertionFailedErrors.buildAssertError(DEFAULT_TEST_DOUBLE_2, DEFAULT_TEST_DOUBLE), e.getMessage());
+			assertEquals(buildTwoPartError("getter failed on second set!",
+					buildAssertError(DEFAULT_TEST_DOUBLE_2, DEFAULT_TEST_DOUBLE)), e.getMessage());
 		}
 	}
 	
 	@Test
 	public void testAssertDoubleGetSetGetterThrows(){
 		try{
-			PojoTest.assertDoubleGetSet(getThrowPojo::getDouble, getThrowPojo::setDouble);
+			assertDoubleGetSet(getThrowPojo::getDouble, getThrowPojo::setDouble);
 			fail();
 		}catch(IllegalArgumentException e){
 			assertEquals("I'm a bad getter", e.getMessage());
@@ -244,10 +301,32 @@ public class PojoTestTest implements DefaultTestValues{
 	@Test
 	public void testAssertDoubleGetSetSetterThrows(){
 		try{
-			PojoTest.assertDoubleGetSet(setThrowPojo::getDouble, setThrowPojo::setDouble);
+			assertDoubleGetSet(setThrowPojo::getDouble, setThrowPojo::setDouble);
 			fail();
 		}catch(IllegalArgumentException e){
 			assertEquals("I'm a bad setter", e.getMessage());
+		}
+	}
+	
+	@Test
+	public void testAssertDoubleGetSetFailedAssertionCustomMessage(){
+		try{
+			assertDoubleGetSet(badPojo::getDouble, badPojo::setDouble, DEFAULT_CUSTOM_ASSERTION_FAILED_MESSAGE);
+			fail();
+		}catch(AssertionFailedError e){
+			assertEquals(buildMultiPartError(DEFAULT_CUSTOM_ASSERTION_FAILED_MESSAGE, "getter failed on first set!",
+					buildAssertError(DEFAULT_TEST_DOUBLE, 0.0)), e.getMessage());
+		}
+	}
+	
+	@Test
+	public void testAssertDoubleGetSetFailedAssertion2CustomMessage(){
+		try{
+			assertDoubleGetSet(trickyPojo::getDouble, trickyPojo::setDouble, DEFAULT_CUSTOM_ASSERTION_FAILED_MESSAGE);
+			fail();
+		}catch(AssertionFailedError e){
+			assertEquals(buildMultiPartError(DEFAULT_CUSTOM_ASSERTION_FAILED_MESSAGE, "getter failed on second set!",
+					buildAssertError(DEFAULT_TEST_DOUBLE_2, DEFAULT_TEST_DOUBLE)), e.getMessage());
 		}
 	}
 }
