@@ -90,6 +90,28 @@ public class MappedPojoTest implements DefaultTestValues{
 	 */
 	public static <P extends Class<? extends MappedPojo>> void assertPojoConstructor(P pojoClass)
 			throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException{
+		assertPojoConstructor(pojoClass, null);
+	}
+	
+	/**
+	 * Using the given {@link MappedPojo} class, it will create a new instance using another MappedPojo as a
+	 * constructor parameter. Then it will check that the map and keys (and getItem) are correct.
+	 * This version allows for specifying a custom message to append to the start of any assertion errors.
+	 *
+	 * @param pojoClass The {@link MappedPojo} class to be tested
+	 * @param message A message to append to the front of any assertion error messages
+	 * @param <P> The {@link MappedPojo} class
+	 * @throws NoSuchMethodException If the pojo constructor does not exist
+	 * @throws InvocationTargetException If the constructor throws an exception
+	 * @throws InstantiationException If the class is abstract
+	 * @throws IllegalAccessException If the constructor is not public
+	 * @throws AssertionFailedError If an assertion fails
+	 */
+	public static <P extends Class<? extends MappedPojo>> void assertPojoConstructor(P pojoClass, String message)
+			throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException{
+		// Create the start of the message
+		String msgStart = buildMessageStart(message);
+		
 		// Create a simple pojo with a couple values
 		MappedPojo simplePojo = new AbstractMappedPojo(){
 			@Override
@@ -103,23 +125,27 @@ public class MappedPojoTest implements DefaultTestValues{
 		// Create a new instance of the pojo class
 		MappedPojo pojo = pojoClass.getDeclaredConstructor(MappedPojo.class).newInstance(simplePojo);
 		// Check the values in the pojo
-		assertEquals(DEFAULT_TEST_DOUBLE, pojo.getItem(DEFAULT_TEST_KEY));
-		assertEquals(DEFAULT_TEST_STRING, pojo.getItem(DEFAULT_TEST_KEY_2));
+		assertEquals(DEFAULT_TEST_DOUBLE, pojo.getItem(DEFAULT_TEST_KEY),
+				msgStart + "Double value not right in pojo!");
+		assertEquals(DEFAULT_TEST_STRING, pojo.getItem(DEFAULT_TEST_KEY_2),
+				msgStart + "String value not right in pojo!");
 		// Check the map is proper
 		Map<String, Object> map = pojo.getMap();
-		assertNotNull(map);
-		assertFalse(map.isEmpty());
-		assertEquals(2, map.size());
-		assertTrue(map.containsKey(DEFAULT_TEST_KEY));
-		assertEquals(DEFAULT_TEST_DOUBLE, map.get(DEFAULT_TEST_KEY));
-		assertTrue(map.containsKey(DEFAULT_TEST_KEY_2));
-		assertEquals(DEFAULT_TEST_STRING, map.get(DEFAULT_TEST_KEY_2));
+		assertNotNull(map, msgStart + "Map is null in populated pojo!");
+		assertFalse(map.isEmpty(), msgStart + "Map is empty in populated pojo!");
+		assertEquals(2, map.size(), msgStart + "Map size is wrong in populated pojo!");
+		assertTrue(map.containsKey(DEFAULT_TEST_KEY), msgStart + "Double key not found in populated pojo!");
+		assertEquals(DEFAULT_TEST_DOUBLE, map.get(DEFAULT_TEST_KEY),
+				msgStart + "Double value not right in populated pojo map!");
+		assertTrue(map.containsKey(DEFAULT_TEST_KEY_2), msgStart + "String key not found in populated pojo!");
+		assertEquals(DEFAULT_TEST_STRING, map.get(DEFAULT_TEST_KEY_2),
+				msgStart + "String value not right in populated pojo map!");
 		// Check the keys are proper
 		Set<String> keys = pojo.getKeys();
-		assertNotNull(keys);
-		assertEquals(2, keys.size());
-		assertTrue(keys.contains(DEFAULT_TEST_KEY));
-		assertTrue(keys.contains(DEFAULT_TEST_KEY_2));
+		assertNotNull(keys, msgStart + "Keys are null in populated pojo!");
+		assertEquals(2, keys.size(), msgStart + "Keys size is wrong in populated pojo!");
+		assertTrue(keys.contains(DEFAULT_TEST_KEY), msgStart + "Keys missing Double key in populated pojo!");
+		assertTrue(keys.contains(DEFAULT_TEST_KEY_2), msgStart + "Keys missing String key in populated pojo!");
 	}
 	
 	/*

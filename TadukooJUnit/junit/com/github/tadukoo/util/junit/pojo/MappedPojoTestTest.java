@@ -14,8 +14,11 @@ import org.opentest4j.AssertionFailedError;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
+import static com.github.tadukoo.util.junit.AssertionFailedErrors.ASSERT_FALSE_ERROR;
 import static com.github.tadukoo.util.junit.AssertionFailedErrors.ASSERT_NOT_NULL_ERROR;
 import static com.github.tadukoo.util.junit.AssertionFailedErrors.ASSERT_TRUE_ERROR;
 import static com.github.tadukoo.util.junit.AssertionFailedErrors.buildAssertError;
@@ -104,6 +107,201 @@ public class MappedPojoTestTest implements DefaultTestValues{
 		public MappedPojoBadValue2(MappedPojo pojo){
 			map = pojo.getMap();
 			map.put(DEFAULT_TEST_KEY_2, DEFAULT_WRONG_STRING);
+		}
+		
+		@Override
+		public Map<String, Object> getMap(){
+			return map;
+		}
+	}
+	
+	private static class MappedPojoConstructorNullMap implements MappedPojo{
+		private final Map<String, Object> map;
+		
+		public MappedPojoConstructorNullMap(MappedPojo pojo){
+			this.map = pojo.getMap();
+		}
+		
+		@Override
+		public Object getItem(String key){
+			return map.get(key);
+		}
+		
+		@Override
+		public Map<String, Object> getMap(){
+			return null;
+		}
+	}
+	
+	private static class MappedPojoConstructorEmptyMap implements MappedPojo{
+		private final Map<String, Object> map;
+		
+		public MappedPojoConstructorEmptyMap(MappedPojo pojo){
+			this.map = pojo.getMap();
+		}
+		
+		@Override
+		public Object getItem(String key){
+			return map.get(key);
+		}
+		
+		@Override
+		public Map<String, Object> getMap(){
+			return new HashMap<>();
+		}
+	}
+	
+	private static class MappedPojoConstructorMapExtraItem implements MappedPojo{
+		private final Map<String, Object> map;
+		
+		public MappedPojoConstructorMapExtraItem(MappedPojo pojo){
+			this.map = pojo.getMap();
+		}
+		
+		@Override
+		public Object getItem(String key){
+			return map.get(key);
+		}
+		
+		@Override
+		public Map<String, Object> getMap(){
+			map.put(DEFAULT_WRONG_KEY, DEFAULT_WRONG_STRING);
+			return map;
+		}
+	}
+	
+	private static class MappedPojoConstructorMapMissingTestKey implements MappedPojo{
+		private final Map<String, Object> map;
+		
+		public MappedPojoConstructorMapMissingTestKey(MappedPojo pojo){
+			this.map = pojo.getMap();
+		}
+		
+		@Override
+		public Object getItem(String key){
+			return map.get(key);
+		}
+		
+		@Override
+		public Map<String, Object> getMap(){
+			map.remove(DEFAULT_TEST_KEY);
+			map.put(DEFAULT_WRONG_KEY, DEFAULT_WRONG_STRING);
+			return map;
+		}
+	}
+	
+	private static class MappedPojoConstructorMapWrongTestValue implements MappedPojo{
+		private final Map<String, Object> map;
+		
+		public MappedPojoConstructorMapWrongTestValue(MappedPojo pojo){
+			this.map = pojo.getMap();
+		}
+		
+		@Override
+		public Object getItem(String key){
+			return map.get(key);
+		}
+		
+		@Override
+		public Map<String, Object> getMap(){
+			map.put(DEFAULT_TEST_KEY, DEFAULT_WRONG_DOUBLE);
+			return map;
+		}
+	}
+	
+	private static class MappedPojoConstructorMapMissingTestKey2 implements MappedPojo{
+		private final Map<String, Object> map;
+		
+		public MappedPojoConstructorMapMissingTestKey2(MappedPojo pojo){
+			this.map = pojo.getMap();
+		}
+		
+		@Override
+		public Object getItem(String key){
+			return map.get(key);
+		}
+		
+		@Override
+		public Map<String, Object> getMap(){
+			map.remove(DEFAULT_TEST_KEY_2);
+			map.put(DEFAULT_WRONG_KEY, DEFAULT_WRONG_STRING);
+			return map;
+		}
+	}
+	
+	private static class MappedPojoConstructorMapWrongTest2Value implements MappedPojo{
+		private final Map<String, Object> map;
+		
+		public MappedPojoConstructorMapWrongTest2Value(MappedPojo pojo){
+			this.map = pojo.getMap();
+		}
+		
+		@Override
+		public Object getItem(String key){
+			return map.get(key);
+		}
+		
+		@Override
+		public Map<String, Object> getMap(){
+			map.put(DEFAULT_TEST_KEY_2, DEFAULT_WRONG_STRING);
+			return map;
+		}
+	}
+	
+	private static class MappedPojoConstructorKeysWrongSize implements MappedPojo{
+		private final Map<String, Object> map;
+		
+		public MappedPojoConstructorKeysWrongSize(MappedPojo pojo){
+			this.map = pojo.getMap();
+		}
+		
+		@Override
+		public Set<String> getKeys(){
+			Set<String> keys = new HashSet<>(map.keySet());
+			keys.remove(DEFAULT_TEST_KEY);
+			return keys;
+		}
+		
+		@Override
+		public Map<String, Object> getMap(){
+			return map;
+		}
+	}
+	
+	private static class MappedPojoConstructorKeysMissingTestKey implements MappedPojo{
+		private final Map<String, Object> map;
+		
+		public MappedPojoConstructorKeysMissingTestKey(MappedPojo pojo){
+			this.map = pojo.getMap();
+		}
+		
+		@Override
+		public Set<String> getKeys(){
+			Set<String> keys = new HashSet<>(map.keySet());
+			keys.remove(DEFAULT_TEST_KEY);
+			keys.add(DEFAULT_WRONG_KEY);
+			return keys;
+		}
+		
+		@Override
+		public Map<String, Object> getMap(){
+			return map;
+		}
+	}
+	
+	private static class MappedPojoConstructorKeysMissingTestKey2 implements MappedPojo{
+		private final Map<String, Object> map;
+		
+		public MappedPojoConstructorKeysMissingTestKey2(MappedPojo pojo){
+			this.map = pojo.getMap();
+		}
+		
+		@Override
+		public Set<String> getKeys(){
+			Set<String> keys = new HashSet<>(map.keySet());
+			keys.remove(DEFAULT_TEST_KEY_2);
+			keys.add(DEFAULT_WRONG_KEY);
+			return keys;
 		}
 		
 		@Override
@@ -374,8 +572,8 @@ public class MappedPojoTestTest implements DefaultTestValues{
 			assertPojoConstructor(MappedPojoBadValue1.class);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(buildAssertError(DEFAULT_TEST_DOUBLE, DEFAULT_WRONG_DOUBLE),
-					e.getMessage());
+			assertEquals(buildTwoPartError("Double value not right in pojo!",
+							buildAssertError(DEFAULT_TEST_DOUBLE, DEFAULT_WRONG_DOUBLE)), e.getMessage());
 		}
 	}
 	
@@ -386,8 +584,90 @@ public class MappedPojoTestTest implements DefaultTestValues{
 			assertPojoConstructor(MappedPojoBadValue2.class);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(buildAssertError(DEFAULT_TEST_STRING, DEFAULT_WRONG_STRING),
+			assertEquals(buildTwoPartError("String value not right in pojo!",
+							buildAssertError(DEFAULT_TEST_STRING, DEFAULT_WRONG_STRING)), e.getMessage());
+		}
+	}
+	
+	@Test
+	public void testAssertPojoConstructorNullMap()
+			throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException{
+		try{
+			assertPojoConstructor(MappedPojoConstructorNullMap.class);
+			fail();
+		}catch(AssertionFailedError e){
+			assertEquals(buildTwoPartError("Map is null in populated pojo!", ASSERT_NOT_NULL_ERROR), e.getMessage());
+		}
+	}
+	
+	@Test
+	public void testAssertPojoConstructorEmptyMap()
+			throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException{
+		try{
+			assertPojoConstructor(MappedPojoConstructorEmptyMap.class);
+			fail();
+		}catch(AssertionFailedError e){
+			assertEquals(buildTwoPartError("Map is empty in populated pojo!", ASSERT_FALSE_ERROR), e.getMessage());
+		}
+	}
+	
+	@Test
+	public void testAssertPojoConstructorWrongSizeMap()
+			throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException{
+		try{
+			assertPojoConstructor(MappedPojoConstructorMapExtraItem.class);
+			fail();
+		}catch(AssertionFailedError e){
+			assertEquals(buildTwoPartError("Map size is wrong in populated pojo!", buildAssertError(2, 3)),
 					e.getMessage());
+		}
+	}
+	
+	@Test
+	public void testAssertPojoConstructorMissingTestKey()
+			throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException{
+		try{
+			assertPojoConstructor(MappedPojoConstructorMapMissingTestKey.class);
+			fail();
+		}catch(AssertionFailedError e){
+			assertEquals(buildTwoPartError("Double key not found in populated pojo!", ASSERT_TRUE_ERROR),
+					e.getMessage());
+		}
+	}
+	
+	@Test
+	public void testAssertPojoConstructorWrongTestValue()
+			throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException{
+		try{
+			assertPojoConstructor(MappedPojoConstructorMapWrongTestValue.class);
+			fail();
+		}catch(AssertionFailedError e){
+			assertEquals(buildTwoPartError("Double value not right in populated pojo map!",
+							buildAssertError(DEFAULT_TEST_DOUBLE, DEFAULT_WRONG_DOUBLE)), e.getMessage());
+		}
+	}
+	
+	@Test
+	public void testAssertPojoConstructorMissingTestKey2()
+			throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException{
+		try{
+			assertPojoConstructor(MappedPojoConstructorMapMissingTestKey2.class);
+			fail();
+		}catch(AssertionFailedError e){
+			assertEquals(buildTwoPartError("String key not found in populated pojo!", ASSERT_TRUE_ERROR),
+					e.getMessage());
+		}
+	}
+	
+	@Test
+	public void testAssertPojoConstructorWrongTest2Value()
+			throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException{
+		try{
+			assertPojoConstructor(MappedPojoConstructorMapWrongTest2Value.class);
+			fail();
+		}catch(AssertionFailedError e){
+			assertEquals(buildTwoPartError("String value not right in populated pojo map!",
+					buildAssertError(DEFAULT_TEST_STRING, DEFAULT_WRONG_STRING)), e.getMessage());
 		}
 	}
 	
@@ -398,7 +678,215 @@ public class MappedPojoTestTest implements DefaultTestValues{
 			assertPojoConstructor(MappedPojoNullKeys.class);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(ASSERT_NOT_NULL_ERROR.toString(), e.getMessage());
+			assertEquals(buildTwoPartError("Keys are null in populated pojo!", ASSERT_NOT_NULL_ERROR), e.getMessage());
+		}
+	}
+	
+	@Test
+	public void testAssertPojoConstructorKeysWrongSize()
+			throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException{
+		try{
+			assertPojoConstructor(MappedPojoConstructorKeysWrongSize.class);
+			fail();
+		}catch(AssertionFailedError e){
+			assertEquals(buildTwoPartError("Keys size is wrong in populated pojo!", buildAssertError(2, 1)),
+					e.getMessage());
+		}
+	}
+	
+	@Test
+	public void testAssertPojoConstructorKeysMissingTestKey()
+			throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException{
+		try{
+			assertPojoConstructor(MappedPojoConstructorKeysMissingTestKey.class);
+			fail();
+		}catch(AssertionFailedError e){
+			assertEquals(buildTwoPartError("Keys missing Double key in populated pojo!", ASSERT_TRUE_ERROR),
+					e.getMessage());
+		}
+	}
+	
+	@Test
+	public void testAssertPojoConstructorKeysMissingTestKey2()
+			throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException{
+		try{
+			assertPojoConstructor(MappedPojoConstructorKeysMissingTestKey2.class);
+			fail();
+		}catch(AssertionFailedError e){
+			assertEquals(buildTwoPartError("Keys missing String key in populated pojo!", ASSERT_TRUE_ERROR),
+					e.getMessage());
+		}
+	}
+	
+	/*
+	 * Assert Pojo Constructor Custom Message
+	 */
+	
+	@Test
+	public void testAssertPojoConstructorPassCustomMessage()
+			throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException{
+		assertPojoConstructor(MappedPojoA.class, DEFAULT_CUSTOM_ASSERTION_FAILED_MESSAGE);
+	}
+	
+	@Test
+	public void testAssertPojoConstructorBadValue1CustomMessage()
+			throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException{
+		try{
+			assertPojoConstructor(MappedPojoBadValue1.class, DEFAULT_CUSTOM_ASSERTION_FAILED_MESSAGE);
+			fail();
+		}catch(AssertionFailedError e){
+			assertEquals(buildMultiPartError(DEFAULT_CUSTOM_ASSERTION_FAILED_MESSAGE,
+					"Double value not right in pojo!", buildAssertError(DEFAULT_TEST_DOUBLE, DEFAULT_WRONG_DOUBLE)),
+					e.getMessage());
+		}
+	}
+	
+	@Test
+	public void testAssertPojoConstructorBadValue2CustomMessage()
+			throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException{
+		try{
+			assertPojoConstructor(MappedPojoBadValue2.class, DEFAULT_CUSTOM_ASSERTION_FAILED_MESSAGE);
+			fail();
+		}catch(AssertionFailedError e){
+			assertEquals(buildMultiPartError(DEFAULT_CUSTOM_ASSERTION_FAILED_MESSAGE,
+					"String value not right in pojo!", buildAssertError(DEFAULT_TEST_STRING, DEFAULT_WRONG_STRING)),
+					e.getMessage());
+		}
+	}
+	
+	@Test
+	public void testAssertPojoConstructorNullMapCustomMessage()
+			throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException{
+		try{
+			assertPojoConstructor(MappedPojoConstructorNullMap.class, DEFAULT_CUSTOM_ASSERTION_FAILED_MESSAGE);
+			fail();
+		}catch(AssertionFailedError e){
+			assertEquals(buildMultiPartError(DEFAULT_CUSTOM_ASSERTION_FAILED_MESSAGE,
+					"Map is null in populated pojo!", ASSERT_NOT_NULL_ERROR.toString()), e.getMessage());
+		}
+	}
+	
+	@Test
+	public void testAssertPojoConstructorEmptyMapCustomMessage()
+			throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException{
+		try{
+			assertPojoConstructor(MappedPojoConstructorEmptyMap.class, DEFAULT_CUSTOM_ASSERTION_FAILED_MESSAGE);
+			fail();
+		}catch(AssertionFailedError e){
+			assertEquals(buildMultiPartError(DEFAULT_CUSTOM_ASSERTION_FAILED_MESSAGE,
+					"Map is empty in populated pojo!", ASSERT_FALSE_ERROR.toString()), e.getMessage());
+		}
+	}
+	
+	@Test
+	public void testAssertPojoConstructorWrongSizeMapCustomMessage()
+			throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException{
+		try{
+			assertPojoConstructor(MappedPojoConstructorMapExtraItem.class, DEFAULT_CUSTOM_ASSERTION_FAILED_MESSAGE);
+			fail();
+		}catch(AssertionFailedError e){
+			assertEquals(buildMultiPartError(DEFAULT_CUSTOM_ASSERTION_FAILED_MESSAGE,
+							"Map size is wrong in populated pojo!", buildAssertError(2, 3)),
+					e.getMessage());
+		}
+	}
+	
+	@Test
+	public void testAssertPojoConstructorMissingTestKeyCustomMessage()
+			throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException{
+		try{
+			assertPojoConstructor(MappedPojoConstructorMapMissingTestKey.class, DEFAULT_CUSTOM_ASSERTION_FAILED_MESSAGE);
+			fail();
+		}catch(AssertionFailedError e){
+			assertEquals(buildMultiPartError(DEFAULT_CUSTOM_ASSERTION_FAILED_MESSAGE,
+							"Double key not found in populated pojo!", ASSERT_TRUE_ERROR.toString()), e.getMessage());
+		}
+	}
+	
+	@Test
+	public void testAssertPojoConstructorWrongTestValueCustomMessage()
+			throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException{
+		try{
+			assertPojoConstructor(MappedPojoConstructorMapWrongTestValue.class, DEFAULT_CUSTOM_ASSERTION_FAILED_MESSAGE);
+			fail();
+		}catch(AssertionFailedError e){
+			assertEquals(buildMultiPartError(DEFAULT_CUSTOM_ASSERTION_FAILED_MESSAGE,
+					"Double value not right in populated pojo map!",
+					buildAssertError(DEFAULT_TEST_DOUBLE, DEFAULT_WRONG_DOUBLE)), e.getMessage());
+		}
+	}
+	
+	@Test
+	public void testAssertPojoConstructorMissingTestKey2CustomMessage()
+			throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException{
+		try{
+			assertPojoConstructor(MappedPojoConstructorMapMissingTestKey2.class, DEFAULT_CUSTOM_ASSERTION_FAILED_MESSAGE);
+			fail();
+		}catch(AssertionFailedError e){
+			assertEquals(buildMultiPartError(DEFAULT_CUSTOM_ASSERTION_FAILED_MESSAGE,
+							"String key not found in populated pojo!", ASSERT_TRUE_ERROR.toString()), e.getMessage());
+		}
+	}
+	
+	@Test
+	public void testAssertPojoConstructorWrongTest2ValueCustomMessage()
+			throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException{
+		try{
+			assertPojoConstructor(MappedPojoConstructorMapWrongTest2Value.class, DEFAULT_CUSTOM_ASSERTION_FAILED_MESSAGE);
+			fail();
+		}catch(AssertionFailedError e){
+			assertEquals(buildMultiPartError(DEFAULT_CUSTOM_ASSERTION_FAILED_MESSAGE,
+					"String value not right in populated pojo map!",
+					buildAssertError(DEFAULT_TEST_STRING, DEFAULT_WRONG_STRING)), e.getMessage());
+		}
+	}
+	
+	@Test
+	public void testAssertPojoConstructorNullKeysCustomMessage()
+			throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException{
+		try{
+			assertPojoConstructor(MappedPojoNullKeys.class, DEFAULT_CUSTOM_ASSERTION_FAILED_MESSAGE);
+			fail();
+		}catch(AssertionFailedError e){
+			assertEquals(buildMultiPartError(DEFAULT_CUSTOM_ASSERTION_FAILED_MESSAGE,
+					"Keys are null in populated pojo!", ASSERT_NOT_NULL_ERROR.toString()), e.getMessage());
+		}
+	}
+	
+	@Test
+	public void testAssertPojoConstructorKeysWrongSizeCustomMessage()
+			throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException{
+		try{
+			assertPojoConstructor(MappedPojoConstructorKeysWrongSize.class, DEFAULT_CUSTOM_ASSERTION_FAILED_MESSAGE);
+			fail();
+		}catch(AssertionFailedError e){
+			assertEquals(buildMultiPartError(DEFAULT_CUSTOM_ASSERTION_FAILED_MESSAGE,
+							"Keys size is wrong in populated pojo!", buildAssertError(2, 1)),
+					e.getMessage());
+		}
+	}
+	
+	@Test
+	public void testAssertPojoConstructorKeysMissingTestKeyCustomMessage()
+			throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException{
+		try{
+			assertPojoConstructor(MappedPojoConstructorKeysMissingTestKey.class, DEFAULT_CUSTOM_ASSERTION_FAILED_MESSAGE);
+			fail();
+		}catch(AssertionFailedError e){
+			assertEquals(buildMultiPartError(DEFAULT_CUSTOM_ASSERTION_FAILED_MESSAGE,
+							"Keys missing Double key in populated pojo!", ASSERT_TRUE_ERROR.toString()), e.getMessage());
+		}
+	}
+	
+	@Test
+	public void testAssertPojoConstructorKeysMissingTestKey2CustomMessage()
+			throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException{
+		try{
+			assertPojoConstructor(MappedPojoConstructorKeysMissingTestKey2.class, DEFAULT_CUSTOM_ASSERTION_FAILED_MESSAGE);
+			fail();
+		}catch(AssertionFailedError e){
+			assertEquals(buildMultiPartError(DEFAULT_CUSTOM_ASSERTION_FAILED_MESSAGE,
+							"Keys missing String key in populated pojo!", ASSERT_TRUE_ERROR.toString()), e.getMessage());
 		}
 	}
 	
