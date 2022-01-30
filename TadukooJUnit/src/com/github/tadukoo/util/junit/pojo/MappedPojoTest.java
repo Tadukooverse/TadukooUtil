@@ -212,50 +212,74 @@ public class MappedPojoTest implements DefaultTestValues{
 	 * @throws AssertionFailedError If an assertion fails
 	 */
 	public static <V> void assertValueGetSet(MappedPojo pojo, String key, V value, V value2){
+		assertValueGetSet(pojo, key, value, value2, null);
+	}
+	
+	/**
+	 * Checks {@link MappedPojo#getItem(String)} and {@link MappedPojo#setItem(String, Object)} on the given
+	 * pojo, to test that those get and set methods work for the given key and values. The set and retrieve
+	 * are done twice (once for each given value) to ensure we're not adding/appending or just always returning
+	 * the expected value. We also check that the keys and map are correct on the pojo.
+	 * <br><br>
+	 * <b>Note: </b> The given pojo should be empty
+	 * This version allows for specifying a custom message to append to the start of any assertion errors.
+	 *
+	 * @param pojo The {@link MappedPojo} to be tested
+	 * @param key The key to be used
+	 * @param value The first value to be used for testing
+	 * @param value2 The second value to be used for testing
+	 * @param message A message to append to the front of any assertion error messages
+	 * @param <V> The value type being set and retrieved
+	 * @throws AssertionFailedError If an assertion fails
+	 */
+	public static <V> void assertValueGetSet(MappedPojo pojo, String key, V value, V value2, String message){
+		// Create message start
+		String msgStart = buildMessageStart(message);
+		
 		// Ensure the pojo is empty
-		assertEmptyPojo(pojo);
+		assertEmptyPojo(pojo, msgStart + "pojo must be empty for assertValueGetSet!");
 		
 		// Set the item
 		pojo.setItem(key, value);
 		// Test that the has methods return true for the key
-		assertTrue(pojo.hasKey(key));
-		assertTrue(pojo.hasItem(key));
+		assertTrue(pojo.hasKey(key), msgStart + "pojo is missing key after 1st set item!");
+		assertTrue(pojo.hasItem(key), msgStart + "pojo is missing item after 1st set item!");
 		// Check that we can retrieve the item
-		assertEquals(value, pojo.getItem(key));
+		assertEquals(value, pojo.getItem(key), msgStart + "value is wrong after 1st set item!");
 		
 		// Check keys
 		Set<String> keys = pojo.getKeys();
-		assertNotNull(keys);
-		assertEquals(1, keys.size());
-		assertEquals(key, keys.iterator().next());
+		assertNotNull(keys, msgStart + "keys are null after 1st set item!");
+		assertEquals(1, keys.size(), msgStart + "keys size is wrong after 1st set item!");
+		assertEquals(key, keys.iterator().next(), msgStart + "key is wrong after 1st set item!");
 		
 		// Check map
 		Map<String, Object> map = pojo.getMap();
-		assertNotNull(map);
-		assertEquals(1, map.size());
-		assertTrue(map.containsKey(key));
-		assertEquals(value, map.get(key));
+		assertNotNull(map, msgStart + "map is null after 1st set item!");
+		assertEquals(1, map.size(), msgStart + "map size is wrong after 1st set item!");
+		assertTrue(map.containsKey(key), msgStart + "map is missing key after 1st set item!");
+		assertEquals(value, map.get(key), msgStart + "map has wrong value after 1st set item!");
 		
 		// 2nd run, to ensure we're not adding/appending or just always returning the expected value
 		pojo.setItem(key, value2);
 		// Test that the has methods return true for the key
-		assertTrue(pojo.hasKey(key));
-		assertTrue(pojo.hasItem(key));
+		assertTrue(pojo.hasKey(key), msgStart + "pojo is missing key after 2nd set item!");
+		assertTrue(pojo.hasItem(key), msgStart + "pojo is missing item after 2nd set item!");
 		// Check that we can retrieve the item
-		assertEquals(value2, pojo.getItem(key));
+		assertEquals(value2, pojo.getItem(key), msgStart + "value is wrong after 2nd set item!");
 		
 		// Check keys
 		Set<String> keys2 = pojo.getKeys();
-		assertNotNull(keys2);
-		assertEquals(1, keys2.size());
-		assertEquals(key, keys2.iterator().next());
+		assertNotNull(keys2, msgStart + "keys are null after 2nd set item!");
+		assertEquals(1, keys2.size(), msgStart + "keys size is wrong after 2nd set item!");
+		assertEquals(key, keys2.iterator().next(), msgStart + "key is wrong after 2nd set item!");
 		
 		// Check map
 		Map<String, Object> map2 = pojo.getMap();
-		assertNotNull(map2);
-		assertEquals(1, map2.size());
-		assertTrue(map2.containsKey(key));
-		assertEquals(value2, map2.get(key));
+		assertNotNull(map2, msgStart + "map is null after 2nd set item!");
+		assertEquals(1, map2.size(), msgStart + "map size is wrong after 2nd set item!");
+		assertTrue(map2.containsKey(key), msgStart + "map is missing key after 2nd set item!");
+		assertEquals(value2, map2.get(key), msgStart + "map has wrong value after 2nd set item!");
 	}
 	
 	/**
@@ -276,6 +300,24 @@ public class MappedPojoTest implements DefaultTestValues{
 	
 	/**
 	 * Checks {@link MappedPojo#getItem(String)} and {@link MappedPojo#setItem(String, Object)} on the given
+	 * pojo, to test that those get and set methods work for the given key for a String value. The set and retrieve
+	 * are done twice to ensure we're not adding/appending or just always returning the expected value.
+	 * We also check that the keys and map are correct on the pojo.
+	 * <br><br>
+	 * <b>Note: </b> The given pojo should be empty
+	 * This version allows for specifying a custom message to append to the start of any assertion errors.
+	 *
+	 * @param pojo The {@link MappedPojo} to be tested
+	 * @param key The key to be used
+	 * @param message A message to append to the front of any assertion error messages
+	 * @throws AssertionFailedError If an assertion fails
+	 */
+	public static void assertStringGetSet(MappedPojo pojo, String key, String message){
+		assertValueGetSet(pojo, key, DEFAULT_TEST_STRING, DEFAULT_TEST_STRING_2, message);
+	}
+	
+	/**
+	 * Checks {@link MappedPojo#getItem(String)} and {@link MappedPojo#setItem(String, Object)} on the given
 	 * pojo, to test that those get and set methods work for the given key for a double value. The set and retrieve
 	 * are done twice to ensure we're not adding/appending or just always returning the expected value.
 	 * We also check that the keys and map are correct on the pojo.
@@ -288,6 +330,24 @@ public class MappedPojoTest implements DefaultTestValues{
 	 */
 	public static void assertDoubleGetSet(MappedPojo pojo, String key){
 		assertValueGetSet(pojo, key, DEFAULT_TEST_DOUBLE, DEFAULT_TEST_DOUBLE_2);
+	}
+	
+	/**
+	 * Checks {@link MappedPojo#getItem(String)} and {@link MappedPojo#setItem(String, Object)} on the given
+	 * pojo, to test that those get and set methods work for the given key for a double value. The set and retrieve
+	 * are done twice to ensure we're not adding/appending or just always returning the expected value.
+	 * We also check that the keys and map are correct on the pojo.
+	 * <br><br>
+	 * <b>Note: </b> The given pojo should be empty
+	 * This version allows for specifying a custom message to append to the start of any assertion errors.
+	 *
+	 * @param pojo The {@link MappedPojo} to be tested
+	 * @param key The key to be used
+	 * @param message A message to append to the front of any assertion error messages
+	 * @throws AssertionFailedError If an assertion fails
+	 */
+	public static void assertDoubleGetSet(MappedPojo pojo, String key, String message){
+		assertValueGetSet(pojo, key, DEFAULT_TEST_DOUBLE, DEFAULT_TEST_DOUBLE_2, message);
 	}
 	
 	/*

@@ -8,24 +8,19 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * A {@link MappedPojo} used for testing where {@link #getMap()} returns with the wrong value if it's not empty on run 2
+ * A {@link MappedPojo} used for testing where {@link #getMap()} returns null if it's not empty
  *
  * @param <V> The type to use for the getter + setter
  *
  * @author Logan Ferree (Tadukoo)
  * @version Beta v.0.6
- * @since Beta v.0.6 (in Tadukoo Util); Alpha v.0.1 (in Tadukoo JUnit)
  */
-public abstract class MappedPojoBadGetMapWrongValue2<V> implements MappedPojo, DefaultTestValues{
+public class MappedPojoBadGetMapNull<V> implements MappedPojo, DefaultTestValues{
 	private final Map<String, Object> map;
 	
-	public MappedPojoBadGetMapWrongValue2(){
+	public MappedPojoBadGetMapNull(){
 		map = new HashMap<>();
 	}
-	
-	protected abstract V getDefaultTestValue2();
-	
-	protected abstract V getDefaultWrongValue();
 	
 	@SuppressWarnings("unchecked")
 	public V getTest(){
@@ -58,9 +53,8 @@ public abstract class MappedPojoBadGetMapWrongValue2<V> implements MappedPojo, D
 	
 	@Override
 	public Map<String, Object> getMap(){
-		Object val = map.get(DEFAULT_TEST_KEY);
-		if(!map.isEmpty() && val.equals(getDefaultTestValue2())){
-			map.put(DEFAULT_TEST_KEY, getDefaultWrongValue());
+		if(!map.isEmpty()){
+			return null;
 		}
 		return map;
 	}

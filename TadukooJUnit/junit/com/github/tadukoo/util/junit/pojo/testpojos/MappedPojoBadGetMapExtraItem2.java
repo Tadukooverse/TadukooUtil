@@ -5,6 +5,7 @@ import com.github.tadukoo.util.pojo.MappedPojo;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * A {@link MappedPojo} used for testing where {@link #getMap()} returns with an extra value if it's not empty on run 2
@@ -31,6 +32,26 @@ public abstract class MappedPojoBadGetMapExtraItem2<V> implements MappedPojo, De
 	
 	public void setTest(V value){
 		setItem(DEFAULT_TEST_KEY, value);
+	}
+	
+	@Override
+	public boolean hasKey(String key){
+		return map.containsKey(key);
+	}
+	
+	@Override
+	public boolean hasItem(String key){
+		return map.get(key) != null;
+	}
+	
+	@Override
+	public Set<String> getKeys(){
+		return map.keySet();
+	}
+	
+	@Override
+	public Object getItem(String key){
+		return map.get(key);
 	}
 	
 	@Override
