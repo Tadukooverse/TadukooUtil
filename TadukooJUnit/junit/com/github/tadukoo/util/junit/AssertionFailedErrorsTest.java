@@ -5,13 +5,20 @@ import org.junit.jupiter.api.Test;
 import static com.github.tadukoo.util.junit.AssertionFailedErrors.ASSERT_FALSE_ERROR;
 import static com.github.tadukoo.util.junit.AssertionFailedErrors.ASSERT_NOT_NULL_ERROR;
 import static com.github.tadukoo.util.junit.AssertionFailedErrors.ASSERT_TRUE_ERROR;
+import static com.github.tadukoo.util.junit.AssertionFailedErrors.SEPARATOR;
 import static com.github.tadukoo.util.junit.AssertionFailedErrors.buildAssertError;
 import static com.github.tadukoo.util.junit.AssertionFailedErrors.buildAssertErrorNot;
+import static com.github.tadukoo.util.junit.AssertionFailedErrors.buildMessageStart;
 import static com.github.tadukoo.util.junit.AssertionFailedErrors.buildMultiPartError;
 import static com.github.tadukoo.util.junit.AssertionFailedErrors.buildTwoPartError;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class AssertionFailedErrorsTest{
+	
+	@Test
+	public void testSEPARATOR(){
+		assertEquals(" ==> ", SEPARATOR);
+	}
 	
 	@Test
 	public void testASSERT_TRUE_ERROR(){
@@ -26,6 +33,21 @@ public class AssertionFailedErrorsTest{
 	@Test
 	public void testASSERT_NOT_NULL_ERROR(){
 		assertEquals("expected: not <null>", ASSERT_NOT_NULL_ERROR.toString());
+	}
+	
+	@Test
+	public void testBuildMessageStartNull(){
+		assertEquals("", buildMessageStart(null));
+	}
+	
+	@Test
+	public void testBuildMessageStartEmpty(){
+		assertEquals("", buildMessageStart(""));
+	}
+	
+	@Test
+	public void testBuildMessageStart(){
+		assertEquals("yep" + SEPARATOR, buildMessageStart("yep"));
 	}
 	
 	@Test

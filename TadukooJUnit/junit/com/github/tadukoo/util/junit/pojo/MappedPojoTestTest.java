@@ -19,6 +19,7 @@ import java.util.Map;
 import static com.github.tadukoo.util.junit.AssertionFailedErrors.ASSERT_NOT_NULL_ERROR;
 import static com.github.tadukoo.util.junit.AssertionFailedErrors.ASSERT_TRUE_ERROR;
 import static com.github.tadukoo.util.junit.AssertionFailedErrors.buildAssertError;
+import static com.github.tadukoo.util.junit.AssertionFailedErrors.buildMultiPartError;
 import static com.github.tadukoo.util.junit.AssertionFailedErrors.buildTwoPartError;
 import static com.github.tadukoo.util.junit.pojo.MappedPojoTest.assertEmptyConstructor;
 import static com.github.tadukoo.util.junit.pojo.MappedPojoTest.assertEmptyPojo;
@@ -184,8 +185,8 @@ public class MappedPojoTestTest implements DefaultTestValues{
 			assertEmptyConstructor(MappedPojoBadIsEmpty.class);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(buildTwoPartError("pojo was non-empty in empty pojo!",
-					ASSERT_TRUE_ERROR), e.getMessage());
+			assertEquals(buildMultiPartError("New pojo is not empty!", "pojo was non-empty in empty pojo!",
+					ASSERT_TRUE_ERROR.toString()), e.getMessage());
 		}
 	}
 	
@@ -196,8 +197,8 @@ public class MappedPojoTestTest implements DefaultTestValues{
 			assertEmptyConstructor(MappedPojoNullMap.class);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(buildTwoPartError("Map was null in empty pojo!",
-					ASSERT_NOT_NULL_ERROR), e.getMessage());
+			assertEquals(buildMultiPartError("New pojo is not empty!", "Map was null in empty pojo!",
+					ASSERT_NOT_NULL_ERROR.toString()), e.getMessage());
 		}
 	}
 	
@@ -208,8 +209,8 @@ public class MappedPojoTestTest implements DefaultTestValues{
 			assertEmptyConstructor(MappedPojoNonEmptyMap.class);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(buildTwoPartError("Map was non-empty in empty pojo!",
-					ASSERT_TRUE_ERROR), e.getMessage());
+			assertEquals(buildMultiPartError("New pojo is not empty!", "Map was non-empty in empty pojo!",
+					ASSERT_TRUE_ERROR.toString()), e.getMessage());
 		}
 	}
 	
@@ -220,8 +221,8 @@ public class MappedPojoTestTest implements DefaultTestValues{
 			assertEmptyConstructor(MappedPojoNullKeys.class);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(buildTwoPartError("getKeys() returned null in empty pojo!",
-							ASSERT_NOT_NULL_ERROR), e.getMessage());
+			assertEquals(buildMultiPartError("New pojo is not empty!", "getKeys() returned null in empty pojo!",
+							ASSERT_NOT_NULL_ERROR.toString()), e.getMessage());
 		}
 	}
 	
@@ -232,8 +233,78 @@ public class MappedPojoTestTest implements DefaultTestValues{
 			assertEmptyConstructor(MappedPojoNonEmptyKeys.class);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(buildTwoPartError("getKeys() was not empty in empty pojo!",
-							ASSERT_TRUE_ERROR), e.getMessage());
+			assertEquals(buildMultiPartError("New pojo is not empty!", "getKeys() was not empty in empty pojo!",
+							ASSERT_TRUE_ERROR.toString()), e.getMessage());
+		}
+	}
+	
+	/*
+	 * Assert Empty Constructor Custom Message
+	 */
+	
+	@Test
+	public void testAssertEmptyConstructorPassCustomMessage()
+			throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException{
+		assertEmptyConstructor(MappedPojoA.class, DEFAULT_CUSTOM_ASSERTION_FAILED_MESSAGE);
+	}
+	
+	@Test
+	public void testAssertEmptyConstructorFalseIsEmptyCustomMessage()
+			throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException{
+		try{
+			assertEmptyConstructor(MappedPojoBadIsEmpty.class, DEFAULT_CUSTOM_ASSERTION_FAILED_MESSAGE);
+			fail();
+		}catch(AssertionFailedError e){
+			assertEquals(buildMultiPartError(DEFAULT_CUSTOM_ASSERTION_FAILED_MESSAGE, "New pojo is not empty!",
+					"pojo was non-empty in empty pojo!", ASSERT_TRUE_ERROR.toString()), e.getMessage());
+		}
+	}
+	
+	@Test
+	public void testAssertEmptyConstructorNullMapCustomMessage()
+			throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException{
+		try{
+			assertEmptyConstructor(MappedPojoNullMap.class, DEFAULT_CUSTOM_ASSERTION_FAILED_MESSAGE);
+			fail();
+		}catch(AssertionFailedError e){
+			assertEquals(buildMultiPartError(DEFAULT_CUSTOM_ASSERTION_FAILED_MESSAGE, "New pojo is not empty!",
+					"Map was null in empty pojo!", ASSERT_NOT_NULL_ERROR.toString()), e.getMessage());
+		}
+	}
+	
+	@Test
+	public void testAssertEmptyConstructorNonEmptyMapCustomMessage()
+			throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException{
+		try{
+			assertEmptyConstructor(MappedPojoNonEmptyMap.class, DEFAULT_CUSTOM_ASSERTION_FAILED_MESSAGE);
+			fail();
+		}catch(AssertionFailedError e){
+			assertEquals(buildMultiPartError(DEFAULT_CUSTOM_ASSERTION_FAILED_MESSAGE, "New pojo is not empty!",
+					"Map was non-empty in empty pojo!", ASSERT_TRUE_ERROR.toString()), e.getMessage());
+		}
+	}
+	
+	@Test
+	public void testAssertEmptyConstructorNullKeysCustomMessage()
+			throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException{
+		try{
+			assertEmptyConstructor(MappedPojoNullKeys.class, DEFAULT_CUSTOM_ASSERTION_FAILED_MESSAGE);
+			fail();
+		}catch(AssertionFailedError e){
+			assertEquals(buildMultiPartError(DEFAULT_CUSTOM_ASSERTION_FAILED_MESSAGE, "New pojo is not empty!",
+					"getKeys() returned null in empty pojo!", ASSERT_NOT_NULL_ERROR.toString()), e.getMessage());
+		}
+	}
+	
+	@Test
+	public void testAssertEmptyConstructorNonEmptyKeysCustomMessage()
+			throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException{
+		try{
+			assertEmptyConstructor(MappedPojoNonEmptyKeys.class, DEFAULT_CUSTOM_ASSERTION_FAILED_MESSAGE);
+			fail();
+		}catch(AssertionFailedError e){
+			assertEquals(buildMultiPartError(DEFAULT_CUSTOM_ASSERTION_FAILED_MESSAGE, "New pojo is not empty!",
+					"getKeys() was not empty in empty pojo!", ASSERT_TRUE_ERROR.toString()), e.getMessage());
 		}
 	}
 	
@@ -392,6 +463,70 @@ public class MappedPojoTestTest implements DefaultTestValues{
 		}catch(AssertionFailedError e){
 			assertEquals(buildTwoPartError("getKeys() was not empty in empty pojo!",
 							ASSERT_TRUE_ERROR), e.getMessage());
+		}
+	}
+	
+	/*
+	 * Assert Empty Pojo Custom Message
+	 */
+	
+	@Test
+	public void testAssertEmptyPojoPassCustomMessage(){
+		assertEmptyPojo(pojoA, DEFAULT_CUSTOM_ASSERTION_FAILED_MESSAGE);
+	}
+	
+	@Test
+	public void testAssertEmptyPojoFalseIsEmptyCustomMessage(){
+		try{
+			assertEmptyPojo(pojoBadIsEmpty, DEFAULT_CUSTOM_ASSERTION_FAILED_MESSAGE);
+			fail();
+		}catch(AssertionFailedError e){
+			assertEquals(buildMultiPartError(DEFAULT_CUSTOM_ASSERTION_FAILED_MESSAGE,
+					"pojo was non-empty in empty pojo!", ASSERT_TRUE_ERROR.toString()), e.getMessage());
+		}
+	}
+	
+	@Test
+	public void testAssertEmptyPojoNullMapCustomMessage(){
+		try{
+			assertEmptyPojo(pojoNullMap, DEFAULT_CUSTOM_ASSERTION_FAILED_MESSAGE);
+			fail();
+		}catch(AssertionFailedError e){
+			assertEquals(buildMultiPartError(DEFAULT_CUSTOM_ASSERTION_FAILED_MESSAGE,
+					"Map was null in empty pojo!", ASSERT_NOT_NULL_ERROR.toString()), e.getMessage());
+		}
+	}
+	
+	@Test
+	public void testAssertEmptyPojoNonEmptyMapCustomMessage(){
+		try{
+			assertEmptyPojo(pojoNonEmptyMap, DEFAULT_CUSTOM_ASSERTION_FAILED_MESSAGE);
+			fail();
+		}catch(AssertionFailedError e){
+			assertEquals(buildMultiPartError(DEFAULT_CUSTOM_ASSERTION_FAILED_MESSAGE,
+					"Map was non-empty in empty pojo!", ASSERT_TRUE_ERROR.toString()), e.getMessage());
+		}
+	}
+	
+	@Test
+	public void testAssertEmptyPojoNullKeysCustomMessage(){
+		try{
+			assertEmptyPojo(pojoNullKeys, DEFAULT_CUSTOM_ASSERTION_FAILED_MESSAGE);
+			fail();
+		}catch(AssertionFailedError e){
+			assertEquals(buildMultiPartError(DEFAULT_CUSTOM_ASSERTION_FAILED_MESSAGE,
+					"getKeys() returned null in empty pojo!", ASSERT_NOT_NULL_ERROR.toString()), e.getMessage());
+		}
+	}
+	
+	@Test
+	public void testAssertEmptyPojoNonEmptyKeysCustomMessage(){
+		try{
+			assertEmptyPojo(pojoNonEmptyKeys, DEFAULT_CUSTOM_ASSERTION_FAILED_MESSAGE);
+			fail();
+		}catch(AssertionFailedError e){
+			assertEquals(buildMultiPartError(DEFAULT_CUSTOM_ASSERTION_FAILED_MESSAGE,
+					"getKeys() was not empty in empty pojo!", ASSERT_TRUE_ERROR.toString()), e.getMessage());
 		}
 	}
 }

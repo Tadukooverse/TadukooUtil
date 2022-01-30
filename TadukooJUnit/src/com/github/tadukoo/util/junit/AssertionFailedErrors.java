@@ -22,6 +22,9 @@ public enum AssertionFailedErrors{
 	/** The error string */
 	private final String error;
 	
+	/** The separator that appears between errors when there are multiple chained */
+	public static final String SEPARATOR = " ==> ";
+	
 	/**
 	 * Creates a new Assertion Failed Error with the given error string
 	 *
@@ -29,6 +32,17 @@ public enum AssertionFailedErrors{
 	 */
 	AssertionFailedErrors(String error){
 		this.error = error;
+	}
+	
+	/**
+	 * Builds the start of a message when appending a message onto another assertion failed error (helpful to
+	 * check if message is blank)
+	 *
+	 * @param message The message to append (might be blank)
+	 * @return An empty string, or the message with the {@link #SEPARATOR} after it
+	 */
+	public static String buildMessageStart(String message){
+		return StringUtil.isBlank(message)?"":message + SEPARATOR;
 	}
 	
 	/**
@@ -76,7 +90,7 @@ public enum AssertionFailedErrors{
 	 * @return A string representing an Assertion Failed Error string
 	 */
 	public static String buildTwoPartError(String message, String error){
-		return message + " ==> " + error;
+		return message + SEPARATOR + error;
 	}
 	
 	/**
@@ -91,9 +105,9 @@ public enum AssertionFailedErrors{
 	public static String buildMultiPartError(String ... errors){
 		StringBuilder message = new StringBuilder();
 		for(String error: errors){
-			message.append(error).append(" ==> ");
+			message.append(error).append(SEPARATOR);
 		}
-		message.delete(message.length()-5, message.length());
+		message.delete(message.length()-SEPARATOR.length(), message.length());
 		return message.toString();
 	}
 	

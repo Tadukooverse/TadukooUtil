@@ -13,6 +13,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 import java.util.Set;
 
+import static com.github.tadukoo.util.junit.AssertionFailedErrors.buildMessageStart;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -48,10 +49,31 @@ public class MappedPojoTest implements DefaultTestValues{
 	 */
 	public static <P extends Class<? extends MappedPojo>> void assertEmptyConstructor(P pojoClass)
 			throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException{
+		assertEmptyConstructor(pojoClass, null);
+	}
+	
+	/**
+	 * Using the given {@link MappedPojo} class, it will create a new instance using no constructor parameters.
+	 * Then it'll test that the map and keys are correctly empty.
+	 * This version allows for specifying a custom message to append to the start of any assertion errors.
+	 *
+	 * @param pojoClass The {@link MappedPojo} class to be tested
+	 * @param message A message to append to the front of any assertion error messages
+	 * @param <P> The {@link MappedPojo} class
+	 * @throws NoSuchMethodException If the empty constructor does not exist
+	 * @throws InvocationTargetException If the constructor throws an exception
+	 * @throws InstantiationException If the class is abstract
+	 * @throws IllegalAccessException If the constructor is not public
+	 * @throws AssertionFailedError If an assertion fails
+	 */
+	public static <P extends Class<? extends MappedPojo>> void assertEmptyConstructor(P pojoClass, String message)
+		throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException{
+		// Create the start of the message
+		String msgStart = buildMessageStart(message);
 		// Create a new instance of the pojo
 		MappedPojo pojo = pojoClass.getDeclaredConstructor().newInstance();
 		// Assert the pojo is empty
-		assertEmptyPojo(pojo);
+		assertEmptyPojo(pojo, msgStart + "New pojo is not empty!");
 	}
 	
 	/**
@@ -113,18 +135,35 @@ public class MappedPojoTest implements DefaultTestValues{
 	 * @throws AssertionFailedError If an assertion fails
 	 */
 	public static void assertEmptyPojo(MappedPojo pojo){
+		assertEmptyPojo(pojo, null);
+	}
+	
+	/**
+	 * Checks that the given {@link MappedPojo} is empty. Checks that {@link MappedPojo#isEmpty()} is true,
+	 * that {@link MappedPojo#getMap()} is not null and is empty, and that {@link MappedPojo#getKeys()} is
+	 * not null and is empty.
+	 * This version allows for specifying a custom message to append to the start of any assertion errors.
+	 *
+	 * @param pojo The {@link MappedPojo} to be tested
+	 * @param message A message to append to the front of any assertion error messages
+	 * @throws AssertionFailedError If an assertion fails
+	 */
+	public static void assertEmptyPojo(MappedPojo pojo, String message){
+		// Build the Message Start
+		String msgStart = buildMessageStart(message);
+		
 		// Test the pojo returns true for its isEmpty method
-		assertTrue(pojo.isEmpty(), "pojo was non-empty in empty pojo!");
+		assertTrue(pojo.isEmpty(), msgStart + "pojo was non-empty in empty pojo!");
 		
 		// Test the map is empty
 		Map<String, Object> map = pojo.getMap();
-		assertNotNull(map, "Map was null in empty pojo!");
-		assertTrue(map.isEmpty(), "Map was non-empty in empty pojo!");
+		assertNotNull(map, msgStart + "Map was null in empty pojo!");
+		assertTrue(map.isEmpty(), msgStart + "Map was non-empty in empty pojo!");
 		
 		// Test the key set is empty
 		Set<String> keys = pojo.getKeys();
-		assertNotNull(keys, "getKeys() returned null in empty pojo!");
-		assertTrue(keys.isEmpty(), "getKeys() was not empty in empty pojo!");
+		assertNotNull(keys, msgStart + "getKeys() returned null in empty pojo!");
+		assertTrue(keys.isEmpty(), msgStart + "getKeys() was not empty in empty pojo!");
 	}
 	
 	/*

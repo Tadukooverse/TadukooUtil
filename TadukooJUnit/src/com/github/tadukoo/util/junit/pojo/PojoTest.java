@@ -1,11 +1,11 @@
 package com.github.tadukoo.util.junit.pojo;
 
-import com.github.tadukoo.util.StringUtil;
 import com.github.tadukoo.util.junit.DefaultTestValues;
 import com.github.tadukoo.util.functional.consumer.ThrowingConsumer;
 import com.github.tadukoo.util.functional.supplier.ThrowingSupplier;
 import org.opentest4j.AssertionFailedError;
 
+import static com.github.tadukoo.util.junit.AssertionFailedErrors.buildMessageStart;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
@@ -37,7 +37,7 @@ public class PojoTest implements DefaultTestValues{
 	 */
 	public static <V, T extends Throwable, T2 extends Throwable> void assertValueGetSet(
 			ThrowingSupplier<V, T> getter, ThrowingConsumer<V, T2> setter, V value, V value2) throws T, T2{
-		assertValueGetSet(getter, setter, value, value2, "");
+		assertValueGetSet(getter, setter, value, value2, null);
 	}
 	
 	/**
@@ -61,7 +61,7 @@ public class PojoTest implements DefaultTestValues{
 			ThrowingSupplier<V, T> getter, ThrowingConsumer<V, T2> setter, V value, V value2, String message)
 		throws T, T2{
 		// Setup message start
-		String msgStart = StringUtil.isBlank(message)?"":message + " ==> ";
+		String msgStart = buildMessageStart(message);
 		
 		// Run a set and try to get the value we set
 		setter.accept(value);
