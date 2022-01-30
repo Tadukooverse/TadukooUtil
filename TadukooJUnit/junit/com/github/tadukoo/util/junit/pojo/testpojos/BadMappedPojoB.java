@@ -1,4 +1,4 @@
-package com.github.tadukoo.util.junit.pojo;
+package com.github.tadukoo.util.junit.pojo.testpojos;
 
 import com.github.tadukoo.util.pojo.MappedPojo;
 
@@ -15,10 +15,12 @@ import java.util.Map;
 public class BadMappedPojoB implements MappedPojo{
 	private final Map<String, Object> map;
 	
+	@SuppressWarnings("unused")
 	private BadMappedPojoB(){
 		map = new HashMap<>();
 	}
 	
+	@SuppressWarnings("unused")
 	private BadMappedPojoB(MappedPojo pojo){
 		map = pojo.getMap();
 	}

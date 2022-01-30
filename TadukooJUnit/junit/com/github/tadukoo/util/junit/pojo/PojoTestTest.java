@@ -169,6 +169,12 @@ public class PojoTestTest implements DefaultTestValues{
 	}
 	
 	@Test
+	public void testAssertValueGetSetPassCustomMessage(){
+		assertValueGetSet(pojo::getString, pojo::setString, DEFAULT_TEST_STRING, DEFAULT_TEST_STRING_2,
+				DEFAULT_CUSTOM_ASSERTION_FAILED_MESSAGE);
+	}
+	
+	@Test
 	public void testAssertValueGetSetFailedAssertionCustomMessage(){
 		try{
 			assertValueGetSet(badPojo::getString, badPojo::setString, DEFAULT_TEST_STRING,
@@ -240,6 +246,11 @@ public class PojoTestTest implements DefaultTestValues{
 	}
 	
 	@Test
+	public void testAssertStringGetSetPassCustomMessage(){
+		assertStringGetSet(pojo::getString, pojo::setString, DEFAULT_CUSTOM_ASSERTION_FAILED_MESSAGE);
+	}
+	
+	@Test
 	public void testAssertStringGetSetFailedAssertionCustomMessage(){
 		try{
 			assertStringGetSet(badPojo::getString, badPojo::setString, DEFAULT_CUSTOM_ASSERTION_FAILED_MESSAGE);
@@ -306,6 +317,11 @@ public class PojoTestTest implements DefaultTestValues{
 		}catch(IllegalArgumentException e){
 			assertEquals("I'm a bad setter", e.getMessage());
 		}
+	}
+	
+	@Test
+	public void testAssertDoubleGetSetPassCustomMessage(){
+		assertDoubleGetSet(pojo::getDouble, pojo::setDouble, DEFAULT_CUSTOM_ASSERTION_FAILED_MESSAGE);
 	}
 	
 	@Test

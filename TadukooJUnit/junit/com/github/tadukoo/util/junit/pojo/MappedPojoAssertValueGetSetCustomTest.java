@@ -4,18 +4,57 @@ import com.github.tadukoo.util.functional.NoException;
 import com.github.tadukoo.util.functional.consumer.ThrowingConsumer;
 import com.github.tadukoo.util.functional.consumer.ThrowingConsumer4;
 import com.github.tadukoo.util.functional.supplier.ThrowingSupplier;
-import com.github.tadukoo.util.junit.AssertionFailedErrors;
-import com.github.tadukoo.util.map.MapUtil;
+import com.github.tadukoo.util.junit.pojo.testpojos.MappedPojoA;
+import com.github.tadukoo.util.junit.pojo.testpojos.MappedPojoBadClear;
+import com.github.tadukoo.util.junit.pojo.testpojos.MappedPojoBadGetItem;
+import com.github.tadukoo.util.junit.pojo.testpojos.MappedPojoBadGetItem2;
+import com.github.tadukoo.util.junit.pojo.testpojos.MappedPojoBadGetKeys;
+import com.github.tadukoo.util.junit.pojo.testpojos.MappedPojoBadGetKeys2;
+import com.github.tadukoo.util.junit.pojo.testpojos.MappedPojoBadGetKeysExtraKey;
+import com.github.tadukoo.util.junit.pojo.testpojos.MappedPojoBadGetKeysExtraKey2;
+import com.github.tadukoo.util.junit.pojo.testpojos.MappedPojoBadGetKeysWrongKey;
+import com.github.tadukoo.util.junit.pojo.testpojos.MappedPojoBadGetKeysWrongKey2;
+import com.github.tadukoo.util.junit.pojo.testpojos.MappedPojoBadGetMapExtraItem;
+import com.github.tadukoo.util.junit.pojo.testpojos.MappedPojoBadGetMapExtraItem2;
+import com.github.tadukoo.util.junit.pojo.testpojos.MappedPojoBadGetMapWrongKey;
+import com.github.tadukoo.util.junit.pojo.testpojos.MappedPojoBadGetMapWrongKey2;
+import com.github.tadukoo.util.junit.pojo.testpojos.MappedPojoBadGetMapWrongValue;
+import com.github.tadukoo.util.junit.pojo.testpojos.MappedPojoBadGetMapWrongValue2;
+import com.github.tadukoo.util.junit.pojo.testpojos.MappedPojoBadGetter;
+import com.github.tadukoo.util.junit.pojo.testpojos.MappedPojoBadGetter2;
+import com.github.tadukoo.util.junit.pojo.testpojos.MappedPojoBadHasItem;
+import com.github.tadukoo.util.junit.pojo.testpojos.MappedPojoBadHasItem2;
+import com.github.tadukoo.util.junit.pojo.testpojos.MappedPojoBadHasKey;
+import com.github.tadukoo.util.junit.pojo.testpojos.MappedPojoBadHasKey2;
+import com.github.tadukoo.util.junit.pojo.testpojos.MappedPojoBadIsEmpty;
+import com.github.tadukoo.util.junit.pojo.testpojos.MappedPojoCustomExtraKey;
+import com.github.tadukoo.util.junit.pojo.testpojos.MappedPojoCustomExtraKey2;
+import com.github.tadukoo.util.junit.pojo.testpojos.MappedPojoCustomExtraMapKey;
+import com.github.tadukoo.util.junit.pojo.testpojos.MappedPojoCustomExtraMapKey2;
+import com.github.tadukoo.util.junit.pojo.testpojos.MappedPojoCustomNullKeys;
+import com.github.tadukoo.util.junit.pojo.testpojos.MappedPojoCustomNullKeys2;
+import com.github.tadukoo.util.junit.pojo.testpojos.MappedPojoCustomWrongKey;
+import com.github.tadukoo.util.junit.pojo.testpojos.MappedPojoCustomWrongKey2;
+import com.github.tadukoo.util.junit.pojo.testpojos.MappedPojoCustomWrongMapValue;
+import com.github.tadukoo.util.junit.pojo.testpojos.MappedPojoCustomWrongMapValue2;
+import com.github.tadukoo.util.junit.pojo.testpojos.MappedPojoHasItemFalse;
+import com.github.tadukoo.util.junit.pojo.testpojos.MappedPojoHasItemFalse2;
+import com.github.tadukoo.util.junit.pojo.testpojos.MappedPojoHasKeyFalse;
+import com.github.tadukoo.util.junit.pojo.testpojos.MappedPojoHasKeyFalse2;
+import com.github.tadukoo.util.junit.pojo.testpojos.MappedPojoNonEmptyKeys;
+import com.github.tadukoo.util.junit.pojo.testpojos.MappedPojoNonEmptyMap;
+import com.github.tadukoo.util.junit.pojo.testpojos.MappedPojoNullKeys;
+import com.github.tadukoo.util.junit.pojo.testpojos.MappedPojoNullMap;
+import com.github.tadukoo.util.junit.pojo.testpojos.MappedPojoWrongItem;
+import com.github.tadukoo.util.junit.pojo.testpojos.MappedPojoWrongItem2;
 import com.github.tadukoo.util.pojo.MappedPojo;
-import com.github.tadukoo.util.tuple.Pair;
 import org.junit.jupiter.api.Test;
 import org.opentest4j.AssertionFailedError;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-
+import static com.github.tadukoo.util.junit.AssertionFailedErrors.ASSERT_NOT_NULL_ERROR;
+import static com.github.tadukoo.util.junit.AssertionFailedErrors.ASSERT_TRUE_ERROR;
+import static com.github.tadukoo.util.junit.AssertionFailedErrors.buildAssertError;
+import static com.github.tadukoo.util.junit.AssertionFailedErrors.buildTwoPartError;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
@@ -50,1293 +89,204 @@ public abstract class MappedPojoAssertValueGetSetCustomTest<V>{
 		this.defaultWrongValue = defaultWrongValue;
 	}
 	
-	/**
-	 * A good {@link MappedPojo} to use for passing tests
-	 *
-	 * @author Logan Ferree (Tadukoo)
-	 * @version Alpha v.0.1
-	 */
-	private class MappedPojoA implements MappedPojo{
-		private final Map<String, Object> map;
-		
-		public MappedPojoA(){
-			map = new HashMap<>();
-		}
-		
-		@SuppressWarnings("unchecked")
-		public V getTest(){
-			return (V) getItem(defaultTestKey);
-		}
-		
-		public void setTest(V value){
-			setItem(defaultTestKey, value);
-		}
-		
+	private final MappedPojoA<V> pojoA = new MappedPojoA<>();
+	private final MappedPojoBadIsEmpty<V> pojoBadIsEmpty = new MappedPojoBadIsEmpty<>();
+	private final MappedPojoNullMap<V> pojoNullMap = new MappedPojoNullMap<>();
+	private final MappedPojoNonEmptyMap<V> pojoNonEmptyMap = new MappedPojoNonEmptyMap<>();
+	private final MappedPojoNullKeys<V> pojoNullKeys = new MappedPojoNullKeys<>();
+	private final MappedPojoNonEmptyKeys<V> pojoNonEmptyKeys = new MappedPojoNonEmptyKeys<>();
+	private final MappedPojoBadHasKey<V> pojoBadHasKey = new MappedPojoBadHasKey<>();
+	private final MappedPojoBadHasItem<V> pojoBadHasItem = new MappedPojoBadHasItem<>();
+	private final MappedPojoBadGetItem<V> pojoBadGetItem = new MappedPojoBadGetItem<>(){
 		@Override
-		public Map<String, Object> getMap(){
-			return map;
-		}
-	}
-	
-	private class MappedPojoBadIsEmpty implements MappedPojo{
-		private final Map<String, Object> map;
-		
-		public MappedPojoBadIsEmpty(){
-			map = new HashMap<>();
-		}
-		
-		@Override
-		public boolean isEmpty(){
-			return false;
-		}
-		
-		@SuppressWarnings("unchecked")
-		public V getTest(){
-			return (V) getItem(defaultTestKey);
-		}
-		
-		public void setTest(V value){
-			setItem(defaultTestKey, value);
-		}
-		
-		@Override
-		public Map<String, Object> getMap(){
-			return map;
-		}
-	}
-	
-	private class MappedPojoNullMap implements MappedPojo{
-		
-		public MappedPojoNullMap(){ }
-		
-		@SuppressWarnings("unchecked")
-		public V getTest(){
-			return (V) getItem(defaultTestKey);
-		}
-		
-		public void setTest(V value){
-			setItem(defaultTestKey, value);
-		}
-		
-		@Override
-		public Map<String, Object> getMap(){
-			return null;
-		}
-	}
-	
-	private class MappedPojoNonEmptyMap implements MappedPojo{
-		private final Map<String, Object> map = MapUtil.createMap(Pair.of(defaultWrongKey, defaultWrongValue));
-		
-		public MappedPojoNonEmptyMap(){ }
-		
-		@SuppressWarnings("unchecked")
-		public V getTest(){
-			return (V) getItem(defaultTestKey);
-		}
-		
-		public void setTest(V value){
-			setItem(defaultTestKey, value);
-		}
-		
-		@Override
-		public boolean isEmpty(){
-			return true;
-		}
-		
-		@Override
-		public Map<String, Object> getMap(){
-			return map;
-		}
-	}
-	
-	private class MappedPojoNullKeys implements MappedPojo{
-		private final Map<String, Object> map;
-		
-		public MappedPojoNullKeys(){
-			map = new HashMap<>();
-		}
-		
-		@Override
-		public Set<String> getKeys(){
-			return null;
-		}
-		
-		@SuppressWarnings("unchecked")
-		public V getTest(){
-			return (V) getItem(defaultTestKey);
-		}
-		
-		public void setTest(V value){
-			setItem(defaultTestKey, value);
-		}
-		
-		@Override
-		public Map<String, Object> getMap(){
-			return map;
-		}
-	}
-	
-	private class MappedPojoNonEmptyKeys implements MappedPojo{
-		private final Map<String, Object> map;
-		
-		public MappedPojoNonEmptyKeys(){
-			map = new HashMap<>();
-		}
-		
-		@Override
-		public Set<String> getKeys(){
-			Set<String> keys = new HashSet<>();
-			keys.add(defaultWrongKey);
-			return keys;
-		}
-		
-		@SuppressWarnings("unchecked")
-		public V getTest(){
-			return (V) getItem(defaultTestKey);
-		}
-		
-		public void setTest(V value){
-			setItem(defaultTestKey, value);
-		}
-		
-		@Override
-		public Map<String, Object> getMap(){
-			return map;
-		}
-	}
-	
-	private class MappedPojoBadHasKey implements MappedPojo{
-		private final Map<String, Object> map;
-		
-		public MappedPojoBadHasKey(){
-			map = new HashMap<>();
-		}
-		
-		@Override
-		public boolean hasKey(String key){
-			return false;
-		}
-		
-		@SuppressWarnings("unchecked")
-		public V getTest(){
-			return (V) getItem(defaultTestKey);
-		}
-		
-		public void setTest(V value){
-			setItem(defaultTestKey, value);
-		}
-		
-		@Override
-		public Map<String, Object> getMap(){
-			return map;
-		}
-	}
-	
-	private class MappedPojoBadHasItem implements MappedPojo{
-		private final Map<String, Object> map;
-		
-		public MappedPojoBadHasItem(){
-			map = new HashMap<>();
-		}
-		
-		@Override
-		public boolean hasItem(String key){
-			return false;
-		}
-		
-		@SuppressWarnings("unchecked")
-		public V getTest(){
-			return (V) getItem(defaultTestKey);
-		}
-		
-		public void setTest(V value){
-			setItem(defaultTestKey, value);
-		}
-		
-		@Override
-		public Map<String, Object> getMap(){
-			return map;
-		}
-	}
-	
-	private class MappedPojoBadGetItem implements MappedPojo{
-		private final Map<String, Object> map;
-		
-		public MappedPojoBadGetItem(){
-			map = new HashMap<>();
-		}
-		
-		@Override
-		public Object getItem(String key){
+		protected V getDefaultWrongValue(){
 			return defaultWrongValue;
 		}
-		
-		@SuppressWarnings("unchecked")
-		public V getTest(){
-			return (V) getItem(defaultTestKey);
-		}
-		
-		public void setTest(V value){
-			setItem(defaultTestKey, value);
-		}
-		
+	};
+	private final MappedPojoBadGetKeys<V> pojoBadGetKeys = new MappedPojoBadGetKeys<>();
+	private final MappedPojoBadGetKeysExtraKey<V> pojoBadGetKeysExtraKey = new MappedPojoBadGetKeysExtraKey<>();
+	private final MappedPojoBadGetKeysWrongKey<V> pojoBadGetKeysWrongKey = new MappedPojoBadGetKeysWrongKey<>();
+	private final MappedPojoBadGetMapExtraItem<V> pojoBadGetMapExtraItem = new MappedPojoBadGetMapExtraItem<>();
+	private final MappedPojoBadGetMapWrongKey<V> pojoBadGetMapWrongKey = new MappedPojoBadGetMapWrongKey<>();
+	private final MappedPojoBadGetMapWrongValue<V> pojoBadGetMapWrongValue = new MappedPojoBadGetMapWrongValue<>(){
 		@Override
-		public Map<String, Object> getMap(){
-			return map;
-		}
-	}
-	
-	private class MappedPojoBadGetKeys implements MappedPojo{
-		private final Map<String, Object> map;
-		
-		public MappedPojoBadGetKeys(){
-			map = new HashMap<>();
-		}
-		
-		@Override
-		public Set<String> getKeys(){
-			Set<String> keys = map.keySet();
-			if(!keys.isEmpty()){
-				return null;
-			}else{
-				return keys;
-			}
-		}
-		
-		@SuppressWarnings("unchecked")
-		public V getTest(){
-			return (V) getItem(defaultTestKey);
-		}
-		
-		public void setTest(V value){
-			setItem(defaultTestKey, value);
-		}
-		
-		@Override
-		public Map<String, Object> getMap(){
-			return map;
-		}
-	}
-	
-	private class MappedPojoBadGetKeysExtraKey implements MappedPojo{
-		private final Map<String, Object> map;
-		
-		public MappedPojoBadGetKeysExtraKey(){
-			map = new HashMap<>();
-		}
-		
-		@Override
-		public Set<String> getKeys(){
-			Set<String> keys = new HashSet<>(map.keySet());
-			if(!keys.isEmpty()){
-				keys.add(defaultWrongKey);
-			}
-			return keys;
-		}
-		
-		@SuppressWarnings("unchecked")
-		public V getTest(){
-			return (V) getItem(defaultTestKey);
-		}
-		
-		public void setTest(V value){
-			setItem(defaultTestKey, value);
-		}
-		
-		@Override
-		public Map<String, Object> getMap(){
-			return map;
-		}
-	}
-	
-	private class MappedPojoBadGetKeysWrongKey implements MappedPojo{
-		private final Map<String, Object> map;
-		
-		public MappedPojoBadGetKeysWrongKey(){
-			map = new HashMap<>();
-		}
-		
-		@Override
-		public Set<String> getKeys(){
-			Set<String> keys = map.keySet();
-			if(!keys.isEmpty()){
-				Set<String> newKeys = new HashSet<>();
-				newKeys.add(defaultWrongKey);
-				return newKeys;
-			}else{
-				return map.keySet();
-			}
-		}
-		
-		@SuppressWarnings("unchecked")
-		public V getTest(){
-			return (V) getItem(defaultTestKey);
-		}
-		
-		public void setTest(V value){
-			setItem(defaultTestKey, value);
-		}
-		
-		@Override
-		public Map<String, Object> getMap(){
-			return map;
-		}
-	}
-	
-	private class MappedPojoBadGetMapExtraItem implements MappedPojo{
-		private final Map<String, Object> map;
-		
-		public MappedPojoBadGetMapExtraItem(){
-			map = new HashMap<>();
-		}
-		
-		@SuppressWarnings("unchecked")
-		public V getTest(){
-			return (V) getItem(defaultTestKey);
-		}
-		
-		public void setTest(V value){
-			setItem(defaultTestKey, value);
-		}
-		
-		@Override
-		public Map<String, Object> getMap(){
-			if(!map.isEmpty()){
-				map.put(defaultWrongKey, defaultWrongValue);
-			}
-			return map;
-		}
-	}
-	
-	private class MappedPojoBadGetMapWrongKey implements MappedPojo{
-		private final Map<String, Object> map;
-		
-		public MappedPojoBadGetMapWrongKey(){
-			map = new HashMap<>();
-		}
-		
-		@SuppressWarnings("unchecked")
-		public V getTest(){
-			return (V) getItem(defaultTestKey);
-		}
-		
-		public void setTest(V value){
-			setItem(defaultTestKey, value);
-		}
-		
-		@Override
-		public Map<String, Object> getMap(){
-			if(!map.isEmpty()){
-				map.remove(defaultTestKey);
-				map.put(defaultWrongKey, defaultWrongValue);
-			}
-			return map;
-		}
-	}
-	
-	private class MappedPojoBadGetMapWrongValue implements MappedPojo{
-		private final Map<String, Object> map;
-		
-		public MappedPojoBadGetMapWrongValue(){
-			map = new HashMap<>();
-		}
-		
-		@SuppressWarnings("unchecked")
-		public V getTest(){
-			return (V) getItem(defaultTestKey);
-		}
-		
-		public void setTest(V value){
-			setItem(defaultTestKey, value);
-		}
-		
-		@Override
-		public Map<String, Object> getMap(){
-			if(!map.isEmpty()){
-				map.put(defaultTestKey, defaultWrongValue);
-			}
-			return map;
-		}
-	}
-	
-	private class MappedPojoBadHasKey2 implements MappedPojo{
-		private final Map<String, Object> map;
-		
-		public MappedPojoBadHasKey2(){
-			map = new HashMap<>();
-		}
-		
-		@Override
-		public boolean hasKey(String key){
-			Object val = map.get(key);
-			if(val.equals(defaultTestValue2)){
-				return false;
-			}else{
-				return map.containsKey(key);
-			}
-		}
-		
-		@SuppressWarnings("unchecked")
-		public V getTest(){
-			return (V) getItem(defaultTestKey);
-		}
-		
-		public void setTest(V value){
-			setItem(defaultTestKey, value);
-		}
-		
-		@Override
-		public Map<String, Object> getMap(){
-			return map;
-		}
-	}
-	
-	private class MappedPojoBadHasItem2 implements MappedPojo{
-		private final Map<String, Object> map;
-		
-		public MappedPojoBadHasItem2(){
-			map = new HashMap<>();
-		}
-		
-		@Override
-		public boolean hasItem(String key){
-			Object val = map.get(key);
-			if(val.equals(defaultTestValue2)){
-				return false;
-			}else{
-				return map.containsKey(key) && map.get(key) != null;
-			}
-		}
-		
-		@SuppressWarnings("unchecked")
-		public V getTest(){
-			return (V) getItem(defaultTestKey);
-		}
-		
-		public void setTest(V value){
-			setItem(defaultTestKey, value);
-		}
-		
-		@Override
-		public Map<String, Object> getMap(){
-			return map;
-		}
-	}
-	
-	private class MappedPojoBadGetItem2 implements MappedPojo{
-		private final Map<String, Object> map;
-		
-		public MappedPojoBadGetItem2(){
-			map = new HashMap<>();
-		}
-		
-		@Override
-		public Object getItem(String key){
-			Object val = map.get(key);
-			if(val.equals(defaultTestValue2)){
-				return defaultWrongValue;
-			}else{
-				return map.get(key);
-			}
-		}
-		
-		@SuppressWarnings("unchecked")
-		public V getTest(){
-			return (V) getItem(defaultTestKey);
-		}
-		
-		public void setTest(V value){
-			setItem(defaultTestKey, value);
-		}
-		
-		@Override
-		public Map<String, Object> getMap(){
-			return map;
-		}
-	}
-	
-	private class MappedPojoBadGetKeys2 implements MappedPojo{
-		private final Map<String, Object> map;
-		
-		public MappedPojoBadGetKeys2(){
-			map = new HashMap<>();
-		}
-		
-		@Override
-		public Set<String> getKeys(){
-			Set<String> keys = map.keySet();
-			Object val = map.get(defaultTestKey);
-			if(!keys.isEmpty() && val.equals(defaultTestValue2)){
-				return null;
-			}else{
-				return keys;
-			}
-		}
-		
-		@SuppressWarnings("unchecked")
-		public V getTest(){
-			return (V) getItem(defaultTestKey);
-		}
-		
-		public void setTest(V value){
-			setItem(defaultTestKey, value);
-		}
-		
-		@Override
-		public Map<String, Object> getMap(){
-			return map;
-		}
-	}
-	
-	private class MappedPojoBadGetKeysExtraKey2 implements MappedPojo{
-		private final Map<String, Object> map;
-		
-		public MappedPojoBadGetKeysExtraKey2(){
-			map = new HashMap<>();
-		}
-		
-		@Override
-		public Set<String> getKeys(){
-			Set<String> keys = new HashSet<>(map.keySet());
-			Object val = map.get(defaultTestKey);
-			if(!keys.isEmpty() && val.equals(defaultTestValue2)){
-				keys.add(defaultWrongKey);
-			}
-			return keys;
-		}
-		
-		@SuppressWarnings("unchecked")
-		public V getTest(){
-			return (V) getItem(defaultTestKey);
-		}
-		
-		public void setTest(V value){
-			setItem(defaultTestKey, value);
-		}
-		
-		@Override
-		public Map<String, Object> getMap(){
-			return map;
-		}
-	}
-	
-	private class MappedPojoBadGetKeysWrongKey2 implements MappedPojo{
-		private final Map<String, Object> map;
-		
-		public MappedPojoBadGetKeysWrongKey2(){
-			map = new HashMap<>();
-		}
-		
-		@Override
-		public Set<String> getKeys(){
-			Set<String> keys = map.keySet();
-			Object val = map.get(defaultTestKey);
-			if(!keys.isEmpty() && val.equals(defaultTestValue2)){
-				Set<String> newKeys = new HashSet<>();
-				newKeys.add(defaultWrongKey);
-				return newKeys;
-			}else{
-				return map.keySet();
-			}
-		}
-		
-		@SuppressWarnings("unchecked")
-		public V getTest(){
-			return (V) getItem(defaultTestKey);
-		}
-		
-		public void setTest(V value){
-			setItem(defaultTestKey, value);
-		}
-		
-		@Override
-		public Map<String, Object> getMap(){
-			return map;
-		}
-	}
-	
-	private class MappedPojoBadGetMapExtraItem2 implements MappedPojo{
-		private final Map<String, Object> map;
-		
-		public MappedPojoBadGetMapExtraItem2(){
-			map = new HashMap<>();
-		}
-		
-		@SuppressWarnings("unchecked")
-		public V getTest(){
-			return (V) getItem(defaultTestKey);
-		}
-		
-		public void setTest(V value){
-			setItem(defaultTestKey, value);
-		}
-		
-		@Override
-		public Map<String, Object> getMap(){
-			Object val = map.get(defaultTestKey);
-			if(!map.isEmpty() && val.equals(defaultTestValue2)){
-				map.put(defaultWrongKey, defaultWrongValue);
-			}
-			return map;
-		}
-	}
-	
-	private class MappedPojoBadGetMapWrongKey2 implements MappedPojo{
-		private final Map<String, Object> map;
-		
-		public MappedPojoBadGetMapWrongKey2(){
-			map = new HashMap<>();
-		}
-		
-		@SuppressWarnings("unchecked")
-		public V getTest(){
-			return (V) getItem(defaultTestKey);
-		}
-		
-		public void setTest(V value){
-			setItem(defaultTestKey, value);
-		}
-		
-		@Override
-		public Map<String, Object> getMap(){
-			Object val = map.get(defaultTestKey);
-			if(!map.isEmpty() && val.equals(defaultTestValue2)){
-				map.remove(defaultTestKey);
-				map.put(defaultWrongKey, defaultWrongValue);
-			}
-			return map;
-		}
-	}
-	
-	private class MappedPojoBadGetMapWrongValue2 implements MappedPojo{
-		private final Map<String, Object> map;
-		
-		public MappedPojoBadGetMapWrongValue2(){
-			map = new HashMap<>();
-		}
-		
-		@SuppressWarnings("unchecked")
-		public V getTest(){
-			return (V) getItem(defaultTestKey);
-		}
-		
-		public void setTest(V value){
-			setItem(defaultTestKey, value);
-		}
-		
-		@Override
-		public Map<String, Object> getMap(){
-			Object val = map.get(defaultTestKey);
-			if(!map.isEmpty() && val.equals(defaultTestValue2)){
-				map.put(defaultTestKey, defaultWrongValue);
-			}
-			return map;
-		}
-	}
-	
-	private class MappedPojoBadClear implements MappedPojo{
-		private final Map<String, Object> map;
-		
-		public MappedPojoBadClear(){
-			map = new HashMap<>();
-		}
-		
-		@SuppressWarnings("unchecked")
-		public V getTest(){
-			return (V) getItem(defaultTestKey);
-		}
-		
-		public void setTest(V value){
-			setItem(defaultTestKey, value);
-		}
-		
-		@Override
-		public void clear(){
-			// do nothing
-		}
-		
-		@Override
-		public Map<String, Object> getMap(){
-			return map;
-		}
-	}
-	
-	private class MappedPojoBadGetter implements MappedPojo{
-		private final Map<String, Object> map;
-		
-		public MappedPojoBadGetter(){
-			map = new HashMap<>();
-		}
-		
-		public V getTest(){
+		protected V getDefaultWrongValue(){
 			return defaultWrongValue;
 		}
-		
-		public void setTest(V value){
-			setItem(defaultTestKey, value);
+	};
+	private final MappedPojoBadHasKey2<V> pojoBadHasKey2 = new MappedPojoBadHasKey2<>(){
+		@Override
+		protected V getDefaultTestValue2(){
+			return defaultTestValue2;
+		}
+	};
+	private final MappedPojoBadHasItem2<V> pojoBadHasItem2 = new MappedPojoBadHasItem2<>(){
+		@Override
+		protected V getDefaultTestValue2(){
+			return defaultTestValue2;
+		}
+	};
+	private final MappedPojoBadGetItem2<V> pojoBadGetItem2 = new MappedPojoBadGetItem2<>(){
+		@Override
+		protected V getDefaultTestValue2(){
+			return defaultTestValue2;
 		}
 		
 		@Override
-		public Map<String, Object> getMap(){
-			return map;
+		protected V getDefaultWrongValue(){
+			return defaultWrongValue;
 		}
-	}
-	
-	private class MappedPojoHasKeyFalse implements MappedPojo{
-		private final Map<String, Object> map;
-		
-		public MappedPojoHasKeyFalse(){
-			map = new HashMap<>();
+	};
+	private final MappedPojoBadGetKeys2<V> pojoBadGetKeys2 = new MappedPojoBadGetKeys2<>(){
+		@Override
+		protected V getDefaultTestValue2(){
+			return defaultTestValue2;
+		}
+	};
+	private final MappedPojoBadGetKeysExtraKey2<V> pojoBadGetKeysExtraKey2 = new MappedPojoBadGetKeysExtraKey2<>(){
+		@Override
+		protected V getDefaultTestValue2(){
+			return defaultTestValue2;
+		}
+	};
+	private final MappedPojoBadGetKeysWrongKey2<V> pojoBadGetKeysWrongKey2 = new MappedPojoBadGetKeysWrongKey2<>(){
+		@Override
+		protected V getDefaultTestValue2(){
+			return defaultTestValue2;
+		}
+	};
+	private final MappedPojoBadGetMapExtraItem2<V> pojoBadGetMapExtraItem2 = new MappedPojoBadGetMapExtraItem2<>(){
+		@Override
+		protected V getDefaultTestValue2(){
+			return defaultTestValue2;
+		}
+	};
+	private final MappedPojoBadGetMapWrongKey2<V> pojoBadGetMapWrongKey2 = new MappedPojoBadGetMapWrongKey2<>(){
+		@Override
+		protected V getDefaultTestValue2(){
+			return defaultTestValue2;
+		}
+	};
+	private final MappedPojoBadGetMapWrongValue2<V> pojoBadGetMapWrongValue2 = new MappedPojoBadGetMapWrongValue2<>(){
+		@Override
+		protected V getDefaultTestValue2(){
+			return defaultTestValue2;
 		}
 		
-		public V getTest(){
+		@Override
+		protected V getDefaultWrongValue(){
+			return defaultWrongValue;
+		}
+	};
+	private final MappedPojoBadClear<V> pojoBadClear = new MappedPojoBadClear<>();
+	private final MappedPojoBadGetter<V> pojoBadGetter = new MappedPojoBadGetter<>(){
+		@Override
+		protected V getDefaultWrongValue(){
+			return defaultWrongValue;
+		}
+	};
+	private final MappedPojoHasKeyFalse<V> pojoHasKeyFalse = new MappedPojoHasKeyFalse<>(){
+		@Override
+		protected V getDefaultTestValue(){
+			return defaultTestValue;
+		}
+	};
+	private final MappedPojoHasItemFalse<V> pojoHasItemFalse = new MappedPojoHasItemFalse<>(){
+		@Override
+		protected V getDefaultTestValue(){
+			return defaultTestValue;
+		}
+	};
+	private final MappedPojoWrongItem<V> pojoWrongItem = new MappedPojoWrongItem<>(){
+		@Override
+		protected V getDefaultTestValue(){
 			return defaultTestValue;
 		}
 		
-		public void setTest(V value){
-			// just don't set it
+		@Override
+		protected V getDefaultWrongValue(){
+			return defaultWrongValue;
+		}
+	};
+	private final MappedPojoCustomNullKeys<V> pojoCustomNullKeys = new MappedPojoCustomNullKeys<>();
+	private final MappedPojoCustomExtraKey<V> pojoCustomExtraKey = new MappedPojoCustomExtraKey<>();
+	private final MappedPojoCustomWrongKey<V> pojoCustomWrongKey = new MappedPojoCustomWrongKey<>();
+	private final MappedPojoCustomExtraMapKey<V> pojoCustomExtraMapKey = new MappedPojoCustomExtraMapKey<>();
+	private final MappedPojoCustomWrongMapValue<V> pojoCustomWrongMapValue = new MappedPojoCustomWrongMapValue<>(){
+		@Override
+		protected V getDefaultWrongValue(){
+			return defaultWrongValue;
+		}
+	};
+	private final MappedPojoBadGetter2<V> pojoBadGetter2 = new MappedPojoBadGetter2<>(){
+		@Override
+		protected V getDefaultTestValue2(){
+			return defaultTestValue2;
 		}
 		
 		@Override
-		public Map<String, Object> getMap(){
-			return map;
+		protected V getDefaultWrongValue(){
+			return defaultWrongValue;
 		}
-	}
-	
-	private class MappedPojoHasItemFalse implements MappedPojo{
-		private final Map<String, Object> map;
-		
-		public MappedPojoHasItemFalse(){
-			map = new HashMap<>();
+	};
+	private final MappedPojoHasKeyFalse2<V> pojoHasKeyFalse2 = new MappedPojoHasKeyFalse2<>(){
+		@Override
+		protected V getDefaultTestValue2(){
+			return defaultTestValue2;
 		}
-		
-		public V getTest(){
-			return defaultTestValue;
+	};
+	private final MappedPojoHasItemFalse2<V> pojoHasItemFalse2 = new MappedPojoHasItemFalse2<>(){
+		@Override
+		protected V getDefaultTestValue2(){
+			return defaultTestValue2;
 		}
-		
-		public void setTest(V value){
-			setItem(defaultTestKey, null);
+	};
+	private final MappedPojoWrongItem2<V> pojoWrongItem2 = new MappedPojoWrongItem2<>(){
+		@Override
+		protected V getDefaultTestValue2(){
+			return defaultTestValue2;
 		}
 		
 		@Override
-		public Map<String, Object> getMap(){
-			return map;
+		protected V getDefaultWrongValue(){
+			return defaultWrongValue;
 		}
-	}
-	
-	private class MappedPojoWrongItem implements MappedPojo{
-		private final Map<String, Object> map;
-		
-		public MappedPojoWrongItem(){
-			map = new HashMap<>();
+	};
+	private final MappedPojoCustomNullKeys2<V> pojoCustomNullKeys2 = new MappedPojoCustomNullKeys2<>(){
+		@Override
+		protected V getDefaultTestValue2(){
+			return defaultTestValue2;
 		}
-		
-		public V getTest(){
-			return defaultTestValue;
+	};
+	private final MappedPojoCustomExtraKey2<V> pojoCustomExtraKey2 = new MappedPojoCustomExtraKey2<>(){
+		@Override
+		protected V getDefaultTestValue2(){
+			return defaultTestValue2;
 		}
-		
-		public void setTest(V value){
-			setItem(defaultTestKey, defaultWrongValue);
+	};
+	private final MappedPojoCustomWrongKey2<V> pojoCustomWrongKey2 = new MappedPojoCustomWrongKey2<>(){
+		@Override
+		protected V getDefaultTestValue2(){
+			return defaultTestValue2;
+		}
+	};
+	private final MappedPojoCustomExtraMapKey2<V> pojoCustomExtraMapKey2 = new MappedPojoCustomExtraMapKey2<>(){
+		@Override
+		protected V getDefaultTestValue2(){
+			return defaultTestValue2;
+		}
+	};
+	private final MappedPojoCustomWrongMapValue2<V> pojoCustomWrongMapValue2 = new MappedPojoCustomWrongMapValue2<>(){
+		@Override
+		protected V getDefaultTestValue2(){
+			return defaultTestValue2;
 		}
 		
 		@Override
-		public Map<String, Object> getMap(){
-			return map;
+		protected V getDefaultWrongValue(){
+			return defaultWrongValue;
 		}
-	}
-	
-	private class MappedPojoCustomNullKeys implements MappedPojo{
-		private final Map<String, Object> map;
-		private boolean doBad = false;
-		
-		public MappedPojoCustomNullKeys(){
-			map = new HashMap<>();
-		}
-		
-		@Override
-		public Set<String> getKeys(){
-			if(doBad){
-				return null;
-			}else{
-				return map.keySet();
-			}
-		}
-		
-		@SuppressWarnings("unchecked")
-		public V getTest(){
-			return (V) getItem(defaultTestKey);
-		}
-		
-		public void setTest(V value){
-			setItem(defaultTestKey, value);
-			doBad = true;
-		}
-		
-		@Override
-		public Map<String, Object> getMap(){
-			return map;
-		}
-	}
-	
-	private class MappedPojoCustomExtraKey implements MappedPojo{
-		private final Map<String, Object> map;
-		private boolean doBad = false;
-		
-		public MappedPojoCustomExtraKey(){
-			map = new HashMap<>();
-		}
-		
-		@Override
-		public Set<String> getKeys(){
-			if(doBad){
-				Set<String> keys = new HashSet<>(map.keySet());
-				keys.add(defaultWrongKey);
-				return keys;
-			}else{
-				return map.keySet();
-			}
-		}
-		
-		@SuppressWarnings("unchecked")
-		public V getTest(){
-			return (V) getItem(defaultTestKey);
-		}
-		
-		public void setTest(V value){
-			setItem(defaultTestKey, value);
-			doBad = true;
-		}
-		
-		@Override
-		public Map<String, Object> getMap(){
-			return map;
-		}
-	}
-	
-	private class MappedPojoCustomWrongKey implements MappedPojo{
-		private final Map<String, Object> map;
-		private boolean doBad = false;
-		
-		public MappedPojoCustomWrongKey(){
-			map = new HashMap<>();
-		}
-		
-		@Override
-		public Set<String> getKeys(){
-			if(doBad){
-				Set<String> keys = new HashSet<>(map.keySet());
-				keys.remove(defaultTestKey);
-				keys.add(defaultWrongKey);
-				return keys;
-			}else{
-				return map.keySet();
-			}
-		}
-		
-		@SuppressWarnings("unchecked")
-		public V getTest(){
-			return (V) getItem(defaultTestKey);
-		}
-		
-		public void setTest(V value){
-			setItem(defaultTestKey, value);
-			doBad = true;
-		}
-		
-		@Override
-		public Map<String, Object> getMap(){
-			return map;
-		}
-	}
-	
-	private class MappedPojoCustomExtraMapKey implements MappedPojo{
-		private final Map<String, Object> map;
-		private boolean doBad = false;
-		
-		public MappedPojoCustomExtraMapKey(){
-			map = new HashMap<>();
-		}
-		
-		@SuppressWarnings("unchecked")
-		public V getTest(){
-			return (V) getItem(defaultTestKey);
-		}
-		
-		public void setTest(V value){
-			setItem(defaultTestKey, value);
-			doBad = true;
-		}
-		
-		@Override
-		public Map<String, Object> getMap(){
-			if(doBad){
-				map.put(defaultWrongKey, defaultWrongValue);
-			}
-			return map;
-		}
-	}
-	
-	private class MappedPojoCustomWrongMapValue implements MappedPojo{
-		private final Map<String, Object> map;
-		private boolean doBad = false;
-		
-		public MappedPojoCustomWrongMapValue(){
-			map = new HashMap<>();
-		}
-		
-		@SuppressWarnings("unchecked")
-		public V getTest(){
-			return (V) getItem(defaultTestKey);
-		}
-		
-		public void setTest(V value){
-			setItem(defaultTestKey, value);
-			doBad = true;
-		}
-		
-		@Override
-		public Map<String, Object> getMap(){
-			if(doBad){
-				map.put(defaultTestKey, defaultWrongValue);
-			}
-			return map;
-		}
-	}
-	
-	private class MappedPojoBadGetter2 implements MappedPojo{
-		private final Map<String, Object> map;
-		
-		public MappedPojoBadGetter2(){
-			map = new HashMap<>();
-		}
-		
-		@SuppressWarnings("unchecked")
-		public V getTest(){
-			V val = (V) getItem(defaultTestKey);
-			if(defaultTestValue2.equals(val)){
-				return defaultWrongValue;
-			}else{
-				return val;
-			}
-		}
-		
-		public void setTest(V value){
-			setItem(defaultTestKey, value);
-		}
-		
-		@Override
-		public Map<String, Object> getMap(){
-			return map;
-		}
-	}
-	
-	private class MappedPojoHasKeyFalse2 implements MappedPojo{
-		private final Map<String, Object> map;
-		private boolean doBad = false;
-		
-		public MappedPojoHasKeyFalse2(){
-			map = new HashMap<>();
-		}
-		
-		@Override
-		public boolean hasKey(String key){
-			if(doBad){
-				return false;
-			}else{
-				return map.containsKey(key);
-			}
-		}
-		
-		@SuppressWarnings("unchecked")
-		public V getTest(){
-			return (V) getItem(defaultTestKey);
-		}
-		
-		public void setTest(V value){
-			setItem(defaultTestKey, value);
-			if(value.equals(defaultTestValue2)){
-				doBad = true;
-			}
-		}
-		
-		@Override
-		public Map<String, Object> getMap(){
-			return map;
-		}
-	}
-	
-	private class MappedPojoHasItemFalse2 implements MappedPojo{
-		private final Map<String, Object> map;
-		private boolean doBad;
-		
-		public MappedPojoHasItemFalse2(){
-			map = new HashMap<>();
-		}
-		
-		@Override
-		public boolean hasItem(String key){
-			if(doBad){
-				return false;
-			}else{
-				return map.get(key) != null;
-			}
-		}
-		
-		@SuppressWarnings("unchecked")
-		public V getTest(){
-			return (V) getItem(defaultTestKey);
-		}
-		
-		public void setTest(V value){
-			setItem(defaultTestKey, value);
-			if(value.equals(defaultTestValue2)){
-				doBad = true;
-			}
-		}
-		
-		@Override
-		public Map<String, Object> getMap(){
-			return map;
-		}
-	}
-	
-	private class MappedPojoWrongItem2 implements MappedPojo{
-		private final Map<String, Object> map;
-		
-		public MappedPojoWrongItem2(){
-			map = new HashMap<>();
-		}
-		
-		@SuppressWarnings("unchecked")
-		public V getTest(){
-			return (V) getItem(defaultTestKey);
-		}
-		
-		public void setTest(V value){
-			if(value.equals(defaultTestValue2)){
-				setItem(defaultTestKey, defaultWrongValue);
-			}else{
-				setItem(defaultTestKey, value);
-			}
-		}
-		
-		@Override
-		public Map<String, Object> getMap(){
-			return map;
-		}
-	}
-	
-	private class MappedPojoCustomNullKeys2 implements MappedPojo{
-		private final Map<String, Object> map;
-		private boolean doBad = false;
-		
-		public MappedPojoCustomNullKeys2(){
-			map = new HashMap<>();
-		}
-		
-		@Override
-		public Set<String> getKeys(){
-			if(doBad){
-				return null;
-			}else{
-				return map.keySet();
-			}
-		}
-		
-		@SuppressWarnings("unchecked")
-		public V getTest(){
-			return (V) getItem(defaultTestKey);
-		}
-		
-		public void setTest(V value){
-			setItem(defaultTestKey, value);
-			if(value.equals(defaultTestValue2)){
-				doBad = true;
-			}
-		}
-		
-		@Override
-		public Map<String, Object> getMap(){
-			return map;
-		}
-	}
-	
-	private class MappedPojoCustomExtraKey2 implements MappedPojo{
-		private final Map<String, Object> map;
-		private boolean doBad = false;
-		
-		public MappedPojoCustomExtraKey2(){
-			map = new HashMap<>();
-		}
-		
-		@Override
-		public Set<String> getKeys(){
-			if(doBad){
-				Set<String> keys = new HashSet<>(map.keySet());
-				keys.add(defaultWrongKey);
-				return keys;
-			}else{
-				return map.keySet();
-			}
-		}
-		
-		@SuppressWarnings("unchecked")
-		public V getTest(){
-			return (V) getItem(defaultTestKey);
-		}
-		
-		public void setTest(V value){
-			setItem(defaultTestKey, value);
-			if(value.equals(defaultTestValue2)){
-				doBad = true;
-			}
-		}
-		
-		@Override
-		public Map<String, Object> getMap(){
-			return map;
-		}
-	}
-	
-	private class MappedPojoCustomWrongKey2 implements MappedPojo{
-		private final Map<String, Object> map;
-		private boolean doBad = false;
-		
-		public MappedPojoCustomWrongKey2(){
-			map = new HashMap<>();
-		}
-		
-		@Override
-		public Set<String> getKeys(){
-			if(doBad){
-				Set<String> keys = new HashSet<>(map.keySet());
-				keys.remove(defaultTestKey);
-				keys.add(defaultWrongKey);
-				return keys;
-			}else{
-				return map.keySet();
-			}
-		}
-		
-		@SuppressWarnings("unchecked")
-		public V getTest(){
-			return (V) getItem(defaultTestKey);
-		}
-		
-		public void setTest(V value){
-			setItem(defaultTestKey, value);
-			if(value.equals(defaultTestValue2)){
-				doBad = true;
-			}
-		}
-		
-		@Override
-		public Map<String, Object> getMap(){
-			return map;
-		}
-	}
-	
-	private class MappedPojoCustomExtraMapKey2 implements MappedPojo{
-		private final Map<String, Object> map;
-		private boolean doBad = false;
-		
-		public MappedPojoCustomExtraMapKey2(){
-			map = new HashMap<>();
-		}
-		
-		@SuppressWarnings("unchecked")
-		public V getTest(){
-			return (V) getItem(defaultTestKey);
-		}
-		
-		public void setTest(V value){
-			setItem(defaultTestKey, value);
-			if(value.equals(defaultTestValue2)){
-				doBad = true;
-			}
-		}
-		
-		@Override
-		public Map<String, Object> getMap(){
-			if(doBad){
-				map.put(defaultWrongKey, defaultWrongValue);
-			}
-			return map;
-		}
-	}
-	
-	private class MappedPojoCustomWrongMapValue2 implements MappedPojo{
-		private final Map<String, Object> map;
-		private boolean doBad = false;
-		
-		public MappedPojoCustomWrongMapValue2(){
-			map = new HashMap<>();
-		}
-		
-		@SuppressWarnings("unchecked")
-		public V getTest(){
-			return (V) getItem(defaultTestKey);
-		}
-		
-		public void setTest(V value){
-			setItem(defaultTestKey, value);
-			if(value.equals(defaultTestValue2)){
-				doBad = true;
-			}
-		}
-		
-		@Override
-		public Map<String, Object> getMap(){
-			if(doBad){
-				map.put(defaultTestKey, defaultWrongValue);
-			}
-			return map;
-		}
-	}
-	
-	private final MappedPojoA pojoA = new MappedPojoA();
-	private final MappedPojoBadIsEmpty pojoBadIsEmpty = new MappedPojoBadIsEmpty();
-	private final MappedPojoNullMap pojoNullMap = new MappedPojoNullMap();
-	private final MappedPojoNonEmptyMap pojoNonEmptyMap = new MappedPojoNonEmptyMap();
-	private final MappedPojoNullKeys pojoNullKeys = new MappedPojoNullKeys();
-	private final MappedPojoNonEmptyKeys pojoNonEmptyKeys = new MappedPojoNonEmptyKeys();
-	private final MappedPojoBadHasKey pojoBadHasKey = new MappedPojoBadHasKey();
-	private final MappedPojoBadHasItem pojoBadHasItem = new MappedPojoBadHasItem();
-	private final MappedPojoBadGetItem pojoBadGetItem = new MappedPojoBadGetItem();
-	private final MappedPojoBadGetKeys pojoBadGetKeys = new MappedPojoBadGetKeys();
-	private final MappedPojoBadGetKeysExtraKey pojoBadGetKeysExtraKey = new MappedPojoBadGetKeysExtraKey();
-	private final MappedPojoBadGetKeysWrongKey pojoBadGetKeysWrongKey = new MappedPojoBadGetKeysWrongKey();
-	private final MappedPojoBadGetMapExtraItem pojoBadGetMapExtraItem = new MappedPojoBadGetMapExtraItem();
-	private final MappedPojoBadGetMapWrongKey pojoBadGetMapWrongKey = new MappedPojoBadGetMapWrongKey();
-	private final MappedPojoBadGetMapWrongValue pojoBadGetMapWrongValue = new MappedPojoBadGetMapWrongValue();
-	private final MappedPojoBadHasKey2 pojoBadHasKey2 = new MappedPojoBadHasKey2();
-	private final MappedPojoBadHasItem2 pojoBadHasItem2 = new MappedPojoBadHasItem2();
-	private final MappedPojoBadGetItem2 pojoBadGetItem2 = new MappedPojoBadGetItem2();
-	private final MappedPojoBadGetKeys2 pojoBadGetKeys2 = new MappedPojoBadGetKeys2();
-	private final MappedPojoBadGetKeysExtraKey2 pojoBadGetKeysExtraKey2 = new MappedPojoBadGetKeysExtraKey2();
-	private final MappedPojoBadGetKeysWrongKey2 pojoBadGetKeysWrongKey2 = new MappedPojoBadGetKeysWrongKey2();
-	private final MappedPojoBadGetMapExtraItem2 pojoBadGetMapExtraItem2 = new MappedPojoBadGetMapExtraItem2();
-	private final MappedPojoBadGetMapWrongKey2 pojoBadGetMapWrongKey2 = new MappedPojoBadGetMapWrongKey2();
-	private final MappedPojoBadGetMapWrongValue2 pojoBadGetMapWrongValue2 = new MappedPojoBadGetMapWrongValue2();
-	private final MappedPojoBadClear pojoBadClear = new MappedPojoBadClear();
-	private final MappedPojoBadGetter pojoBadGetter = new MappedPojoBadGetter();
-	private final MappedPojoHasKeyFalse pojoHasKeyFalse = new MappedPojoHasKeyFalse();
-	private final MappedPojoHasItemFalse pojoHasItemFalse = new MappedPojoHasItemFalse();
-	private final MappedPojoWrongItem pojoWrongItem = new MappedPojoWrongItem();
-	private final MappedPojoCustomNullKeys pojoCustomNullKeys = new MappedPojoCustomNullKeys();
-	private final MappedPojoCustomExtraKey pojoCustomExtraKey = new MappedPojoCustomExtraKey();
-	private final MappedPojoCustomWrongKey pojoCustomWrongKey = new MappedPojoCustomWrongKey();
-	private final MappedPojoCustomExtraMapKey pojoCustomExtraMapKey = new MappedPojoCustomExtraMapKey();
-	private final MappedPojoCustomWrongMapValue pojoCustomWrongMapValue = new MappedPojoCustomWrongMapValue();
-	private final MappedPojoBadGetter2 pojoBadGetter2 = new MappedPojoBadGetter2();
-	private final MappedPojoHasKeyFalse2 pojoHasKeyFalse2 = new MappedPojoHasKeyFalse2();
-	private final MappedPojoHasItemFalse2 pojoHasItemFalse2 = new MappedPojoHasItemFalse2();
-	private final MappedPojoWrongItem2 pojoWrongItem2 = new MappedPojoWrongItem2();
-	private final MappedPojoCustomNullKeys2 pojoCustomNullKeys2 = new MappedPojoCustomNullKeys2();
-	private final MappedPojoCustomExtraKey2 pojoCustomExtraKey2 = new MappedPojoCustomExtraKey2();
-	private final MappedPojoCustomWrongKey2 pojoCustomWrongKey2 = new MappedPojoCustomWrongKey2();
-	private final MappedPojoCustomExtraMapKey2 pojoCustomExtraMapKey2 = new MappedPojoCustomExtraMapKey2();
-	private final MappedPojoCustomWrongMapValue2 pojoCustomWrongMapValue2 = new MappedPojoCustomWrongMapValue2();
+	};
 	
 	@Test
 	public void testAssertValueGetSetPass(){
@@ -1350,8 +300,8 @@ public abstract class MappedPojoAssertValueGetSetCustomTest<V>{
 					defaultTestKey);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(AssertionFailedErrors.buildTwoPartError("pojo was non-empty in empty pojo!",
-					AssertionFailedErrors.ASSERT_TRUE_ERROR), e.getMessage());
+			assertEquals(buildTwoPartError("pojo was non-empty in empty pojo!",
+					ASSERT_TRUE_ERROR), e.getMessage());
 		}
 	}
 	
@@ -1361,8 +311,8 @@ public abstract class MappedPojoAssertValueGetSetCustomTest<V>{
 			assertValueGetSetFunc.accept(pojoNullMap, pojoNullMap::getTest, pojoNullMap::setTest, defaultTestKey);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(AssertionFailedErrors.buildTwoPartError("Map was null in empty pojo!",
-					AssertionFailedErrors.ASSERT_NOT_NULL_ERROR), e.getMessage());
+			assertEquals(buildTwoPartError("Map was null in empty pojo!",
+					ASSERT_NOT_NULL_ERROR), e.getMessage());
 		}
 	}
 	
@@ -1373,8 +323,8 @@ public abstract class MappedPojoAssertValueGetSetCustomTest<V>{
 					defaultTestKey);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(AssertionFailedErrors.buildTwoPartError("Map was non-empty in empty pojo!",
-					AssertionFailedErrors.ASSERT_TRUE_ERROR), e.getMessage());
+			assertEquals(buildTwoPartError("Map was non-empty in empty pojo!",
+					ASSERT_TRUE_ERROR), e.getMessage());
 		}
 	}
 	
@@ -1384,8 +334,8 @@ public abstract class MappedPojoAssertValueGetSetCustomTest<V>{
 			assertValueGetSetFunc.accept(pojoNullKeys, pojoNullKeys::getTest, pojoNullKeys::setTest, defaultTestKey);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(AssertionFailedErrors.buildTwoPartError("getKeys() returned null in empty pojo!",
-					AssertionFailedErrors.ASSERT_NOT_NULL_ERROR), e.getMessage());
+			assertEquals(buildTwoPartError("getKeys() returned null in empty pojo!",
+					ASSERT_NOT_NULL_ERROR), e.getMessage());
 		}
 	}
 	
@@ -1396,8 +346,8 @@ public abstract class MappedPojoAssertValueGetSetCustomTest<V>{
 					defaultTestKey);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(AssertionFailedErrors.buildTwoPartError("getKeys() was not empty in empty pojo!",
-					AssertionFailedErrors.ASSERT_TRUE_ERROR), e.getMessage());
+			assertEquals(buildTwoPartError("getKeys() was not empty in empty pojo!",
+					ASSERT_TRUE_ERROR), e.getMessage());
 		}
 	}
 	
@@ -1407,7 +357,7 @@ public abstract class MappedPojoAssertValueGetSetCustomTest<V>{
 			assertValueGetSetFunc.accept(pojoBadHasKey, pojoBadHasKey::getTest, pojoBadHasKey::setTest, defaultTestKey);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(AssertionFailedErrors.ASSERT_TRUE_ERROR.toString(), e.getMessage());
+			assertEquals(ASSERT_TRUE_ERROR.toString(), e.getMessage());
 		}
 	}
 	
@@ -1418,7 +368,7 @@ public abstract class MappedPojoAssertValueGetSetCustomTest<V>{
 					defaultTestKey);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(AssertionFailedErrors.ASSERT_TRUE_ERROR.toString(), e.getMessage());
+			assertEquals(ASSERT_TRUE_ERROR.toString(), e.getMessage());
 		}
 	}
 	
@@ -1429,7 +379,7 @@ public abstract class MappedPojoAssertValueGetSetCustomTest<V>{
 					defaultTestKey);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(AssertionFailedErrors.buildAssertError(defaultTestValue ,defaultWrongValue), e.getMessage());
+			assertEquals(buildAssertError(defaultTestValue ,defaultWrongValue), e.getMessage());
 		}
 	}
 	
@@ -1440,7 +390,7 @@ public abstract class MappedPojoAssertValueGetSetCustomTest<V>{
 					defaultTestKey);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(AssertionFailedErrors.ASSERT_NOT_NULL_ERROR.toString(), e.getMessage());
+			assertEquals(ASSERT_NOT_NULL_ERROR.toString(), e.getMessage());
 		}
 	}
 	
@@ -1451,7 +401,7 @@ public abstract class MappedPojoAssertValueGetSetCustomTest<V>{
 					pojoBadGetKeysExtraKey::setTest, defaultTestKey);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(AssertionFailedErrors.buildAssertError(1, 2), e.getMessage());
+			assertEquals(buildAssertError(1, 2), e.getMessage());
 		}
 	}
 	
@@ -1462,7 +412,7 @@ public abstract class MappedPojoAssertValueGetSetCustomTest<V>{
 					pojoBadGetKeysWrongKey::setTest, defaultTestKey);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(AssertionFailedErrors.buildAssertError(defaultTestKey, defaultWrongKey), e.getMessage());
+			assertEquals(buildAssertError(defaultTestKey, defaultWrongKey), e.getMessage());
 		}
 	}
 	
@@ -1473,7 +423,7 @@ public abstract class MappedPojoAssertValueGetSetCustomTest<V>{
 					pojoBadGetMapExtraItem::setTest, defaultTestKey);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(AssertionFailedErrors.buildAssertError(1, 2), e.getMessage());
+			assertEquals(buildAssertError(1, 2), e.getMessage());
 		}
 	}
 	
@@ -1484,7 +434,7 @@ public abstract class MappedPojoAssertValueGetSetCustomTest<V>{
 					pojoBadGetMapWrongKey::setTest, defaultTestKey);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(AssertionFailedErrors.ASSERT_TRUE_ERROR.toString(), e.getMessage());
+			assertEquals(ASSERT_TRUE_ERROR.toString(), e.getMessage());
 		}
 	}
 	
@@ -1495,7 +445,7 @@ public abstract class MappedPojoAssertValueGetSetCustomTest<V>{
 					pojoBadGetMapWrongValue::setTest, defaultTestKey);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(AssertionFailedErrors.buildAssertError(defaultTestValue, defaultWrongValue), e.getMessage());
+			assertEquals(buildAssertError(defaultTestValue, defaultWrongValue), e.getMessage());
 		}
 	}
 	
@@ -1506,7 +456,7 @@ public abstract class MappedPojoAssertValueGetSetCustomTest<V>{
 					defaultTestKey);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(AssertionFailedErrors.ASSERT_TRUE_ERROR.toString(), e.getMessage());
+			assertEquals(ASSERT_TRUE_ERROR.toString(), e.getMessage());
 		}
 	}
 	
@@ -1517,7 +467,7 @@ public abstract class MappedPojoAssertValueGetSetCustomTest<V>{
 					defaultTestKey);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(AssertionFailedErrors.ASSERT_TRUE_ERROR.toString(), e.getMessage());
+			assertEquals(ASSERT_TRUE_ERROR.toString(), e.getMessage());
 		}
 	}
 	
@@ -1528,7 +478,7 @@ public abstract class MappedPojoAssertValueGetSetCustomTest<V>{
 					defaultTestKey);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(AssertionFailedErrors.buildAssertError(defaultTestValue2, defaultWrongValue), e.getMessage());
+			assertEquals(buildAssertError(defaultTestValue2, defaultWrongValue), e.getMessage());
 		}
 	}
 	
@@ -1539,7 +489,7 @@ public abstract class MappedPojoAssertValueGetSetCustomTest<V>{
 					defaultTestKey);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(AssertionFailedErrors.ASSERT_NOT_NULL_ERROR.toString(), e.getMessage());
+			assertEquals(ASSERT_NOT_NULL_ERROR.toString(), e.getMessage());
 		}
 	}
 	
@@ -1550,7 +500,7 @@ public abstract class MappedPojoAssertValueGetSetCustomTest<V>{
 					pojoBadGetKeysExtraKey2::setTest, defaultTestKey);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(AssertionFailedErrors.buildAssertError(1, 2), e.getMessage());
+			assertEquals(buildAssertError(1, 2), e.getMessage());
 		}
 	}
 	
@@ -1561,7 +511,7 @@ public abstract class MappedPojoAssertValueGetSetCustomTest<V>{
 					pojoBadGetKeysWrongKey2::setTest, defaultTestKey);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(AssertionFailedErrors.buildAssertError(defaultTestKey, defaultWrongKey), e.getMessage());
+			assertEquals(buildAssertError(defaultTestKey, defaultWrongKey), e.getMessage());
 		}
 	}
 	
@@ -1572,7 +522,7 @@ public abstract class MappedPojoAssertValueGetSetCustomTest<V>{
 					pojoBadGetMapExtraItem2::setTest, defaultTestKey);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(AssertionFailedErrors.buildAssertError(1, 2), e.getMessage());
+			assertEquals(buildAssertError(1, 2), e.getMessage());
 		}
 	}
 	
@@ -1583,7 +533,7 @@ public abstract class MappedPojoAssertValueGetSetCustomTest<V>{
 					pojoBadGetMapWrongKey2::setTest, defaultTestKey);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(AssertionFailedErrors.ASSERT_TRUE_ERROR.toString(), e.getMessage());
+			assertEquals(ASSERT_TRUE_ERROR.toString(), e.getMessage());
 		}
 	}
 	
@@ -1594,7 +544,7 @@ public abstract class MappedPojoAssertValueGetSetCustomTest<V>{
 					pojoBadGetMapWrongValue2::setTest, defaultTestKey);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(AssertionFailedErrors.buildAssertError(defaultTestValue2, defaultWrongValue), e.getMessage());
+			assertEquals(buildAssertError(defaultTestValue2, defaultWrongValue), e.getMessage());
 		}
 	}
 	
@@ -1604,8 +554,8 @@ public abstract class MappedPojoAssertValueGetSetCustomTest<V>{
 			assertValueGetSetFunc.accept(pojoBadClear, pojoBadClear::getTest, pojoBadClear::setTest, defaultTestKey);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(AssertionFailedErrors.buildTwoPartError("pojo was non-empty in empty pojo!",
-					AssertionFailedErrors.ASSERT_TRUE_ERROR), e.getMessage());
+			assertEquals(buildTwoPartError("pojo was non-empty in empty pojo!",
+					ASSERT_TRUE_ERROR), e.getMessage());
 		}
 	}
 	
@@ -1615,7 +565,7 @@ public abstract class MappedPojoAssertValueGetSetCustomTest<V>{
 			assertValueGetSetFunc.accept(pojoBadGetter, pojoBadGetter::getTest, pojoBadGetter::setTest, defaultTestKey);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(AssertionFailedErrors.buildAssertError(defaultTestValue, defaultWrongValue), e.getMessage());
+			assertEquals(buildAssertError(defaultTestValue, defaultWrongValue), e.getMessage());
 		}
 	}
 	
@@ -1626,7 +576,7 @@ public abstract class MappedPojoAssertValueGetSetCustomTest<V>{
 					defaultTestKey);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(AssertionFailedErrors.ASSERT_TRUE_ERROR.toString(), e.getMessage());
+			assertEquals(ASSERT_TRUE_ERROR.toString(), e.getMessage());
 		}
 	}
 	
@@ -1637,7 +587,7 @@ public abstract class MappedPojoAssertValueGetSetCustomTest<V>{
 					defaultTestKey);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(AssertionFailedErrors.ASSERT_TRUE_ERROR.toString(), e.getMessage());
+			assertEquals(ASSERT_TRUE_ERROR.toString(), e.getMessage());
 		}
 	}
 	
@@ -1647,7 +597,7 @@ public abstract class MappedPojoAssertValueGetSetCustomTest<V>{
 			assertValueGetSetFunc.accept(pojoWrongItem, pojoWrongItem::getTest, pojoWrongItem::setTest, defaultTestKey);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(AssertionFailedErrors.buildAssertError(defaultTestValue, defaultWrongValue), e.getMessage());
+			assertEquals(buildAssertError(defaultTestValue, defaultWrongValue), e.getMessage());
 		}
 	}
 	
@@ -1658,7 +608,7 @@ public abstract class MappedPojoAssertValueGetSetCustomTest<V>{
 					defaultTestKey);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(AssertionFailedErrors.ASSERT_NOT_NULL_ERROR.toString(), e.getMessage());
+			assertEquals(ASSERT_NOT_NULL_ERROR.toString(), e.getMessage());
 		}
 	}
 	
@@ -1669,7 +619,7 @@ public abstract class MappedPojoAssertValueGetSetCustomTest<V>{
 					defaultTestKey);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(AssertionFailedErrors.buildAssertError(1, 2), e.getMessage());
+			assertEquals(buildAssertError(1, 2), e.getMessage());
 		}
 	}
 	
@@ -1680,7 +630,7 @@ public abstract class MappedPojoAssertValueGetSetCustomTest<V>{
 					defaultTestKey);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(AssertionFailedErrors.buildAssertError(defaultTestKey, defaultWrongKey), e.getMessage());
+			assertEquals(buildAssertError(defaultTestKey, defaultWrongKey), e.getMessage());
 		}
 	}
 	
@@ -1691,7 +641,7 @@ public abstract class MappedPojoAssertValueGetSetCustomTest<V>{
 					pojoCustomExtraMapKey::setTest, defaultTestKey);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(AssertionFailedErrors.buildAssertError(1, 2), e.getMessage());
+			assertEquals(buildAssertError(1, 2), e.getMessage());
 		}
 	}
 	
@@ -1702,7 +652,7 @@ public abstract class MappedPojoAssertValueGetSetCustomTest<V>{
 					pojoCustomWrongMapValue::setTest, defaultTestKey);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(AssertionFailedErrors.buildAssertError(defaultTestValue, defaultWrongValue), e.getMessage());
+			assertEquals(buildAssertError(defaultTestValue, defaultWrongValue), e.getMessage());
 		}
 	}
 	
@@ -1713,7 +663,7 @@ public abstract class MappedPojoAssertValueGetSetCustomTest<V>{
 					defaultTestKey);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(AssertionFailedErrors.buildAssertError(defaultTestValue2, defaultWrongValue), e.getMessage());
+			assertEquals(buildAssertError(defaultTestValue2, defaultWrongValue), e.getMessage());
 		}
 	}
 	
@@ -1724,7 +674,7 @@ public abstract class MappedPojoAssertValueGetSetCustomTest<V>{
 					defaultTestKey);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(AssertionFailedErrors.ASSERT_TRUE_ERROR.toString(), e.getMessage());
+			assertEquals(ASSERT_TRUE_ERROR.toString(), e.getMessage());
 		}
 	}
 	
@@ -1735,7 +685,7 @@ public abstract class MappedPojoAssertValueGetSetCustomTest<V>{
 					defaultTestKey);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(AssertionFailedErrors.ASSERT_TRUE_ERROR.toString(), e.getMessage());
+			assertEquals(ASSERT_TRUE_ERROR.toString(), e.getMessage());
 		}
 	}
 	
@@ -1746,7 +696,7 @@ public abstract class MappedPojoAssertValueGetSetCustomTest<V>{
 					defaultTestKey);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(AssertionFailedErrors.buildAssertError(defaultTestValue2, defaultWrongValue), e.getMessage());
+			assertEquals(buildAssertError(defaultTestValue2, defaultWrongValue), e.getMessage());
 		}
 	}
 	
@@ -1757,7 +707,7 @@ public abstract class MappedPojoAssertValueGetSetCustomTest<V>{
 					defaultTestKey);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(AssertionFailedErrors.ASSERT_NOT_NULL_ERROR.toString(), e.getMessage());
+			assertEquals(ASSERT_NOT_NULL_ERROR.toString(), e.getMessage());
 		}
 	}
 	
@@ -1768,7 +718,7 @@ public abstract class MappedPojoAssertValueGetSetCustomTest<V>{
 					defaultTestKey);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(AssertionFailedErrors.buildAssertError(1, 2), e.getMessage());
+			assertEquals(buildAssertError(1, 2), e.getMessage());
 		}
 	}
 	
@@ -1779,7 +729,7 @@ public abstract class MappedPojoAssertValueGetSetCustomTest<V>{
 					defaultTestKey);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(AssertionFailedErrors.buildAssertError(defaultTestKey, defaultWrongKey), e.getMessage());
+			assertEquals(buildAssertError(defaultTestKey, defaultWrongKey), e.getMessage());
 		}
 	}
 	
@@ -1790,7 +740,7 @@ public abstract class MappedPojoAssertValueGetSetCustomTest<V>{
 					pojoCustomExtraMapKey2::setTest, defaultTestKey);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(AssertionFailedErrors.buildAssertError(1, 2), e.getMessage());
+			assertEquals(buildAssertError(1, 2), e.getMessage());
 		}
 	}
 	
@@ -1801,7 +751,7 @@ public abstract class MappedPojoAssertValueGetSetCustomTest<V>{
 					pojoCustomWrongMapValue2::setTest, defaultTestKey);
 			fail();
 		}catch(AssertionFailedError e){
-			assertEquals(AssertionFailedErrors.buildAssertError(defaultTestValue2, defaultWrongValue), e.getMessage());
+			assertEquals(buildAssertError(defaultTestValue2, defaultWrongValue), e.getMessage());
 		}
 	}
 }
