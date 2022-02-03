@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * A {@link MappedPojo} used for testing that sets the wrong item in the setter on run 2
+ * A {@link MappedPojo} used for testing that makes the map null on {@link #clear()}
  *
  * @param <V> The type to use for the getter + setter
  *
@@ -15,43 +15,36 @@ import java.util.Map;
  * @version Beta v.0.6
  * @since Beta v.0.6 (in Tadukoo Util); Alpha v.0.1 (in Tadukoo JUnit)
  */
-public abstract class MappedPojoWrongItem2<V> implements MappedPojo, DefaultTestValues{
+public class MappedPojoBadClearNullMap<V> implements MappedPojo, DefaultTestValues{
 	private final Map<String, Object> map;
 	private boolean doBad;
 	
-	public MappedPojoWrongItem2(){
+	public MappedPojoBadClearNullMap(){
 		map = new HashMap<>();
 		doBad = false;
 	}
 	
-	protected abstract V getDefaultTestValue2();
-	
-	protected abstract V getDefaultWrongValue();
-	
 	@SuppressWarnings("unchecked")
 	public V getTest(){
-		return (V) map.get(DEFAULT_TEST_KEY);
+		return (V) getItem(DEFAULT_TEST_KEY);
 	}
 	
 	public void setTest(V value){
-		if(value.equals(getDefaultTestValue2())){
-			doBad = true;
-		}
 		setItem(DEFAULT_TEST_KEY, value);
 	}
 	
 	@Override
-	@SuppressWarnings("unchecked")
-	public V getItem(String key){
-		if(doBad){
-			return getDefaultWrongValue();
-		}else{
-			return (V) map.get(key);
-		}
+	public void clear(){
+		map.clear();
+		doBad = true;
 	}
 	
 	@Override
 	public Map<String, Object> getMap(){
-		return map;
+		if(doBad){
+			return null;
+		}else{
+			return map;
+		}
 	}
 }

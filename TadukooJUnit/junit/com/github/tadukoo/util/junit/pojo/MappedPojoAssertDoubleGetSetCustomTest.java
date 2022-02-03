@@ -6,7 +6,7 @@ public class MappedPojoAssertDoubleGetSetCustomTest extends MappedPojoAssertValu
 		implements DefaultTestValues{
 	
 	public MappedPojoAssertDoubleGetSetCustomTest(){
-		super(MappedPojoTest::assertDoubleGetSetCustom, DEFAULT_TEST_KEY, DEFAULT_WRONG_KEY,
+		super(MappedPojoTest::assertDoubleGetSetCustom, MappedPojoTest::assertDoubleGetSetCustom,
 				DEFAULT_TEST_DOUBLE, DEFAULT_TEST_DOUBLE_2, DEFAULT_WRONG_DOUBLE);
 	}
 }

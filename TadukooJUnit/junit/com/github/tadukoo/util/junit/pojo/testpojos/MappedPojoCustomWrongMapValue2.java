@@ -29,7 +29,7 @@ public abstract class MappedPojoCustomWrongMapValue2<V> implements MappedPojo, D
 	
 	@SuppressWarnings("unchecked")
 	public V getTest(){
-		return (V) getItem(DEFAULT_TEST_KEY);
+		return (V) map.get(DEFAULT_TEST_KEY);
 	}
 	
 	public void setTest(V value){
@@ -37,6 +37,22 @@ public abstract class MappedPojoCustomWrongMapValue2<V> implements MappedPojo, D
 		if(value.equals(getDefaultTestValue2())){
 			doBad = true;
 		}
+	}
+	
+	@Override
+	public boolean hasKey(String key){
+		return map.containsKey(key);
+	}
+	
+	@Override
+	public boolean hasItem(String key){
+		return map.get(key) != null;
+	}
+	
+	@Override
+	@SuppressWarnings("unchecked")
+	public V getItem(String key){
+		return (V) map.get(key);
 	}
 	
 	@Override

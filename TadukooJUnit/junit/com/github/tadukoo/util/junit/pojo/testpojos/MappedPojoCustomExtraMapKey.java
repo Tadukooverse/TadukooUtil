@@ -5,6 +5,7 @@ import com.github.tadukoo.util.pojo.MappedPojo;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * A {@link MappedPojo} used for testing that adds an extra item to the map once we have values
@@ -25,12 +26,33 @@ public class MappedPojoCustomExtraMapKey<V> implements MappedPojo, DefaultTestVa
 	
 	@SuppressWarnings("unchecked")
 	public V getTest(){
-		return (V) getItem(DEFAULT_TEST_KEY);
+		return (V) map.get(DEFAULT_TEST_KEY);
 	}
 	
 	public void setTest(V value){
 		setItem(DEFAULT_TEST_KEY, value);
 		doBad = true;
+	}
+	
+	@Override
+	public Set<String> getKeys(){
+		return map.keySet();
+	}
+	
+	@Override
+	public boolean hasKey(String key){
+		return map.containsKey(key);
+	}
+	
+	@Override
+	public boolean hasItem(String key){
+		return map.get(key) != null;
+	}
+	
+	@Override
+	@SuppressWarnings("unchecked")
+	public V getItem(String key){
+		return (V) map.get(key);
 	}
 	
 	@Override

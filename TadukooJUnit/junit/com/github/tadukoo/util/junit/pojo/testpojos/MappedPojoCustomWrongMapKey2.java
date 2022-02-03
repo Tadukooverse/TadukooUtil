@@ -5,9 +5,10 @@ import com.github.tadukoo.util.pojo.MappedPojo;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 /**
- * A {@link MappedPojo} used for testing that returns the wrong value in the map using {@link #getMap()}
+ * A {@link MappedPojo} used for testing that returns the wrong key for map once we have values on run 2
  *
  * @param <V> The type to use for the getter + setter
  *
@@ -15,15 +16,15 @@ import java.util.Map;
  * @version Beta v.0.6
  * @since Beta v.0.6 (in Tadukoo Util); Alpha v.0.1 (in Tadukoo JUnit)
  */
-public abstract class MappedPojoCustomWrongMapValue<V> implements MappedPojo, DefaultTestValues{
+public abstract class MappedPojoCustomWrongMapKey2<V> implements MappedPojo, DefaultTestValues{
 	private final Map<String, Object> map;
 	private boolean doBad = false;
 	
-	public MappedPojoCustomWrongMapValue(){
+	public MappedPojoCustomWrongMapKey2(){
 		map = new HashMap<>();
 	}
 	
-	protected abstract V getDefaultWrongValue();
+	protected abstract V getDefaultTestValue2();
 	
 	@SuppressWarnings("unchecked")
 	public V getTest(){
@@ -32,7 +33,14 @@ public abstract class MappedPojoCustomWrongMapValue<V> implements MappedPojo, De
 	
 	public void setTest(V value){
 		setItem(DEFAULT_TEST_KEY, value);
-		doBad = true;
+		if(value.equals(getDefaultTestValue2())){
+			doBad = true;
+		}
+	}
+	
+	@Override
+	public Set<String> getKeys(){
+		return map.keySet();
 	}
 	
 	@Override
@@ -54,7 +62,9 @@ public abstract class MappedPojoCustomWrongMapValue<V> implements MappedPojo, De
 	@Override
 	public Map<String, Object> getMap(){
 		if(doBad){
-			map.put(DEFAULT_TEST_KEY, getDefaultWrongValue());
+			map.remove(DEFAULT_TEST_KEY);
+			map.put(DEFAULT_WRONG_KEY, DEFAULT_WRONG_STRING);
+			return map;
 		}
 		return map;
 	}

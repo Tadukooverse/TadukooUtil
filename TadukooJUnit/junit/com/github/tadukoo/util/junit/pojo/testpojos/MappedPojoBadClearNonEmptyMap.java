@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * A {@link MappedPojo} used for testing that returns the wrong value in the map using {@link #getMap()}
+ * A {@link MappedPojo} used for testing that makes the map non-empty on {@link #clear()}
  *
  * @param <V> The type to use for the getter + setter
  *
@@ -15,46 +15,43 @@ import java.util.Map;
  * @version Beta v.0.6
  * @since Beta v.0.6 (in Tadukoo Util); Alpha v.0.1 (in Tadukoo JUnit)
  */
-public abstract class MappedPojoCustomWrongMapValue<V> implements MappedPojo, DefaultTestValues{
+public class MappedPojoBadClearNonEmptyMap<V> implements MappedPojo, DefaultTestValues{
 	private final Map<String, Object> map;
-	private boolean doBad = false;
+	private boolean doBad;
 	
-	public MappedPojoCustomWrongMapValue(){
+	public MappedPojoBadClearNonEmptyMap(){
 		map = new HashMap<>();
+		doBad = false;
 	}
-	
-	protected abstract V getDefaultWrongValue();
 	
 	@SuppressWarnings("unchecked")
 	public V getTest(){
-		return (V) map.get(DEFAULT_TEST_KEY);
+		return (V) getItem(DEFAULT_TEST_KEY);
 	}
 	
 	public void setTest(V value){
 		setItem(DEFAULT_TEST_KEY, value);
+	}
+	
+	@Override
+	public void clear(){
+		map.clear();
 		doBad = true;
 	}
 	
 	@Override
-	public boolean hasKey(String key){
-		return map.containsKey(key);
-	}
-	
-	@Override
-	public boolean hasItem(String key){
-		return map.get(key) != null;
-	}
-	
-	@Override
-	@SuppressWarnings("unchecked")
-	public V getItem(String key){
-		return (V) map.get(key);
+	public boolean isEmpty(){
+		if(doBad){
+			return true;
+		}else{
+			return map.isEmpty();
+		}
 	}
 	
 	@Override
 	public Map<String, Object> getMap(){
 		if(doBad){
-			map.put(DEFAULT_TEST_KEY, getDefaultWrongValue());
+			map.put(DEFAULT_WRONG_KEY, DEFAULT_WRONG_STRING);
 		}
 		return map;
 	}

@@ -8,6 +8,8 @@ public class MappedPojoAssertValueGetSetRegularCustomTest extends MappedPojoAsse
 	protected MappedPojoAssertValueGetSetRegularCustomTest(){
 		super((pojo, getter, setter, key) ->
 				MappedPojoTest.assertValueGetSetCustom(pojo, getter, setter, key, DEFAULT_TEST_STRING, DEFAULT_TEST_STRING_2),
-				DEFAULT_TEST_KEY, DEFAULT_WRONG_KEY, DEFAULT_TEST_STRING, DEFAULT_TEST_STRING_2, DEFAULT_WRONG_STRING);
+				(pojo, getter, setter, key, message) ->
+				MappedPojoTest.assertValueGetSetCustom(pojo, getter, setter, key, DEFAULT_TEST_STRING, DEFAULT_TEST_STRING_2, message),
+				DEFAULT_TEST_STRING, DEFAULT_TEST_STRING_2, DEFAULT_WRONG_STRING);
 	}
 }
