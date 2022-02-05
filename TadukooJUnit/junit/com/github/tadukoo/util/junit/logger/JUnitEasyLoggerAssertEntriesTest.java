@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.logging.Level;
 
 import static com.github.tadukoo.util.junit.AssertionFailedErrors.buildAssertError;
+import static com.github.tadukoo.util.junit.logger.JUnitEasyLoggerAssertEntries.assertEntries;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class JUnitEasyLoggerAssertEntriesTest{
@@ -15,31 +16,31 @@ public class JUnitEasyLoggerAssertEntriesTest{
 	
 	@Test
 	public void testAssertEntriesSingleEntry(){
-		JUnitEasyLogger.JUnitEasyLoggerEntry entry =
-				new JUnitEasyLogger.JUnitEasyLoggerEntry(Level.INFO, "test message", null);
-		List<JUnitEasyLogger.JUnitEasyLoggerEntry> expectedEntries = ListUtil.createList(entry);
+		JUnitEasyLoggerEntry entry =
+				new JUnitEasyLoggerEntry(Level.INFO, "test message", null);
+		List<JUnitEasyLoggerEntry> expectedEntries = ListUtil.createList(entry);
 		logger.logInfo("test message");
-		JUnitEasyLogger.assertEntries(expectedEntries, logger.getEntries());
+		assertEntries(expectedEntries, logger.getEntries());
 	}
 	
 	@Test
 	public void testAssertEntriesMultiEntry(){
-		List<JUnitEasyLogger.JUnitEasyLoggerEntry> expectedEntries = ListUtil.createList(
-				new JUnitEasyLogger.JUnitEasyLoggerEntry(Level.INFO, "test message", null),
-				new JUnitEasyLogger.JUnitEasyLoggerEntry(Level.FINEST, "debug test", null));
+		List<JUnitEasyLoggerEntry> expectedEntries = ListUtil.createList(
+				new JUnitEasyLoggerEntry(Level.INFO, "test message", null),
+				new JUnitEasyLoggerEntry(Level.FINEST, "debug test", null));
 		logger.logInfo("test message");
 		logger.logDebugFinest("debug test");
-		JUnitEasyLogger.assertEntries(expectedEntries, logger.getEntries());
+		assertEntries(expectedEntries, logger.getEntries());
 	}
 	
 	@Test
 	public void testAssertEntriesExtraInExpected(){
 		try{
-			List<JUnitEasyLogger.JUnitEasyLoggerEntry> expectedEntries = ListUtil.createList(
-					new JUnitEasyLogger.JUnitEasyLoggerEntry(Level.INFO, "test message", null),
-					new JUnitEasyLogger.JUnitEasyLoggerEntry(Level.FINEST, "debug test", null));
+			List<JUnitEasyLoggerEntry> expectedEntries = ListUtil.createList(
+					new JUnitEasyLoggerEntry(Level.INFO, "test message", null),
+					new JUnitEasyLoggerEntry(Level.FINEST, "debug test", null));
 			logger.logInfo("test message");
-			JUnitEasyLogger.assertEntries(expectedEntries, logger.getEntries());
+			assertEntries(expectedEntries, logger.getEntries());
 		}catch(AssertionFailedError e){
 			assertEquals(buildAssertError(2, 1), e.getMessage());
 		}
@@ -48,11 +49,11 @@ public class JUnitEasyLoggerAssertEntriesTest{
 	@Test
 	public void testAssertEntriesExtraInActual(){
 		try{
-			List<JUnitEasyLogger.JUnitEasyLoggerEntry> expectedEntries = ListUtil.createList(
-					new JUnitEasyLogger.JUnitEasyLoggerEntry(Level.INFO, "test message", null));
+			List<JUnitEasyLoggerEntry> expectedEntries = ListUtil.createList(
+					new JUnitEasyLoggerEntry(Level.INFO, "test message", null));
 			logger.logInfo("test message");
 			logger.logDebugFinest("debug test");
-			JUnitEasyLogger.assertEntries(expectedEntries, logger.getEntries());
+			assertEntries(expectedEntries, logger.getEntries());
 		}catch(AssertionFailedError e){
 			assertEquals(buildAssertError(1, 2), e.getMessage());
 		}
@@ -61,11 +62,11 @@ public class JUnitEasyLoggerAssertEntriesTest{
 	@Test
 	public void testAssertEntriesWrongLevel(){
 		try{
-			JUnitEasyLogger.JUnitEasyLoggerEntry entry =
-					new JUnitEasyLogger.JUnitEasyLoggerEntry(Level.SEVERE, "test message", null);
-			List<JUnitEasyLogger.JUnitEasyLoggerEntry> expectedEntries = ListUtil.createList(entry);
+			JUnitEasyLoggerEntry entry =
+					new JUnitEasyLoggerEntry(Level.SEVERE, "test message", null);
+			List<JUnitEasyLoggerEntry> expectedEntries = ListUtil.createList(entry);
 			logger.logInfo("test message");
-			JUnitEasyLogger.assertEntries(expectedEntries, logger.getEntries());
+			assertEntries(expectedEntries, logger.getEntries());
 		}catch(AssertionFailedError e){
 			assertEquals(buildAssertError(Level.SEVERE, Level.INFO), e.getMessage());
 		}
@@ -74,11 +75,11 @@ public class JUnitEasyLoggerAssertEntriesTest{
 	@Test
 	public void testAssertEntriesWrongMessage(){
 		try{
-			JUnitEasyLogger.JUnitEasyLoggerEntry entry =
-					new JUnitEasyLogger.JUnitEasyLoggerEntry(Level.INFO, "test message 2", null);
-			List<JUnitEasyLogger.JUnitEasyLoggerEntry> expectedEntries = ListUtil.createList(entry);
+			JUnitEasyLoggerEntry entry =
+					new JUnitEasyLoggerEntry(Level.INFO, "test message 2", null);
+			List<JUnitEasyLoggerEntry> expectedEntries = ListUtil.createList(entry);
 			logger.logInfo("test message");
-			JUnitEasyLogger.assertEntries(expectedEntries, logger.getEntries());
+			assertEntries(expectedEntries, logger.getEntries());
 		}catch(AssertionFailedError e){
 			assertEquals(buildAssertError("test message 2", "test message"), e.getMessage());
 		}
@@ -88,11 +89,11 @@ public class JUnitEasyLoggerAssertEntriesTest{
 	public void testAssertEntriesWrongThrowable(){
 		Throwable t = new IllegalArgumentException("something wrong");
 		try{
-			JUnitEasyLogger.JUnitEasyLoggerEntry entry =
-					new JUnitEasyLogger.JUnitEasyLoggerEntry(Level.INFO, "test message", t);
-			List<JUnitEasyLogger.JUnitEasyLoggerEntry> expectedEntries = ListUtil.createList(entry);
+			JUnitEasyLoggerEntry entry =
+					new JUnitEasyLoggerEntry(Level.INFO, "test message", t);
+			List<JUnitEasyLoggerEntry> expectedEntries = ListUtil.createList(entry);
 			logger.logInfo("test message");
-			JUnitEasyLogger.assertEntries(expectedEntries, logger.getEntries());
+			assertEntries(expectedEntries, logger.getEntries());
 		}catch(AssertionFailedError e){
 			assertEquals(buildAssertError(t, null), e.getMessage());
 		}
@@ -100,31 +101,31 @@ public class JUnitEasyLoggerAssertEntriesTest{
 	
 	@Test
 	public void testAssertEntriesSingleEntryLogger(){
-		JUnitEasyLogger.JUnitEasyLoggerEntry entry =
-				new JUnitEasyLogger.JUnitEasyLoggerEntry(Level.INFO, "test message", null);
-		List<JUnitEasyLogger.JUnitEasyLoggerEntry> expectedEntries = ListUtil.createList(entry);
+		JUnitEasyLoggerEntry entry =
+				new JUnitEasyLoggerEntry(Level.INFO, "test message", null);
+		List<JUnitEasyLoggerEntry> expectedEntries = ListUtil.createList(entry);
 		logger.logInfo("test message");
-		JUnitEasyLogger.assertEntries(expectedEntries, logger);
+		assertEntries(expectedEntries, logger);
 	}
 	
 	@Test
 	public void testAssertEntriesMultiEntryLogger(){
-		List<JUnitEasyLogger.JUnitEasyLoggerEntry> expectedEntries = ListUtil.createList(
-				new JUnitEasyLogger.JUnitEasyLoggerEntry(Level.INFO, "test message", null),
-				new JUnitEasyLogger.JUnitEasyLoggerEntry(Level.FINEST, "debug test", null));
+		List<JUnitEasyLoggerEntry> expectedEntries = ListUtil.createList(
+				new JUnitEasyLoggerEntry(Level.INFO, "test message", null),
+				new JUnitEasyLoggerEntry(Level.FINEST, "debug test", null));
 		logger.logInfo("test message");
 		logger.logDebugFinest("debug test");
-		JUnitEasyLogger.assertEntries(expectedEntries, logger);
+		assertEntries(expectedEntries, logger);
 	}
 	
 	@Test
 	public void testAssertEntriesExtraInExpectedLogger(){
 		try{
-			List<JUnitEasyLogger.JUnitEasyLoggerEntry> expectedEntries = ListUtil.createList(
-					new JUnitEasyLogger.JUnitEasyLoggerEntry(Level.INFO, "test message", null),
-					new JUnitEasyLogger.JUnitEasyLoggerEntry(Level.FINEST, "debug test", null));
+			List<JUnitEasyLoggerEntry> expectedEntries = ListUtil.createList(
+					new JUnitEasyLoggerEntry(Level.INFO, "test message", null),
+					new JUnitEasyLoggerEntry(Level.FINEST, "debug test", null));
 			logger.logInfo("test message");
-			JUnitEasyLogger.assertEntries(expectedEntries, logger);
+			assertEntries(expectedEntries, logger);
 		}catch(AssertionFailedError e){
 			assertEquals(buildAssertError(2, 1), e.getMessage());
 		}
@@ -133,11 +134,11 @@ public class JUnitEasyLoggerAssertEntriesTest{
 	@Test
 	public void testAssertEntriesExtraInActualLogger(){
 		try{
-			List<JUnitEasyLogger.JUnitEasyLoggerEntry> expectedEntries = ListUtil.createList(
-					new JUnitEasyLogger.JUnitEasyLoggerEntry(Level.INFO, "test message", null));
+			List<JUnitEasyLoggerEntry> expectedEntries = ListUtil.createList(
+					new JUnitEasyLoggerEntry(Level.INFO, "test message", null));
 			logger.logInfo("test message");
 			logger.logDebugFinest("debug test");
-			JUnitEasyLogger.assertEntries(expectedEntries, logger);
+			assertEntries(expectedEntries, logger);
 		}catch(AssertionFailedError e){
 			assertEquals(buildAssertError(1, 2), e.getMessage());
 		}
@@ -146,11 +147,11 @@ public class JUnitEasyLoggerAssertEntriesTest{
 	@Test
 	public void testAssertEntriesWrongLevelLogger(){
 		try{
-			JUnitEasyLogger.JUnitEasyLoggerEntry entry =
-					new JUnitEasyLogger.JUnitEasyLoggerEntry(Level.SEVERE, "test message", null);
-			List<JUnitEasyLogger.JUnitEasyLoggerEntry> expectedEntries = ListUtil.createList(entry);
+			JUnitEasyLoggerEntry entry =
+					new JUnitEasyLoggerEntry(Level.SEVERE, "test message", null);
+			List<JUnitEasyLoggerEntry> expectedEntries = ListUtil.createList(entry);
 			logger.logInfo("test message");
-			JUnitEasyLogger.assertEntries(expectedEntries, logger);
+			assertEntries(expectedEntries, logger);
 		}catch(AssertionFailedError e){
 			assertEquals(buildAssertError(Level.SEVERE, Level.INFO), e.getMessage());
 		}
@@ -159,11 +160,11 @@ public class JUnitEasyLoggerAssertEntriesTest{
 	@Test
 	public void testAssertEntriesWrongMessageLogger(){
 		try{
-			JUnitEasyLogger.JUnitEasyLoggerEntry entry =
-					new JUnitEasyLogger.JUnitEasyLoggerEntry(Level.INFO, "test message 2", null);
-			List<JUnitEasyLogger.JUnitEasyLoggerEntry> expectedEntries = ListUtil.createList(entry);
+			JUnitEasyLoggerEntry entry =
+					new JUnitEasyLoggerEntry(Level.INFO, "test message 2", null);
+			List<JUnitEasyLoggerEntry> expectedEntries = ListUtil.createList(entry);
 			logger.logInfo("test message");
-			JUnitEasyLogger.assertEntries(expectedEntries, logger);
+			assertEntries(expectedEntries, logger);
 		}catch(AssertionFailedError e){
 			assertEquals(buildAssertError("test message 2", "test message"), e.getMessage());
 		}
@@ -173,11 +174,11 @@ public class JUnitEasyLoggerAssertEntriesTest{
 	public void testAssertEntriesWrongThrowableLogger(){
 		Throwable t = new IllegalArgumentException("something wrong");
 		try{
-			JUnitEasyLogger.JUnitEasyLoggerEntry entry =
-					new JUnitEasyLogger.JUnitEasyLoggerEntry(Level.INFO, "test message", t);
-			List<JUnitEasyLogger.JUnitEasyLoggerEntry> expectedEntries = ListUtil.createList(entry);
+			JUnitEasyLoggerEntry entry =
+					new JUnitEasyLoggerEntry(Level.INFO, "test message", t);
+			List<JUnitEasyLoggerEntry> expectedEntries = ListUtil.createList(entry);
 			logger.logInfo("test message");
-			JUnitEasyLogger.assertEntries(expectedEntries, logger);
+			assertEntries(expectedEntries, logger);
 		}catch(AssertionFailedError e){
 			assertEquals(buildAssertError(t, null), e.getMessage());
 		}
@@ -185,20 +186,20 @@ public class JUnitEasyLoggerAssertEntriesTest{
 	
 	@Test
 	public void testAssertEntriesSingleEntrySingleEntry(){
-		JUnitEasyLogger.JUnitEasyLoggerEntry entry =
-				new JUnitEasyLogger.JUnitEasyLoggerEntry(Level.INFO, "test message", null);
+		JUnitEasyLoggerEntry entry =
+				new JUnitEasyLoggerEntry(Level.INFO, "test message", null);
 		logger.logInfo("test message");
-		JUnitEasyLogger.assertEntries(entry, logger.getEntries());
+		assertEntries(entry, logger.getEntries());
 	}
 	
 	@Test
 	public void testAssertEntriesExtraInActualSingleEntry(){
 		try{
-			JUnitEasyLogger.JUnitEasyLoggerEntry entry =
-					new JUnitEasyLogger.JUnitEasyLoggerEntry(Level.INFO, "test message", null);
+			JUnitEasyLoggerEntry entry =
+					new JUnitEasyLoggerEntry(Level.INFO, "test message", null);
 			logger.logInfo("test message");
 			logger.logDebugFinest("debug test");
-			JUnitEasyLogger.assertEntries(entry, logger.getEntries());
+			assertEntries(entry, logger.getEntries());
 		}catch(AssertionFailedError e){
 			assertEquals(buildAssertError(1, 2), e.getMessage());
 		}
@@ -207,10 +208,10 @@ public class JUnitEasyLoggerAssertEntriesTest{
 	@Test
 	public void testAssertEntriesWrongLevelSingleEntry(){
 		try{
-			JUnitEasyLogger.JUnitEasyLoggerEntry entry =
-					new JUnitEasyLogger.JUnitEasyLoggerEntry(Level.SEVERE, "test message", null);
+			JUnitEasyLoggerEntry entry =
+					new JUnitEasyLoggerEntry(Level.SEVERE, "test message", null);
 			logger.logInfo("test message");
-			JUnitEasyLogger.assertEntries(entry, logger.getEntries());
+			assertEntries(entry, logger.getEntries());
 		}catch(AssertionFailedError e){
 			assertEquals(buildAssertError(Level.SEVERE, Level.INFO), e.getMessage());
 		}
@@ -219,10 +220,10 @@ public class JUnitEasyLoggerAssertEntriesTest{
 	@Test
 	public void testAssertEntriesWrongMessageSingleEntry(){
 		try{
-			JUnitEasyLogger.JUnitEasyLoggerEntry entry =
-					new JUnitEasyLogger.JUnitEasyLoggerEntry(Level.INFO, "test message 2", null);
+			JUnitEasyLoggerEntry entry =
+					new JUnitEasyLoggerEntry(Level.INFO, "test message 2", null);
 			logger.logInfo("test message");
-			JUnitEasyLogger.assertEntries(entry, logger.getEntries());
+			assertEntries(entry, logger.getEntries());
 		}catch(AssertionFailedError e){
 			assertEquals(buildAssertError("test message 2", "test message"), e.getMessage());
 		}
@@ -232,10 +233,10 @@ public class JUnitEasyLoggerAssertEntriesTest{
 	public void testAssertEntriesWrongThrowableSingleEntry(){
 		Throwable t = new IllegalArgumentException("something wrong");
 		try{
-			JUnitEasyLogger.JUnitEasyLoggerEntry entry =
-					new JUnitEasyLogger.JUnitEasyLoggerEntry(Level.INFO, "test message", t);
+			JUnitEasyLoggerEntry entry =
+					new JUnitEasyLoggerEntry(Level.INFO, "test message", t);
 			logger.logInfo("test message");
-			JUnitEasyLogger.assertEntries(entry, logger.getEntries());
+			assertEntries(entry, logger.getEntries());
 		}catch(AssertionFailedError e){
 			assertEquals(buildAssertError(t, null), e.getMessage());
 		}
@@ -243,20 +244,20 @@ public class JUnitEasyLoggerAssertEntriesTest{
 	
 	@Test
 	public void testAssertEntriesSingleEntrySingleEntryLogger(){
-		JUnitEasyLogger.JUnitEasyLoggerEntry entry =
-				new JUnitEasyLogger.JUnitEasyLoggerEntry(Level.INFO, "test message", null);
+		JUnitEasyLoggerEntry entry =
+				new JUnitEasyLoggerEntry(Level.INFO, "test message", null);
 		logger.logInfo("test message");
-		JUnitEasyLogger.assertEntries(entry, logger);
+		assertEntries(entry, logger);
 	}
 	
 	@Test
 	public void testAssertEntriesExtraInActualSingleEntryLogger(){
 		try{
-			JUnitEasyLogger.JUnitEasyLoggerEntry entry =
-					new JUnitEasyLogger.JUnitEasyLoggerEntry(Level.INFO, "test message", null);
+			JUnitEasyLoggerEntry entry =
+					new JUnitEasyLoggerEntry(Level.INFO, "test message", null);
 			logger.logInfo("test message");
 			logger.logDebugFinest("debug test");
-			JUnitEasyLogger.assertEntries(entry, logger);
+			assertEntries(entry, logger);
 		}catch(AssertionFailedError e){
 			assertEquals(buildAssertError(1, 2), e.getMessage());
 		}
@@ -265,10 +266,10 @@ public class JUnitEasyLoggerAssertEntriesTest{
 	@Test
 	public void testAssertEntriesWrongLevelSingleEntryLogger(){
 		try{
-			JUnitEasyLogger.JUnitEasyLoggerEntry entry =
-					new JUnitEasyLogger.JUnitEasyLoggerEntry(Level.SEVERE, "test message", null);
+			JUnitEasyLoggerEntry entry =
+					new JUnitEasyLoggerEntry(Level.SEVERE, "test message", null);
 			logger.logInfo("test message");
-			JUnitEasyLogger.assertEntries(entry, logger);
+			assertEntries(entry, logger);
 		}catch(AssertionFailedError e){
 			assertEquals(buildAssertError(Level.SEVERE, Level.INFO), e.getMessage());
 		}
@@ -277,10 +278,10 @@ public class JUnitEasyLoggerAssertEntriesTest{
 	@Test
 	public void testAssertEntriesWrongMessageSingleEntryLogger(){
 		try{
-			JUnitEasyLogger.JUnitEasyLoggerEntry entry =
-					new JUnitEasyLogger.JUnitEasyLoggerEntry(Level.INFO, "test message 2", null);
+			JUnitEasyLoggerEntry entry =
+					new JUnitEasyLoggerEntry(Level.INFO, "test message 2", null);
 			logger.logInfo("test message");
-			JUnitEasyLogger.assertEntries(entry, logger);
+			assertEntries(entry, logger);
 		}catch(AssertionFailedError e){
 			assertEquals(buildAssertError("test message 2", "test message"), e.getMessage());
 		}
@@ -290,10 +291,10 @@ public class JUnitEasyLoggerAssertEntriesTest{
 	public void testAssertEntriesWrongThrowableSingleEntryLogger(){
 		Throwable t = new IllegalArgumentException("something wrong");
 		try{
-			JUnitEasyLogger.JUnitEasyLoggerEntry entry =
-					new JUnitEasyLogger.JUnitEasyLoggerEntry(Level.INFO, "test message", t);
+			JUnitEasyLoggerEntry entry =
+					new JUnitEasyLoggerEntry(Level.INFO, "test message", t);
 			logger.logInfo("test message");
-			JUnitEasyLogger.assertEntries(entry, logger);
+			assertEntries(entry, logger);
 		}catch(AssertionFailedError e){
 			assertEquals(buildAssertError(t, null), e.getMessage());
 		}
@@ -302,7 +303,7 @@ public class JUnitEasyLoggerAssertEntriesTest{
 	@Test
 	public void testAssertEntriesSingleEntrySingleEntryParams(){
 		logger.logInfo("test message");
-		JUnitEasyLogger.assertEntries(Level.INFO, "test message", null, logger.getEntries());
+		assertEntries(Level.INFO, "test message", null, logger.getEntries());
 	}
 	
 	@Test
@@ -310,7 +311,7 @@ public class JUnitEasyLoggerAssertEntriesTest{
 		try{
 			logger.logInfo("test message");
 			logger.logDebugFinest("debug test");
-			JUnitEasyLogger.assertEntries(Level.INFO, "test message", null, logger.getEntries());
+			assertEntries(Level.INFO, "test message", null, logger.getEntries());
 		}catch(AssertionFailedError e){
 			assertEquals(buildAssertError(1, 2), e.getMessage());
 		}
@@ -320,7 +321,7 @@ public class JUnitEasyLoggerAssertEntriesTest{
 	public void testAssertEntriesWrongLevelSingleEntryParams(){
 		try{
 			logger.logInfo("test message");
-			JUnitEasyLogger.assertEntries(Level.SEVERE, "test message", null, logger.getEntries());
+			assertEntries(Level.SEVERE, "test message", null, logger.getEntries());
 		}catch(AssertionFailedError e){
 			assertEquals(buildAssertError(Level.SEVERE, Level.INFO), e.getMessage());
 		}
@@ -330,7 +331,7 @@ public class JUnitEasyLoggerAssertEntriesTest{
 	public void testAssertEntriesWrongMessageSingleEntryParams(){
 		try{
 			logger.logInfo("test message");
-			JUnitEasyLogger.assertEntries(Level.INFO, "test message 2", null, logger.getEntries());
+			assertEntries(Level.INFO, "test message 2", null, logger.getEntries());
 		}catch(AssertionFailedError e){
 			assertEquals(buildAssertError("test message 2", "test message"), e.getMessage());
 		}
@@ -341,7 +342,7 @@ public class JUnitEasyLoggerAssertEntriesTest{
 		Throwable t = new IllegalArgumentException("something wrong");
 		try{
 			logger.logInfo("test message");
-			JUnitEasyLogger.assertEntries(Level.INFO, "test message", t, logger.getEntries());
+			assertEntries(Level.INFO, "test message", t, logger.getEntries());
 		}catch(AssertionFailedError e){
 			assertEquals(buildAssertError(t, null), e.getMessage());
 		}
@@ -350,7 +351,7 @@ public class JUnitEasyLoggerAssertEntriesTest{
 	@Test
 	public void testAssertEntriesSingleEntrySingleEntryParamsLogger(){
 		logger.logInfo("test message");
-		JUnitEasyLogger.assertEntries(Level.INFO, "test message", null, logger);
+		assertEntries(Level.INFO, "test message", null, logger);
 	}
 	
 	@Test
@@ -358,7 +359,7 @@ public class JUnitEasyLoggerAssertEntriesTest{
 		try{
 			logger.logInfo("test message");
 			logger.logDebugFinest("debug test");
-			JUnitEasyLogger.assertEntries(Level.INFO, "test message", null, logger);
+			assertEntries(Level.INFO, "test message", null, logger);
 		}catch(AssertionFailedError e){
 			assertEquals(buildAssertError(1, 2), e.getMessage());
 		}
@@ -368,7 +369,7 @@ public class JUnitEasyLoggerAssertEntriesTest{
 	public void testAssertEntriesWrongLevelSingleEntryParamsLogger(){
 		try{
 			logger.logInfo("test message");
-			JUnitEasyLogger.assertEntries(Level.SEVERE, "test message", null, logger);
+			assertEntries(Level.SEVERE, "test message", null, logger);
 		}catch(AssertionFailedError e){
 			assertEquals(buildAssertError(Level.SEVERE, Level.INFO), e.getMessage());
 		}
@@ -378,7 +379,7 @@ public class JUnitEasyLoggerAssertEntriesTest{
 	public void testAssertEntriesWrongMessageSingleEntryParamsLogger(){
 		try{
 			logger.logInfo("test message");
-			JUnitEasyLogger.assertEntries(Level.INFO, "test message 2", null, logger);
+			assertEntries(Level.INFO, "test message 2", null, logger);
 		}catch(AssertionFailedError e){
 			assertEquals(buildAssertError("test message 2", "test message"), e.getMessage());
 		}
@@ -389,7 +390,7 @@ public class JUnitEasyLoggerAssertEntriesTest{
 		Throwable t = new IllegalArgumentException("something wrong");
 		try{
 			logger.logInfo("test message");
-			JUnitEasyLogger.assertEntries(Level.INFO, "test message", t, logger);
+			assertEntries(Level.INFO, "test message", t, logger);
 		}catch(AssertionFailedError e){
 			assertEquals(buildAssertError(t, null), e.getMessage());
 		}
