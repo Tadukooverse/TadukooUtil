@@ -23,6 +23,13 @@ public interface DefaultTestValues{
 	/** A double to use for returning wrong values: 27.3 */
 	double DEFAULT_WRONG_DOUBLE = 27.3;
 	
+	/** The default first test int to be used: 42 */
+	int DEFAULT_TEST_INT = 42;
+	/** The default second test int to be used when you need 2 distinct values: 27 */
+	int DEFAULT_TEST_INT_2 = 27;
+	/** An int to use for returning wrong values: -42 */
+	int DEFAULT_WRONG_INT = -42;
+	
 	/** The default string to use for a key: Test */
 	String DEFAULT_TEST_KEY = "Test";
 	/** The default second string to use for a key: Derp */

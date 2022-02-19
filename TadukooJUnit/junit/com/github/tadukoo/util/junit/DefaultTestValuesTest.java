@@ -37,6 +37,21 @@ public class DefaultTestValuesTest implements DefaultTestValues{
 	}
 	
 	@Test
+	public void testDEFAULT_TEST_INT(){
+		assertEquals(42, DEFAULT_TEST_INT);
+	}
+	
+	@Test
+	public void testDEFAULT_TEST_INT_2(){
+		assertEquals(27, DEFAULT_TEST_INT_2);
+	}
+	
+	@Test
+	public void testDEFAULT_WRONG_INT(){
+		assertEquals(-42, DEFAULT_WRONG_INT);
+	}
+	
+	@Test
 	public void testDEFAULT_TEST_KEY(){
 		assertEquals("Test", DEFAULT_TEST_KEY);
 	}
