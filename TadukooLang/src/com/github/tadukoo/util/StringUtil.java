@@ -345,6 +345,16 @@ public final class StringUtil{
 		return parseListFromStringWithSeparator(text, ",", true);
 	}
 	
+	/**
+	 * Adds a tab to every new line in the given string
+	 *
+	 * @param text A String to be indented
+	 * @return The String with every line indented
+	 */
+	public static String indentAllLines(String text){
+		return "\t" + text.replace("\n", "\n\t");
+	}
+	
 	/*
 	 * Handling String Case
 	 */

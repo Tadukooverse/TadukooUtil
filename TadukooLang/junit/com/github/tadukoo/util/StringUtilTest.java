@@ -353,6 +353,19 @@ public class StringUtilTest{
 		assertEquals("derp", result.get(2));
 	}
 	
+	@Test
+	public void testIndentAllLinesSingleLine(){
+		assertEquals("\tThe line", StringUtil.indentAllLines("The line"));
+	}
+	
+	@Test
+	public void testIndentAllLinesMultiLines(){
+		assertEquals("""
+				\tThe line
+				\tThe second line
+				\tThe third line""", StringUtil.indentAllLines("The line\nThe second line\nThe third line"));
+	}
+	
 	/*
 	 * Handling String Case
 	 */
