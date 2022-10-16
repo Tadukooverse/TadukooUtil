@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 public class PairTest{
 	private final String key = "Test";
@@ -62,5 +63,35 @@ public class PairTest{
 	@Test
 	public void testToString(){
 		assertEquals("(Test, 5)", pair.toString());
+	}
+	
+	/*
+	 * Test Equals
+	 */
+	
+	@Test
+	public void testEquals(){
+		assertEquals(Pair.of(42, "yes"), Pair.of(42, "yes"));
+	}
+	
+	@Test
+	public void testEqualsLeftNotEqual(){
+		assertNotEquals(Pair.of(41, "yes"), Pair.of(42, "yes"));
+	}
+	
+	@Test
+	public void testEqualsRightNotEqual(){
+		assertNotEquals(Pair.of(42, "yes"), Pair.of(42, "no"));
+	}
+	
+	@Test
+	public void testEqualsNeitherEqual(){
+		assertNotEquals(Pair.of(41, "yes"), Pair.of(42, "no"));
+	}
+	
+	@Test
+	public void testEqualsDifferentType(){
+		//noinspection AssertBetweenInconvertibleTypes
+		assertNotEquals(Pair.of(42, "yes"), 42);
 	}
 }

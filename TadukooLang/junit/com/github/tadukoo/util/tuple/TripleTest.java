@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 public class TripleTest{
 	private final String left = "Test";
@@ -52,5 +53,40 @@ public class TripleTest{
 	@Test
 	public void testToString(){
 		assertEquals("(Test, 15, Derp)", triple.toString());
+	}
+	
+	/*
+	 * Test Equals
+	 */
+	
+	@Test
+	public void testEquals(){
+		assertEquals(Triple.of(42, "Yes", 25.0), Triple.of(42, "Yes", 25.0));
+	}
+	
+	@Test
+	public void testEqualsLeftNotEqual(){
+		assertNotEquals(Triple.of(41, "Yes", 25.0), Triple.of(42, "Yes", 25.0));
+	}
+	
+	@Test
+	public void testEqualsMiddleNotEqual(){
+		assertNotEquals(Triple.of(42, "No", 25.0), Triple.of(42, "Yes", 25.0));
+	}
+	
+	@Test
+	public void testEqualsRightNotEqual(){
+		assertNotEquals(Triple.of(42, "Yes", 26.0), Triple.of(42, "Yes", 25.0));
+	}
+	
+	@Test
+	public void testEqualsNoneEqual(){
+		assertNotEquals(Triple.of(41, "No", 27.0), Triple.of(42, "Yes", 25.0));
+	}
+	
+	@Test
+	public void testEqualsDifferentType(){
+		//noinspection AssertBetweenInconvertibleTypes
+		assertNotEquals(Triple.of(42, "Yes", 25.0), "something");
 	}
 }

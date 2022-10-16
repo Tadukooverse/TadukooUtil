@@ -110,4 +110,14 @@ public class Pair<L, R>{
 	public String toString(){
 		return "(" + left.toString() + ", " + right.toString() + ")";
 	}
+	
+	/** {@inheritDoc} */
+	@Override
+	public boolean equals(Object otherPair){
+		if(otherPair instanceof Pair pair){
+			return this.getLeft().equals(pair.getLeft()) && this.getRight().equals(pair.getRight());
+		}else{
+			return false;
+		}
+	}
 }

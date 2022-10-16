@@ -101,4 +101,15 @@ public class Triple<L, M, R>{
 	public String toString(){
 		return "(" + left.toString() + ", " + middle.toString() + ", " + right.toString() + ")";
 	}
+	
+	/** {@inheritDoc} */
+	@Override
+	public boolean equals(Object otherTriple){
+		if(otherTriple instanceof Triple triple){
+			return this.getLeft().equals(triple.getLeft()) && this.getMiddle().equals(triple.getMiddle()) &&
+					this.getRight().equals(triple.getRight());
+		}else{
+			return false;
+		}
+	}
 }
