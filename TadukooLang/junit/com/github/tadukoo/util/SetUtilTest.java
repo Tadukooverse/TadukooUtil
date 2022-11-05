@@ -3,6 +3,7 @@ package com.github.tadukoo.util;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -91,5 +92,68 @@ public class SetUtilTest{
 		set.add("yes");
 		set.add("no");
 		assertEquals(4, set.size());
+	}
+	
+	@Test
+	public void testCreateOrderedSet(){
+		Set<Integer> set = SetUtil.createOrderedSet(5, 1, 2);
+		assertEquals(3, set.size());
+		Iterator<Integer> it = set.iterator();
+		assertEquals(5, it.next());
+		assertEquals(1, it.next());
+		assertEquals(2, it.next());
+	}
+	
+	@Test
+	public void testMergeSets(){
+		Set<Integer> set = SetUtil.mergeSets(SetUtil.createSet(5, 1, 2), SetUtil.createSet(7, 3, 9));
+		assertEquals(6, set.size());
+		assertTrue(set.contains(5));
+		assertTrue(set.contains(1));
+		assertTrue(set.contains(2));
+		assertTrue(set.contains(7));
+		assertTrue(set.contains(3));
+		assertTrue(set.contains(9));
+	}
+	
+	@Test
+	public void testMergeOrderedSets(){
+		Set<Integer> set = SetUtil.mergeOrderedSets(SetUtil.createOrderedSet(5, 1, 2),
+				SetUtil.createOrderedSet(7, 3, 9));
+		assertEquals(6, set.size());
+		Iterator<Integer> it = set.iterator();
+		assertEquals(5, it.next());
+		assertEquals(1, it.next());
+		assertEquals(2, it.next());
+		assertEquals(7, it.next());
+		assertEquals(3, it.next());
+		assertEquals(9, it.next());
+	}
+	
+	@Test
+	public void testMergeSetsWithBooleanFalse(){
+		Set<Integer> set = SetUtil.mergeSets(false, SetUtil.createSet(5, 1, 2),
+				SetUtil.createSet(7, 3, 9));
+		assertEquals(6, set.size());
+		assertTrue(set.contains(5));
+		assertTrue(set.contains(1));
+		assertTrue(set.contains(2));
+		assertTrue(set.contains(7));
+		assertTrue(set.contains(3));
+		assertTrue(set.contains(9));
+	}
+	
+	@Test
+	public void testMergeSetsWithBooleanTrue(){
+		Set<Integer> set = SetUtil.mergeSets(true, SetUtil.createOrderedSet(5, 1, 2),
+				SetUtil.createOrderedSet(7, 3, 9));
+		assertEquals(6, set.size());
+		Iterator<Integer> it = set.iterator();
+		assertEquals(5, it.next());
+		assertEquals(1, it.next());
+		assertEquals(2, it.next());
+		assertEquals(7, it.next());
+		assertEquals(3, it.next());
+		assertEquals(9, it.next());
 	}
 }
