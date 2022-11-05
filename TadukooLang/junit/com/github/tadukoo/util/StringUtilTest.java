@@ -53,6 +53,176 @@ public class StringUtilTest{
 	}
 	
 	@Test
+	public void testAllBlankNulls(){
+		assertTrue(StringUtil.allBlank(null, null, null));
+	}
+	
+	@Test
+	public void testAllBlankFalseLeftNonEmpty(){
+		assertFalse(StringUtil.allBlank("yes", null, null));
+	}
+	
+	@Test
+	public void testAllBlankFalseMiddleEmpty(){
+		assertFalse(StringUtil.allBlank(null, "yes", null));
+	}
+	
+	@Test
+	public void testAllBlankFalseRightEmpty(){
+		assertFalse(StringUtil.allBlank(null, null, "yes"));
+	}
+	
+	@Test
+	public void testAllBlankEmpties(){
+		assertTrue(StringUtil.allBlank("", "", ""));
+	}
+	
+	@Test
+	public void testAllBlankFalseOnWhitespace(){
+		assertFalse(StringUtil.allBlank(" ", "", null));
+	}
+	
+	@Test
+	public void testAllBlankMixture(){
+		assertTrue(StringUtil.allBlank("", null, ""));
+	}
+	
+	@Test
+	public void testNoneBlank(){
+		assertTrue(StringUtil.noneBlank("yes", "no", "maybe"));
+	}
+	
+	@Test
+	public void testNoneBlankFalseLeftNull(){
+		assertFalse(StringUtil.noneBlank(null, "no", "maybe"));
+	}
+	
+	@Test
+	public void testNoneBlankFalseMiddleNull(){
+		assertFalse(StringUtil.noneBlank("yes", null, "maybe"));
+	}
+	
+	@Test
+	public void testNoneBlankFalseRightNull(){
+		assertFalse(StringUtil.noneBlank("yes", "no", null));
+	}
+	
+	@Test
+	public void testNoneBlankFalseAllNull(){
+		assertFalse(StringUtil.noneBlank(null, null, null));
+	}
+	
+	@Test
+	public void testNoneBlankFalseLeftEmpty(){
+		assertFalse(StringUtil.noneBlank("", "no", "maybe"));
+	}
+	
+	@Test
+	public void testNoneBlankFalseMiddleEmpty(){
+		assertFalse(StringUtil.noneBlank("yes", "", "maybe"));
+	}
+	
+	@Test
+	public void testNoneBlankFalseRightEmpty(){
+		assertFalse(StringUtil.noneBlank("yes", "no", ""));
+	}
+	
+	@Test
+	public void testNoneBlankFalseAllEmpty(){
+		assertFalse(StringUtil.noneBlank("", "", ""));
+	}
+	
+	@Test
+	public void testNoneBlankOnWhitespace(){
+		assertTrue(StringUtil.noneBlank(" ", " ", " "));
+	}
+	
+	@Test
+	public void testAnyBlank(){
+		assertFalse(StringUtil.anyBlank("yes", "no", "maybe"));
+	}
+	
+	@Test
+	public void testAnyBlankTrueLeftNull(){
+		assertTrue(StringUtil.anyBlank(null, "no", "maybe"));
+	}
+	
+	@Test
+	public void testAnyBlankTrueMiddleNull(){
+		assertTrue(StringUtil.anyBlank("yes", null, "maybe"));
+	}
+	
+	@Test
+	public void testAnyBlankTrueRightNull(){
+		assertTrue(StringUtil.anyBlank("yes", "no", null));
+	}
+	
+	@Test
+	public void testAnyBlankTrueAllNull(){
+		assertTrue(StringUtil.anyBlank(null, null, null));
+	}
+	
+	@Test
+	public void testAnyBlankTrueLeftEmpty(){
+		assertTrue(StringUtil.anyBlank("", "no", "maybe"));
+	}
+	
+	@Test
+	public void testAnyBlankTrueMiddleEmpty(){
+		assertTrue(StringUtil.anyBlank("yes", "", "maybe"));
+	}
+	
+	@Test
+	public void testAnyBlankTrueRightEmpty(){
+		assertTrue(StringUtil.anyBlank("yes", "no", ""));
+	}
+	
+	@Test
+	public void testAnyBlankTrueAllEmpty(){
+		assertTrue(StringUtil.anyBlank("", "", ""));
+	}
+	
+	@Test
+	public void testAnyBlankOnWhitespace(){
+		assertFalse(StringUtil.anyBlank(" ", " ", " "));
+	}
+	
+	@Test
+	public void testAnyNotBlankNulls(){
+		assertFalse(StringUtil.anyNotBlank(null, null, null));
+	}
+	
+	@Test
+	public void testAnyNotBlankTrueLeftNonEmpty(){
+		assertTrue(StringUtil.anyNotBlank("yes", null, null));
+	}
+	
+	@Test
+	public void testAnyNotBlankTrueMiddleEmpty(){
+		assertTrue(StringUtil.anyNotBlank(null, "yes", null));
+	}
+	
+	@Test
+	public void testAnyNotBlankTrueRightEmpty(){
+		assertTrue(StringUtil.anyNotBlank(null, null, "yes"));
+	}
+	
+	@Test
+	public void testAnyNotBlankEmpties(){
+		assertFalse(StringUtil.anyNotBlank("", "", ""));
+	}
+	
+	@Test
+	public void testAnyNotBlankTrueOnWhitespace(){
+		assertTrue(StringUtil.anyNotBlank(" ", "", null));
+	}
+	
+	@Test
+	public void testAnyNotBlankMixture(){
+		assertFalse(StringUtil.anyNotBlank("", null, ""));
+	}
+	
+	@Test
 	public void testEqualsOnBothNull(){
 		assertTrue(StringUtil.equals(null, null));
 	}

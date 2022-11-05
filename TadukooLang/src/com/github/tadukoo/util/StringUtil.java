@@ -37,6 +37,74 @@ public final class StringUtil{
 	}
 	
 	/**
+	 * Checks if all the given strings are blank or not (blank = either null or the empty string).
+	 *
+	 * @param texts The strings to check
+	 * @return true if all strings are blank (null/empty string), false otherwise
+	 */
+	public static boolean allBlank(String ... texts){
+		// If any string is not blank, return false
+		for(String text: texts){
+			if(isNotBlank(text)){
+				return false;
+			}
+		}
+		// Return true if we didn't hit a false
+		return true;
+	}
+	
+	/**
+	 * Checks if all the given strings are not blank (blank = either null or the empty string).
+	 *
+	 * @param texts The strings to check
+	 * @return true if all strings are not blank (not null/empty string), false otherwise
+	 */
+	public static boolean noneBlank(String ... texts){
+		// If any string is blank, return false
+		for(String text: texts){
+			if(isBlank(text)){
+				return false;
+			}
+		}
+		// Return true if we didn't hit a false
+		return true;
+	}
+	
+	/**
+	 * Checks if any of the given strings are blank (blank = either null or the empty string).
+	 *
+	 * @param texts The strings to check
+	 * @return true if any string is blank (null/empty string), false otherwise
+	 */
+	public static boolean anyBlank(String ... texts){
+		// If any string is blank, return true
+		for(String text: texts){
+			if(isBlank(text)){
+				return true;
+			}
+		}
+		// Return false if we didn't hit a true
+		return false;
+	}
+	
+	/**
+	 * Checks if any of the given strings are not blank (blank = either null or the empty string).
+	 *
+	 * @param texts The strings to check
+	 * @return true if any string is not blank (not null/empty string), false otherwise
+	 */
+	public static boolean anyNotBlank(String ... texts){
+		// If any string is not blank, return true
+		for(String text: texts){
+			if(isNotBlank(text)){
+				return true;
+			}
+		}
+		// Return false if we didn't hit a true
+		return false;
+	}
+	
+	/**
 	 * Checks if the two strings are equal using String.equals(), but properly 
 	 * handles null (if they're both null, returns true, if one is null and the 
 	 * other isn't, return false instead of throwing an NPE).
