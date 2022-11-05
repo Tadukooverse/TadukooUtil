@@ -94,4 +94,29 @@ public class PairTest{
 		//noinspection AssertBetweenInconvertibleTypes
 		assertNotEquals(Pair.of(42, "yes"), 42);
 	}
+	
+	@Test
+	public void testEqualsAllNull(){
+		assertEquals(Pair.of(null, null), Pair.of(null, null));
+	}
+	
+	@Test
+	public void testEqualsAllFirstPairNull(){
+		assertNotEquals(Pair.of(null, null), Pair.of(true, 42));
+	}
+	
+	@Test
+	public void testEqualsAllSecondPairNull(){
+		assertNotEquals(Pair.of(true, 42), Pair.of(null, null));
+	}
+	
+	@Test
+	public void testEqualsLeftsNull(){
+		assertEquals(Pair.of(null, 42), Pair.of(null, 42));
+	}
+	
+	@Test
+	public void testEqualsRightsNull(){
+		assertEquals(Pair.of(true, null), Pair.of(true, null));
+	}
 }

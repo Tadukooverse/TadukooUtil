@@ -89,4 +89,34 @@ public class TripleTest{
 		//noinspection AssertBetweenInconvertibleTypes
 		assertNotEquals(Triple.of(42, "Yes", 25.0), "something");
 	}
+	
+	@Test
+	public void testEqualsAllNull(){
+		assertEquals(Triple.of(null, null, null), Triple.of(null, null, null));
+	}
+	
+	@Test
+	public void testEqualsFirstTripleAllNull(){
+		assertNotEquals(Triple.of(null, null, null), Triple.of(true, 42, "yes"));
+	}
+	
+	@Test
+	public void testEqualsSecondTripleAllNull(){
+		assertNotEquals(Triple.of(true, 42, "yes"), Triple.of(null, null, null));
+	}
+	
+	@Test
+	public void testEqualsAllLeftNull(){
+		assertEquals(Triple.of(null, 42, "yes"), Triple.of(null, 42, "yes"));
+	}
+	
+	@Test
+	public void testEqualsAllMiddleNull(){
+		assertEquals(Triple.of(true, null, "yes"), Triple.of(true, null, "yes"));
+	}
+	
+	@Test
+	public void testEqualsAllRightNull(){
+		assertEquals(Triple.of(true, 42, null), Triple.of(true, 42, null));
+	}
 }

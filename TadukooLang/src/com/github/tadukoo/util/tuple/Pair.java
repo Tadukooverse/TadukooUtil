@@ -1,5 +1,7 @@
 package com.github.tadukoo.util.tuple;
 
+import java.util.Objects;
+
 /**
  * A tuple class for holding 2 items of specified type.
  *
@@ -115,7 +117,7 @@ public class Pair<L, R>{
 	@Override
 	public boolean equals(Object otherPair){
 		if(otherPair instanceof Pair pair){
-			return this.getLeft().equals(pair.getLeft()) && this.getRight().equals(pair.getRight());
+			return Objects.equals(this.getLeft(), pair.getLeft()) && Objects.equals(this.getRight(), pair.getRight());
 		}else{
 			return false;
 		}

@@ -1,5 +1,7 @@
 package com.github.tadukoo.util.tuple;
 
+import java.util.Objects;
+
 /**
  * A tuple class for holding 3 items of specified type.
  *
@@ -106,8 +108,9 @@ public class Triple<L, M, R>{
 	@Override
 	public boolean equals(Object otherTriple){
 		if(otherTriple instanceof Triple triple){
-			return this.getLeft().equals(triple.getLeft()) && this.getMiddle().equals(triple.getMiddle()) &&
-					this.getRight().equals(triple.getRight());
+			return Objects.equals(this.getLeft(), triple.getLeft()) &&
+					Objects.equals(this.getMiddle(), triple.getMiddle()) &&
+					Objects.equals(this.getRight(), triple.getRight());
 		}else{
 			return false;
 		}
