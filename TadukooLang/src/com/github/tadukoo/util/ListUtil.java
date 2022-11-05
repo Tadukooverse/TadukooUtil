@@ -50,4 +50,20 @@ public final class ListUtil{
 	public static <T> List<T> createList(T ... t){
 		return new ArrayList<>(Arrays.asList(t));
 	}
+	
+	/**
+	 * Merges 2 or more {@link List lists} together
+	 *
+	 * @param <T> The type argument of the {@link List lists}, for the type of element in them
+	 * @param lists The {@link List lists} to be merged
+	 * @return A {@link List} containing the elements from all the given {@link List lists}
+	 */
+	@SafeVarargs
+	public static <T> List<T> mergeLists(List<T> ... lists){
+		List<T> resultList = new ArrayList<>();
+		for(List<T> list: lists){
+			resultList.addAll(list);
+		}
+		return resultList;
+	}
 }
