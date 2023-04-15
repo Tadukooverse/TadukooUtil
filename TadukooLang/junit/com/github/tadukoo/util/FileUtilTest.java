@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
 
@@ -55,6 +56,81 @@ public class FileUtilTest{
 		
 		List<File> files = FileUtil.listAllFiles(folder);
 		assertEquals(5, files.size());
+		assertTrue(files.containsAll(Arrays.asList(file, file2, file3, file4, file5)));
+	}
+	
+	@Test
+	public void createAndListAllFilesAsPathsTest() throws IOException{
+		File file = FileUtil.createFile("target/test-files/createAndListTest/test.txt");
+		assertNotNull(file);
+		
+		List<Path> files = FileUtil.listAllFilesAsPaths("target/test-files/createAndListTest/");
+		assertEquals(1, files.size());
+		assertEquals(file, files.get(0).toFile());
+	}
+	
+	@Test
+	public void createAndListMultipleFilesAsPathsTest() throws IOException{
+		String folder = "target/test-files/createAndListBigTest/";
+		File file = FileUtil.createFile(folder + "test1.txt");
+		File file2 = FileUtil.createFile(folder + "test2.txt");
+		File file3 = FileUtil.createFile(folder + "test3.txt");
+		File file4 = FileUtil.createFile(folder + "test4.txt");
+		File file5 = FileUtil.createFile(folder + "test5.txt");
+		
+		List<Path> paths = FileUtil.listAllFilesAsPaths(folder);
+		assertEquals(5, paths.size());
+		List<File> files = paths.stream().map(Path::toFile).toList();
+		assertTrue(files.containsAll(Arrays.asList(file, file2, file3, file4, file5)));
+	}
+	
+	@Test
+	public void createAndListAllFilesAsPathsFileTest() throws IOException{
+		File file = FileUtil.createFile("target/test-files/createAndListTest/test.txt");
+		assertNotNull(file);
+		
+		List<Path> files = FileUtil.listAllFilesAsPaths(new File("target/test-files/createAndListTest/"));
+		assertEquals(1, files.size());
+		assertEquals(file, files.get(0).toFile());
+	}
+	
+	@Test
+	public void createAndListMultipleFilesAsPathsFileTest() throws IOException{
+		String folder = "target/test-files/createAndListBigTest/";
+		File file = FileUtil.createFile(folder + "test1.txt");
+		File file2 = FileUtil.createFile(folder + "test2.txt");
+		File file3 = FileUtil.createFile(folder + "test3.txt");
+		File file4 = FileUtil.createFile(folder + "test4.txt");
+		File file5 = FileUtil.createFile(folder + "test5.txt");
+		
+		List<Path> paths = FileUtil.listAllFilesAsPaths(new File(folder));
+		assertEquals(5, paths.size());
+		List<File> files = paths.stream().map(Path::toFile).toList();
+		assertTrue(files.containsAll(Arrays.asList(file, file2, file3, file4, file5)));
+	}
+	
+	@Test
+	public void createAndListAllFilesAsPathsPathTest() throws IOException{
+		File file = FileUtil.createFile("target/test-files/createAndListTest/test.txt");
+		assertNotNull(file);
+		
+		List<Path> files = FileUtil.listAllFilesAsPaths(Path.of("target/test-files/createAndListTest/"));
+		assertEquals(1, files.size());
+		assertEquals(file, files.get(0).toFile());
+	}
+	
+	@Test
+	public void createAndListMultipleFilesAsPathsPathTest() throws IOException{
+		String folder = "target/test-files/createAndListBigTest/";
+		File file = FileUtil.createFile(folder + "test1.txt");
+		File file2 = FileUtil.createFile(folder + "test2.txt");
+		File file3 = FileUtil.createFile(folder + "test3.txt");
+		File file4 = FileUtil.createFile(folder + "test4.txt");
+		File file5 = FileUtil.createFile(folder + "test5.txt");
+		
+		List<Path> paths = FileUtil.listAllFilesAsPaths(Path.of(folder));
+		assertEquals(5, paths.size());
+		List<File> files = paths.stream().map(Path::toFile).toList();
 		assertTrue(files.containsAll(Arrays.asList(file, file2, file3, file4, file5)));
 	}
 	

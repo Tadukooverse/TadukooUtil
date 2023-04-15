@@ -19,6 +19,7 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
@@ -56,29 +57,83 @@ public final class FileUtil{
 	
 	/**
 	 * Creates a List of all Files in the given directory and any of 
-	 * its sub-directories.
+	 * its subdirectories.
 	 * 
 	 * @param directoryPath The path to the directory to check
-	 * @return A List of all Files in the directory and its sub-directories
+	 * @return A List of all Files in the directory and its subdirectories
 	 * @throws IOException If something goes wrong in listing the files
 	 */
-	public static List<File> listAllFiles(String directoryPath) throws IOException{
-		return Files.walk(Paths.get(directoryPath))
-				.filter(Files::isRegularFile)
-				.map(Path::toFile)
-				.collect(Collectors.toList());
+	public static List<File> listAllFiles(Path directoryPath) throws IOException{
+		try(Stream<Path> pathStream = Files.walk(directoryPath)){
+			return pathStream
+					.filter(Files::isRegularFile)
+					.map(Path::toFile)
+					.collect(Collectors.toList());
+		}
 	}
 	
 	/**
 	 * Creates a List of all Files in the given directory and any of its 
-	 * sub-directories.
+	 * subdirectories.
 	 * 
 	 * @param directory The directory (as a File) to check
-	 * @return A List of all Files in the directory and its sub-directories
+	 * @return A List of all Files in the directory and its subdirectories
 	 * @throws IOException If something goes wrong in listing the files
 	 */
 	public static List<File> listAllFiles(File directory) throws IOException{
-		return listAllFiles(directory.getPath());
+		return listAllFiles(directory.toPath());
+	}
+	
+	/**
+	 * Creates a List of all Files in the given directory and any of its
+	 * subdirectories.
+	 *
+	 * @param directory The directory path (as a String) to check
+	 * @return A List of all Files in the directory and its subdirectories
+	 * @throws IOException If something goes wrong in listing the files
+	 */
+	public static List<File> listAllFiles(String directory) throws IOException{
+		return listAllFiles(Paths.get(directory));
+	}
+	
+	/**
+	 * Creates a List of all files in the given directory and any of
+	 * its subdirectories. The files are returned as Paths.
+	 *
+	 * @param directory The path to the directory to check
+	 * @return A List of all files in the directory and its subdirectories as Paths
+	 * @throws IOException If something goes wrong in listing the files
+	 */
+	public static List<Path> listAllFilesAsPaths(Path directory) throws IOException{
+		try(Stream<Path> pathStream = Files.walk(directory)){
+			return pathStream
+					.filter(Files::isRegularFile)
+					.collect(Collectors.toList());
+		}
+	}
+	
+	/**
+	 * Creates a List of all files in the given directory and any of its
+	 * subdirectories. The files are returned as Paths.
+	 *
+	 * @param directory The directory (as a File) to check
+	 * @return A List of all files in the directory and its subdirectories as Paths
+	 * @throws IOException If something goes wrong in listing the files
+	 */
+	public static List<Path> listAllFilesAsPaths(File directory) throws IOException{
+		return listAllFilesAsPaths(directory.toPath());
+	}
+	
+	/**
+	 * Creates a List of all files in the given directory and any of its
+	 * subdirectories. The files are returned as Paths.
+	 *
+	 * @param directory The directory path (as a String) to check
+	 * @return A List of all files in the directory and its subdirectories as Paths
+	 * @throws IOException If something goes wrong in listing the files
+	 */
+	public static List<Path> listAllFilesAsPaths(String directory) throws IOException{
+		return listAllFilesAsPaths(Paths.get(directory));
 	}
 	
 	/**
@@ -148,11 +203,13 @@ public final class FileUtil{
 	 * @throws IOException If anything goes wrong
 	 */
 	public static void deleteDirectory(String directoryPath) throws IOException{
-		//noinspection ResultOfMethodCallIgnored
-		Files.walk(Path.of(directoryPath))
-				.sorted(Comparator.reverseOrder())
-				.map(Path::toFile)
-				.forEach(File::delete);
+		try(Stream<Path> pathStream = Files.walk(Path.of(directoryPath))){
+			//noinspection ResultOfMethodCallIgnored
+			pathStream
+					.sorted(Comparator.reverseOrder())
+					.map(Path::toFile)
+					.forEach(File::delete);
+		}
 	}
 	
 	/**
