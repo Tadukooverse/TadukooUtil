@@ -260,6 +260,20 @@ public final class StringUtil{
 	}
 	
 	/**
+	 * A null-safe trim method. Useful for simplifying a block where you grab a potentially null String from
+	 * somewhere and would have to check it's not null before attempting a trim.
+	 *
+	 * @param text The text to be trimmed
+	 * @return {@code null} if text is null, or a trimmed version of text
+	 */
+	public static String trim(String text){
+		if(text == null){
+			return null;
+		}
+		return text.trim();
+	}
+	
+	/**
 	 * Converts the given Object to a String, including proper
 	 * null handling.
 	 *

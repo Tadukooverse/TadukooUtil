@@ -418,6 +418,21 @@ public class StringUtilTest{
 	}
 	
 	@Test
+	public void testTrimOnNull(){
+		assertNull(StringUtil.trim(null));
+	}
+	
+	@Test
+	public void testTrimOnEmpty(){
+		assertEquals("", StringUtil.trim(""));
+	}
+	
+	@Test
+	public void testTrimOnString(){
+		assertEquals("Test", StringUtil.trim("   \t  Test  \t  \t"));
+	}
+	
+	@Test
 	public void testConvertToStringOnObject(){
 		// Setup a dummy class to use
 		String testString = "this is a string here";
