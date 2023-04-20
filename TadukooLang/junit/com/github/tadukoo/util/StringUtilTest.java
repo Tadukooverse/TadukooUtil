@@ -530,6 +530,57 @@ public class StringUtilTest{
 	}
 	
 	@Test
+	public void testParseListFromStringWithSeparatorUsingRegex(){
+		List<String> result = StringUtil.parseListFromStringWithSeparator("package com.example;", "\\s+", false);
+		
+		assertEquals(1, result.size());
+		assertEquals("package com.example;", result.get(0));
+	}
+	
+	@Test
+	public void testParseListFromStringWithRegexTrimMissingSeparator(){
+		List<String> result = StringUtil.parseListFromStringWithRegex("  test  ", "f1", true);
+		assertEquals(1, result.size());
+		assertEquals("test", result.get(0));
+	}
+	
+	@Test
+	public void testParseListFromStringWithRegexNoTrimMissingSeparator(){
+		List<String> result = StringUtil.parseListFromStringWithRegex("  test  ", "e3", false);
+		assertEquals(1, result.size());
+		assertEquals("  test  ", result.get(0));
+	}
+	
+	@Test
+	public void testParseListFromStringWithRegexTrim(){
+		List<String> result = StringUtil.parseListFromStringWithRegex("  test  -  derp  -  plop  ",
+				"-", true);
+		assertEquals(3, result.size());
+		assertEquals("test", result.get(0));
+		assertEquals("derp", result.get(1));
+		assertEquals("plop", result.get(2));
+	}
+	
+	@Test
+	public void testParseListFromStringWithRegexNoTrim(){
+		List<String> result = StringUtil.parseListFromStringWithRegex("  test  -  derp  -  plop  ",
+				"-", false);
+		assertEquals(3, result.size());
+		assertEquals("  test  ", result.get(0));
+		assertEquals("  derp  ", result.get(1));
+		assertEquals("  plop  ", result.get(2));
+	}
+	
+	@Test
+	public void testParseListFromStringWithRegexUsingRegex(){
+		List<String> result = StringUtil.parseListFromStringWithRegex("package com.example;", "\\s+", false);
+		
+		assertEquals(2, result.size());
+		assertEquals("package", result.get(0));
+		assertEquals("com.example;", result.get(1));
+	}
+	
+	@Test
 	public void testParseCommaSeparatedListFromString(){
 		List<String> result = StringUtil.parseCommaSeparatedListFromString("  test ,  plop,  derp  ");
 		assertEquals(3, result.size());

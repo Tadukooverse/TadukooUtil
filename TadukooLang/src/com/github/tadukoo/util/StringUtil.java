@@ -3,6 +3,7 @@ package com.github.tadukoo.util;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.regex.Pattern;
 
 /**
  * Util functions for dealing with Strings, including building and parsing them.
@@ -408,6 +409,34 @@ public final class StringUtil{
 		}else{
 			// Split the text on the separator string
 			String[] textSplit = text.split(separator);
+			for(String split: textSplit){
+				// Add each string to the list, optionally trimming them
+				strings.add(trim?split.trim():split);
+			}
+		}
+		
+		return strings;
+	}
+	
+	/**
+	 * Parses the given text into a List using the given regex to split and optionally
+	 * trimming to remove whitespace in the resulting strings.
+	 *
+	 * @param text The text to parse into a List of Strings
+	 * @param regex The regex to use in separating the given text
+	 * @param trim Whether to trim any whitespace off the resulting strings
+	 * @return The resulting List of Strings
+	 */
+	public static List<String> parseListFromStringWithRegex(String text, String regex, boolean trim){
+		List<String> strings = new ArrayList<>();
+		
+		// If there is no match of the regex, just make a list with the text
+		if(!Pattern.compile(regex).matcher(text).find()){
+			// Optionally trim the text
+			strings.add(trim?text.trim():text);
+		}else{
+			// Split the text on the regex
+			String[] textSplit = text.split(regex);
 			for(String split: textSplit){
 				// Add each string to the list, optionally trimming them
 				strings.add(trim?split.trim():split);
