@@ -32,7 +32,9 @@ public final class StackUtil{
 	 * @return The calling class
 	 */
 	public static Class<?> getCallingClass() throws ClassNotFoundException{
-		return StackUtil.class.getClassLoader().loadClass(getCallingClassName());
+		StackTraceElement[] elements = Thread.currentThread().getStackTrace();
+		StackTraceElement element = elements[3];
+		return StackUtil.class.getClassLoader().loadClass(element.getClassName());
 	}
 	
 	/**
