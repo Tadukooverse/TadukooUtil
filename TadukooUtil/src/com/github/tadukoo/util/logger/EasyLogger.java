@@ -1,5 +1,7 @@
 package com.github.tadukoo.util.logger;
 
+import com.github.tadukoo.util.stack.StackUtil;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -7,7 +9,8 @@ import java.util.logging.Logger;
  * EasyLogger is a wrapper around {@link Logger} that provides methods to simplify logging operations
  *
  * @author Logan Ferree (Tadukoo)
- * @version Alpha v.0.2
+ * @version Beta v.0.6
+ * @since Alpha v.0.2
  */
 public class EasyLogger{
 	/** The {@link Logger} wrapped in this EasyLogger */
@@ -35,7 +38,7 @@ public class EasyLogger{
 	 * @param info The message to be logged
 	 */
 	public void logInfo(String info){
-		logger.log(Level.INFO, info);
+		logger.logp(Level.INFO, StackUtil.getCallingClassName(), StackUtil.getCallingMethodName(), info);
 	}
 	
 	/**
@@ -45,7 +48,7 @@ public class EasyLogger{
 	 * @param t The {@link Throwable} to be logged
 	 */
 	public void logInfo(Throwable t){
-		logger.log(Level.INFO, t.getMessage(), t);
+		logger.logp(Level.INFO, StackUtil.getCallingClassName(), StackUtil.getCallingMethodName(), t.getMessage(), t);
 	}
 	
 	/**
@@ -55,7 +58,7 @@ public class EasyLogger{
 	 * @param t The {@link Throwable} to be logged
 	 */
 	public void logInfo(String info, Throwable t){
-		logger.log(Level.INFO, info, t);
+		logger.logp(Level.INFO, StackUtil.getCallingClassName(), StackUtil.getCallingMethodName(), info, t);
 	}
 	
 	/**
@@ -64,7 +67,7 @@ public class EasyLogger{
 	 * @param warning The message to be logged
 	 */
 	public void logWarning(String warning){
-		logger.log(Level.WARNING, warning);
+		logger.logp(Level.WARNING, StackUtil.getCallingClassName(), StackUtil.getCallingMethodName(), warning);
 	}
 	
 	/**
@@ -74,7 +77,7 @@ public class EasyLogger{
 	 * @param t The {@link Throwable} to be logged
 	 */
 	public void logWarning(Throwable t){
-		logger.log(Level.WARNING, t.getMessage(), t);
+		logger.logp(Level.WARNING, StackUtil.getCallingClassName(), StackUtil.getCallingMethodName(), t.getMessage(), t);
 	}
 	
 	/**
@@ -84,7 +87,7 @@ public class EasyLogger{
 	 * @param t The {@link Throwable} to be logged
 	 */
 	public void logWarning(String warning, Throwable t){
-		logger.log(Level.WARNING, warning, t);
+		logger.logp(Level.WARNING, StackUtil.getCallingClassName(), StackUtil.getCallingMethodName(), warning, t);
 	}
 	
 	/**
@@ -93,7 +96,7 @@ public class EasyLogger{
 	 * @param error The message to be logged
 	 */
 	public void logError(String error){
-		logger.log(Level.SEVERE, error);
+		logger.logp(Level.SEVERE, StackUtil.getCallingClassName(), StackUtil.getCallingMethodName(), error);
 	}
 	
 	/**
@@ -103,7 +106,7 @@ public class EasyLogger{
 	 * @param t The {@link Throwable} to be logged
 	 */
 	public void logError(Throwable t){
-		logger.log(Level.SEVERE, t.getMessage(), t);
+		logger.logp(Level.SEVERE, StackUtil.getCallingClassName(), StackUtil.getCallingMethodName(), t.getMessage(), t);
 	}
 	
 	/**
@@ -113,7 +116,7 @@ public class EasyLogger{
 	 * @param t The {@link Throwable} to be logged
 	 */
 	public void logError(String error, Throwable t){
-		logger.log(Level.SEVERE, error, t);
+		logger.logp(Level.SEVERE, StackUtil.getCallingClassName(), StackUtil.getCallingMethodName(), error, t);
 	}
 	
 	/**
@@ -122,7 +125,7 @@ public class EasyLogger{
 	 * @param config The message to be logged
 	 */
 	public void logConfig(String config){
-		logger.log(Level.CONFIG, config);
+		logger.logp(Level.CONFIG, StackUtil.getCallingClassName(), StackUtil.getCallingMethodName(), config);
 	}
 	
 	/**
@@ -132,7 +135,7 @@ public class EasyLogger{
 	 * @param t The {@link Throwable} to be logged
 	 */
 	public void logConfig(Throwable t){
-		logger.log(Level.CONFIG, t.getMessage(), t);
+		logger.logp(Level.CONFIG, StackUtil.getCallingClassName(), StackUtil.getCallingMethodName(), t.getMessage(), t);
 	}
 	
 	/**
@@ -142,7 +145,7 @@ public class EasyLogger{
 	 * @param t The {@link Throwable} to be logged
 	 */
 	public void logConfig(String config, Throwable t){
-		logger.log(Level.CONFIG, config, t);
+		logger.logp(Level.CONFIG, StackUtil.getCallingClassName(), StackUtil.getCallingMethodName(), config, t);
 	}
 	
 	/**
@@ -151,7 +154,7 @@ public class EasyLogger{
 	 * @param debug The message to be logged
 	 */
 	public void logDebugFine(String debug){
-		logger.log(Level.FINE, debug);
+		logger.logp(Level.FINE, StackUtil.getCallingClassName(), StackUtil.getCallingMethodName(), debug);
 	}
 	
 	/**
@@ -161,7 +164,7 @@ public class EasyLogger{
 	 * @param t The {@link Throwable} to be logged
 	 */
 	public void logDebugFine(Throwable t){
-		logger.log(Level.FINE, t.getMessage(), t);
+		logger.logp(Level.FINE, StackUtil.getCallingClassName(), StackUtil.getCallingMethodName(), t.getMessage(), t);
 	}
 	
 	/**
@@ -171,7 +174,7 @@ public class EasyLogger{
 	 * @param t The {@link Throwable} to be logged
 	 */
 	public void logDebugFine(String debug, Throwable t){
-		logger.log(Level.FINE, debug, t);
+		logger.logp(Level.FINE, StackUtil.getCallingClassName(), StackUtil.getCallingMethodName(), debug, t);
 	}
 	
 	/**
@@ -180,7 +183,7 @@ public class EasyLogger{
 	 * @param debug The message to be logged
 	 */
 	public void logDebugFiner(String debug){
-		logger.log(Level.FINER, debug);
+		logger.logp(Level.FINER, StackUtil.getCallingClassName(), StackUtil.getCallingMethodName(), debug);
 	}
 	
 	/**
@@ -190,7 +193,7 @@ public class EasyLogger{
 	 * @param t The {@link Throwable} to be logged
 	 */
 	public void logDebugFiner(Throwable t){
-		logger.log(Level.FINER, t.getMessage(), t);
+		logger.logp(Level.FINER, StackUtil.getCallingClassName(), StackUtil.getCallingMethodName(), t.getMessage(), t);
 	}
 	
 	/**
@@ -200,7 +203,7 @@ public class EasyLogger{
 	 * @param t The {@link Throwable} to be logged
 	 */
 	public void logDebugFiner(String debug, Throwable t){
-		logger.log(Level.FINER, debug, t);
+		logger.logp(Level.FINER, StackUtil.getCallingClassName(), StackUtil.getCallingMethodName(), debug, t);
 	}
 	
 	/**
@@ -209,7 +212,7 @@ public class EasyLogger{
 	 * @param debug The message to be logged
 	 */
 	public void logDebugFinest(String debug){
-		logger.log(Level.FINEST, debug);
+		logger.logp(Level.FINEST, StackUtil.getCallingClassName(), StackUtil.getCallingMethodName(), debug);
 	}
 	
 	/**
@@ -219,7 +222,7 @@ public class EasyLogger{
 	 * @param t The {@link Throwable} to be logged
 	 */
 	public void logDebugFinest(Throwable t){
-		logger.log(Level.FINEST, t.getMessage(), t);
+		logger.logp(Level.FINEST, StackUtil.getCallingClassName(), StackUtil.getCallingMethodName(), t.getMessage(), t);
 	}
 	
 	/**
@@ -229,6 +232,6 @@ public class EasyLogger{
 	 * @param t The {@link Throwable} to be logged
 	 */
 	public void logDebugFinest(String debug, Throwable t){
-		logger.log(Level.FINEST, debug, t);
+		logger.logp(Level.FINEST, StackUtil.getCallingClassName(), StackUtil.getCallingMethodName(), debug, t);
 	}
 }
