@@ -590,6 +590,28 @@ public class StringUtilTest{
 	}
 	
 	@Test
+	public void testParseListFromStringWithPattern(){
+		List<String> result = StringUtil.parseListFromStringWithPattern("umyumumyum", "(um)+", false);
+		assertEquals(3, result.size());
+		assertEquals("um", result.get(0));
+		assertEquals("umum", result.get(1));
+		assertEquals("um", result.get(2));
+	}
+	
+	@Test
+	public void testParseListFromStringWithPatternPatternDoesntAppear(){
+		List<String> result = StringUtil.parseListFromStringWithPattern("umyumumyum", "derp", false);
+		assertEquals(0, result.size());
+	}
+	
+	@Test
+	public void testParseListFromStringWithPatternAndTrim(){
+		List<String> result = StringUtil.parseListFromStringWithPattern("derp plop derp", "\\s*plop\\s*", true);
+		assertEquals(1, result.size());
+		assertEquals("plop", result.get(0));
+	}
+	
+	@Test
 	public void testIndentAllLinesSingleLine(){
 		assertEquals("\tThe line", StringUtil.indentAllLines("The line"));
 	}
@@ -605,6 +627,31 @@ public class StringUtilTest{
 	/*
 	 * Handling String Case
 	 */
+	
+	@Test
+	public void testCapitalizeFirstLetter(){
+		assertEquals("First", StringUtil.capitalizeFirstLetter("first"));
+	}
+	
+	@Test
+	public void testCapitalizeFirstLetterAlreadyCapital(){
+		assertEquals("First", StringUtil.capitalizeFirstLetter("First"));
+	}
+	
+	@Test
+	public void testCapitalizeFirstLetterNotLetter(){
+		assertEquals("!yep", StringUtil.capitalizeFirstLetter("!yep"));
+	}
+	
+	@Test
+	public void testCapitalizeFirstLetterSingleLetter(){
+		assertEquals("Y", StringUtil.capitalizeFirstLetter("y"));
+	}
+	
+	@Test
+	public void testCapitalizeFirstLetterBlank(){
+		assertEquals("", StringUtil.capitalizeFirstLetter(""));
+	}
 	
 	@Test
 	public void testIsPascalCase(){

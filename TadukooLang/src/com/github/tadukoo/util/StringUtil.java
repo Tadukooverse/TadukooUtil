@@ -3,6 +3,7 @@ package com.github.tadukoo.util;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -456,6 +457,18 @@ public final class StringUtil{
 		return parseListFromStringWithSeparator(text, ",", true);
 	}
 	
+	public static List<String> parseListFromStringWithPattern(String text, String pattern, boolean trim){
+		List<String> strings = new ArrayList<>();
+		
+		// Set up the matcher
+		Matcher matcher = Pattern.compile(pattern).matcher(text);
+		while(matcher.find()){
+			strings.add(trim?matcher.group(0).trim():matcher.group(0));
+		}
+		
+		return strings;
+	}
+	
 	/**
 	 * Adds a tab to every new line in the given string
 	 *
@@ -469,6 +482,30 @@ public final class StringUtil{
 	/*
 	 * Handling String Case
 	 */
+	
+	/**
+	 * Capitalizes the first letter of the given String (if it's a letter, otherwise just returns the String).
+	 * Will properly handle null/empty string by returning what was given
+	 *
+	 * @param text The text to capitalize the first letter of
+	 * @return The resulting text after the first letter is capitalized
+	 */
+	public static String capitalizeFirstLetter(String text){
+		// If string is blank, just return it
+		if(StringUtil.isBlank(text)){
+			return text;
+		}
+		
+		// Capitalize the first character
+		char firstChar = CharacterUtil.toUpperCase(text.charAt(0));
+		
+		// If the string is just 1 character, return it
+		if(text.length() == 1){
+			return String.valueOf(firstChar);
+		}else{
+			return firstChar + text.substring(1);
+		}
+	}
 	
 	/**
 	 * Checks if the given text is PascalCase or not.
