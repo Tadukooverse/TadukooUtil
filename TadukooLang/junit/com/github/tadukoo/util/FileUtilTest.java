@@ -394,6 +394,21 @@ public class FileUtilTest{
 	}
 	
 	@Test
+	public void testWriteFileUsingByteArray() throws IOException{
+		String filepath = "target/test-files/writeFileUsingByteArray/test.txt";
+		String content = """
+				Test
+				Derp
+				Yes""";
+		FileUtil.writeFile(filepath, content.getBytes());
+		List<String> lines = FileUtil.readLinesAsList(FileUtil.setupFileReader(filepath));
+		assertEquals(3, lines.size());
+		assertEquals("Test", lines.get(0));
+		assertEquals("Derp", lines.get(1));
+		assertEquals("Yes", lines.get(2));
+	}
+	
+	@Test
 	public void testZipAndUnzipByFileName() throws IOException{
 		String folder = "target/test-files/zipAndUnzipByFileName/";
 		String filepath = folder + "test.txt";

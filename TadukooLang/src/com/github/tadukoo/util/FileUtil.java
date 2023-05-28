@@ -414,6 +414,23 @@ public final class FileUtil{
 	}
 	
 	/**
+	 * Writes the given byte array to the file path given
+	 *
+	 * @param filePath The path to write the file at
+	 * @param bytes The byte array contents of the file
+	 * @throws IOException If something goes wrong in writing the file
+	 */
+	public static void writeFile(String filePath, byte[] bytes) throws IOException{
+		// Create the File
+		File file = createFile(filePath);
+		
+		// Actually write to the file using a FileOutputStream
+		FileOutputStream fos = new FileOutputStream(file);
+		fos.write(bytes);
+		fos.close();
+	}
+	
+	/**
 	 * Creates a zip file using the file or directory at the given path.
 	 *
 	 * @param pathToZip The path to the file or directory to be zipped
