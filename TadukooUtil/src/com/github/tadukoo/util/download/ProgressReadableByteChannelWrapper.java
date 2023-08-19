@@ -29,8 +29,8 @@ public class ProgressReadableByteChannelWrapper implements ReadableByteChannel{
 	 * @param listener The {@link ProgressRBCWrapperListener} which will track progress
 	 * @param expectedSize The expected total size in bytes to be read
 	 */
-	public ProgressReadableByteChannelWrapper(ReadableByteChannel byteChannel, ProgressRBCWrapperListener listener,
-	                                   long expectedSize){
+	public ProgressReadableByteChannelWrapper(
+			ReadableByteChannel byteChannel, ProgressRBCWrapperListener listener, long expectedSize){
 		this.byteChannel = byteChannel;
 		this.listener = listener;
 		this.expectedSize = expectedSize;
