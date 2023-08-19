@@ -116,7 +116,7 @@ public class Pair<L, R>{
 	/** {@inheritDoc} */
 	@Override
 	public boolean equals(Object otherPair){
-		if(otherPair instanceof Pair pair){
+		if(otherPair instanceof Pair<?, ?> pair){
 			return Objects.equals(this.getLeft(), pair.getLeft()) && Objects.equals(this.getRight(), pair.getRight());
 		}else{
 			return false;
