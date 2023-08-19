@@ -538,7 +538,6 @@ public final class FileUtil{
 		while(zipEntry != null){
 			File newFile = new File(destDirectory, zipEntry.getName());
 			
-			
 			// Check destination path to prevent zip slip
 			String destDirPath = destDirectory.getCanonicalPath();
 			String destFilePath = newFile.getCanonicalPath();
