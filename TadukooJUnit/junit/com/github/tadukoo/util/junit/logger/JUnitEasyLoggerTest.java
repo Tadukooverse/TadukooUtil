@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import java.util.logging.Level;
 
 import static com.github.tadukoo.util.junit.logger.JUnitEasyLoggerAssertEntries.assertEntries;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -18,6 +19,14 @@ public class JUnitEasyLoggerTest{
 	
 	@Test
 	public void testInitialEmptyEntries(){
+		assertTrue(logger.getEntries().isEmpty());
+	}
+	
+	@Test
+	public void testClear(){
+		logger.logInfo("Yep");
+		assertFalse(logger.getEntries().isEmpty());
+		logger.clear();
 		assertTrue(logger.getEntries().isEmpty());
 	}
 	

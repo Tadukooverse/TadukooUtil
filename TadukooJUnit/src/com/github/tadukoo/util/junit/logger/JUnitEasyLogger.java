@@ -34,6 +34,13 @@ public class JUnitEasyLogger extends EasyLogger{
 		return entries;
 	}
 	
+	/**
+	 * Clears all the {@link JUnitEasyLoggerEntry entries} out of this {@link JUnitEasyLogger}
+	 */
+	public void clear(){
+		entries.clear();
+	}
+	
 	/** {@inheritDoc} */
 	@Override
 	public void logInfo(String info){

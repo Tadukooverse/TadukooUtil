@@ -7,9 +7,14 @@ import org.opentest4j.AssertionFailedError;
 import java.util.List;
 import java.util.logging.Level;
 
+import static com.github.tadukoo.util.junit.AssertionFailedErrors.ASSERT_TRUE_ERROR;
 import static com.github.tadukoo.util.junit.AssertionFailedErrors.buildAssertError;
+import static com.github.tadukoo.util.junit.AssertionFailedErrors.buildTwoPartError;
 import static com.github.tadukoo.util.junit.logger.JUnitEasyLoggerAssertEntries.assertEntries;
+import static com.github.tadukoo.util.junit.logger.JUnitEasyLoggerAssertEntries.assertLastEntries;
+import static com.github.tadukoo.util.junit.logger.JUnitEasyLoggerAssertEntries.assertLastEntry;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 public class JUnitEasyLoggerAssertEntriesTest{
 	private final JUnitEasyLogger logger = new JUnitEasyLogger();
@@ -41,6 +46,7 @@ public class JUnitEasyLoggerAssertEntriesTest{
 					new JUnitEasyLoggerEntry(Level.FINEST, "debug test", null));
 			logger.logInfo("test message");
 			assertEntries(expectedEntries, logger.getEntries());
+			fail();
 		}catch(AssertionFailedError e){
 			assertEquals(buildAssertError(2, 1), e.getMessage());
 		}
@@ -54,6 +60,7 @@ public class JUnitEasyLoggerAssertEntriesTest{
 			logger.logInfo("test message");
 			logger.logDebugFinest("debug test");
 			assertEntries(expectedEntries, logger.getEntries());
+			fail();
 		}catch(AssertionFailedError e){
 			assertEquals(buildAssertError(1, 2), e.getMessage());
 		}
@@ -67,6 +74,7 @@ public class JUnitEasyLoggerAssertEntriesTest{
 			List<JUnitEasyLoggerEntry> expectedEntries = ListUtil.createList(entry);
 			logger.logInfo("test message");
 			assertEntries(expectedEntries, logger.getEntries());
+			fail();
 		}catch(AssertionFailedError e){
 			assertEquals(buildAssertError(Level.SEVERE, Level.INFO), e.getMessage());
 		}
@@ -80,6 +88,7 @@ public class JUnitEasyLoggerAssertEntriesTest{
 			List<JUnitEasyLoggerEntry> expectedEntries = ListUtil.createList(entry);
 			logger.logInfo("test message");
 			assertEntries(expectedEntries, logger.getEntries());
+			fail();
 		}catch(AssertionFailedError e){
 			assertEquals(buildAssertError("test message 2", "test message"), e.getMessage());
 		}
@@ -94,6 +103,7 @@ public class JUnitEasyLoggerAssertEntriesTest{
 			List<JUnitEasyLoggerEntry> expectedEntries = ListUtil.createList(entry);
 			logger.logInfo("test message");
 			assertEntries(expectedEntries, logger.getEntries());
+			fail();
 		}catch(AssertionFailedError e){
 			assertEquals(buildAssertError(t, null), e.getMessage());
 		}
@@ -126,6 +136,7 @@ public class JUnitEasyLoggerAssertEntriesTest{
 					new JUnitEasyLoggerEntry(Level.FINEST, "debug test", null));
 			logger.logInfo("test message");
 			assertEntries(expectedEntries, logger);
+			fail();
 		}catch(AssertionFailedError e){
 			assertEquals(buildAssertError(2, 1), e.getMessage());
 		}
@@ -139,6 +150,7 @@ public class JUnitEasyLoggerAssertEntriesTest{
 			logger.logInfo("test message");
 			logger.logDebugFinest("debug test");
 			assertEntries(expectedEntries, logger);
+			fail();
 		}catch(AssertionFailedError e){
 			assertEquals(buildAssertError(1, 2), e.getMessage());
 		}
@@ -152,6 +164,7 @@ public class JUnitEasyLoggerAssertEntriesTest{
 			List<JUnitEasyLoggerEntry> expectedEntries = ListUtil.createList(entry);
 			logger.logInfo("test message");
 			assertEntries(expectedEntries, logger);
+			fail();
 		}catch(AssertionFailedError e){
 			assertEquals(buildAssertError(Level.SEVERE, Level.INFO), e.getMessage());
 		}
@@ -165,6 +178,7 @@ public class JUnitEasyLoggerAssertEntriesTest{
 			List<JUnitEasyLoggerEntry> expectedEntries = ListUtil.createList(entry);
 			logger.logInfo("test message");
 			assertEntries(expectedEntries, logger);
+			fail();
 		}catch(AssertionFailedError e){
 			assertEquals(buildAssertError("test message 2", "test message"), e.getMessage());
 		}
@@ -179,6 +193,7 @@ public class JUnitEasyLoggerAssertEntriesTest{
 			List<JUnitEasyLoggerEntry> expectedEntries = ListUtil.createList(entry);
 			logger.logInfo("test message");
 			assertEntries(expectedEntries, logger);
+			fail();
 		}catch(AssertionFailedError e){
 			assertEquals(buildAssertError(t, null), e.getMessage());
 		}
@@ -200,6 +215,7 @@ public class JUnitEasyLoggerAssertEntriesTest{
 			logger.logInfo("test message");
 			logger.logDebugFinest("debug test");
 			assertEntries(entry, logger.getEntries());
+			fail();
 		}catch(AssertionFailedError e){
 			assertEquals(buildAssertError(1, 2), e.getMessage());
 		}
@@ -212,6 +228,7 @@ public class JUnitEasyLoggerAssertEntriesTest{
 					new JUnitEasyLoggerEntry(Level.SEVERE, "test message", null);
 			logger.logInfo("test message");
 			assertEntries(entry, logger.getEntries());
+			fail();
 		}catch(AssertionFailedError e){
 			assertEquals(buildAssertError(Level.SEVERE, Level.INFO), e.getMessage());
 		}
@@ -224,6 +241,7 @@ public class JUnitEasyLoggerAssertEntriesTest{
 					new JUnitEasyLoggerEntry(Level.INFO, "test message 2", null);
 			logger.logInfo("test message");
 			assertEntries(entry, logger.getEntries());
+			fail();
 		}catch(AssertionFailedError e){
 			assertEquals(buildAssertError("test message 2", "test message"), e.getMessage());
 		}
@@ -237,6 +255,7 @@ public class JUnitEasyLoggerAssertEntriesTest{
 					new JUnitEasyLoggerEntry(Level.INFO, "test message", t);
 			logger.logInfo("test message");
 			assertEntries(entry, logger.getEntries());
+			fail();
 		}catch(AssertionFailedError e){
 			assertEquals(buildAssertError(t, null), e.getMessage());
 		}
@@ -258,6 +277,7 @@ public class JUnitEasyLoggerAssertEntriesTest{
 			logger.logInfo("test message");
 			logger.logDebugFinest("debug test");
 			assertEntries(entry, logger);
+			fail();
 		}catch(AssertionFailedError e){
 			assertEquals(buildAssertError(1, 2), e.getMessage());
 		}
@@ -270,6 +290,7 @@ public class JUnitEasyLoggerAssertEntriesTest{
 					new JUnitEasyLoggerEntry(Level.SEVERE, "test message", null);
 			logger.logInfo("test message");
 			assertEntries(entry, logger);
+			fail();
 		}catch(AssertionFailedError e){
 			assertEquals(buildAssertError(Level.SEVERE, Level.INFO), e.getMessage());
 		}
@@ -282,6 +303,7 @@ public class JUnitEasyLoggerAssertEntriesTest{
 					new JUnitEasyLoggerEntry(Level.INFO, "test message 2", null);
 			logger.logInfo("test message");
 			assertEntries(entry, logger);
+			fail();
 		}catch(AssertionFailedError e){
 			assertEquals(buildAssertError("test message 2", "test message"), e.getMessage());
 		}
@@ -295,6 +317,7 @@ public class JUnitEasyLoggerAssertEntriesTest{
 					new JUnitEasyLoggerEntry(Level.INFO, "test message", t);
 			logger.logInfo("test message");
 			assertEntries(entry, logger);
+			fail();
 		}catch(AssertionFailedError e){
 			assertEquals(buildAssertError(t, null), e.getMessage());
 		}
@@ -312,6 +335,7 @@ public class JUnitEasyLoggerAssertEntriesTest{
 			logger.logInfo("test message");
 			logger.logDebugFinest("debug test");
 			assertEntries(Level.INFO, "test message", null, logger.getEntries());
+			fail();
 		}catch(AssertionFailedError e){
 			assertEquals(buildAssertError(1, 2), e.getMessage());
 		}
@@ -322,6 +346,7 @@ public class JUnitEasyLoggerAssertEntriesTest{
 		try{
 			logger.logInfo("test message");
 			assertEntries(Level.SEVERE, "test message", null, logger.getEntries());
+			fail();
 		}catch(AssertionFailedError e){
 			assertEquals(buildAssertError(Level.SEVERE, Level.INFO), e.getMessage());
 		}
@@ -332,6 +357,7 @@ public class JUnitEasyLoggerAssertEntriesTest{
 		try{
 			logger.logInfo("test message");
 			assertEntries(Level.INFO, "test message 2", null, logger.getEntries());
+			fail();
 		}catch(AssertionFailedError e){
 			assertEquals(buildAssertError("test message 2", "test message"), e.getMessage());
 		}
@@ -343,6 +369,7 @@ public class JUnitEasyLoggerAssertEntriesTest{
 		try{
 			logger.logInfo("test message");
 			assertEntries(Level.INFO, "test message", t, logger.getEntries());
+			fail();
 		}catch(AssertionFailedError e){
 			assertEquals(buildAssertError(t, null), e.getMessage());
 		}
@@ -360,6 +387,7 @@ public class JUnitEasyLoggerAssertEntriesTest{
 			logger.logInfo("test message");
 			logger.logDebugFinest("debug test");
 			assertEntries(Level.INFO, "test message", null, logger);
+			fail();
 		}catch(AssertionFailedError e){
 			assertEquals(buildAssertError(1, 2), e.getMessage());
 		}
@@ -370,6 +398,7 @@ public class JUnitEasyLoggerAssertEntriesTest{
 		try{
 			logger.logInfo("test message");
 			assertEntries(Level.SEVERE, "test message", null, logger);
+			fail();
 		}catch(AssertionFailedError e){
 			assertEquals(buildAssertError(Level.SEVERE, Level.INFO), e.getMessage());
 		}
@@ -380,6 +409,7 @@ public class JUnitEasyLoggerAssertEntriesTest{
 		try{
 			logger.logInfo("test message");
 			assertEntries(Level.INFO, "test message 2", null, logger);
+			fail();
 		}catch(AssertionFailedError e){
 			assertEquals(buildAssertError("test message 2", "test message"), e.getMessage());
 		}
@@ -391,8 +421,177 @@ public class JUnitEasyLoggerAssertEntriesTest{
 		try{
 			logger.logInfo("test message");
 			assertEntries(Level.INFO, "test message", t, logger);
+			fail();
 		}catch(AssertionFailedError e){
 			assertEquals(buildAssertError(t, null), e.getMessage());
+		}
+	}
+	
+	@Test
+	public void testAssertLastEntryPiecesAndLoggerSuccess(){
+		Throwable t = new IllegalArgumentException("yep");
+		logger.logError("something");
+		logger.logInfo("some info", t);
+		assertLastEntry(Level.INFO, "some info", t, logger);
+	}
+	
+	@Test
+	public void testAssertLastEntryPiecesAndLoggerFail(){
+		Throwable t = new IllegalArgumentException("yep");
+		try{
+			logger.logError("something");
+			logger.logInfo("some info", t);
+			assertLastEntry(Level.SEVERE, "some info", t, logger);
+			fail();
+		}catch(AssertionFailedError e){
+			assertEquals(buildAssertError(Level.SEVERE, Level.INFO), e.getMessage());
+		}
+	}
+	
+	@Test
+	public void testAssertLastEntryPiecesAndEntryListSuccess(){
+		Throwable t = new IllegalArgumentException("yep");
+		logger.logError("something");
+		logger.logInfo("some info", t);
+		assertLastEntry(Level.INFO, "some info", t, logger.getEntries());
+	}
+	
+	@Test
+	public void testAssertLastEntryPiecesAndEntryListFail(){
+		Throwable t = new IllegalArgumentException("yep");
+		try{
+			logger.logError("something");
+			logger.logInfo("some info", t);
+			assertLastEntry(Level.SEVERE, "some info", t, logger.getEntries());
+			fail();
+		}catch(AssertionFailedError e){
+			assertEquals(buildAssertError(Level.SEVERE, Level.INFO), e.getMessage());
+		}
+	}
+	
+	@Test
+	public void testAssertLastEntryEntryAndLoggerSuccess(){
+		Throwable t = new IllegalArgumentException("yep");
+		logger.logError("something");
+		logger.logInfo("some info", t);
+		assertLastEntry(new JUnitEasyLoggerEntry(Level.INFO, "some info", t), logger);
+	}
+	
+	@Test
+	public void testAssertLastEntryEntryAndLoggerFail(){
+		Throwable t = new IllegalArgumentException("yep");
+		try{
+			logger.logError("something");
+			logger.logInfo("some info", t);
+			assertLastEntry(new JUnitEasyLoggerEntry(Level.SEVERE, "some info", t), logger);
+			fail();
+		}catch(AssertionFailedError e){
+			assertEquals(buildAssertError(Level.SEVERE, Level.INFO), e.getMessage());
+		}
+	}
+	
+	@Test
+	public void testAssertLastEntryEntryAndEntryListSuccess(){
+		Throwable t = new IllegalArgumentException("yep");
+		logger.logError("something");
+		logger.logInfo("some info", t);
+		assertLastEntry(new JUnitEasyLoggerEntry(Level.INFO, "some info", t), logger.getEntries());
+	}
+	
+	@Test
+	public void testAssertLastEntryEntryAndEntryListFail(){
+		Throwable t = new IllegalArgumentException("yep");
+		try{
+			logger.logError("something");
+			logger.logInfo("some info", t);
+			assertLastEntry(new JUnitEasyLoggerEntry(Level.SEVERE, "some info", t), logger.getEntries());
+			fail();
+		}catch(AssertionFailedError e){
+			assertEquals(buildAssertError(Level.SEVERE, Level.INFO), e.getMessage());
+		}
+	}
+	
+	@Test
+	public void testAssertLastEntriesLoggerSuccess(){
+		Throwable t = new IllegalArgumentException("yep");
+		logger.logConfig("nope");
+		logger.logError("something");
+		logger.logInfo("some info", t);
+		assertLastEntries(ListUtil.createList(
+				new JUnitEasyLoggerEntry(Level.SEVERE, "something", null),
+				new JUnitEasyLoggerEntry(Level.INFO, "some info", t)), logger);
+	}
+	
+	@Test
+	public void testAssertLastEntriesLoggerFail(){
+		try{
+			Throwable t = new IllegalArgumentException("yep");
+			logger.logConfig("nope");
+			logger.logError("something");
+			logger.logInfo("some info", t);
+			assertLastEntries(ListUtil.createList(
+					new JUnitEasyLoggerEntry(Level.SEVERE, "something", null),
+					new JUnitEasyLoggerEntry(Level.CONFIG, "some info", t)), logger);
+			fail();
+		}catch(AssertionFailedError e){
+			assertEquals(buildAssertError(Level.CONFIG, Level.INFO), e.getMessage());
+		}
+	}
+	
+	@Test
+	public void testAssertLastEntriesLoggerFailNotEvenEntries(){
+		try{
+			Throwable t = new IllegalArgumentException("yep");
+			logger.logInfo("some info", t);
+			assertLastEntries(ListUtil.createList(
+					new JUnitEasyLoggerEntry(Level.SEVERE, "something", null),
+					new JUnitEasyLoggerEntry(Level.CONFIG, "some info", t)), logger);
+			fail();
+		}catch(AssertionFailedError e){
+			assertEquals(buildTwoPartError(
+					"Found 1 actual entries when expecting at least 2 entries.", ASSERT_TRUE_ERROR), e.getMessage());
+		}
+	}
+	
+	@Test
+	public void testAssertLastEntriesEntryListSuccess(){
+		Throwable t = new IllegalArgumentException("yep");
+		logger.logConfig("nope");
+		logger.logError("something");
+		logger.logInfo("some info", t);
+		assertLastEntries(ListUtil.createList(
+				new JUnitEasyLoggerEntry(Level.SEVERE, "something", null),
+				new JUnitEasyLoggerEntry(Level.INFO, "some info", t)), logger.getEntries());
+	}
+	
+	@Test
+	public void testAssertLastEntriesEntryListFail(){
+		try{
+			Throwable t = new IllegalArgumentException("yep");
+			logger.logConfig("nope");
+			logger.logError("something");
+			logger.logInfo("some info", t);
+			assertLastEntries(ListUtil.createList(
+					new JUnitEasyLoggerEntry(Level.SEVERE, "something", null),
+					new JUnitEasyLoggerEntry(Level.CONFIG, "some info", t)), logger.getEntries());
+			fail();
+		}catch(AssertionFailedError e){
+			assertEquals(buildAssertError(Level.CONFIG, Level.INFO), e.getMessage());
+		}
+	}
+	
+	@Test
+	public void testAssertLastEntriesEntryListFailNotEvenEntries(){
+		try{
+			Throwable t = new IllegalArgumentException("yep");
+			logger.logInfo("some info", t);
+			assertLastEntries(ListUtil.createList(
+					new JUnitEasyLoggerEntry(Level.SEVERE, "something", null),
+					new JUnitEasyLoggerEntry(Level.CONFIG, "some info", t)), logger.getEntries());
+			fail();
+		}catch(AssertionFailedError e){
+			assertEquals(buildTwoPartError(
+					"Found 1 actual entries when expecting at least 2 entries.", ASSERT_TRUE_ERROR), e.getMessage());
 		}
 	}
 }
