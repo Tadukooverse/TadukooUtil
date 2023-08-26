@@ -9,11 +9,13 @@ import com.github.tadukoo.util.logger.EasyLogger;
  * Subclasses you make of this class should have a constructor matching this class's constructor, because of
  * how {@link ParallelRunner} works for instantiating an instance of this class.
  *
- * @param <E> The type of the work object
  * @author Logan Ferree (Tadukoo)
  * @version Beta v.0.6
+ *
+ * @param <E> The type of the work object
  */
 public abstract class ParallelWorker<E> implements Runnable{
+	
 	/** The {@link EasyLogger logger} to use for logging */
 	protected final EasyLogger logger;
 	/** The {@link Queue} containing work that needs to be executed yet */

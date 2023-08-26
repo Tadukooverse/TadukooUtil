@@ -13,6 +13,7 @@ import java.util.logging.Logger;
  * @since Alpha v.0.2
  */
 public class EasyLogger{
+	
 	/** The {@link Logger} wrapped in this EasyLogger */
 	private final Logger logger;
 	

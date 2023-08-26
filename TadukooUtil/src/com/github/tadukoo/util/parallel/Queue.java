@@ -6,11 +6,13 @@ import java.util.LinkedList;
  * This Queue is used to run parallel code with thread-safe methods for grabbing items off the queue and
  * putting items on the queue.
  *
- * @param <E> The type of item stored in this {@link Queue}
  * @author Logan Ferree (Tadukoo)
  * @version Beta v.0.6
+ *
+ * @param <E> The type of item stored in this {@link Queue}
  */
 public class Queue<E>{
+	
 	/** An object to use as a lock for synchronizing while running in parallel */
 	private final Object lock = new Object();
 	/** The actual data of the {@link Queue} */
@@ -55,7 +57,7 @@ public class Queue<E>{
 	public E dequeue() throws InterruptedException{
 		synchronized(lock){
 			// Wait until there's something in the queue to take out
-			while(data.size() == 0){
+			while(data.isEmpty()){
 				lock.wait();
 			}
 			// Grab an item off the queue, release the lock, and return the grabbed item
