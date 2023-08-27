@@ -30,6 +30,7 @@ public final class StackUtil{
 	 * StackUtilTest's method)
 	 *
 	 * @return The calling class
+	 * @throws ClassNotFoundException If the class is not found
 	 */
 	public static Class<?> getCallingClass() throws ClassNotFoundException{
 		StackTraceElement[] elements = Thread.currentThread().getStackTrace();

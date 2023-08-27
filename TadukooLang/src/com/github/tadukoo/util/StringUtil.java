@@ -25,7 +25,7 @@ public final class StringUtil{
 	 * @return true if the string is null or the empty string
 	 */
 	public static boolean isBlank(String text){
-		return text == null || text.equals("");
+		return text == null || text.isEmpty();
 	}
 	
 	/**
@@ -457,6 +457,14 @@ public final class StringUtil{
 		return parseListFromStringWithSeparator(text, ",", true);
 	}
 	
+	/**
+	 * Parses the given String into a List of strings by matching using the given regex
+	 *
+	 * @param text The text to be parsed into a List of Strings
+	 * @param pattern The regular expression to use for matching for parsing the text
+	 * @param trim Whether to trim the matching strings or not
+	 * @return The List of Strings produced by parsing the text
+	 */
 	public static List<String> parseListFromStringWithPattern(String text, String pattern, boolean trim){
 		List<String> strings = new ArrayList<>();
 		
@@ -616,7 +624,7 @@ public final class StringUtil{
 			for(char c: text.toCharArray()){
 				if(CharacterUtil.isUpperCase(c)){
 					// Only append an underscore if the previous character is not an underscore
-					if(!newText.toString().equals("") && newText.charAt(newText.length() - 1) != '_'){
+					if(!newText.toString().isEmpty() && newText.charAt(newText.length() - 1) != '_'){
 						newText.append('_');
 					}
 					newText.append(CharacterUtil.toLowerCase(c));
