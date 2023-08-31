@@ -32,8 +32,4 @@
 			<artifactId>${junit.platform.artifactID}</artifactId>
 		</dependency>
 	</dependencies>
-	<build>
-		<sourceDirectory>${directory.source}</sourceDirectory>
-		<testSourceDirectory>${directory.test}</testSourceDirectory>
-	</build>
 </project>
