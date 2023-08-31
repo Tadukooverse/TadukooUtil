@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.github.tadukoo.util</groupId>
         <artifactId>TadukooUtilParent</artifactId>
-        <version>0.5.1-Beta</version>
+        <version>0.6-Beta</version>
     </parent>
     <artifactId>TadukooLang</artifactId>
     <dependencies>
@@ -20,13 +20,4 @@
             <artifactId>${junit.platform.artifactID}</artifactId>
         </dependency>
     </dependencies>
-    <build>
-        <sourceDirectory>${directory.source}</sourceDirectory>
-        <testSourceDirectory>${directory.test}</testSourceDirectory>
-        <testResources>
-            <testResource>
-                <directory>${directory.test-resource}</directory>
-            </testResource>
-        </testResources>
-    </build>
 </project>

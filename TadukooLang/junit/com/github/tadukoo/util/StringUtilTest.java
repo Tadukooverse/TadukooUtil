@@ -53,6 +53,176 @@ public class StringUtilTest{
 	}
 	
 	@Test
+	public void testAllBlankNulls(){
+		assertTrue(StringUtil.allBlank(null, null, null));
+	}
+	
+	@Test
+	public void testAllBlankFalseLeftNonEmpty(){
+		assertFalse(StringUtil.allBlank("yes", null, null));
+	}
+	
+	@Test
+	public void testAllBlankFalseMiddleEmpty(){
+		assertFalse(StringUtil.allBlank(null, "yes", null));
+	}
+	
+	@Test
+	public void testAllBlankFalseRightEmpty(){
+		assertFalse(StringUtil.allBlank(null, null, "yes"));
+	}
+	
+	@Test
+	public void testAllBlankEmpties(){
+		assertTrue(StringUtil.allBlank("", "", ""));
+	}
+	
+	@Test
+	public void testAllBlankFalseOnWhitespace(){
+		assertFalse(StringUtil.allBlank(" ", "", null));
+	}
+	
+	@Test
+	public void testAllBlankMixture(){
+		assertTrue(StringUtil.allBlank("", null, ""));
+	}
+	
+	@Test
+	public void testNoneBlank(){
+		assertTrue(StringUtil.noneBlank("yes", "no", "maybe"));
+	}
+	
+	@Test
+	public void testNoneBlankFalseLeftNull(){
+		assertFalse(StringUtil.noneBlank(null, "no", "maybe"));
+	}
+	
+	@Test
+	public void testNoneBlankFalseMiddleNull(){
+		assertFalse(StringUtil.noneBlank("yes", null, "maybe"));
+	}
+	
+	@Test
+	public void testNoneBlankFalseRightNull(){
+		assertFalse(StringUtil.noneBlank("yes", "no", null));
+	}
+	
+	@Test
+	public void testNoneBlankFalseAllNull(){
+		assertFalse(StringUtil.noneBlank(null, null, null));
+	}
+	
+	@Test
+	public void testNoneBlankFalseLeftEmpty(){
+		assertFalse(StringUtil.noneBlank("", "no", "maybe"));
+	}
+	
+	@Test
+	public void testNoneBlankFalseMiddleEmpty(){
+		assertFalse(StringUtil.noneBlank("yes", "", "maybe"));
+	}
+	
+	@Test
+	public void testNoneBlankFalseRightEmpty(){
+		assertFalse(StringUtil.noneBlank("yes", "no", ""));
+	}
+	
+	@Test
+	public void testNoneBlankFalseAllEmpty(){
+		assertFalse(StringUtil.noneBlank("", "", ""));
+	}
+	
+	@Test
+	public void testNoneBlankOnWhitespace(){
+		assertTrue(StringUtil.noneBlank(" ", " ", " "));
+	}
+	
+	@Test
+	public void testAnyBlank(){
+		assertFalse(StringUtil.anyBlank("yes", "no", "maybe"));
+	}
+	
+	@Test
+	public void testAnyBlankTrueLeftNull(){
+		assertTrue(StringUtil.anyBlank(null, "no", "maybe"));
+	}
+	
+	@Test
+	public void testAnyBlankTrueMiddleNull(){
+		assertTrue(StringUtil.anyBlank("yes", null, "maybe"));
+	}
+	
+	@Test
+	public void testAnyBlankTrueRightNull(){
+		assertTrue(StringUtil.anyBlank("yes", "no", null));
+	}
+	
+	@Test
+	public void testAnyBlankTrueAllNull(){
+		assertTrue(StringUtil.anyBlank(null, null, null));
+	}
+	
+	@Test
+	public void testAnyBlankTrueLeftEmpty(){
+		assertTrue(StringUtil.anyBlank("", "no", "maybe"));
+	}
+	
+	@Test
+	public void testAnyBlankTrueMiddleEmpty(){
+		assertTrue(StringUtil.anyBlank("yes", "", "maybe"));
+	}
+	
+	@Test
+	public void testAnyBlankTrueRightEmpty(){
+		assertTrue(StringUtil.anyBlank("yes", "no", ""));
+	}
+	
+	@Test
+	public void testAnyBlankTrueAllEmpty(){
+		assertTrue(StringUtil.anyBlank("", "", ""));
+	}
+	
+	@Test
+	public void testAnyBlankOnWhitespace(){
+		assertFalse(StringUtil.anyBlank(" ", " ", " "));
+	}
+	
+	@Test
+	public void testAnyNotBlankNulls(){
+		assertFalse(StringUtil.anyNotBlank(null, null, null));
+	}
+	
+	@Test
+	public void testAnyNotBlankTrueLeftNonEmpty(){
+		assertTrue(StringUtil.anyNotBlank("yes", null, null));
+	}
+	
+	@Test
+	public void testAnyNotBlankTrueMiddleEmpty(){
+		assertTrue(StringUtil.anyNotBlank(null, "yes", null));
+	}
+	
+	@Test
+	public void testAnyNotBlankTrueRightEmpty(){
+		assertTrue(StringUtil.anyNotBlank(null, null, "yes"));
+	}
+	
+	@Test
+	public void testAnyNotBlankEmpties(){
+		assertFalse(StringUtil.anyNotBlank("", "", ""));
+	}
+	
+	@Test
+	public void testAnyNotBlankTrueOnWhitespace(){
+		assertTrue(StringUtil.anyNotBlank(" ", "", null));
+	}
+	
+	@Test
+	public void testAnyNotBlankMixture(){
+		assertFalse(StringUtil.anyNotBlank("", null, ""));
+	}
+	
+	@Test
 	public void testEqualsOnBothNull(){
 		assertTrue(StringUtil.equals(null, null));
 	}
@@ -248,6 +418,21 @@ public class StringUtilTest{
 	}
 	
 	@Test
+	public void testTrimOnNull(){
+		assertNull(StringUtil.trim(null));
+	}
+	
+	@Test
+	public void testTrimOnEmpty(){
+		assertEquals("", StringUtil.trim(""));
+	}
+	
+	@Test
+	public void testTrimOnString(){
+		assertEquals("Test", StringUtil.trim("   \t  Test  \t  \t"));
+	}
+	
+	@Test
 	public void testConvertToStringOnObject(){
 		// Setup a dummy class to use
 		String testString = "this is a string here";
@@ -345,6 +530,57 @@ public class StringUtilTest{
 	}
 	
 	@Test
+	public void testParseListFromStringWithSeparatorUsingRegex(){
+		List<String> result = StringUtil.parseListFromStringWithSeparator("package com.example;", "\\s+", false);
+		
+		assertEquals(1, result.size());
+		assertEquals("package com.example;", result.get(0));
+	}
+	
+	@Test
+	public void testParseListFromStringWithRegexTrimMissingSeparator(){
+		List<String> result = StringUtil.parseListFromStringWithRegex("  test  ", "f1", true);
+		assertEquals(1, result.size());
+		assertEquals("test", result.get(0));
+	}
+	
+	@Test
+	public void testParseListFromStringWithRegexNoTrimMissingSeparator(){
+		List<String> result = StringUtil.parseListFromStringWithRegex("  test  ", "e3", false);
+		assertEquals(1, result.size());
+		assertEquals("  test  ", result.get(0));
+	}
+	
+	@Test
+	public void testParseListFromStringWithRegexTrim(){
+		List<String> result = StringUtil.parseListFromStringWithRegex("  test  -  derp  -  plop  ",
+				"-", true);
+		assertEquals(3, result.size());
+		assertEquals("test", result.get(0));
+		assertEquals("derp", result.get(1));
+		assertEquals("plop", result.get(2));
+	}
+	
+	@Test
+	public void testParseListFromStringWithRegexNoTrim(){
+		List<String> result = StringUtil.parseListFromStringWithRegex("  test  -  derp  -  plop  ",
+				"-", false);
+		assertEquals(3, result.size());
+		assertEquals("  test  ", result.get(0));
+		assertEquals("  derp  ", result.get(1));
+		assertEquals("  plop  ", result.get(2));
+	}
+	
+	@Test
+	public void testParseListFromStringWithRegexUsingRegex(){
+		List<String> result = StringUtil.parseListFromStringWithRegex("package com.example;", "\\s+", false);
+		
+		assertEquals(2, result.size());
+		assertEquals("package", result.get(0));
+		assertEquals("com.example;", result.get(1));
+	}
+	
+	@Test
 	public void testParseCommaSeparatedListFromString(){
 		List<String> result = StringUtil.parseCommaSeparatedListFromString("  test ,  plop,  derp  ");
 		assertEquals(3, result.size());
@@ -353,9 +589,69 @@ public class StringUtilTest{
 		assertEquals("derp", result.get(2));
 	}
 	
+	@Test
+	public void testParseListFromStringWithPattern(){
+		List<String> result = StringUtil.parseListFromStringWithPattern("umyumumyum", "(um)+", false);
+		assertEquals(3, result.size());
+		assertEquals("um", result.get(0));
+		assertEquals("umum", result.get(1));
+		assertEquals("um", result.get(2));
+	}
+	
+	@Test
+	public void testParseListFromStringWithPatternPatternDoesntAppear(){
+		List<String> result = StringUtil.parseListFromStringWithPattern("umyumumyum", "derp", false);
+		assertEquals(0, result.size());
+	}
+	
+	@Test
+	public void testParseListFromStringWithPatternAndTrim(){
+		List<String> result = StringUtil.parseListFromStringWithPattern("derp plop derp", "\\s*plop\\s*", true);
+		assertEquals(1, result.size());
+		assertEquals("plop", result.get(0));
+	}
+	
+	@Test
+	public void testIndentAllLinesSingleLine(){
+		assertEquals("\tThe line", StringUtil.indentAllLines("The line"));
+	}
+	
+	@Test
+	public void testIndentAllLinesMultiLines(){
+		assertEquals("""
+				\tThe line
+				\tThe second line
+				\tThe third line""", StringUtil.indentAllLines("The line\nThe second line\nThe third line"));
+	}
+	
 	/*
 	 * Handling String Case
 	 */
+	
+	@Test
+	public void testCapitalizeFirstLetter(){
+		assertEquals("First", StringUtil.capitalizeFirstLetter("first"));
+	}
+	
+	@Test
+	public void testCapitalizeFirstLetterAlreadyCapital(){
+		assertEquals("First", StringUtil.capitalizeFirstLetter("First"));
+	}
+	
+	@Test
+	public void testCapitalizeFirstLetterNotLetter(){
+		assertEquals("!yep", StringUtil.capitalizeFirstLetter("!yep"));
+	}
+	
+	@Test
+	public void testCapitalizeFirstLetterSingleLetter(){
+		assertEquals("Y", StringUtil.capitalizeFirstLetter("y"));
+	}
+	
+	@Test
+	public void testCapitalizeFirstLetterBlank(){
+		assertEquals("", StringUtil.capitalizeFirstLetter(""));
+	}
 	
 	@Test
 	public void testIsPascalCase(){

@@ -8,6 +8,7 @@ package com.github.tadukoo.util.event;
  * @version 0.1-Alpha-SNAPSHOT
  */
 public abstract class Event{
+	
 	/** The type of Event */
 	private final String type;
 	/** The message for the Event */

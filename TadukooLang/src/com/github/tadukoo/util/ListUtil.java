@@ -8,7 +8,7 @@ import java.util.List;
  * Util functions for dealing with {@link List}s.
  * 
  * @author Logan Ferree (Tadukoo)
- * @version Alpha v.0.2
+ * @version Beta v.0.5.2
  * @since Alpha v.0.1
  */
 public final class ListUtil{
@@ -17,23 +17,23 @@ public final class ListUtil{
 	private ListUtil(){ }
 	
 	/**
-	 * Checks if the given List is blank (either null or an empty list).
+	 * Checks if the given {@link List} is blank (either null or an empty list).
 	 *
-	 * @param list The List to check
-	 * @return true if the List is null or empty
+	 * @param list The {@link List} to check
+	 * @return true if the {@link List} is null or empty
 	 */
 	public static boolean isBlank(List<?> list){
-		return list == null || list.isEmpty();
+		return CollectionUtil.isBlank(list);
 	}
 	
 	/**
-	 * Checks if the given List is NOT blank (blank = either null or an empty List).
+	 * Checks if the given {@link List} is NOT blank (blank = either null or an empty List).
 	 *
-	 * @param list The List to check
-	 * @return true if the List is not null and not empty
+	 * @param list The {@link List} to check
+	 * @return true if the {@link List} is not null and not empty
 	 */
 	public static boolean isNotBlank(List<?> list){
-		return !isBlank(list);
+		return CollectionUtil.isNotBlank(list);
 	}
 	
 	/**
@@ -42,12 +42,28 @@ public final class ListUtil{
 	 * it actually allows you to manipulate this {@link List} 
 	 * instead of having an immutable List.
 	 * 
-	 * @param <T> The List's type argument and type of variables passed in
+	 * @param <T> The {@link List List's} type argument and type of variables passed in
 	 * @param t The array of variables passed in
-	 * @return A List containing the given variables
+	 * @return A {@link List} containing the given variables
 	 */
 	@SafeVarargs
 	public static <T> List<T> createList(T ... t){
 		return new ArrayList<>(Arrays.asList(t));
+	}
+	
+	/**
+	 * Merges 2 or more {@link List lists} together
+	 *
+	 * @param <T> The type argument of the {@link List lists}, for the type of element in them
+	 * @param lists The {@link List lists} to be merged
+	 * @return A {@link List} containing the elements from all the given {@link List lists}
+	 */
+	@SafeVarargs
+	public static <T> List<T> mergeLists(List<T> ... lists){
+		List<T> resultList = new ArrayList<>();
+		for(List<T> list: lists){
+			resultList.addAll(list);
+		}
+		return resultList;
 	}
 }

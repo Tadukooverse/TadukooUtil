@@ -24,8 +24,7 @@ public class TreeManyToManyMap<K, V> extends ManyToManyMap<K, V>{
 	 * of its keys.
 	 */
 	public TreeManyToManyMap(){
-		super(new TreeMultiMap<>(),
-				new TreeMultiMap<>());
+		super(new TreeMultiMap<>(), new TreeMultiMap<>());
 	}
 	
 	/**

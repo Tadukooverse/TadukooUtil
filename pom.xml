@@ -6,17 +6,18 @@
 	<parent>
 		<groupId>com.github.tadukoo.maven</groupId>
 		<artifactId>TadukooMavenLibraryPOM</artifactId>
-		<version>0.3.1-Alpha</version>
+		<version>0.4.2-Alpha</version>
 	</parent>
 	<groupId>com.github.tadukoo.util</groupId>
 	<artifactId>TadukooUtilParent</artifactId>
-	<version>0.5.1-Beta</version>
+	<version>0.6-Beta</version>
 	<packaging>pom</packaging>
 	<description>A collection of utilities to be used in various projects</description>
 	<modules>
 		<module>TadukooLang</module>
 		<module>TadukooFunctions</module>
 		<module>TadukooUtil</module>
+		<module>TadukooJUnit</module>
 	</modules>
 	<properties>
 		<!-- Info -->

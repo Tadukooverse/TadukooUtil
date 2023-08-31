@@ -3,6 +3,8 @@ package com.github.tadukoo.util;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Util functions for dealing with Strings, including building and parsing them.
@@ -23,7 +25,7 @@ public final class StringUtil{
 	 * @return true if the string is null or the empty string
 	 */
 	public static boolean isBlank(String text){
-		return text == null || text.equals("");
+		return text == null || text.isEmpty();
 	}
 	
 	/**
@@ -34,6 +36,74 @@ public final class StringUtil{
 	 */
 	public static boolean isNotBlank(String text){
 		return !isBlank(text);
+	}
+	
+	/**
+	 * Checks if all the given strings are blank or not (blank = either null or the empty string).
+	 *
+	 * @param texts The strings to check
+	 * @return true if all strings are blank (null/empty string), false otherwise
+	 */
+	public static boolean allBlank(String ... texts){
+		// If any string is not blank, return false
+		for(String text: texts){
+			if(isNotBlank(text)){
+				return false;
+			}
+		}
+		// Return true if we didn't hit a false
+		return true;
+	}
+	
+	/**
+	 * Checks if all the given strings are not blank (blank = either null or the empty string).
+	 *
+	 * @param texts The strings to check
+	 * @return true if all strings are not blank (not null/empty string), false otherwise
+	 */
+	public static boolean noneBlank(String ... texts){
+		// If any string is blank, return false
+		for(String text: texts){
+			if(isBlank(text)){
+				return false;
+			}
+		}
+		// Return true if we didn't hit a false
+		return true;
+	}
+	
+	/**
+	 * Checks if any of the given strings are blank (blank = either null or the empty string).
+	 *
+	 * @param texts The strings to check
+	 * @return true if any string is blank (null/empty string), false otherwise
+	 */
+	public static boolean anyBlank(String ... texts){
+		// If any string is blank, return true
+		for(String text: texts){
+			if(isBlank(text)){
+				return true;
+			}
+		}
+		// Return false if we didn't hit a true
+		return false;
+	}
+	
+	/**
+	 * Checks if any of the given strings are not blank (blank = either null or the empty string).
+	 *
+	 * @param texts The strings to check
+	 * @return true if any string is not blank (not null/empty string), false otherwise
+	 */
+	public static boolean anyNotBlank(String ... texts){
+		// If any string is not blank, return true
+		for(String text: texts){
+			if(isNotBlank(text)){
+				return true;
+			}
+		}
+		// Return false if we didn't hit a true
+		return false;
 	}
 	
 	/**
@@ -192,6 +262,20 @@ public final class StringUtil{
 	}
 	
 	/**
+	 * A null-safe trim method. Useful for simplifying a block where you grab a potentially null String from
+	 * somewhere and would have to check it's not null before attempting a trim.
+	 *
+	 * @param text The text to be trimmed
+	 * @return {@code null} if text is null, or a trimmed version of text
+	 */
+	public static String trim(String text){
+		if(text == null){
+			return null;
+		}
+		return text.trim();
+	}
+	
+	/**
 	 * Converts the given Object to a String, including proper
 	 * null handling.
 	 *
@@ -336,6 +420,34 @@ public final class StringUtil{
 	}
 	
 	/**
+	 * Parses the given text into a List using the given regex to split and optionally
+	 * trimming to remove whitespace in the resulting strings.
+	 *
+	 * @param text The text to parse into a List of Strings
+	 * @param regex The regex to use in separating the given text
+	 * @param trim Whether to trim any whitespace off the resulting strings
+	 * @return The resulting List of Strings
+	 */
+	public static List<String> parseListFromStringWithRegex(String text, String regex, boolean trim){
+		List<String> strings = new ArrayList<>();
+		
+		// If there is no match of the regex, just make a list with the text
+		if(!Pattern.compile(regex).matcher(text).find()){
+			// Optionally trim the text
+			strings.add(trim?text.trim():text);
+		}else{
+			// Split the text on the regex
+			String[] textSplit = text.split(regex);
+			for(String split: textSplit){
+				// Add each string to the list, optionally trimming them
+				strings.add(trim?split.trim():split);
+			}
+		}
+		
+		return strings;
+	}
+	
+	/**
 	 * Parses a comma-separated list into a List of Strings.
 	 * 
 	 * @param text The text to convert into a List of Strings
@@ -345,9 +457,63 @@ public final class StringUtil{
 		return parseListFromStringWithSeparator(text, ",", true);
 	}
 	
+	/**
+	 * Parses the given String into a List of strings by matching using the given regex
+	 *
+	 * @param text The text to be parsed into a List of Strings
+	 * @param pattern The regular expression to use for matching for parsing the text
+	 * @param trim Whether to trim the matching strings or not
+	 * @return The List of Strings produced by parsing the text
+	 */
+	public static List<String> parseListFromStringWithPattern(String text, String pattern, boolean trim){
+		List<String> strings = new ArrayList<>();
+		
+		// Set up the matcher
+		Matcher matcher = Pattern.compile(pattern).matcher(text);
+		while(matcher.find()){
+			strings.add(trim?matcher.group(0).trim():matcher.group(0));
+		}
+		
+		return strings;
+	}
+	
+	/**
+	 * Adds a tab to every new line in the given string
+	 *
+	 * @param text A String to be indented
+	 * @return The String with every line indented
+	 */
+	public static String indentAllLines(String text){
+		return "\t" + text.replace("\n", "\n\t");
+	}
+	
 	/*
 	 * Handling String Case
 	 */
+	
+	/**
+	 * Capitalizes the first letter of the given String (if it's a letter, otherwise just returns the String).
+	 * Will properly handle null/empty string by returning what was given
+	 *
+	 * @param text The text to capitalize the first letter of
+	 * @return The resulting text after the first letter is capitalized
+	 */
+	public static String capitalizeFirstLetter(String text){
+		// If string is blank, just return it
+		if(StringUtil.isBlank(text)){
+			return text;
+		}
+		
+		// Capitalize the first character
+		char firstChar = CharacterUtil.toUpperCase(text.charAt(0));
+		
+		// If the string is just 1 character, return it
+		if(text.length() == 1){
+			return String.valueOf(firstChar);
+		}else{
+			return firstChar + text.substring(1);
+		}
+	}
 	
 	/**
 	 * Checks if the given text is PascalCase or not.
@@ -458,7 +624,7 @@ public final class StringUtil{
 			for(char c: text.toCharArray()){
 				if(CharacterUtil.isUpperCase(c)){
 					// Only append an underscore if the previous character is not an underscore
-					if(!newText.toString().equals("") && newText.charAt(newText.length() - 1) != '_'){
+					if(!newText.toString().isEmpty() && newText.charAt(newText.length() - 1) != '_'){
 						newText.append('_');
 					}
 					newText.append(CharacterUtil.toLowerCase(c));

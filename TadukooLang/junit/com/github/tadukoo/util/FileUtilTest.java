@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
 
@@ -59,6 +60,81 @@ public class FileUtilTest{
 	}
 	
 	@Test
+	public void createAndListAllFilesAsPathsTest() throws IOException{
+		File file = FileUtil.createFile("target/test-files/createAndListTest/test.txt");
+		assertNotNull(file);
+		
+		List<Path> files = FileUtil.listAllFilesAsPaths("target/test-files/createAndListTest/");
+		assertEquals(1, files.size());
+		assertEquals(file, files.get(0).toFile());
+	}
+	
+	@Test
+	public void createAndListMultipleFilesAsPathsTest() throws IOException{
+		String folder = "target/test-files/createAndListBigTest/";
+		File file = FileUtil.createFile(folder + "test1.txt");
+		File file2 = FileUtil.createFile(folder + "test2.txt");
+		File file3 = FileUtil.createFile(folder + "test3.txt");
+		File file4 = FileUtil.createFile(folder + "test4.txt");
+		File file5 = FileUtil.createFile(folder + "test5.txt");
+		
+		List<Path> paths = FileUtil.listAllFilesAsPaths(folder);
+		assertEquals(5, paths.size());
+		List<File> files = paths.stream().map(Path::toFile).toList();
+		assertTrue(files.containsAll(Arrays.asList(file, file2, file3, file4, file5)));
+	}
+	
+	@Test
+	public void createAndListAllFilesAsPathsFileTest() throws IOException{
+		File file = FileUtil.createFile("target/test-files/createAndListTest/test.txt");
+		assertNotNull(file);
+		
+		List<Path> files = FileUtil.listAllFilesAsPaths(new File("target/test-files/createAndListTest/"));
+		assertEquals(1, files.size());
+		assertEquals(file, files.get(0).toFile());
+	}
+	
+	@Test
+	public void createAndListMultipleFilesAsPathsFileTest() throws IOException{
+		String folder = "target/test-files/createAndListBigTest/";
+		File file = FileUtil.createFile(folder + "test1.txt");
+		File file2 = FileUtil.createFile(folder + "test2.txt");
+		File file3 = FileUtil.createFile(folder + "test3.txt");
+		File file4 = FileUtil.createFile(folder + "test4.txt");
+		File file5 = FileUtil.createFile(folder + "test5.txt");
+		
+		List<Path> paths = FileUtil.listAllFilesAsPaths(new File(folder));
+		assertEquals(5, paths.size());
+		List<File> files = paths.stream().map(Path::toFile).toList();
+		assertTrue(files.containsAll(Arrays.asList(file, file2, file3, file4, file5)));
+	}
+	
+	@Test
+	public void createAndListAllFilesAsPathsPathTest() throws IOException{
+		File file = FileUtil.createFile("target/test-files/createAndListTest/test.txt");
+		assertNotNull(file);
+		
+		List<Path> files = FileUtil.listAllFilesAsPaths(Path.of("target/test-files/createAndListTest/"));
+		assertEquals(1, files.size());
+		assertEquals(file, files.get(0).toFile());
+	}
+	
+	@Test
+	public void createAndListMultipleFilesAsPathsPathTest() throws IOException{
+		String folder = "target/test-files/createAndListBigTest/";
+		File file = FileUtil.createFile(folder + "test1.txt");
+		File file2 = FileUtil.createFile(folder + "test2.txt");
+		File file3 = FileUtil.createFile(folder + "test3.txt");
+		File file4 = FileUtil.createFile(folder + "test4.txt");
+		File file5 = FileUtil.createFile(folder + "test5.txt");
+		
+		List<Path> paths = FileUtil.listAllFilesAsPaths(Path.of(folder));
+		assertEquals(5, paths.size());
+		List<File> files = paths.stream().map(Path::toFile).toList();
+		assertTrue(files.containsAll(Arrays.asList(file, file2, file3, file4, file5)));
+	}
+	
+	@Test
 	public void createFileDoesNotExist() throws IOException{
 		String folder = "target/test-files/createFileDoesNotExist/";
 		String filepath = folder + "test.txt";
@@ -105,6 +181,17 @@ public class FileUtilTest{
 	}
 	
 	@Test
+	public void testDeleteFile() throws IOException{
+		String folder = "target/testDeleteFile";
+		FileUtil.createDirectory(folder);
+		String filepath = folder + "/test.txt";
+		File file = FileUtil.createFile(filepath);
+		assertTrue(file.exists());
+		FileUtil.deleteFile(filepath);
+		assertFalse(file.exists());
+	}
+	
+	@Test
 	public void testCreateDirectory(){
 		String folderPath = "target/testCreateDirectory";
 		
@@ -118,6 +205,21 @@ public class FileUtilTest{
 		folder = FileUtil.createDirectory(folderPath);
 		assertTrue(folder.exists());
 		assertEquals("testCreateDirectory", folder.getName());
+	}
+	
+	@Test
+	public void testDeleteDirectory() throws IOException{
+		String folderPath = "target/testDeleteDirectory";
+		File folder = FileUtil.createDirectory(folderPath);
+		File file1 = FileUtil.createFile(folder + "/test.txt");
+		File file2 = FileUtil.createFile(folder + "/test2.txt");
+		assertTrue(folder.exists());
+		assertTrue(file1.exists());
+		assertTrue(file2.exists());
+		FileUtil.deleteDirectory(folderPath);
+		assertFalse(folder.exists());
+		assertFalse(file1.exists());
+		assertFalse(file2.exists());
 	}
 	
 	@Test
@@ -292,14 +394,30 @@ public class FileUtilTest{
 	}
 	
 	@Test
+	public void testWriteFileUsingByteArray() throws IOException{
+		String filepath = "target/test-files/writeFileUsingByteArray/test.txt";
+		String content = """
+				Test
+				Derp
+				Yes""";
+		FileUtil.writeFile(filepath, content.getBytes());
+		List<String> lines = FileUtil.readLinesAsList(FileUtil.setupFileReader(filepath));
+		assertEquals(3, lines.size());
+		assertEquals("Test", lines.get(0));
+		assertEquals("Derp", lines.get(1));
+		assertEquals("Yes", lines.get(2));
+	}
+	
+	@Test
 	public void testZipAndUnzipByFileName() throws IOException{
 		String folder = "target/test-files/zipAndUnzipByFileName/";
 		String filepath = folder + "test.txt";
 		String zipPath = folder + "test.zip";
 		String resultPath = folder + "result/";
 		File resultDir = new File(resultPath);
+		//noinspection ResultOfMethodCallIgnored
 		resultDir.mkdirs();
-		File file = FileUtil.createFile(filepath);
+		FileUtil.createFile(filepath);
 		FileUtil.writeFile(filepath, "Some content");
 		FileUtil.zipFile(filepath, zipPath);
 		FileUtil.unzipFile(zipPath, resultPath);
@@ -321,9 +439,10 @@ public class FileUtilTest{
 		String zipPath = folder + "test.zip";
 		String resultPath = folder + "result/";
 		File resultDir = new File(resultPath);
+		//noinspection ResultOfMethodCallIgnored
 		resultDir.mkdirs();
-		File file = FileUtil.createFile(filepath);
-		File file2 = FileUtil.createFile(filepath2);
+		FileUtil.createFile(filepath);
+		FileUtil.createFile(filepath2);
 		FileUtil.writeFile(filepath, "Some content");
 		FileUtil.writeFile(filepath2, "Some other content");
 		FileUtil.zipFile(dataFolder, zipPath);
@@ -349,6 +468,7 @@ public class FileUtilTest{
 		String zipPath = folder + "test.zip";
 		String resultPath = folder + "result/";
 		File resultDir = new File(resultPath);
+		//noinspection ResultOfMethodCallIgnored
 		resultDir.mkdirs();
 		File file = FileUtil.createFile(filepath);
 		FileUtil.writeFile(filepath, "Some content");
@@ -372,9 +492,10 @@ public class FileUtilTest{
 		String zipPath = folder + "test.zip";
 		String resultPath = folder + "result/";
 		File resultDir = new File(resultPath);
+		//noinspection ResultOfMethodCallIgnored
 		resultDir.mkdirs();
-		File file = FileUtil.createFile(filepath);
-		File file2 = FileUtil.createFile(filepath2);
+		FileUtil.createFile(filepath);
+		FileUtil.createFile(filepath2);
 		FileUtil.writeFile(filepath, "Some content");
 		FileUtil.writeFile(filepath2, "Some other content");
 		FileUtil.zipFile(new File(dataFolder), zipPath);

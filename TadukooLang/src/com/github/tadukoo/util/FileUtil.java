@@ -16,8 +16,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
@@ -26,7 +28,7 @@ import java.util.zip.ZipOutputStream;
  * Util functions for dealing with Files.
  * 
  * @author Logan Ferree (Tadukoo)
- * @version Beta v.0.5
+ * @version Beta v.0.5.2
  * @since Pre-Alpha
  */
 public final class FileUtil{
@@ -55,29 +57,83 @@ public final class FileUtil{
 	
 	/**
 	 * Creates a List of all Files in the given directory and any of 
-	 * its sub-directories.
+	 * its subdirectories.
 	 * 
 	 * @param directoryPath The path to the directory to check
-	 * @return A List of all Files in the directory and its sub-directories
+	 * @return A List of all Files in the directory and its subdirectories
 	 * @throws IOException If something goes wrong in listing the files
 	 */
-	public static List<File> listAllFiles(String directoryPath) throws IOException{
-		return Files.walk(Paths.get(directoryPath))
-				.filter(Files::isRegularFile)
-				.map(Path::toFile)
-				.collect(Collectors.toList());
+	public static List<File> listAllFiles(Path directoryPath) throws IOException{
+		try(Stream<Path> pathStream = Files.walk(directoryPath)){
+			return pathStream
+					.filter(Files::isRegularFile)
+					.map(Path::toFile)
+					.collect(Collectors.toList());
+		}
 	}
 	
 	/**
 	 * Creates a List of all Files in the given directory and any of its 
-	 * sub-directories.
+	 * subdirectories.
 	 * 
 	 * @param directory The directory (as a File) to check
-	 * @return A List of all Files in the directory and its sub-directories
+	 * @return A List of all Files in the directory and its subdirectories
 	 * @throws IOException If something goes wrong in listing the files
 	 */
 	public static List<File> listAllFiles(File directory) throws IOException{
-		return listAllFiles(directory.getPath());
+		return listAllFiles(directory.toPath());
+	}
+	
+	/**
+	 * Creates a List of all Files in the given directory and any of its
+	 * subdirectories.
+	 *
+	 * @param directory The directory path (as a String) to check
+	 * @return A List of all Files in the directory and its subdirectories
+	 * @throws IOException If something goes wrong in listing the files
+	 */
+	public static List<File> listAllFiles(String directory) throws IOException{
+		return listAllFiles(Paths.get(directory));
+	}
+	
+	/**
+	 * Creates a List of all files in the given directory and any of
+	 * its subdirectories. The files are returned as Paths.
+	 *
+	 * @param directory The path to the directory to check
+	 * @return A List of all files in the directory and its subdirectories as Paths
+	 * @throws IOException If something goes wrong in listing the files
+	 */
+	public static List<Path> listAllFilesAsPaths(Path directory) throws IOException{
+		try(Stream<Path> pathStream = Files.walk(directory)){
+			return pathStream
+					.filter(Files::isRegularFile)
+					.collect(Collectors.toList());
+		}
+	}
+	
+	/**
+	 * Creates a List of all files in the given directory and any of its
+	 * subdirectories. The files are returned as Paths.
+	 *
+	 * @param directory The directory (as a File) to check
+	 * @return A List of all files in the directory and its subdirectories as Paths
+	 * @throws IOException If something goes wrong in listing the files
+	 */
+	public static List<Path> listAllFilesAsPaths(File directory) throws IOException{
+		return listAllFilesAsPaths(directory.toPath());
+	}
+	
+	/**
+	 * Creates a List of all files in the given directory and any of its
+	 * subdirectories. The files are returned as Paths.
+	 *
+	 * @param directory The directory path (as a String) to check
+	 * @return A List of all files in the directory and its subdirectories as Paths
+	 * @throws IOException If something goes wrong in listing the files
+	 */
+	public static List<Path> listAllFilesAsPaths(String directory) throws IOException{
+		return listAllFilesAsPaths(Paths.get(directory));
 	}
 	
 	/**
@@ -88,6 +144,7 @@ public final class FileUtil{
 	 * @return The newly created File
 	 * @throws IOException If something goes wrong in creating the file
 	 */
+	@SuppressWarnings("ResultOfMethodCallIgnored")
 	public static File createFile(String filepath) throws IOException{
 		// Create a File object from the given filepath
 		File file = new File(filepath);
@@ -107,6 +164,19 @@ public final class FileUtil{
 	}
 	
 	/**
+	 * Deletes the file at the given filepath
+	 *
+	 * @param filepath The path for the File to be deleted
+	 * @return If the file was deleted or not
+	 */
+	public static boolean deleteFile(String filepath){
+		// Create the File object from the given filepath
+		File file = new File(filepath);
+		
+		return file.delete();
+	}
+	
+	/**
 	 * Creates a directory at the given directoryPath, including any parent directories
 	 * necessary, and returns the {@link File} object to be used.
 	 *
@@ -123,6 +193,23 @@ public final class FileUtil{
 		}
 		
 		return directory;
+	}
+	
+	/**
+	 * Deletes the directory at the given directoryPath, including any files contained
+	 * within it.
+	 *
+	 * @param directoryPath The path to the directory to be deleted
+	 * @throws IOException If anything goes wrong
+	 */
+	public static void deleteDirectory(String directoryPath) throws IOException{
+		try(Stream<Path> pathStream = Files.walk(Path.of(directoryPath))){
+			//noinspection ResultOfMethodCallIgnored
+			pathStream
+					.sorted(Comparator.reverseOrder())
+					.map(Path::toFile)
+					.forEach(File::delete);
+		}
 	}
 	
 	/**
@@ -327,6 +414,23 @@ public final class FileUtil{
 	}
 	
 	/**
+	 * Writes the given byte array to the file path given
+	 *
+	 * @param filePath The path to write the file at
+	 * @param bytes The byte array contents of the file
+	 * @throws IOException If something goes wrong in writing the file
+	 */
+	public static void writeFile(String filePath, byte[] bytes) throws IOException{
+		// Create the File
+		File file = createFile(filePath);
+		
+		// Actually write to the file using a FileOutputStream
+		FileOutputStream fos = new FileOutputStream(file);
+		fos.write(bytes);
+		fos.close();
+	}
+	
+	/**
 	 * Creates a zip file using the file or directory at the given path.
 	 *
 	 * @param pathToZip The path to the file or directory to be zipped
@@ -433,7 +537,6 @@ public final class FileUtil{
 		// Extract each file
 		while(zipEntry != null){
 			File newFile = new File(destDirectory, zipEntry.getName());
-			
 			
 			// Check destination path to prevent zip slip
 			String destDirPath = destDirectory.getCanonicalPath();

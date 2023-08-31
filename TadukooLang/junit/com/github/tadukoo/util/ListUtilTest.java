@@ -94,4 +94,31 @@ public class ListUtilTest{
 		list.add("no");
 		assertEquals(4, list.size());
 	}
+	
+	@Test
+	public void testMergeLists(){
+		List<Integer> list = ListUtil.mergeLists(ListUtil.createList(5, 1, 2), ListUtil.createList(6, 3, 9));
+		assertEquals(6, list.size());
+		assertEquals(5, list.get(0));
+		assertEquals(1, list.get(1));
+		assertEquals(2, list.get(2));
+		assertEquals(6, list.get(3));
+		assertEquals(3, list.get(4));
+		assertEquals(9, list.get(5));
+	}
+	
+	@Test
+	public void testMergeListsAllowsModification(){
+		List<Integer> list = ListUtil.mergeLists(ListUtil.createList(5), ListUtil.createList(1, 2));
+		assertEquals(3, list.size());
+		
+		// Remove an item
+		list.remove(0);
+		assertEquals(2, list.size());
+		
+		// Add a couple items
+		list.add(7);
+		list.add(9);
+		assertEquals(4, list.size());
+	}
 }
