@@ -6,15 +6,10 @@
 	<parent>
 		<artifactId>TadukooUtilParent</artifactId>
 		<groupId>com.github.tadukoo.util</groupId>
-		<version>0.6-Beta</version>
+		<version>0.6.1-Beta</version>
 	</parent>
 	<artifactId>TadukooJUnit</artifactId>
 	<dependencies>
-		<!-- Tadukoo Functions -->
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>${tadukoo.util.functions.artifactID}</artifactId>
-		</dependency>
 		<!-- Tadukoo Util -->
 		<dependency>
 			<groupId>${project.groupId}</groupId>

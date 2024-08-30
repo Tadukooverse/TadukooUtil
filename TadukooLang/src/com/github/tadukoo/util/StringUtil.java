@@ -289,8 +289,8 @@ public final class StringUtil{
 		}
 		
 		// If obj is a String, cast it to a String
-		if(obj instanceof String){
-			return (String) obj;
+		if(obj instanceof String s){
+			return s;
 		}
 		
 		// Otherwise just use String.valueOf
