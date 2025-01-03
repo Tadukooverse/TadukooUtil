@@ -22,9 +22,5 @@
 			<!-- Need this different due to create JUnit testing functions -->
 			<scope>compile</scope>
 		</dependency>
-		<dependency>
-			<groupId>${junit.platform.groupID}</groupId>
-			<artifactId>${junit.platform.artifactID}</artifactId>
-		</dependency>
 	</dependencies>
 </project>
