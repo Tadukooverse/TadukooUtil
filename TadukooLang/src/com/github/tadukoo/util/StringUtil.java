@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
  * Util functions for dealing with Strings, including building and parsing them.
  *
  * @author Logan Ferree (Tadukoo)
- * @version Alpha v.0.3.1
+ * @version Beta v.0.7
  * @since Pre-Alpha
  */
 public final class StringUtil{
@@ -298,6 +298,34 @@ public final class StringUtil{
 	}
 	
 	/**
+	 * Converts the given Object to a String, including proper
+	 * null handling. This will convert it to a String to be used in Java code,
+	 * rather than mainly relying on the toString method.
+	 *
+	 * @param obj The Object to convert to a String
+	 * @return null if obj is null, or a String representing the Object
+	 */
+	public static String convertToJavaString(Object obj){
+		// If obj is null, just return null
+		if(obj == null){
+			return null;
+		}
+		
+		// If obj is a String, cast it to a String
+		if(obj instanceof String s){
+			return s;
+		}
+		
+		// If obj is an Enum, handle it special
+		if(obj instanceof Enum<?> e){
+			return e.getClass().getSimpleName() + "." + e.name();
+		}
+		
+		// Otherwise just use String.valueOf
+		return String.valueOf(obj);
+	}
+	
+	/**
 	 * Converts an entire Collection of items to strings, and
 	 * returns them as a List.
 	 *
@@ -311,6 +339,42 @@ public final class StringUtil{
 			strings.add(convertToString(item));
 		}
 		return strings;
+	}
+	
+	/**
+	 * Escapes characters in the string for use in e.g. builderCode so that you have \n instead of a newline
+	 *
+	 * @param theString The string to have characters escaped
+	 * @return The given String, but with the characters escaped
+	 */
+	public static String escapeString(String theString){
+		return theString.replaceAll("\n", "\\\\n")
+				.replaceAll("\r", "\\\\r")
+				.replaceAll("\t", "\\\\t");
+	}
+	
+	/**
+	 * Counts the number of instances of the given substring within the given text
+	 *
+	 * @param text The String to look for the substring in
+	 * @param substring The substring to count instances of
+	 * @return The count of instances of the substring within the text
+	 */
+	public static int countSubstringInstances(String text, String substring){
+		// Keep track of current count and index to check at
+		int count = 0;
+		int index = 0;
+		
+		// Continue counting instances of the substring until we no longer find one
+		while(index != -1){
+			index = text.indexOf(substring, index);
+			if(index != -1){
+				count++;
+				index += substring.length();
+			}
+		}
+		
+		return count;
 	}
 	
 	/*
