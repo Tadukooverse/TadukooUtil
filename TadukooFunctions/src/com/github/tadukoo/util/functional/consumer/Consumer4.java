@@ -43,6 +43,7 @@ public interface Consumer4<A, B, C, D>{
 	 * given {@link ThrowingConsumer4} on the same arguments.
 	 *
 	 * @param after A {@link ThrowingConsumer4} to run the arguments on after this {@link Consumer4}
+	 * @param <T> A {@link Throwable} that the {@link ThrowingConsumer4} is throwing
 	 * @return The {@link ThrowingConsumer4} made from composing this {@link Consumer4} and the given {@link ThrowingConsumer4}
 	 */
 	default <T extends Throwable> ThrowingConsumer4<A, B, C, D, T> andThen(

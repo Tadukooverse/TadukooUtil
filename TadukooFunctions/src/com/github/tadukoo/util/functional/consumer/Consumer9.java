@@ -55,6 +55,7 @@ public interface Consumer9<A, B, C, D, E, F, G, H, I>{
 	 * given {@link ThrowingConsumer9} on the same arguments.
 	 *
 	 * @param after A {@link ThrowingConsumer9} to run the arguments on after this {@link Consumer9}
+	 * @param <T> A {@link Throwable} that the {@link ThrowingConsumer9} is throwing
 	 * @return The {@link ThrowingConsumer9} made from composing this {@link Consumer9} and the given {@link ThrowingConsumer9}
 	 */
 	default <T extends Throwable> ThrowingConsumer9<A, B, C, D, E, F, G, H, I, T> andThen(
