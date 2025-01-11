@@ -14,7 +14,8 @@ package com.github.tadukoo.util.functional.consumer;
  * @param <T> The type of {@link Throwable} thrown by the consumer
  *
  * @author Logan Ferree (Tadukoo)
- * @version Alpha v.0.3
+ * @version Beta v.0.7
+ * @since Alpha v.0.3
  */
 @FunctionalInterface
 public interface ThrowingConsumer7<A, B, C, D, E, F, G, T extends Throwable>{
@@ -34,18 +35,33 @@ public interface ThrowingConsumer7<A, B, C, D, E, F, G, T extends Throwable>{
 	void accept(A a, B b, C c, D d, E e, F f, G g) throws T;
 	
 	/**
-	 * Creates a ThrowingConsumer7 that runs this ThrowingConsumer7 and then also runs the
-	 * given ThrowingConsumer7 on the same arguments.
+	 * Creates a {@link ThrowingConsumer7} that runs this {@link ThrowingConsumer7} and then also runs the
+	 * given {@link ThrowingConsumer7} on the same arguments.
 	 *
-	 * @param after A 2nd ThrowingConsumer7 to run the arguments on after this one
-	 * @return The ThrowingConsumer7 made from composing this one and the given one
+	 * @param after A 2nd {@link ThrowingConsumer7} to run the arguments on after this one
+	 * @return The {@link ThrowingConsumer7} made from composing this one and the given one
 	 */
 	default ThrowingConsumer7<A, B, C, D, E, F, G, T> andThen(
 			ThrowingConsumer7<? super A, ? super B, ? super C, ? super D, ? super E,
 					? super F, ? super G, ? extends T> after){
 		return (a, b, c, d, e, f, g) -> {
-								this.accept(a, b, c, d, e, f, g);
-								after.accept(a, b, c, d, e, f, g);
-							};
+			this.accept(a, b, c, d, e, f, g);
+			after.accept(a, b, c, d, e, f, g);
+		};
+	}
+	
+	/**
+	 * Creates a {@link ThrowingConsumer7} that runs this {@link ThrowingConsumer7} and then also runs the
+	 * given {@link Consumer7} on the same arguments.
+	 *
+	 * @param after A {@link Consumer7} to run the arguments on after this {@link ThrowingConsumer7}
+	 * @return The {@link ThrowingConsumer7} made from composing this {@link ThrowingConsumer7} and the given {@link Consumer7}
+	 */
+	default ThrowingConsumer7<A, B, C, D, E, F, G, T> andThen(
+			Consumer7<? super A, ? super B, ? super C, ? super D, ? super E, ? super F, ? super G> after){
+		return (a, b, c, d, e, f, g) -> {
+			this.accept(a, b, c, d, e, f, g);
+			after.accept(a, b, c, d, e, f, g);
+		};
 	}
 }

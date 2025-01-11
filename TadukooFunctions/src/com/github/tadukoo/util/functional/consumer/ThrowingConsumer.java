@@ -1,9 +1,7 @@
 package com.github.tadukoo.util.functional.consumer;
 
-import java.util.function.Consumer;
-
 /**
- * A better version of Java's {@link Consumer} interface that 
+ * A better version of Java's {@link java.util.function.Consumer} interface that
  * allows for the consumers to throw whatever {@link Throwable}
  * is specified.
  *
@@ -11,7 +9,8 @@ import java.util.function.Consumer;
  * @param <T> The type of {@link Throwable} thrown by the consumer
  * 
  * @author Logan Ferree (Tadukoo)
- * @version 0.1-Alpha-SNAPSHOT
+ * @version Beta v.0.7
+ * @since 0.1-Alpha-SNAPSHOT
  */
 @FunctionalInterface
 public interface ThrowingConsumer<A, T extends Throwable>{
@@ -25,16 +24,30 @@ public interface ThrowingConsumer<A, T extends Throwable>{
 	void accept(A a) throws T;
 	
 	/**
-	 * Creates a ThrowingConsumer that runs this ThrowingConsumer and then also runs the 
-	 * given ThrowingConsumer on the same argument.
+	 * Creates a {@link ThrowingConsumer} that runs this {@link ThrowingConsumer} and then also runs the
+	 * given {@link ThrowingConsumer} on the same argument.
 	 * 
-	 * @param after A 2nd ThrowingConsumer to run the argument on after this one
-	 * @return The ThrowingConsumer made from composing this one and the given one
+	 * @param after A 2nd {@link ThrowingConsumer} to run the argument on after this one
+	 * @return The {@link ThrowingConsumer} made from composing this one and the given one
 	 */
 	default ThrowingConsumer<A, T> andThen(ThrowingConsumer<? super A, ? extends T> after){
 		return a -> {
-						this.accept(a);
-						after.accept(a);
-					};
+			this.accept(a);
+			after.accept(a);
+		};
+	}
+	
+	/**
+	 * Creates a {@link ThrowingConsumer} that runs this {@link ThrowingConsumer} and then also runs the
+	 * given {@link Consumer} on the same argument.
+	 *
+	 * @param after A {@link Consumer} to run the argument on after this one
+	 * @return The {@link ThrowingConsumer} made from composing this one and the given {@link Consumer}
+	 */
+	default ThrowingConsumer<A, T> andThen(Consumer<? super A> after){
+		return a-> {
+			this.accept(a);
+			after.accept(a);
+		};
 	}
 }

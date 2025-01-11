@@ -12,7 +12,8 @@ package com.github.tadukoo.util.functional.consumer;
  * @param <T> The type of {@link Throwable} thrown by the consumer
  *
  * @author Logan Ferree (Tadukoo)
- * @version 0.1-Alpha-SNAPSHOT
+ * @version Beta v.0.7
+ * @since 0.1-Alpha-SNAPSHOT
  */
 @FunctionalInterface
 public interface ThrowingConsumer5<A, B, C, D, E, T extends Throwable>{
@@ -30,17 +31,32 @@ public interface ThrowingConsumer5<A, B, C, D, E, T extends Throwable>{
 	void accept(A a, B b, C c, D d, E e) throws T;
 	
 	/**
-	 * Creates a ThrowingConsumer5 that runs this ThrowingConsumer5 and then also runs the
-	 * given ThrowingConsumer5 on the same arguments.
+	 * Creates a {@link ThrowingConsumer5} that runs this {@link ThrowingConsumer5} and then also runs the
+	 * given {@link ThrowingConsumer5} on the same arguments.
 	 * 
-	 * @param after A 2nd ThrowingConsumer5 to run the arguments on after this one
-	 * @return The ThrowingConsumer5 made from composing this one and the given one
+	 * @param after A 2nd {@link ThrowingConsumer5} to run the arguments on after this one
+	 * @return The {@link ThrowingConsumer5} made from composing this one and the given one
 	 */
 	default ThrowingConsumer5<A, B, C, D, E, T> andThen(
 			ThrowingConsumer5<? super A, ? super B, ? super C, ? super D, ? super E, ? extends T> after){
 		return (a, b, c, d, e) -> {
-								this.accept(a, b, c, d, e);
-								after.accept(a, b, c, d, e);
-							};
+			this.accept(a, b, c, d, e);
+			after.accept(a, b, c, d, e);
+		};
+	}
+	
+	/**
+	 * Creates a {@link ThrowingConsumer5} that runs this {@link ThrowingConsumer5} and then also runs the
+	 * given {@link Consumer5} on the same arguments.
+	 *
+	 * @param after A {@link Consumer5} to run the arguments on after this {@link ThrowingConsumer5}
+	 * @return The {@link ThrowingConsumer5} made from composing this {@link ThrowingConsumer5} and the given {@link Consumer5}
+	 */
+	default ThrowingConsumer5<A, B, C, D, E, T> andThen(
+			Consumer5<? super A, ? super B, ? super C, ? super D, ? super E> after){
+		return (a, b, c, d, e) -> {
+			this.accept(a, b, c, d, e);
+			after.accept(a, b, c, d, e);
+		};
 	}
 }

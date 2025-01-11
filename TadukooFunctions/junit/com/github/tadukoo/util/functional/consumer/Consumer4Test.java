@@ -6,12 +6,12 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
-public class ThrowingConsumer4Test{
+public class Consumer4Test{
 	private int value1, value2, value3, value4;
-	private ThrowingConsumer4<Integer, Integer, Integer, Integer, IllegalArgumentException> success;
-	private ThrowingConsumer4<Integer, Integer, Integer, Integer, IllegalArgumentException> add2;
-	private ThrowingConsumer4<Integer, Integer, Integer, Integer, IllegalArgumentException> consumer;
-	private Consumer4<Integer, Integer, Integer, Integer> regularConsumer;
+	private Consumer4<Integer, Integer, Integer, Integer> success;
+	private Consumer4<Integer, Integer, Integer, Integer> add2;
+	private ThrowingConsumer4<Integer, Integer, Integer, Integer, IllegalArgumentException> throwingConsumer;
+	private ThrowingConsumer4<Integer, Integer, Integer, Integer, IllegalArgumentException> throwingSuccess;
 	
 	@BeforeEach
 	public void setup(){
@@ -27,10 +27,10 @@ public class ThrowingConsumer4Test{
 			value3 = k + 2;
 			value4 = l + 2;
 		};
-		consumer = (i, j, k, l) -> {
+		throwingConsumer = (i, j, k, l) -> {
 			throw new IllegalArgumentException("Not supported");
 		};
-		regularConsumer = (i, j, k, l) -> {
+		throwingSuccess = (i, j, k, l) -> {
 			value1 = i + 2;
 			value2 = j + 2;
 			value3 = k + 2;
@@ -39,20 +39,18 @@ public class ThrowingConsumer4Test{
 	}
 	
 	@Test
-	public void testThrowingConsumer4(){
-		try{
-			consumer.accept(5, 3, 17, 13);
-			fail();
-		}catch(IllegalArgumentException e){
-			// Success
-			assertEquals("Not supported", e.getMessage());
-		}
+	public void testConsumer4(){
+		success.accept(5, 3, 17, 13);
+		assertEquals(5, value1);
+		assertEquals(3, value2);
+		assertEquals(17, value3);
+		assertEquals(13, value4);
 	}
 	
 	@Test
 	public void testAndThenThrowing(){
 		try{
-			success.andThen(consumer).accept(5, 3, 17, 13);
+			success.andThen(throwingConsumer).accept(5, 3, 17, 13);
 			fail();
 		}catch(IllegalArgumentException e){
 			assertEquals(5, value1);
@@ -73,8 +71,8 @@ public class ThrowingConsumer4Test{
 	}
 	
 	@Test
-	public void testAndThenRegularConsumer(){
-		success.andThen(regularConsumer).accept(5, 3, 17, 13);
+	public void testAndThenThrowingSuccess(){
+		success.andThen(throwingSuccess).accept(5, 3, 17, 13);
 		assertEquals(7, value1);
 		assertEquals(5, value2);
 		assertEquals(19, value3);

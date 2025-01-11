@@ -12,7 +12,8 @@ import java.util.function.BiConsumer;
  * @param <T> The type of {@link Throwable} thrown by the consumer
  * 
  * @author Logan Ferree (Tadukoo)
- * @version 0.1-Alpha-SNAPSHOT
+ * @version Beta v.0.7
+ * @since 0.1-Alpha-SNAPSHOT
  */
 @FunctionalInterface
 public interface ThrowingConsumer2<A, B, T extends Throwable>{
@@ -27,16 +28,30 @@ public interface ThrowingConsumer2<A, B, T extends Throwable>{
 	void accept(A a, B b) throws T;
 	
 	/**
-	 * Creates a ThrowingConsumer2 that runs this ThrowingConsumer2 and then also runs the 
-	 * given ThrowingConsumer2 on the same arguments.
+	 * Creates a {@link ThrowingConsumer2} that runs this {@link ThrowingConsumer2} and then also runs the
+	 * given {@link ThrowingConsumer2} on the same arguments.
 	 * 
-	 * @param after A 2nd ThrowingConsumer2 to run the arguments on after this one
-	 * @return The ThrowingConsumer2 made from composing this one and the given one
+	 * @param after A 2nd {@link ThrowingConsumer2} to run the arguments on after this one
+	 * @return The {@link ThrowingConsumer2} made from composing this one and the given one
 	 */
 	default ThrowingConsumer2<A, B, T> andThen(ThrowingConsumer2<? super A, ? super B, ? extends T> after){
 		return (a, b) -> {
-							this.accept(a, b);
-							after.accept(a, b);
-						};
+			this.accept(a, b);
+			after.accept(a, b);
+		};
+	}
+	
+	/**
+	 * Creates a {@link ThrowingConsumer2} that runs this {@link ThrowingConsumer2} and then also runs the
+	 * given {@link Consumer2} on the same arguments.
+	 *
+	 * @param after A {@link Consumer2} to run the arguments on after this one
+	 * @return The {@link ThrowingConsumer2} made from composing this one and the given {@link Consumer2}
+	 */
+	default ThrowingConsumer2<A, B, T> andThen(Consumer2<? super A, ? super B> after){
+		return (a, b) -> {
+			this.accept(a, b);
+			after.accept(a, b);
+		};
 	}
 }

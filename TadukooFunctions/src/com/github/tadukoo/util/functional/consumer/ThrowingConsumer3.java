@@ -26,16 +26,30 @@ public interface ThrowingConsumer3<A, B, C, T extends Throwable>{
 	void accept(A a, B b, C c) throws T;
 	
 	/**
-	 * Creates a ThrowingConsumer3 that runs this ThrowingConsumer3 and then also runs the 
-	 * given ThrowingConsumer3 on the same arguments.
+	 * Creates a {@link ThrowingConsumer3} that runs this {@link ThrowingConsumer3} and then also runs the
+	 * given {@link ThrowingConsumer3} on the same arguments.
 	 * 
-	 * @param after A 2nd ThrowingConsumer3 to run the arguments on after this one
-	 * @return The ThrowingConsumer3 made from composing this one and the given one
+	 * @param after A 2nd {@link ThrowingConsumer3} to run the arguments on after this one
+	 * @return The {@link ThrowingConsumer3} made from composing this one and the given one
 	 */
 	default ThrowingConsumer3<A, B, C, T> andThen(ThrowingConsumer3<? super A, ? super B, ? super C, ? extends T> after){
 		return (a, b, c) -> {
-								this.accept(a, b, c);
-								after.accept(a, b, c);
-							};
+			this.accept(a, b, c);
+			after.accept(a, b, c);
+		};
+	}
+	
+	/**
+	 * Creates a {@link ThrowingConsumer3} that runs this {@link ThrowingConsumer3} and then also runs the
+	 * given {@link Consumer3} on the same arguments.
+	 *
+	 * @param after A {@link Consumer3} to run the arguments on after this {@link ThrowingConsumer3}
+	 * @return The {@link ThrowingConsumer3} made from composing this {@link ThrowingConsumer3} and the given {@link Consumer3}
+	 */
+	default ThrowingConsumer3<A, B, C, T> andThen(Consumer3<? super A, ? super B, ? super C> after){
+		return (a, b, c) -> {
+			this.accept(a, b, c);
+			after.accept(a, b, c);
+		};
 	}
 }

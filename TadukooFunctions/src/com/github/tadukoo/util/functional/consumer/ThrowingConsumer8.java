@@ -15,7 +15,8 @@ package com.github.tadukoo.util.functional.consumer;
  * @param <T> The type of {@link Throwable} thrown by the consumer
  *
  * @author Logan Ferree (Tadukoo)
- * @version Alpha v.0.3
+ * @version Beta v.0.7
+ * @since Alpha v.0.3
  */
 @FunctionalInterface
 public interface ThrowingConsumer8<A, B, C, D, E, F, G, H, T extends Throwable>{
@@ -36,18 +37,33 @@ public interface ThrowingConsumer8<A, B, C, D, E, F, G, H, T extends Throwable>{
 	void accept(A a, B b, C c, D d, E e, F f, G g, H h) throws T;
 	
 	/**
-	 * Creates a ThrowingConsumer8 that runs this ThrowingConsumer8 and then also runs the
-	 * given ThrowingConsumer8 on the same arguments.
+	 * Creates a {@link ThrowingConsumer8} that runs this {@link ThrowingConsumer8} and then also runs the
+	 * given {@link ThrowingConsumer8} on the same arguments.
 	 *
-	 * @param after A 2nd ThrowingConsumer8 to run the arguments on after this one
-	 * @return The ThrowingConsumer8 made from composing this one and the given one
+	 * @param after A 2nd {@link ThrowingConsumer8} to run the arguments on after this one
+	 * @return The {@link ThrowingConsumer8} made from composing this one and the given one
 	 */
 	default ThrowingConsumer8<A, B, C, D, E, F, G, H, T> andThen(
 			ThrowingConsumer8<? super A, ? super B, ? super C, ? super D, ? super E,
 					? super F, ? super G,? super H, ? extends T> after){
 		return (a, b, c, d, e, f, g, h) -> {
-								this.accept(a, b, c, d, e, f, g, h);
-								after.accept(a, b, c, d, e, f, g, h);
-							};
+			this.accept(a, b, c, d, e, f, g, h);
+			after.accept(a, b, c, d, e, f, g, h);
+		};
+	}
+	
+	/**
+	 * Creates a {@link ThrowingConsumer8} that runs this {@link ThrowingConsumer8} and then also runs the
+	 * given {@link Consumer8} on the same arguments.
+	 *
+	 * @param after A {@link Consumer8} to run the arguments on after this {@link ThrowingConsumer8}
+	 * @return The {@link ThrowingConsumer8} made from composing this {@link ThrowingConsumer8} and the given {@link Consumer8}
+	 */
+	default ThrowingConsumer8<A, B, C, D, E, F, G, H, T> andThen(
+			Consumer8<? super A, ? super B, ? super C, ? super D, ? super E, ? super F, ? super G,? super H> after){
+		return (a, b, c, d, e, f, g, h) -> {
+			this.accept(a, b, c, d, e, f, g, h);
+			after.accept(a, b, c, d, e, f, g, h);
+		};
 	}
 }

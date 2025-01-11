@@ -6,12 +6,12 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
-public class ThrowingConsumer2Test{
+public class Consumer2Test{
 	private int value1, value2;
-	private ThrowingConsumer2<Integer, Integer, IllegalArgumentException> success;
-	private ThrowingConsumer2<Integer, Integer, IllegalArgumentException> add2;
-	private ThrowingConsumer2<Integer, Integer, IllegalArgumentException> consumer;
-	private Consumer2<Integer, Integer> regularConsumer;
+	private Consumer2<Integer, Integer> success;
+	private Consumer2<Integer, Integer> add2;
+	private ThrowingConsumer2<Integer, Integer, IllegalArgumentException> throwingConsumer;
+	private ThrowingConsumer2<Integer, Integer, IllegalArgumentException> throwingSuccess;
 	
 	@BeforeEach
 	public void setup(){
@@ -23,30 +23,26 @@ public class ThrowingConsumer2Test{
 			value1 = i + 2;
 			value2 = j + 2;
 		};
-		consumer = (i, j) -> {
+		throwingConsumer = (i, j) -> {
 			throw new IllegalArgumentException("Not supported");
 		};
-		regularConsumer = (i, j) -> {
+		throwingSuccess = (i, j) -> {
 			value1 = i + 2;
 			value2 = j + 2;
 		};
 	}
 	
 	@Test
-	public void testThrowingConsumer2(){
-		try{
-			consumer.accept(5, 3);
-			fail();
-		}catch(IllegalArgumentException e){
-			// Success
-			assertEquals("Not supported", e.getMessage());
-		}
+	public void testConsumer2(){
+		success.accept(5, 3);
+		assertEquals(5, value1);
+		assertEquals(3, value2);
 	}
 	
 	@Test
 	public void testAndThenThrowing(){
 		try{
-			success.andThen(consumer).accept(5, 3);
+			success.andThen(throwingConsumer).accept(5, 3);
 			fail();
 		}catch(IllegalArgumentException e){
 			assertEquals(5, value1);
@@ -63,8 +59,8 @@ public class ThrowingConsumer2Test{
 	}
 	
 	@Test
-	public void testAndThenRegularConsumer(){
-		success.andThen(regularConsumer).accept(5, 3);
+	public void testAndThenThrowingSuccess(){
+		success.andThen(throwingSuccess).accept(5, 3);
 		assertEquals(7, value1);
 		assertEquals(5, value2);
 	}

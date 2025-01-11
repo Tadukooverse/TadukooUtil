@@ -6,12 +6,12 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
-public class ThrowingConsumer3Test{
+public class Consumer3Test{
 	private int value1, value2, value3;
-	private ThrowingConsumer3<Integer, Integer, Integer, IllegalArgumentException> success;
-	private ThrowingConsumer3<Integer, Integer, Integer, IllegalArgumentException> add2;
-	private ThrowingConsumer3<Integer, Integer, Integer, IllegalArgumentException> consumer;
-	private Consumer3<Integer, Integer, Integer> regularConsumer;
+	private Consumer3<Integer, Integer, Integer> success;
+	private Consumer3<Integer, Integer, Integer> add2;
+	private ThrowingConsumer3<Integer, Integer, Integer, IllegalArgumentException> throwingConsumer;
+	private ThrowingConsumer3<Integer, Integer, Integer, IllegalArgumentException> throwingSuccess;
 	
 	@BeforeEach
 	public void setup(){
@@ -25,10 +25,10 @@ public class ThrowingConsumer3Test{
 			value2 = j + 2;
 			value3 = k + 2;
 		};
-		consumer = (i, j, k) -> {
+		throwingConsumer = (i, j, k) -> {
 			throw new IllegalArgumentException("Not supported");
 		};
-		regularConsumer = (i, j, k) -> {
+		throwingSuccess = (i, j, k) -> {
 			value1 = i + 2;
 			value2 = j + 2;
 			value3 = k + 2;
@@ -36,20 +36,17 @@ public class ThrowingConsumer3Test{
 	}
 	
 	@Test
-	public void testThrowingConsumer3(){
-		try{
-			consumer.accept(5, 3, 17);
-			fail();
-		}catch(IllegalArgumentException e){
-			// Success
-			assertEquals("Not supported", e.getMessage());
-		}
+	public void testConsumer3(){
+		success.accept(5, 3, 17);
+		assertEquals(5, value1);
+		assertEquals(3, value2);
+		assertEquals(17, value3);
 	}
 	
 	@Test
 	public void testAndThenThrowing(){
 		try{
-			success.andThen(consumer).accept(5, 3, 17);
+			success.andThen(throwingConsumer).accept(5, 3, 17);
 			fail();
 		}catch(IllegalArgumentException e){
 			assertEquals(5, value1);
@@ -69,7 +66,7 @@ public class ThrowingConsumer3Test{
 	
 	@Test
 	public void testAndThenRegularConsumer(){
-		success.andThen(regularConsumer).accept(5, 3, 17);
+		success.andThen(throwingSuccess).accept(5, 3, 17);
 		assertEquals(7, value1);
 		assertEquals(5, value2);
 		assertEquals(19, value3);

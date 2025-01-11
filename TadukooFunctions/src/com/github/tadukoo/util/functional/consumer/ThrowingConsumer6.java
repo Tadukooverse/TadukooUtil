@@ -13,7 +13,8 @@ package com.github.tadukoo.util.functional.consumer;
  * @param <T> The type of {@link Throwable} thrown by the consumer
  *
  * @author Logan Ferree (Tadukoo)
- * @version Alpha v.0.3
+ * @version Beta v.0.7
+ * @since Alpha v.0.3
  */
 @FunctionalInterface
 public interface ThrowingConsumer6<A, B, C, D, E, F, T extends Throwable>{
@@ -32,18 +33,32 @@ public interface ThrowingConsumer6<A, B, C, D, E, F, T extends Throwable>{
 	void accept(A a, B b, C c, D d, E e, F f) throws T;
 	
 	/**
-	 * Creates a ThrowingConsumer6 that runs this ThrowingConsumer6 and then also runs the
-	 * given ThrowingConsumer6 on the same arguments.
+	 * Creates a {@link ThrowingConsumer6} that runs this {@link ThrowingConsumer6} and then also runs the
+	 * given {@link ThrowingConsumer6} on the same arguments.
 	 * 
-	 * @param after A 2nd ThrowingConsumer6 to run the arguments on after this one
-	 * @return The ThrowingConsumer6 made from composing this one and the given one
+	 * @param after A 2nd {@link ThrowingConsumer6} to run the arguments on after this one
+	 * @return The {@link ThrowingConsumer6} made from composing this one and the given one
 	 */
 	default ThrowingConsumer6<A, B, C, D, E, F, T> andThen(
-			ThrowingConsumer6<? super A, ? super B, ? super C, ? super D, ? super E,
-					? super F, ? extends T> after){
+			ThrowingConsumer6<? super A, ? super B, ? super C, ? super D, ? super E, ? super F, ? extends T> after){
 		return (a, b, c, d, e, f) -> {
-								this.accept(a, b, c, d, e, f);
-								after.accept(a, b, c, d, e, f);
-							};
+			this.accept(a, b, c, d, e, f);
+			after.accept(a, b, c, d, e, f);
+		};
+	}
+	
+	/**
+	 * Creates a {@link ThrowingConsumer6} that runs this {@link ThrowingConsumer6} and then also runs the
+	 * given {@link Consumer6} on the same arguments.
+	 *
+	 * @param after A {@link Consumer6} to run the arguments on after this {@link ThrowingConsumer6}
+	 * @return The {@link ThrowingConsumer6} made from composing this {@link ThrowingConsumer6} and the given {@link Consumer6}
+	 */
+	default ThrowingConsumer6<A, B, C, D, E, F, T> andThen(
+			Consumer6<? super A, ? super B, ? super C, ? super D, ? super E, ? super F> after){
+		return (a, b, c, d, e, f) -> {
+			this.accept(a, b, c, d, e, f);
+			after.accept(a, b, c, d, e, f);
+		};
 	}
 }
