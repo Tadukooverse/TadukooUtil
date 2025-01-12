@@ -10,6 +10,7 @@ public class ThrowingSelfFunctionTest{
 	private ThrowingSelfFunction<Integer, IllegalArgumentException> thrower;
 	private ThrowingSelfFunction<Integer, IllegalArgumentException> success;
 	private ThrowingSelfFunction<Integer, IllegalArgumentException> add2;
+	private SelfFunction<Integer> regularFunction;
 	
 	@BeforeEach
 	public void setup(){
@@ -18,6 +19,7 @@ public class ThrowingSelfFunctionTest{
 		};
 		success = i -> i;
 		add2 = i -> i + 2;
+		regularFunction = i -> i + 2;
 	}
 	
 	@Test
@@ -47,6 +49,11 @@ public class ThrowingSelfFunctionTest{
 	}
 	
 	@Test
+	public void testComposeRegularFunction(){
+		assertEquals(9, add2.compose(regularFunction).apply(5));
+	}
+	
+	@Test
 	public void testAndThenThrowing(){
 		try{
 			success.andThen(thrower).apply(5);
@@ -59,6 +66,11 @@ public class ThrowingSelfFunctionTest{
 	@Test
 	public void testAndThenSuccess(){
 		assertEquals(7, success.andThen(add2).apply(5));
+	}
+	
+	@Test
+	public void testAndThenRegularFunction(){
+		assertEquals(7, success.andThen(regularFunction).apply(5));
 	}
 	
 	@Test

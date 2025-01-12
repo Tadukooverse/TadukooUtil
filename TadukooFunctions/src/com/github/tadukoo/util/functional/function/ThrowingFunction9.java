@@ -40,15 +40,27 @@ public interface ThrowingFunction9<A, B, C, D, E, F, G, H, I, R, T extends Throw
 	R apply(A a, B b, C c, D d, E e, F f, G g, H h, I i) throws T;
 	
 	/**
-	 * Creates a ThrowingFunction9 that runs this ThrowingFunction9 and
+	 * Creates a {@link ThrowingFunction9} that runs this {@link ThrowingFunction9} and
 	 * puts the result into the given {@link ThrowingFunction}.
 	 * 
 	 * @param <S> The output type of the {@link ThrowingFunction}
-	 * @param after A {@link ThrowingFunction} to put the result of this ThrowingFunction9 into
-	 * @return The ThrowingFunction9 made from composing this one and the given {@link ThrowingFunction}
+	 * @param after A {@link ThrowingFunction} to put the result of this {@link ThrowingFunction9} into
+	 * @return The {@link ThrowingFunction9} made from composing this {@link ThrowingFunction9} and the given {@link ThrowingFunction}
 	 */
 	default <S> ThrowingFunction9<A, B, C, D, E, F, G, H, I, S, T> andThen(
 			ThrowingFunction<? super R, ? extends S, ? extends T> after){
+		return (a, b, c, d, e, f, g, h, i) -> after.apply(this.apply(a, b, c, d, e, f, g, h, i));
+	}
+	
+	/**
+	 * Creates a {@link ThrowingFunction9} that runs this {@link ThrowingFunction9} and
+	 * puts the result into the given {@link Function}.
+	 *
+	 * @param <S> The output type of the {@link Function}
+	 * @param after A {@link Function} to put the result of this {@link ThrowingFunction9} into
+	 * @return The {@link ThrowingFunction9} made from composing this {@link ThrowingFunction9} and the given {@link Function}
+	 */
+	default <S> ThrowingFunction9<A, B, C, D, E, F, G, H, I, S, T> andThen(Function<? super R, ? extends S> after){
 		return (a, b, c, d, e, f, g, h, i) -> after.apply(this.apply(a, b, c, d, e, f, g, h, i));
 	}
 }

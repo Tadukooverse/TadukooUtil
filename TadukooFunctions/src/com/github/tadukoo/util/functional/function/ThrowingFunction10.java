@@ -18,7 +18,8 @@ package com.github.tadukoo.util.functional.function;
  * @param <T> The type of {@link Throwable} thrown by the function
  *
  * @author Logan Ferree (Tadukoo)
- * @version Alpha v.0.3
+ * @version Beta v.0.7
+ * @since Alpha v.0.3
  */
 @FunctionalInterface
 public interface ThrowingFunction10<A, B, C, D, E, F, G, H, I, J, R, T extends Throwable>{
@@ -42,15 +43,27 @@ public interface ThrowingFunction10<A, B, C, D, E, F, G, H, I, J, R, T extends T
 	R apply(A a, B b, C c, D d, E e, F f, G g, H h, I i, J j) throws T;
 	
 	/**
-	 * Creates a ThrowingFunction10 that runs this ThrowingFunction10 and
+	 * Creates a {@link ThrowingFunction10} that runs this {@link ThrowingFunction10} and
 	 * puts the result into the given {@link ThrowingFunction}.
 	 * 
 	 * @param <S> The output type of the {@link ThrowingFunction}
-	 * @param after A {@link ThrowingFunction} to put the result of this ThrowingFunction10 into
-	 * @return The ThrowingFunction10 made from composing this one and the given {@link ThrowingFunction}
+	 * @param after A {@link ThrowingFunction} to put the result of this {@link ThrowingFunction10} into
+	 * @return The {@link ThrowingFunction10} made from composing this {@link ThrowingFunction10} and the given {@link ThrowingFunction}
 	 */
 	default <S> ThrowingFunction10<A, B, C, D, E, F, G, H, I, J, S, T> andThen(
 			ThrowingFunction<? super R, ? extends S, ? extends T> after){
+		return (a, b, c, d, e, f, g, h, i, j) -> after.apply(this.apply(a, b, c, d, e, f, g, h, i, j));
+	}
+	
+	/**
+	 * Creates a {@link ThrowingFunction10} that runs this {@link ThrowingFunction10} and
+	 * puts the result into the given {@link Function}.
+	 *
+	 * @param <S> The output type of the {@link Function}
+	 * @param after A {@link Function} to put the result of this {@link ThrowingFunction10} into
+	 * @return The {@link ThrowingFunction10} made from composing this {@link ThrowingFunction10} and the given {@link Function}
+	 */
+	default <S> ThrowingFunction10<A, B, C, D, E, F, G, H, I, J, S, T> andThen(Function<? super R, ? extends S> after){
 		return (a, b, c, d, e, f, g, h, i, j) -> after.apply(this.apply(a, b, c, d, e, f, g, h, i, j));
 	}
 }

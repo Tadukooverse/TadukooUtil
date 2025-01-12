@@ -6,11 +6,11 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
-public class ThrowingFunctionTest{
-	private ThrowingFunction<Integer, Integer, IllegalArgumentException> thrower;
-	private ThrowingFunction<Integer, Integer, IllegalArgumentException> success;
-	private ThrowingFunction<Integer, Integer, IllegalArgumentException> add2;
-	private Function<Integer, Integer> regularFunction;
+public class SelfFunctionTest{
+	private ThrowingSelfFunction<Integer, IllegalArgumentException> thrower;
+	private SelfFunction<Integer> success;
+	private SelfFunction<Integer> add2;
+	private ThrowingSelfFunction<Integer, IllegalArgumentException> throwingSuccess;
 	
 	@BeforeEach
 	public void setup(){
@@ -19,18 +19,12 @@ public class ThrowingFunctionTest{
 		};
 		success = i -> i;
 		add2 = i -> i + 2;
-		regularFunction = i -> i + 2;
+		throwingSuccess = i -> i + 2;
 	}
 	
 	@Test
-	public void testThrowingFunction(){
-		try{
-			thrower.apply(5);
-			fail();
-		}catch(IllegalArgumentException e){
-			// Success
-			assertEquals("Unsupported", e.getMessage());
-		}
+	public void testSelfFunction(){
+		assertEquals(5, success.apply(5));
 	}
 	
 	@Test
@@ -49,8 +43,8 @@ public class ThrowingFunctionTest{
 	}
 	
 	@Test
-	public void testComposeRegularFunction(){
-		assertEquals(7, regularFunction.compose(success).apply(5));
+	public void testComposeThrowingSuccess(){
+		assertEquals(9, add2.compose(throwingSuccess).apply(5));
 	}
 	
 	@Test
@@ -69,13 +63,13 @@ public class ThrowingFunctionTest{
 	}
 	
 	@Test
-	public void testAndThenRegularFunction(){
-		assertEquals(7, success.andThen(regularFunction).apply(5));
+	public void testAndThenThrowingSuccess(){
+		assertEquals(7, success.andThen(throwingSuccess).apply(5));
 	}
 	
 	@Test
-	public void testIdentity() throws Throwable{
-		ThrowingFunction<Integer, Integer, Throwable> identity = ThrowingFunction.identity();
+	public void testIdentity(){
+		SelfFunction<Integer> identity = SelfFunction.identity();
 		assertEquals(5, identity.apply(5));
 	}
 }

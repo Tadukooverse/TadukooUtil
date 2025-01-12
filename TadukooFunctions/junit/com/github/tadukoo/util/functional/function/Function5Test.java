@@ -6,35 +6,25 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
-public class ThrowingFunction5Test{
-	private ThrowingFunction5<Integer, Integer, Integer, Integer, Integer, Integer, IllegalArgumentException> thrower;
-	private ThrowingFunction5<Integer, Integer, Integer, Integer, Integer, Integer, IllegalArgumentException> success;
-	private ThrowingFunction<Integer, Integer, IllegalArgumentException> add2;
+public class Function5Test{
+	private Function5<Integer, Integer, Integer, Integer, Integer, Integer> success;
+	private Function<Integer, Integer> add2;
 	private ThrowingFunction<Integer, Integer, IllegalArgumentException> simpleThrower;
-	private Function<Integer, Integer> regularFunction;
+	private ThrowingFunction<Integer, Integer, IllegalArgumentException> throwingSuccess;
 	
 	@BeforeEach
 	public void setup(){
-		thrower = (i, j, k, l, m) -> {
-			throw new IllegalArgumentException("Unsupported");
-		};
 		success = (i, j, k, l, m) -> i + j + k + l + m;
 		add2 = i -> i + 2;
 		simpleThrower = i -> {
 			throw new IllegalArgumentException("Not supported");
 		};
-		regularFunction = i -> i + 2;
+		throwingSuccess = i -> i + 2;
 	}
 	
 	@Test
 	public void testThrowingFunction5(){
-		try{
-			thrower.apply(5, 5, 5, 5, 5);
-			fail();
-		}catch(IllegalArgumentException e){
-			// Success
-			assertEquals("Unsupported", e.getMessage());
-		}
+		assertEquals(25, success.apply(5, 5, 5, 5, 5));
 	}
 	
 	@Test
@@ -53,7 +43,7 @@ public class ThrowingFunction5Test{
 	}
 	
 	@Test
-	public void testAndThenRegularFunction(){
-		assertEquals(27, success.andThen(regularFunction).apply(5, 5, 5, 5, 5));
+	public void testAndThenThrowingSuccess(){
+		assertEquals(27, success.andThen(throwingSuccess).apply(5, 5, 5, 5, 5));
 	}
 }

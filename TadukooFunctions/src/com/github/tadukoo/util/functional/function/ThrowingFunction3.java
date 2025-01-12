@@ -11,7 +11,8 @@ package com.github.tadukoo.util.functional.function;
  * @param <T> The type of {@link Throwable} thrown by the function
  * 
  * @author Logan Ferree (Tadukoo)
- * @version 0.1-Alpha-SNAPSHOT
+ * @version Beta v.0.7
+ * @since 0.1-Alpha-SNAPSHOT
  */
 @FunctionalInterface
 public interface ThrowingFunction3<A, B, C, R, T extends Throwable>{
@@ -28,14 +29,26 @@ public interface ThrowingFunction3<A, B, C, R, T extends Throwable>{
 	R apply(A a, B b, C c) throws T;
 	
 	/**
-	 * Creates a ThrowingFunction3 that runs this ThrowingFunction3 and 
+	 * Creates a {@link ThrowingFunction3} that runs this {@link ThrowingFunction3} and
 	 * puts the result into the given {@link ThrowingFunction}.
 	 * 
 	 * @param <S> The output type of the {@link ThrowingFunction}
-	 * @param after A {@link ThrowingFunction} to put the result of this ThrowingFunction3 into
-	 * @return The ThrowingFunction3 made from composing this one and the given {@link ThrowingFunction}
+	 * @param after A {@link ThrowingFunction} to put the result of this {@link ThrowingFunction3} into
+	 * @return The {@link ThrowingFunction3} made from composing this {@link ThrowingFunction3} and the given {@link ThrowingFunction}
 	 */
 	default <S> ThrowingFunction3<A, B, C, S, T> andThen(ThrowingFunction<? super R, ? extends S, ? extends T> after){
+		return (a, b, c) -> after.apply(this.apply(a, b, c));
+	}
+	
+	/**
+	 * Creates a {@link ThrowingFunction3} that runs this {@link ThrowingFunction3} and
+	 * puts the result into the given {@link Function}.
+	 *
+	 * @param <S> The output type of the {@link Function}
+	 * @param after A {@link Function} to put the result of this {@link ThrowingFunction3} into
+	 * @return The {@link ThrowingFunction3} made from composing this {@link ThrowingFunction3} and the given {@link Function}
+	 */
+	default <S> ThrowingFunction3<A, B, C, S, T> andThen(Function<? super R, ? extends S> after){
 		return (a, b, c) -> after.apply(this.apply(a, b, c));
 	}
 }
