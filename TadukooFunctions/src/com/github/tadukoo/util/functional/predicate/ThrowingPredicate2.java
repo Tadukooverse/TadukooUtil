@@ -12,7 +12,8 @@ import java.util.function.BiPredicate;
  * @param <T> The type of {@link Throwable} thrown by the predicate
  *
  * @author Logan Ferree (Tadukoo)
- * @version 0.1-Alpha-SNAPSHOT
+ * @version Beta v.0.7
+ * @since 0.1-Alpha-SNAPSHOT
  */
 @FunctionalInterface
 public interface ThrowingPredicate2<A, B, T extends Throwable>{
@@ -28,31 +29,53 @@ public interface ThrowingPredicate2<A, B, T extends Throwable>{
 	boolean test(A a, B b) throws T;
 	
 	/**
-	 * Creates a ThrowingPredicate2 that will test the arguments with this ThrowingPredicate2 
-	 * and with the given ThrowingPredicate2, returning true only if both results are true.
+	 * Creates a {@link ThrowingPredicate2} that will test the arguments with this {@link ThrowingPredicate2}
+	 * and with the given {@link ThrowingPredicate2}, returning true only if both results are true.
 	 * 
-	 * @param other The other ThrowingPredicate2 to test the arguments on
-	 * @return The ThrowingPredicate2 that results from composing this one and the given one
+	 * @param other The other {@link ThrowingPredicate2} to test the arguments on
+	 * @return The {@link ThrowingPredicate2} that results from composing this one and the given one
 	 */
 	default ThrowingPredicate2<A, B, T> and(ThrowingPredicate2<? super A, ? super B, ? extends T> other){
 		return (a, b) -> this.test(a, b) && other.test(a, b);
 	}
 	
 	/**
-	 * Creates a ThrowingPredicate2 that will test the arguments with this ThrowingPredicate2 
-	 * and with the given ThrowingPredicate2, returning true if either result is true.
+	 * Creates a {@link ThrowingPredicate2} that will test the arguments with this {@link ThrowingPredicate2}
+	 * and with the given {@link Predicate2}, returning true only if both results are true.
+	 *
+	 * @param other The other {@link Predicate2} to test the arguments on
+	 * @return The {@link ThrowingPredicate2}that results from composing this {@link ThrowingPredicate2} and the given {@link Predicate2}
+	 */
+	default ThrowingPredicate2<A, B, T> and(Predicate2<? super A, ? super B> other){
+		return (a, b) -> this.test(a, b) && other.test(a, b);
+	}
+	
+	/**
+	 * Creates a {@link ThrowingPredicate2} that will test the arguments with this {@link ThrowingPredicate2}
+	 * and with the given {@link ThrowingPredicate2}, returning true if either result is true.
 	 * 
-	 * @param other The other ThrowingPredicate2 to test the arguments on
-	 * @return The ThrowingPredicate2 that results from composing this one and the given one
+	 * @param other The other {@link ThrowingPredicate2} to test the arguments on
+	 * @return The {@link ThrowingPredicate2} that results from composing this one and the given one
 	 */
 	default ThrowingPredicate2<A, B, T> or(ThrowingPredicate2<? super A, ? super B, ? extends T> other){
 		return (a, b) -> this.test(a, b) || other.test(a, b);
 	}
 	
 	/**
-	 * Creates a ThrowingPredicate2 that will return the opposite result of this ThrowingPredicate2.
+	 * Creates a {@link ThrowingPredicate2} that will test the arguments with this {@link ThrowingPredicate2}
+	 * and with the given {@link Predicate2}, returning true if either result is true.
+	 *
+	 * @param other The other {@link Predicate2} to test the arguments on
+	 * @return The {@link ThrowingPredicate2} that results from composing this {@link ThrowingPredicate2} and the given {@link Predicate2}
+	 */
+	default ThrowingPredicate2<A, B, T> or(Predicate2<? super A, ? super B> other){
+		return (a, b) -> this.test(a, b) || other.test(a, b);
+	}
+	
+	/**
+	 * Creates a {@link ThrowingPredicate2} that will return the opposite result of this {@link ThrowingPredicate2}.
 	 * 
-	 * @return A negated version of this ThrowingPredicate2
+	 * @return A negated version of this {@link ThrowingPredicate2}
 	 */
 	default ThrowingPredicate2<A, B, T> negate(){
 		return (a, b) -> !this.test(a, b);

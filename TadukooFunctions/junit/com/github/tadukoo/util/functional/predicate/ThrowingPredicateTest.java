@@ -13,6 +13,7 @@ public class ThrowingPredicateTest{
 	private ThrowingPredicate<Integer, IllegalArgumentException> aboveOrEqual5;
 	private ThrowingPredicate<Integer, IllegalArgumentException> belowOrEqual5;
 	private ThrowingPredicate<Integer, IllegalArgumentException> equal5;
+	private Predicate<Integer> equal5Regular, belowOrEqual5Regular;
 	
 	@BeforeEach
 	public void setup(){
@@ -22,6 +23,8 @@ public class ThrowingPredicateTest{
 		aboveOrEqual5 = i -> i >= 5;
 		belowOrEqual5 = i -> i <= 5;
 		equal5 = i -> i == 5;
+		equal5Regular = i -> i == 5;
+		belowOrEqual5Regular = i -> i <= 5;
 	}
 	
 	@Test
@@ -55,6 +58,26 @@ public class ThrowingPredicateTest{
 	}
 	
 	@Test
+	public void testAndBothTrueRegular(){
+		assertTrue(aboveOrEqual5.and(belowOrEqual5Regular).test(5));
+	}
+	
+	@Test
+	public void testAndBothFalseRegular(){
+		assertFalse(aboveOrEqual5.and(equal5Regular).test(4));
+	}
+	
+	@Test
+	public void testAndFirstFalseRegular(){
+		assertFalse(aboveOrEqual5.and(belowOrEqual5Regular).test(4));
+	}
+	
+	@Test
+	public void testAndLastFalseRegular(){
+		assertFalse(aboveOrEqual5.and(belowOrEqual5Regular).test(6));
+	}
+	
+	@Test
 	public void testOrBothTrue(){
 		assertTrue(aboveOrEqual5.or(belowOrEqual5).test(5));
 	}
@@ -72,6 +95,26 @@ public class ThrowingPredicateTest{
 	@Test
 	public void testOrLastFalse(){
 		assertTrue(aboveOrEqual5.or(belowOrEqual5).test(6));
+	}
+	
+	@Test
+	public void testOrBothTrueRegular(){
+		assertTrue(aboveOrEqual5.or(belowOrEqual5Regular).test(5));
+	}
+	
+	@Test
+	public void testOrBothFalseRegular(){
+		assertFalse(aboveOrEqual5.or(equal5Regular).test(4));
+	}
+	
+	@Test
+	public void testOrFirstFalseRegular(){
+		assertTrue(aboveOrEqual5.or(belowOrEqual5Regular).test(4));
+	}
+	
+	@Test
+	public void testOrLastFalseRegular(){
+		assertTrue(aboveOrEqual5.or(belowOrEqual5Regular).test(6));
 	}
 	
 	@Test

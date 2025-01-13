@@ -1,10 +1,9 @@
 package com.github.tadukoo.util.functional.predicate;
 
 import java.util.Objects;
-import java.util.function.Predicate;
 
 /**
- * A better version of Java's {@link Predicate} interface that 
+ * A better version of Java's {@link java.util.function.Predicate} interface that
  * allows for the predicates to throw whatever {@link Throwable}
  * is specified.
  *
@@ -12,7 +11,8 @@ import java.util.function.Predicate;
  * @param <T> The type of {@link Throwable} thrown by the predicate
  * 
  * @author Logan Ferree (Tadukoo)
- * @version 0.1-Alpha-SNAPSHOT
+ * @version Beta v.0.7
+ * @since 0.1-Alpha-SNAPSHOT
  */
 @FunctionalInterface
 public interface ThrowingPredicate<A, T extends Throwable>{
@@ -27,39 +27,61 @@ public interface ThrowingPredicate<A, T extends Throwable>{
 	boolean test(A a) throws T;
 	
 	/**
-	 * Creates a ThrowingPredicate that will test the argument with this ThrowingPredicate 
-	 * and with the given ThrowingPredicate, returning true only if both results are true.
+	 * Creates a {@link ThrowingPredicate} that will test the argument with this {@link ThrowingPredicate}
+	 * and with the given {@link ThrowingPredicate}, returning true only if both results are true.
 	 * 
-	 * @param other The other ThrowingPredicate to test the argument on
-	 * @return The ThrowingPredicate that results from composing this one and the given one
+	 * @param other The other {@link ThrowingPredicate} to test the argument on
+	 * @return The {@link ThrowingPredicate} that results from composing this one and the given one
 	 */
 	default ThrowingPredicate<A, T> and(ThrowingPredicate<? super A, ? extends T> other){
 		return a -> this.test(a) && other.test(a);
 	}
 	
 	/**
-	 * Creates a ThrowingPredicate that will test the argument with this ThrowingPredicate 
-	 * and with the given ThrowingPredicate, returning true if either result is true.
+	 * Creates a {@link ThrowingPredicate} that will test the argument with this {@link ThrowingPredicate}
+	 * and with the given {@link Predicate}, returning true only if both results are true.
+	 *
+	 * @param other The other {@link Predicate} to test the argument on
+	 * @return The {@link ThrowingPredicate} that results from composing this {@link ThrowingPredicate} and the given {@link Predicate}
+	 */
+	default ThrowingPredicate<A, T> and(Predicate<? super A> other){
+		return a -> this.test(a) && other.test(a);
+	}
+	
+	/**
+	 * Creates a {@link ThrowingPredicate} that will test the argument with this {@link ThrowingPredicate}
+	 * and with the given {@link ThrowingPredicate}, returning true if either result is true.
 	 * 
-	 * @param other The other ThrowingPredicate to test the argument on
-	 * @return The ThrowingPredicate that results from composing this one and the given one
+	 * @param other The other {@link ThrowingPredicate} to test the argument on
+	 * @return The {@link ThrowingPredicate} that results from composing this one and the given one
 	 */
 	default ThrowingPredicate<A, T> or(ThrowingPredicate<? super A, ? extends T> other){
 		return a -> this.test(a) || other.test(a);
 	}
 	
 	/**
-	 * Creates a ThrowingPredicate that will return the opposite result of this ThrowingPredicate.
+	 * Creates a {@link ThrowingPredicate} that will test the argument with this {@link ThrowingPredicate}
+	 * and with the given {@link Predicate}, returning true if either result is true.
+	 *
+	 * @param other The other {@link Predicate} to test the argument on
+	 * @return The {@link ThrowingPredicate} that results from composing this {@link ThrowingPredicate} and the given {@link Predicate}
+	 */
+	default ThrowingPredicate<A, T> or(Predicate<? super A> other){
+		return a -> this.test(a) || other.test(a);
+	}
+	
+	/**
+	 * Creates a {@link ThrowingPredicate} that will return the opposite result of this {@link ThrowingPredicate}.
 	 * 
-	 * @return A negated version of this ThrowingPredicate
+	 * @return A negated version of this {@link ThrowingPredicate}
 	 */
 	default ThrowingPredicate<A, T> negate(){
 		return a -> !this.test(a);
 	}
 	
 	/**
-	 * Creates a ThrowingPredicate that tests if two arguments are equal according 
-	 * to Objects.equals(Object, Object).
+	 * Creates a {@link ThrowingPredicate} that tests if two arguments are equal according
+	 * to {@link Objects#equals(Object, Object)}.
 	 * 
 	 * @param <A> The argument type
 	 * @param <T> The {@link Throwable} being thrown

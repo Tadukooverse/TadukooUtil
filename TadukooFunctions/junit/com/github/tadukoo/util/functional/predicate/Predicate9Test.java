@@ -3,40 +3,28 @@ package com.github.tadukoo.util.functional.predicate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
 
-public class ThrowingPredicate9Test{
-	private ThrowingPredicate9<Boolean, Boolean, Boolean, Boolean, Boolean,
-			Boolean, Boolean, Boolean, Boolean, IllegalArgumentException> thrower;
-	private ThrowingPredicate9<Boolean, Boolean, Boolean, Boolean, Boolean,
-			Boolean, Boolean, Boolean, Boolean, IllegalArgumentException> simpleAnd;
-	private ThrowingPredicate9<Boolean, Boolean, Boolean, Boolean, Boolean,
-			Boolean, Boolean, Boolean, Boolean, IllegalArgumentException> simpleOr;
+public class Predicate9Test{
 	private Predicate9<Boolean, Boolean, Boolean, Boolean, Boolean,
-			Boolean, Boolean, Boolean, Boolean> simpleAndRegular, simpleOrRegular;
+			Boolean, Boolean, Boolean, Boolean> simpleAnd;
+	private Predicate9<Boolean, Boolean, Boolean, Boolean, Boolean,
+			Boolean, Boolean, Boolean, Boolean> simpleOr;
+	private ThrowingPredicate9<Boolean, Boolean, Boolean, Boolean, Boolean,
+			Boolean, Boolean, Boolean, Boolean, IllegalArgumentException> simpleAndThrowing, simpleOrThrowing;
 	
 	@BeforeEach
 	public void setup(){
-		thrower = (a, b, c, d, e, f, g, h, i) -> {
-			throw new IllegalArgumentException("Unsupported");
-		};
 		simpleAnd = (a, b, c, d, e, f, g, h, i) -> a && b && c && d && e && f && g && h && i;
 		simpleOr = (a , b, c, d, e, f, g, h, i) -> a || b || c || d || e || f || g || h || i;
-		simpleAndRegular = (a, b, c, d, e, f, g, h, i) -> a && b && c && d && e && f && g && h && i;
-		simpleOrRegular = (a , b, c, d, e, f, g, h, i) -> a || b || c || d || e || f || g || h || i;
+		simpleAndThrowing = (a, b, c, d, e, f, g, h, i) -> a && b && c && d && e && f && g && h && i;
+		simpleOrThrowing = (a , b, c, d, e, f, g, h, i) -> a || b || c || d || e || f || g || h || i;
 	}
 	
 	@Test
-	public void testThrowingPredicate9(){
-		try{
-			thrower.test(true, false, true, false, true, false, true, false, true);
-			fail();
-		}catch(IllegalArgumentException e){
-			assertEquals("Unsupported", e.getMessage());
-		}
+	public void testPredicate9(){
+		assertFalse(simpleAnd.test(true, false, true, false, true, false, true, false, true));
 	}
 	
 	@Test
@@ -64,26 +52,26 @@ public class ThrowingPredicate9Test{
 	}
 	
 	@Test
-	public void testAndBothTrueRegular(){
-		assertTrue(simpleAnd.and(simpleOrRegular).test(true, true, true, true, true,
+	public void testAndBothTrueThrowing(){
+		assertTrue(simpleAnd.and(simpleOrThrowing).test(true, true, true, true, true,
 				true, true, true, true));
 	}
 	
 	@Test
-	public void testAndBothFalseRegular(){
-		assertFalse(simpleAnd.and(simpleOrRegular).test(false, false, false, false, false,
+	public void testAndBothFalseThrowing(){
+		assertFalse(simpleAnd.and(simpleOrThrowing).test(false, false, false, false, false,
 				false, false, false, false));
 	}
 	
 	@Test
-	public void testAndFirstFalseRegular(){
-		assertFalse(simpleAnd.and(simpleOrRegular).test(false, true, false, false, true,
+	public void testAndFirstFalseThrowing(){
+		assertFalse(simpleAnd.and(simpleOrThrowing).test(false, true, false, false, true,
 				true, false, true, false));
 	}
 	
 	@Test
-	public void testAndLastFalseRegular(){
-		assertFalse(simpleOr.and(simpleAndRegular).test(true, false, false, true, false,
+	public void testAndLastFalseThrowing(){
+		assertFalse(simpleOr.and(simpleAndThrowing).test(true, false, false, true, false,
 				false, true, true, false));
 	}
 	
@@ -112,33 +100,33 @@ public class ThrowingPredicate9Test{
 	}
 	
 	@Test
-	public void testOrBothTrueRegular(){
-		assertTrue(simpleAnd.or(simpleOrRegular).test(true, true, true, true, true,
+	public void testOrBothTrueThrowing(){
+		assertTrue(simpleAnd.or(simpleOrThrowing).test(true, true, true, true, true,
 				true, true, true, true));
 	}
 	
 	@Test
-	public void testOrBothFalseRegular(){
-		assertFalse(simpleAnd.or(simpleOrRegular).test(false, false, false, false, false,
+	public void testOrBothFalseThrowing(){
+		assertFalse(simpleAnd.or(simpleOrThrowing).test(false, false, false, false, false,
 				false, false, false, false));
 	}
 	
 	@Test
-	public void testOrFirstFalseRegular(){
-		assertTrue(simpleAnd.or(simpleOrRegular).test(false, true, false, true, false,
+	public void testOrFirstFalseThrowing(){
+		assertTrue(simpleAnd.or(simpleOrThrowing).test(false, true, false, true, false,
 				false, true, true, false));
 	}
 	
 	@Test
-	public void testOrLastFalseRegular(){
-		assertTrue(simpleOr.or(simpleAndRegular).test(true, true, false, false, false,
+	public void testOrLastFalseThrowing(){
+		assertTrue(simpleOr.or(simpleAndThrowing).test(true, true, false, false, false,
 				false, true, true, false));
 	}
 	
 	@Test
 	public void testNegate(){
-		ThrowingPredicate9<Boolean, Boolean, Boolean, Boolean, Boolean,
-				Boolean, Boolean, Boolean, Boolean, IllegalArgumentException> negate =
+		Predicate9<Boolean, Boolean, Boolean, Boolean, Boolean,
+				Boolean, Boolean, Boolean, Boolean> negate =
 				simpleAnd.negate();
 		assertTrue(negate.test(false, false, false, false, false,
 				false, false, false, false));
