@@ -12,14 +12,6 @@ package com.github.tadukoo.util.functional.function;
 public interface UnaryOperator<A> extends Function<A, A>{
 	
 	/**
-	 * Takes a single argument and returns a result of the same type.
-	 *
-	 * @param a The argument
-	 * @return A result
-	 */
-	A apply(A a);
-	
-	/**
 	 * Returns a {@link UnaryOperator} that always returns its input argument
 	 *
 	 * @param <A> The type of argument
