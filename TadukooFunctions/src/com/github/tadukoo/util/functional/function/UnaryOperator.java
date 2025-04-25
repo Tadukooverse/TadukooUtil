@@ -9,7 +9,7 @@ package com.github.tadukoo.util.functional.function;
  * @version Beta v.0.7
  */
 @FunctionalInterface
-public interface SelfFunction<A> extends Function<A, A>{
+public interface UnaryOperator<A> extends Function<A, A>{
 	
 	/**
 	 * Takes a single argument and returns a result of the same type.
@@ -20,12 +20,12 @@ public interface SelfFunction<A> extends Function<A, A>{
 	A apply(A a);
 	
 	/**
-	 * Returns a {@link SelfFunction} that always returns its input argument
+	 * Returns a {@link UnaryOperator} that always returns its input argument
 	 *
 	 * @param <A> The type of argument
-	 * @return A {@link SelfFunction} that always returns its input argument
+	 * @return A {@link UnaryOperator} that always returns its input argument
 	 */
-	static <A> SelfFunction<A> identity(){
+	static <A> UnaryOperator<A> identity(){
 		return a -> a;
 	}
 }

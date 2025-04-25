@@ -6,11 +6,11 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
-public class ThrowingSelfFunctionTest{
-	private ThrowingSelfFunction<Integer, IllegalArgumentException> thrower;
-	private ThrowingSelfFunction<Integer, IllegalArgumentException> success;
-	private ThrowingSelfFunction<Integer, IllegalArgumentException> add2;
-	private SelfFunction<Integer> regularFunction;
+public class ThrowingUnaryOperatorTest{
+	private ThrowingUnaryOperator<Integer, IllegalArgumentException> thrower;
+	private ThrowingUnaryOperator<Integer, IllegalArgumentException> success;
+	private ThrowingUnaryOperator<Integer, IllegalArgumentException> add2;
+	private UnaryOperator<Integer> regularFunction;
 	
 	@BeforeEach
 	public void setup(){
@@ -75,7 +75,7 @@ public class ThrowingSelfFunctionTest{
 	
 	@Test
 	public void testIdentity() throws Throwable{
-		ThrowingSelfFunction<Integer, Throwable> identity = ThrowingSelfFunction.identity();
+		ThrowingUnaryOperator<Integer, Throwable> identity = ThrowingUnaryOperator.identity();
 		assertEquals(5, identity.apply(5));
 	}
 }

@@ -11,7 +11,7 @@ package com.github.tadukoo.util.functional.function;
  * @since Beta v.0.6
  */
 @FunctionalInterface
-public interface ThrowingSelfFunction<A, T extends Throwable> extends ThrowingFunction<A, A, T>{
+public interface ThrowingUnaryOperator<A, T extends Throwable> extends ThrowingFunction<A, A, T>{
 	
 	/**
 	 * Takes a single argument and returns a result of the same type.
@@ -23,13 +23,13 @@ public interface ThrowingSelfFunction<A, T extends Throwable> extends ThrowingFu
 	A apply(A a) throws T;
 	
 	/**
-	 * Returns a ThrowingSelfFunction that always returns its input argument
+	 * Returns a {@link ThrowingUnaryOperator} that always returns its input argument
 	 *
 	 * @param <A> The type of argument
 	 * @param <T> The {@link Throwable} being thrown
-	 * @return A ThrowingFunction that always returns its input argument
+	 * @return A {@link ThrowingUnaryOperator} that always returns its input argument
 	 */
-	static <A, T extends Throwable> ThrowingSelfFunction<A, T> identity(){
+	static <A, T extends Throwable> ThrowingUnaryOperator<A, T> identity(){
 		return a -> a;
 	}
 }
