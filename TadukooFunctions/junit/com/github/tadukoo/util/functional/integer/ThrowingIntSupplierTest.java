@@ -1,4 +1,4 @@
-package com.github.tadukoo.util.functional.supplier;
+package com.github.tadukoo.util.functional.integer;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -6,8 +6,8 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
-public class BooleanThrowingSupplierTest{
-	private ThrowingBooleanSupplier<IllegalArgumentException> supplier;
+public class ThrowingIntSupplierTest{
+	private ThrowingIntSupplier<IllegalArgumentException> supplier;
 	
 	@BeforeEach
 	public void setup(){
