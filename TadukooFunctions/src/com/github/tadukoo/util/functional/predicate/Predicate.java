@@ -83,7 +83,7 @@ public interface Predicate<A>{
 	 *
 	 * @param <A> The argument type
 	 * @param obj The object to test against
-	 * @return A ThrowingPredicate that tests if two objects are equal
+	 * @return A {@link Predicate} that tests if two objects are equal
 	 */
 	static <A> Predicate<A> isEqual(Object obj){
 		return a -> Objects.equals(obj, a);
