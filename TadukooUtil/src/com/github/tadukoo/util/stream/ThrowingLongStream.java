@@ -1,11 +1,17 @@
 package com.github.tadukoo.util.stream;
 
 import com.github.tadukoo.util.functional.consumer.Consumer;
-import com.github.tadukoo.util.functional.consumer.ThrowingConsumer;
 import com.github.tadukoo.util.functional.consumer.ThrowingConsumer2;
 import com.github.tadukoo.util.functional.function.ThrowingFunction;
-import com.github.tadukoo.util.functional.function.ThrowingFunction2;
-import com.github.tadukoo.util.functional.predicate.ThrowingPredicate;
+import com.github.tadukoo.util.functional.longs.LongConsumer;
+import com.github.tadukoo.util.functional.longs.ThrowingLongBinaryOperator;
+import com.github.tadukoo.util.functional.longs.ThrowingLongConsumer;
+import com.github.tadukoo.util.functional.longs.ThrowingLongFunction;
+import com.github.tadukoo.util.functional.longs.ThrowingLongPredicate;
+import com.github.tadukoo.util.functional.longs.ThrowingLongToDoubleFunction;
+import com.github.tadukoo.util.functional.longs.ThrowingLongToIntFunction;
+import com.github.tadukoo.util.functional.longs.ThrowingLongUnaryOperator;
+import com.github.tadukoo.util.functional.longs.ThrowingObjLongConsumer;
 import com.github.tadukoo.util.functional.supplier.ThrowingSupplier;
 
 import java.util.ArrayList;
@@ -15,7 +21,6 @@ import java.util.OptionalDouble;
 import java.util.OptionalLong;
 import java.util.function.BiConsumer;
 import java.util.function.LongBinaryOperator;
-import java.util.function.LongConsumer;
 import java.util.function.LongFunction;
 import java.util.function.LongPredicate;
 import java.util.function.LongSupplier;
@@ -285,7 +290,7 @@ public class ThrowingLongStream extends ThrowingBaseStream<Long, LongStream, Thr
 	 * @see LongStream#filter(LongPredicate)
 	 */
 	@SuppressWarnings("RedundantThrows")
-	public <T extends Throwable> ThrowingLongStream filter(ThrowingPredicate<Long, T> predicate) throws T{
+	public <T extends Throwable> ThrowingLongStream filter(ThrowingLongPredicate<T> predicate) throws T{
 		return ThrowingLongStream.from(stream.filter(item -> {
 			try{
 				return predicate.test(item);
@@ -310,7 +315,7 @@ public class ThrowingLongStream extends ThrowingBaseStream<Long, LongStream, Thr
 	 * @throws T If the mapper throws it
 	 * @see LongStream#map(LongUnaryOperator)
 	 */
-	public <T extends Throwable> ThrowingLongStream map(ThrowingFunction<Long, Long, T> mapper) throws T{
+	public <T extends Throwable> ThrowingLongStream map(ThrowingLongUnaryOperator<T> mapper) throws T{
 		return ThrowingLongStream.from(stream.map(item -> {
 			try{
 				return mapper.apply(item);
@@ -337,7 +342,7 @@ public class ThrowingLongStream extends ThrowingBaseStream<Long, LongStream, Thr
 	 * @see LongStream#mapToObj(LongFunction)
 	 */
 	@SuppressWarnings("RedundantThrows")
-	public <U, T extends Throwable> ThrowingStream<U> mapToObj(ThrowingFunction<Long, ? extends U, T> mapper) throws T{
+	public <U, T extends Throwable> ThrowingStream<U> mapToObj(ThrowingLongFunction<? extends U, T> mapper) throws T{
 		return ThrowingStream.from(stream.mapToObj(item -> {
 			try{
 				return mapper.apply(item);
@@ -363,7 +368,7 @@ public class ThrowingLongStream extends ThrowingBaseStream<Long, LongStream, Thr
 	 * @see LongStream#mapToInt(LongToIntFunction)
 	 */
 	@SuppressWarnings("RedundantThrows")
-	public <T extends Throwable> ThrowingIntStream mapToInt(ThrowingFunction<Long, Integer, T> mapper) throws T{
+	public <T extends Throwable> ThrowingIntStream mapToInt(ThrowingLongToIntFunction<T> mapper) throws T{
 		return ThrowingIntStream.from(stream.mapToInt(item -> {
 			try{
 				return mapper.apply(item);
@@ -389,7 +394,7 @@ public class ThrowingLongStream extends ThrowingBaseStream<Long, LongStream, Thr
 	 * @see LongStream#mapToDouble(LongToDoubleFunction)
 	 */
 	@SuppressWarnings("RedundantThrows")
-	public <T extends Throwable> ThrowingDoubleStream mapToDouble(ThrowingFunction<Long, Double, T> mapper) throws T{
+	public <T extends Throwable> ThrowingDoubleStream mapToDouble(ThrowingLongToDoubleFunction<T> mapper) throws T{
 		return ThrowingDoubleStream.from(stream.mapToDouble(item -> {
 			try{
 				return mapper.apply(item);
@@ -421,7 +426,7 @@ public class ThrowingLongStream extends ThrowingBaseStream<Long, LongStream, Thr
 	 * @see LongStream#flatMap(LongFunction)
 	 */
 	@SuppressWarnings("RedundantThrows")
-	public <T extends Throwable> ThrowingLongStream flatMap(ThrowingFunction<Long, ? extends LongStream, T> mapper) throws T{
+	public <T extends Throwable> ThrowingLongStream flatMap(ThrowingLongFunction<? extends LongStream, T> mapper) throws T{
 		return ThrowingLongStream.from(stream.flatMap(item -> {
 			try{
 				return mapper.apply(item);
@@ -462,7 +467,7 @@ public class ThrowingLongStream extends ThrowingBaseStream<Long, LongStream, Thr
 	 * @see LongStream#mapMulti(LongStream.LongMapMultiConsumer)
 	 */
 	@SuppressWarnings("RedundantThrows")
-	public <T extends Throwable> ThrowingLongStream mapMulti(ThrowingConsumer2<Long, Consumer<Long>, T> mapper) throws T{
+	public <T extends Throwable> ThrowingLongStream mapMulti(ThrowingConsumer2<Long, LongConsumer, T> mapper) throws T{
 		return ThrowingLongStream.from(stream.flatMap(item -> {
 			try{
 				List<Long> results = new ArrayList<>();
@@ -536,10 +541,10 @@ public class ThrowingLongStream extends ThrowingBaseStream<Long, LongStream, Thr
 	 *               they are consumed from the stream
 	 * @return the new stream
 	 * @throws T If the action throws it
-	 * @see LongStream#peek(LongConsumer)
+	 * @see LongStream#peek(java.util.function.LongConsumer)
 	 */
 	@SuppressWarnings("RedundantThrows")
-	public <T extends Throwable> ThrowingLongStream peek(ThrowingConsumer<Long, T> action) throws T{
+	public <T extends Throwable> ThrowingLongStream peek(ThrowingLongConsumer<T> action) throws T{
 		return ThrowingLongStream.from(stream.peek(item -> {
 			try{
 				action.accept(item);
@@ -670,7 +675,7 @@ public class ThrowingLongStream extends ThrowingBaseStream<Long, LongStream, Thr
 	 * @see LongStream#takeWhile(LongPredicate)
 	 */
 	@SuppressWarnings("RedundantThrows")
-	public <T extends Throwable> ThrowingLongStream takeWhile(ThrowingPredicate<Long, T> predicate) throws T{
+	public <T extends Throwable> ThrowingLongStream takeWhile(ThrowingLongPredicate<T> predicate) throws T{
 		return ThrowingLongStream.from(stream.takeWhile(item -> {
 			try{
 				return predicate.test(item);
@@ -740,7 +745,7 @@ public class ThrowingLongStream extends ThrowingBaseStream<Long, LongStream, Thr
 	 * @see LongStream#dropWhile(LongPredicate)
 	 */
 	@SuppressWarnings("RedundantThrows")
-	public <T extends Throwable> ThrowingLongStream dropWhile(ThrowingPredicate<Long, T> predicate) throws T{
+	public <T extends Throwable> ThrowingLongStream dropWhile(ThrowingLongPredicate<T> predicate) throws T{
 		return ThrowingLongStream.from(stream.dropWhile(item -> {
 			try{
 				return predicate.test(item);
@@ -767,10 +772,10 @@ public class ThrowingLongStream extends ThrowingBaseStream<Long, LongStream, Thr
 	 * @param action a <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/stream/package-summary.html#NonInterference">
 	 *               non-interfering</a> action to perform on the elements
 	 * @throws T If the action throws it
-	 * @see LongStream#forEach(LongConsumer)
+	 * @see LongStream#forEach(java.util.function.LongConsumer)
 	 */
 	@SuppressWarnings("RedundantThrows")
-	public <T extends Throwable> void forEach(ThrowingConsumer<Long, T> action) throws T{
+	public <T extends Throwable> void forEach(ThrowingLongConsumer<T> action) throws T{
 		stream.forEach(item -> {
 			try{
 				action.accept(item);
@@ -792,11 +797,11 @@ public class ThrowingLongStream extends ThrowingBaseStream<Long, LongStream, Thr
 	 * @param action a <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/stream/package-summary.html#NonInterference">
 	 *               non-interfering</a> action to perform on the elements
 	 * @throws T If the action throws it
-	 * @see #forEach(ThrowingConsumer)
-	 * @see LongStream#forEachOrdered(LongConsumer)
+	 * @see #forEach(ThrowingLongConsumer)
+	 * @see LongStream#forEachOrdered(java.util.function.LongConsumer)
 	 */
 	@SuppressWarnings("RedundantThrows")
-	public <T extends Throwable> void forEachOrdered(ThrowingConsumer<Long, T> action) throws T{
+	public <T extends Throwable> void forEachOrdered(ThrowingLongConsumer<T> action) throws T{
 		stream.forEachOrdered(item -> {
 			try{
 				action.accept(item);
@@ -877,7 +882,7 @@ public class ThrowingLongStream extends ThrowingBaseStream<Long, LongStream, Thr
 	 * @see LongStream#reduce(long, LongBinaryOperator)
 	 */
 	@SuppressWarnings("RedundantThrows")
-	public <T extends Throwable> long reduce(long identity, ThrowingFunction2<Long, Long, Long, T> op) throws T{
+	public <T extends Throwable> long reduce(long identity, ThrowingLongBinaryOperator<T> op) throws T{
 		return stream.reduce(identity, (item1, item2) -> {
 			try{
 				return op.apply(item1, item2);
@@ -922,11 +927,11 @@ public class ThrowingLongStream extends ThrowingBaseStream<Long, LongStream, Thr
 	 *           function for combining two values
 	 * @return the result of the reduction
 	 * @throws T If the op throws it
-	 * @see #reduce(long, ThrowingFunction2)
+	 * @see #reduce(long, ThrowingLongBinaryOperator)
 	 * @see LongStream#reduce(LongBinaryOperator)
 	 */
 	@SuppressWarnings("RedundantThrows")
-	public <T extends Throwable> OptionalLong reduce(ThrowingFunction2<Long, Long, Long, T> op) throws T{
+	public <T extends Throwable> OptionalLong reduce(ThrowingLongBinaryOperator<T> op) throws T{
 		return stream.reduce((item1, item2) -> {
 			try{
 				return op.apply(item1, item2);
@@ -950,7 +955,7 @@ public class ThrowingLongStream extends ThrowingBaseStream<Long, LongStream, Thr
 	 *     return result;
 	 * }</pre>
 	 *
-	 * <p>Like {@link #reduce(long, ThrowingFunction2)}, {@code collect} operations
+	 * <p>Like {@link #reduce(long, ThrowingLongBinaryOperator)}, {@code collect} operations
 	 * can be parallelized without requiring additional synchronization.
 	 *
 	 * <p>This is a <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/stream/package-summary.html#StreamOps">terminal
@@ -985,7 +990,7 @@ public class ThrowingLongStream extends ThrowingBaseStream<Long, LongStream, Thr
 	 */
 	@SuppressWarnings("RedundantThrows")
 	public <R, T extends Throwable, T2 extends Throwable, T3 extends Throwable> R collect(
-			ThrowingSupplier<R, T> supplier, ThrowingConsumer2<R, Long, T2> accumulator,
+			ThrowingSupplier<R, T> supplier, ThrowingObjLongConsumer<R, T2> accumulator,
 			ThrowingConsumer2<R, R, T3> combiner) throws T, T2, T3{
 		return stream.collect(() -> {
 			try{
@@ -1156,7 +1161,7 @@ public class ThrowingLongStream extends ThrowingBaseStream<Long, LongStream, Thr
 	 * @see LongStream#anyMatch(LongPredicate)
 	 */
 	@SuppressWarnings("RedundantThrows")
-	public <T extends Throwable> boolean anyMatch(ThrowingPredicate<Long, T> predicate) throws T{
+	public <T extends Throwable> boolean anyMatch(ThrowingLongPredicate<T> predicate) throws T{
 		return stream.anyMatch(item -> {
 			try{
 				return predicate.test(item);
@@ -1191,7 +1196,7 @@ public class ThrowingLongStream extends ThrowingBaseStream<Long, LongStream, Thr
 	 * @see LongStream#allMatch(LongPredicate)
 	 */
 	@SuppressWarnings("RedundantThrows")
-	public <T extends Throwable> boolean allMatch(ThrowingPredicate<Long, T> predicate) throws T{
+	public <T extends Throwable> boolean allMatch(ThrowingLongPredicate<T> predicate) throws T{
 		return stream.allMatch(item -> {
 			try{
 				return predicate.test(item);
@@ -1226,7 +1231,7 @@ public class ThrowingLongStream extends ThrowingBaseStream<Long, LongStream, Thr
 	 * @see LongStream#noneMatch(LongPredicate)
 	 */
 	@SuppressWarnings("RedundantThrows")
-	public <T extends Throwable> boolean noneMatch(ThrowingPredicate<Long, T> predicate) throws T{
+	public <T extends Throwable> boolean noneMatch(ThrowingLongPredicate<T> predicate) throws T{
 		return stream.noneMatch(item -> {
 			try{
 				return predicate.test(item);

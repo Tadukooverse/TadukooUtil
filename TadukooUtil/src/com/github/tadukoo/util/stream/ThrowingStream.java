@@ -3,8 +3,13 @@ package com.github.tadukoo.util.stream;
 import com.github.tadukoo.util.functional.consumer.Consumer;
 import com.github.tadukoo.util.functional.consumer.ThrowingConsumer;
 import com.github.tadukoo.util.functional.consumer.ThrowingConsumer2;
+import com.github.tadukoo.util.functional.doubles.ThrowingToDoubleFunction;
+import com.github.tadukoo.util.functional.function.ThrowingBinaryOperator;
 import com.github.tadukoo.util.functional.function.ThrowingFunction;
 import com.github.tadukoo.util.functional.function.ThrowingFunction2;
+import com.github.tadukoo.util.functional.integer.ThrowingIntFunction;
+import com.github.tadukoo.util.functional.integer.ThrowingToIntFunction;
+import com.github.tadukoo.util.functional.longs.ThrowingToLongFunction;
 import com.github.tadukoo.util.functional.predicate.ThrowingPredicate;
 import com.github.tadukoo.util.functional.supplier.ThrowingSupplier;
 
@@ -330,7 +335,7 @@ public class ThrowingStream<A> extends ThrowingBaseStream<A, Stream<A>, Throwing
 	 * @see Stream#mapToInt(ToIntFunction)
 	 */
 	@SuppressWarnings("RedundantThrows")
-	public <T extends Throwable> ThrowingIntStream mapToInt(ThrowingFunction<? super A, Integer, T> mapper) throws T{
+	public <T extends Throwable> ThrowingIntStream mapToInt(ThrowingToIntFunction<? super A, T> mapper) throws T{
 		return ThrowingIntStream.from(stream.mapToInt(item -> {
 			try{
 				return mapper.apply(item);
@@ -356,7 +361,7 @@ public class ThrowingStream<A> extends ThrowingBaseStream<A, Stream<A>, Throwing
 	 * @see Stream#mapToLong(ToLongFunction)
 	 */
 	@SuppressWarnings("RedundantThrows")
-	public <T extends Throwable> ThrowingLongStream mapToLong(ThrowingFunction<? super A, Long, T> mapper) throws T{
+	public <T extends Throwable> ThrowingLongStream mapToLong(ThrowingToLongFunction<? super A, T> mapper) throws T{
 		return ThrowingLongStream.from(stream.mapToLong(item -> {
 			try{
 				return mapper.apply(item);
@@ -382,7 +387,7 @@ public class ThrowingStream<A> extends ThrowingBaseStream<A, Stream<A>, Throwing
 	 * @see Stream#mapToDouble(ToDoubleFunction)
 	 */
 	@SuppressWarnings("RedundantThrows")
-	public <T extends Throwable> ThrowingDoubleStream mapToDouble(ThrowingFunction<? super A, Double, T> mapper) throws T{
+	public <T extends Throwable> ThrowingDoubleStream mapToDouble(ThrowingToDoubleFunction<? super A, T> mapper) throws T{
 		return ThrowingDoubleStream.from(stream.mapToDouble(item -> {
 			try{
 				return mapper.apply(item);
@@ -1201,7 +1206,7 @@ public class ThrowingStream<A> extends ThrowingBaseStream<A, Stream<A>, Throwing
 	 * @see Stream#toArray(IntFunction)
 	 */
 	@SuppressWarnings("RedundantThrows")
-	public <B, T extends Throwable> B[] toArray(ThrowingFunction<Integer, B[], T> generator) throws T{
+	public <B, T extends Throwable> B[] toArray(ThrowingIntFunction<B[], T> generator) throws T{
 		return stream.toArray(value -> {
 			try{
 				return generator.apply(value);
@@ -1264,7 +1269,7 @@ public class ThrowingStream<A> extends ThrowingBaseStream<A, Stream<A>, Throwing
 	 * @see Stream#reduce(Object, BinaryOperator)
 	 */
 	@SuppressWarnings("RedundantThrows")
-	public <T extends Throwable> A reduce(A identity, ThrowingFunction2<A, A, A, T> accumulator) throws T{
+	public <T extends Throwable> A reduce(A identity, ThrowingBinaryOperator<A, T> accumulator) throws T{
 		return stream.reduce(identity, (item, item2) -> {
 			try{
 				return accumulator.apply(item, item2);
@@ -1310,13 +1315,13 @@ public class ThrowingStream<A> extends ThrowingBaseStream<A, Stream<A>, Throwing
 	 * @return an {@link Optional} describing the result of the reduction
 	 * @throws NullPointerException if the result of the reduction is null
 	 * @throws T If the accumulator throws it
-	 * @see #reduce(Object, ThrowingFunction2)
+	 * @see #reduce(Object, ThrowingBinaryOperator)
 	 * @see #min(Comparator)
 	 * @see #max(Comparator)
 	 * @see Stream#reduce(BinaryOperator)
 	 */
 	@SuppressWarnings("RedundantThrows")
-	public <T extends Throwable> Optional<A> reduce(ThrowingFunction2<A, A, A, T> accumulator) throws T{
+	public <T extends Throwable> Optional<A> reduce(ThrowingBinaryOperator<A, T> accumulator) throws T{
 		return stream.reduce((item, item2) -> {
 			try{
 				return accumulator.apply(item, item2);
@@ -1374,13 +1379,13 @@ public class ThrowingStream<A> extends ThrowingBaseStream<A, Stream<A>, Throwing
 	 * @return the result of the reduction
 	 * @throws T If the accumulator throws it
 	 * @throws T2 If the combiner throws it
-	 * @see #reduce(ThrowingFunction2)
-	 * @see #reduce(Object, ThrowingFunction2)
+	 * @see #reduce(ThrowingBinaryOperator)
+	 * @see #reduce(Object, ThrowingBinaryOperator)
 	 * @see Stream#reduce(Object, BiFunction, BinaryOperator)
 	 */
 	@SuppressWarnings("RedundantThrows")
 	public <U, T extends Throwable, T2 extends Throwable> U reduce(
-			U identity, ThrowingFunction2<U, ? super A, U, T> accumulator, ThrowingFunction2<U, U, U, T2> combiner) throws T, T2{
+			U identity, ThrowingFunction2<U, ? super A, U, T> accumulator, ThrowingBinaryOperator<U, T2> combiner) throws T, T2{
 		return stream.reduce(identity, (item, item2) -> {
 			try{
 				return accumulator.apply(item, item2);
@@ -1410,7 +1415,7 @@ public class ThrowingStream<A> extends ThrowingBaseStream<A, Stream<A>, Throwing
 	 *     return result;
 	 * }</pre>
 	 *
-	 * <p>Like {@link #reduce(Object, ThrowingFunction2)}, {@code collect} operations
+	 * <p>Like {@link #reduce(Object, ThrowingBinaryOperator)}, {@code collect} operations
 	 * can be parallelized without requiring additional synchronization.
 	 *
 	 * <p>This is a <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/stream/package-summary.html#StreamOps">terminal
