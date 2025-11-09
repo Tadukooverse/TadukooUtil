@@ -12,6 +12,7 @@
 	<artifactId>TadukooUtilParent</artifactId>
 	<version>0.7-Beta</version>
 	<packaging>pom</packaging>
+	<name>${project.artifactId}</name>
 	<description>A collection of utilities to be used in various projects</description>
 	<modules>
 		<module>TadukooLang</module>

@@ -9,6 +9,7 @@
 		<version>0.7-Beta</version>
 	</parent>
 	<artifactId>TadukooFunctions</artifactId>
+	<name>${project.artifactId}</name>
 	<dependencies>
 		<!-- JUnit Dependencies -->
 		<dependency>

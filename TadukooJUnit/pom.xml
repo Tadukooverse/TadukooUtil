@@ -9,6 +9,7 @@
 		<version>0.7-Beta</version>
 	</parent>
 	<artifactId>TadukooJUnit</artifactId>
+	<name>${project.artifactId}</name>
 	<dependencies>
 		<!-- Tadukoo Util -->
 		<dependency>
