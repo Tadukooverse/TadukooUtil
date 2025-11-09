@@ -599,8 +599,11 @@ public final class StringUtil{
 	 * @return The PascalCase version of the given text
 	 */
 	public static String toPascalCase(String text){
+		// Remove characters that shouldn't be here
+		text = text.replaceAll("[^A-Za-z0-9_ ]", "");
+		
 		// If we have spaces, replace them with underscores (in case we have both, to make it easier)
-		text = text.replaceAll(" ", "_");
+		text = text.replaceAll(" +", "_");
 		
 		// If we have snake_case, we need to remove the underscores and do some capitalization
 		StringBuilder newText;
@@ -639,8 +642,11 @@ public final class StringUtil{
 	 * @return The camelCase version of the given text
 	 */
 	public static String toCamelCase(String text){
+		// Remove characters that shouldn't be here
+		text = text.replaceAll("[^A-Za-z0-9_ ]", "");
+		
 		// If we have spaces, replace them with underscores (in case we have both, to make it easier)
-		text = text.replaceAll(" ", "_");
+		text = text.replaceAll(" +", "_");
 		
 		// If we have snake_case, we need to remove the underscores and do some capitalization
 		String newText = text;
@@ -679,6 +685,9 @@ public final class StringUtil{
 	 * @return The snake_case version of the given text
 	 */
 	public static String toSnakeCase(String text){
+		// Remove characters that shouldn't be here
+		text = text.replaceAll("[^A-Za-z0-9_ ]", "");
+		
 		// If we have underscores and no spaces, it's already snake_case
 		if(text.contains("_") && !text.contains(" ")){
 			return text;
