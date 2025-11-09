@@ -11,7 +11,8 @@ package com.github.tadukoo.util.functional.predicate;
  * @param <T> The type of {@link Throwable} thrown by the predicate
  * 
  * @author Logan Ferree (Tadukoo)
- * @version 0.1-Alpha-SNAPSHOT
+ * @version Beta v.0.7
+ * @since 0.1-Alpha-SNAPSHOT
  */
 @FunctionalInterface
 public interface ThrowingPredicate4<A, B, C, D, T extends Throwable>{
@@ -29,11 +30,11 @@ public interface ThrowingPredicate4<A, B, C, D, T extends Throwable>{
 	boolean test(A a, B b, C c, D d) throws T;
 	
 	/**
-	 * Creates a ThrowingPredicate4 that will test the arguments with this ThrowingPredicate4
-	 * and with the given ThrowingPredicate4, returning true only if both results are true.
+	 * Creates a {@link ThrowingPredicate4} that will test the arguments with this {@link ThrowingPredicate4}
+	 * and with the given {@link ThrowingPredicate4}, returning true only if both results are true.
 	 * 
-	 * @param other The other ThrowingPredicate4 to test the arguments on
-	 * @return The ThrowingPredicate4 that results from composing this one and the given one
+	 * @param other The other {@link ThrowingPredicate4} to test the arguments on
+	 * @return The {@link ThrowingPredicate4} that results from composing this one and the given one
 	 */
 	default ThrowingPredicate4<A, B, C, D, T> and(
 			ThrowingPredicate4<? super A, ? super B, ? super C, ? super D, ? extends T> other){
@@ -41,11 +42,22 @@ public interface ThrowingPredicate4<A, B, C, D, T extends Throwable>{
 	}
 	
 	/**
-	 * Creates a ThrowingPredicate4 that will test the arguments with this ThrowingPredicate4
-	 * and with the given ThrowingPredicate4, returning true if either result is true.
+	 * Creates a {@link ThrowingPredicate4} that will test the arguments with this {@link ThrowingPredicate4}
+	 * and with the given {@link Predicate4}, returning true only if both results are true.
+	 *
+	 * @param other The other {@link Predicate4} to test the arguments on
+	 * @return The {@link ThrowingPredicate4} that results from composing this {@link ThrowingPredicate4} and the given {@link Predicate4}
+	 */
+	default ThrowingPredicate4<A, B, C, D, T> and(Predicate4<? super A, ? super B, ? super C, ? super D> other){
+		return (a, b, c, d) -> this.test(a, b, c, d) && other.test(a, b, c, d);
+	}
+	
+	/**
+	 * Creates a {@link ThrowingPredicate4} that will test the arguments with this {@link ThrowingPredicate4}
+	 * and with the given {@link ThrowingPredicate4}, returning true if either result is true.
 	 * 
-	 * @param other The other ThrowingPredicate4 to test the arguments on
-	 * @return The ThrowingPredicate4 that results from composing this one and the given one
+	 * @param other The other {@link ThrowingPredicate4} to test the arguments on
+	 * @return The {@link ThrowingPredicate4} that results from composing this one and the given one
 	 */
 	default ThrowingPredicate4<A, B, C, D, T> or(
 			ThrowingPredicate4<? super A, ? super B, ? super C, ? super D, ? extends T> other){
@@ -53,9 +65,20 @@ public interface ThrowingPredicate4<A, B, C, D, T extends Throwable>{
 	}
 	
 	/**
-	 * Creates a ThrowingPredicate4 that will return the opposite result of this ThrowingPredicate4.
+	 * Creates a {@link ThrowingPredicate4} that will test the arguments with this {@link ThrowingPredicate4}
+	 * and with the given {@link Predicate4}, returning true if either result is true.
+	 *
+	 * @param other The other {@link ThrowingPredicate4} to test the arguments on
+	 * @return The {@link ThrowingPredicate4} that results from composing this {@link ThrowingPredicate4} and the given {@link Predicate4}
+	 */
+	default ThrowingPredicate4<A, B, C, D, T> or(Predicate4<? super A, ? super B, ? super C, ? super D> other){
+		return (a, b, c, d) -> this.test(a, b, c, d) || other.test(a, b, c, d);
+	}
+	
+	/**
+	 * Creates a {@link ThrowingPredicate4} that will return the opposite result of this {@link ThrowingPredicate4}.
 	 * 
-	 * @return A negated version of this ThrowingPredicate4
+	 * @return A negated version of this {@link ThrowingPredicate4}
 	 */
 	default ThrowingPredicate4<A, B, C, D, T> negate(){
 		return (a, b, c, d) -> !this.test(a, b, c, d);

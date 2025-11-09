@@ -17,7 +17,8 @@ package com.github.tadukoo.util.functional.consumer;
  * @param <T> The type of {@link Throwable} thrown by the consumer
  *
  * @author Logan Ferree (Tadukoo)
- * @version Alpha v.0.3
+ * @version Beta v.0.7
+ * @since Alpha v.0.3
  */
 @FunctionalInterface
 public interface ThrowingConsumer10<A, B, C, D, E, F, G, H, I, J, T extends Throwable>{
@@ -40,18 +41,34 @@ public interface ThrowingConsumer10<A, B, C, D, E, F, G, H, I, J, T extends Thro
 	void accept(A a, B b, C c, D d, E e, F f, G g, H h, I i, J j) throws T;
 	
 	/**
-	 * Creates a ThrowingConsumer10 that runs this ThrowingConsumer10 and then also runs the
-	 * given ThrowingConsumer10 on the same arguments.
+	 * Creates a {@link ThrowingConsumer10} that runs this {@link ThrowingConsumer10} and then also runs the
+	 * given {@link ThrowingConsumer10} on the same arguments.
 	 *
-	 * @param after A 2nd ThrowingConsumer10 to run the arguments on after this one
-	 * @return The ThrowingConsumer10 made from composing this one and the given one
+	 * @param after A 2nd {@link ThrowingConsumer10} to run the arguments on after this one
+	 * @return The {@link ThrowingConsumer10} made from composing this one and the given one
 	 */
 	default ThrowingConsumer10<A, B, C, D, E, F, G, H, I, J, T> andThen(
 			ThrowingConsumer10<? super A, ? super B, ? super C, ? super D, ? super E,
 					? super F, ? super G,? super H, ? super I, ? super J, ? extends T> after){
 		return (a, b, c, d, e, f, g, h, i, j) -> {
-								this.accept(a, b, c, d, e, f, g, h, i, j);
-								after.accept(a, b, c, d, e, f, g, h, i, j);
-							};
+			this.accept(a, b, c, d, e, f, g, h, i, j);
+			after.accept(a, b, c, d, e, f, g, h, i, j);
+		};
+	}
+	
+	/**
+	 * Creates a {@link ThrowingConsumer10} that runs this {@link ThrowingConsumer10} and then also runs the
+	 * given {@link Consumer10} on the same arguments.
+	 *
+	 * @param after A {@link Consumer10} to run the arguments on after this {@link ThrowingConsumer10}
+	 * @return The {@link ThrowingConsumer10} made from composing this {@link ThrowingConsumer10} and the given {@link Consumer10}
+	 */
+	default ThrowingConsumer10<A, B, C, D, E, F, G, H, I, J, T> andThen(
+			Consumer10<? super A, ? super B, ? super C, ? super D, ? super E,
+					? super F, ? super G,? super H, ? super I, ? super J> after){
+		return (a, b, c, d, e, f, g, h, i, j) -> {
+			this.accept(a, b, c, d, e, f, g, h, i, j);
+			after.accept(a, b, c, d, e, f, g, h, i, j);
+		};
 	}
 }

@@ -1,0 +1,66 @@
+package com.github.tadukoo.util.functional.function;
+
+/**
+ * A function that takes ten arguments and returns a result.
+ *
+ * @param <A> The 1st input argument type for the function
+ * @param <B> The 2nd input argument type for the function
+ * @param <C> The 3rd input argument type for the function
+ * @param <D> The 4th input argument type for the function
+ * @param <E> The 5th input argument type for the function
+ * @param <F> The 6th input argument type for the function
+ * @param <G> The 7th input argument type for the function
+ * @param <H> The 8th input argument type for the function
+ * @param <I> The 9th input argument type for the function
+ * @param <J> The 10th input argument type for the function
+ * @param <R> The output result type for the function
+ *
+ * @author Logan Ferree (Tadukoo)
+ * @version Beta v.0.7
+ */
+@FunctionalInterface
+public interface Function10<A, B, C, D, E, F, G, H, I, J, R>{
+	
+	/**
+	 * Takes ten arguments and returns a result.
+	 *
+	 * @param a The 1st argument
+	 * @param b The 2nd argument
+	 * @param c The 3rd argument
+	 * @param d The 4th argument
+	 * @param e The 5th argument
+	 * @param f The 6th argument
+	 * @param g The 7th argument
+	 * @param h The 8th argument
+	 * @param i The 9th argument
+	 * @param j The 10th argument
+	 * @return A result
+	 */
+	R apply(A a, B b, C c, D d, E e, F f, G g, H h, I i, J j);
+	
+	/**
+	 * Creates a {@link Function10} that runs this {@link Function10} and
+	 * puts the result into the given {@link Function}.
+	 *
+	 * @param <S> The output type of the {@link Function}
+	 * @param after A {@link Function} to put the result of this {@link Function10} into
+	 * @return The {@link Function10} made from composing this {@link Function10} and the given {@link Function}
+	 */
+	default <S> Function10<A, B, C, D, E, F, G, H, I, J, S> andThen(Function<? super R, ? extends S> after){
+		return (a, b, c, d, e, f, g, h, i, j) -> after.apply(this.apply(a, b, c, d, e, f, g, h, i, j));
+	}
+	
+	/**
+	 * Creates a {@link ThrowingFunction10} that runs this {@link Function10} and
+	 * puts the result into the given {@link ThrowingFunction}.
+	 *
+	 * @param <S> The output type of the {@link ThrowingFunction}
+	 * @param <T> The {@link Throwable} being thrown
+	 * @param after A {@link ThrowingFunction} to put the result of this {@link Function10} into
+	 * @return The {@link ThrowingFunction10} made from composing this {@link Function10} and the given {@link ThrowingFunction}
+	 */
+	default <S, T extends Throwable> ThrowingFunction10<A, B, C, D, E, F, G, H, I, J, S, T> andThen(
+			ThrowingFunction<? super R, ? extends S, ? extends T> after){
+		return (a, b, c, d, e, f, g, h, i, j) -> after.apply(this.apply(a, b, c, d, e, f, g, h, i, j));
+	}
+}

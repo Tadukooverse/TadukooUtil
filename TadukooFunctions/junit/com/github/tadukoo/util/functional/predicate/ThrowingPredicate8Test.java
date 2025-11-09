@@ -15,6 +15,8 @@ public class ThrowingPredicate8Test{
 			Boolean, Boolean, Boolean, IllegalArgumentException> simpleAnd;
 	private ThrowingPredicate8<Boolean, Boolean, Boolean, Boolean, Boolean,
 			Boolean, Boolean, Boolean, IllegalArgumentException> simpleOr;
+	private Predicate8<Boolean, Boolean, Boolean, Boolean, Boolean,
+			Boolean, Boolean, Boolean> simpleAndRegular, simpleOrRegular;
 	
 	@BeforeEach
 	public void setup(){
@@ -23,10 +25,12 @@ public class ThrowingPredicate8Test{
 		};
 		simpleAnd = (a, b, c, d, e, f, g, h) -> a && b && c && d && e && f && g && h;
 		simpleOr = (a , b, c, d, e, f, g, h) -> a || b || c || d || e || f || g || h;
+		simpleAndRegular = (a, b, c, d, e, f, g, h) -> a && b && c && d && e && f && g && h;
+		simpleOrRegular = (a , b, c, d, e, f, g, h) -> a || b || c || d || e || f || g || h;
 	}
 	
 	@Test
-	public void testThrowingPredicate4(){
+	public void testThrowingPredicate8(){
 		try{
 			thrower.test(true, false, true, false, true, false, true, false);
 			fail();
@@ -60,6 +64,30 @@ public class ThrowingPredicate8Test{
 	}
 	
 	@Test
+	public void testAndBothTrueRegular(){
+		assertTrue(simpleAnd.and(simpleOrRegular).test(true, true, true, true, true,
+				true, true, true));
+	}
+	
+	@Test
+	public void testAndBothFalseRegular(){
+		assertFalse(simpleAnd.and(simpleOrRegular).test(false, false, false, false, false,
+				false, false, false));
+	}
+	
+	@Test
+	public void testAndFirstFalseRegular(){
+		assertFalse(simpleAnd.and(simpleOrRegular).test(false, true, false, false, true,
+				true, false, true));
+	}
+	
+	@Test
+	public void testAndLastFalseRegular(){
+		assertFalse(simpleOr.and(simpleAndRegular).test(true, false, false, true, false,
+				false, true, false));
+	}
+	
+	@Test
 	public void testOrBothTrue(){
 		assertTrue(simpleAnd.or(simpleOr).test(true, true, true, true, true,
 				true, true, true));
@@ -80,6 +108,30 @@ public class ThrowingPredicate8Test{
 	@Test
 	public void testOrLastFalse(){
 		assertTrue(simpleOr.or(simpleAnd).test(true, true, false, false, false,
+				false, true, false));
+	}
+	
+	@Test
+	public void testOrBothTrueRegular(){
+		assertTrue(simpleAnd.or(simpleOrRegular).test(true, true, true, true, true,
+				true, true, true));
+	}
+	
+	@Test
+	public void testOrBothFalseRegular(){
+		assertFalse(simpleAnd.or(simpleOrRegular).test(false, false, false, false, false,
+				false, false, false));
+	}
+	
+	@Test
+	public void testOrFirstFalseRegular(){
+		assertTrue(simpleAnd.or(simpleOrRegular).test(false, true, false, true, false,
+				false, true, false));
+	}
+	
+	@Test
+	public void testOrLastFalseRegular(){
+		assertTrue(simpleOr.or(simpleAndRegular).test(true, true, false, false, false,
 				false, true, false));
 	}
 	

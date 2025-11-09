@@ -15,7 +15,8 @@ package com.github.tadukoo.util.functional.predicate;
  * @param <T> The type of {@link Throwable} thrown by the predicate
  *
  * @author Logan Ferree (Tadukoo)
- * @version Alpha v.0.3
+ * @version Beta v.0.7
+ * @since Alpha v.0.3
  */
 @FunctionalInterface
 public interface ThrowingPredicate8<A, B, C, D, E, F, G, H, T extends Throwable>{
@@ -37,11 +38,11 @@ public interface ThrowingPredicate8<A, B, C, D, E, F, G, H, T extends Throwable>
 	boolean test(A a, B b, C c, D d, E e, F f, G g, H h) throws T;
 	
 	/**
-	 * Creates a ThrowingPredicate8 that will test the arguments with this ThrowingPredicate8
-	 * and with the given ThrowingPredicate8, returning true only if both results are true.
+	 * Creates a {@link ThrowingPredicate8} that will test the arguments with this {@link ThrowingPredicate8}
+	 * and with the given {@link ThrowingPredicate8}, returning true only if both results are true.
 	 *
-	 * @param other The other ThrowingPredicate8 to test the arguments on
-	 * @return The ThrowingPredicate8 that results from composing this one and the given one
+	 * @param other The other {@link ThrowingPredicate8} to test the arguments on
+	 * @return The {@link ThrowingPredicate8} that results from composing this one and the given one
 	 */
 	default ThrowingPredicate8<A, B, C, D, E, F, G, H, T> and(
 			ThrowingPredicate8<? super A, ? super B, ? super C, ? super D, ? super E,
@@ -50,11 +51,24 @@ public interface ThrowingPredicate8<A, B, C, D, E, F, G, H, T extends Throwable>
 	}
 	
 	/**
-	 * Creates a ThrowingPredicate8 that will test the arguments with this ThrowingPredicate8
-	 * and with the given ThrowingPredicate8, returning true if either result is true.
+	 * Creates a {@link ThrowingPredicate8} that will test the arguments with this {@link ThrowingPredicate8}
+	 * and with the given {@link Predicate8}, returning true only if both results are true.
+	 *
+	 * @param other The other {@link Predicate8} to test the arguments on
+	 * @return The {@link ThrowingPredicate8} that results from composing this {@link ThrowingPredicate8} and the given {@link Predicate8}
+	 */
+	default ThrowingPredicate8<A, B, C, D, E, F, G, H, T> and(
+			Predicate8<? super A, ? super B, ? super C, ? super D, ? super E,
+					? super F, ? super G, ? super H> other){
+		return (a, b, c, d, e, f, g, h) -> this.test(a, b, c, d, e, f, g, h) && other.test(a, b, c, d, e, f, g, h);
+	}
+	
+	/**
+	 * Creates a {@link ThrowingPredicate8} that will test the arguments with this {@link ThrowingPredicate8}
+	 * and with the given {@link ThrowingPredicate8}, returning true if either result is true.
 	 * 
-	 * @param other The other ThrowingPredicate8 to test the arguments on
-	 * @return The ThrowingPredicate8 that results from composing this one and the given one
+	 * @param other The other {@link ThrowingPredicate8} to test the arguments on
+	 * @return The {@link ThrowingPredicate8} that results from composing this one and the given one
 	 */
 	default ThrowingPredicate8<A, B, C, D, E, F, G, H, T> or(
 			ThrowingPredicate8<? super A, ? super B, ? super C, ? super D, ? super E,
@@ -63,9 +77,22 @@ public interface ThrowingPredicate8<A, B, C, D, E, F, G, H, T extends Throwable>
 	}
 	
 	/**
-	 * Creates a ThrowingPredicate8 that will return the opposite result of this ThrowingPredicate8.
+	 * Creates a {@link ThrowingPredicate8} that will test the arguments with this {@link ThrowingPredicate8}
+	 * and with the given {@link Predicate8}, returning true if either result is true.
+	 *
+	 * @param other The other {@link Predicate8} to test the arguments on
+	 * @return The {@link ThrowingPredicate8} that results from composing this {@link ThrowingPredicate8} and the given {@link Predicate8}
+	 */
+	default ThrowingPredicate8<A, B, C, D, E, F, G, H, T> or(
+			Predicate8<? super A, ? super B, ? super C, ? super D, ? super E,
+					? super F, ? super G, ? super H> other){
+		return (a, b, c, d, e, f, g, h) -> this.test(a, b, c, d, e, f, g, h) || other.test(a, b, c, d, e, f, g, h);
+	}
+	
+	/**
+	 * Creates a {@link ThrowingPredicate8} that will return the opposite result of this {@link ThrowingPredicate8}.
 	 * 
-	 * @return A negated version of this ThrowingPredicate8
+	 * @return A negated version of this {@link ThrowingPredicate8}
 	 */
 	default ThrowingPredicate8<A, B, C, D, E, F, G, H, T> negate(){
 		return (a, b, c, d, e, f, g, h) -> !this.test(a, b, c, d, e, f, g, h);

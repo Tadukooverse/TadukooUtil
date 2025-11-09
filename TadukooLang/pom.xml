@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.github.tadukoo.util</groupId>
         <artifactId>TadukooUtilParent</artifactId>
-        <version>0.6.1-Beta</version>
+        <version>0.7-Beta</version>
     </parent>
     <artifactId>TadukooLang</artifactId>
     <dependencies>
@@ -14,10 +14,6 @@
         <dependency>
             <groupId>${junit.jupiter.groupID}</groupId>
             <artifactId>${junit.jupiter.artifactID}</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>${junit.platform.groupID}</groupId>
-            <artifactId>${junit.platform.artifactID}</artifactId>
         </dependency>
     </dependencies>
 </project>

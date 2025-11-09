@@ -1,15 +1,17 @@
-package com.github.tadukoo.util.functional.function;
+package com.github.tadukoo.util.functional.integer;
 
+import com.github.tadukoo.util.functional.function.ThrowingFunction;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
-public class ThrowingSelfFunctionTest{
-	private ThrowingSelfFunction<Integer, IllegalArgumentException> thrower;
-	private ThrowingSelfFunction<Integer, IllegalArgumentException> success;
-	private ThrowingSelfFunction<Integer, IllegalArgumentException> add2;
+public class ToIntFunctionTest{
+	private ThrowingFunction<Integer, Integer, IllegalArgumentException> thrower;
+	private ToIntFunction<Integer> success;
+	private ToIntFunction<Integer> add2;
+	private ThrowingFunction<Integer, Integer, IllegalArgumentException> throwingSuccess;
 	
 	@BeforeEach
 	public void setup(){
@@ -18,17 +20,12 @@ public class ThrowingSelfFunctionTest{
 		};
 		success = i -> i;
 		add2 = i -> i + 2;
+		throwingSuccess = i -> i + 2;
 	}
 	
 	@Test
-	public void testThrowingSelfFunction(){
-		try{
-			thrower.apply(5);
-			fail();
-		}catch(IllegalArgumentException e){
-			// Success
-			assertEquals("Unsupported", e.getMessage());
-		}
+	public void testFunction(){
+		assertEquals(5, success.apply(5));
 	}
 	
 	@Test
@@ -47,6 +44,11 @@ public class ThrowingSelfFunctionTest{
 	}
 	
 	@Test
+	public void testComposeThrowingSuccess(){
+		assertEquals(7, throwingSuccess.compose(success).apply(5));
+	}
+	
+	@Test
 	public void testAndThenThrowing(){
 		try{
 			success.andThen(thrower).apply(5);
@@ -62,8 +64,13 @@ public class ThrowingSelfFunctionTest{
 	}
 	
 	@Test
-	public void testIdentity() throws Throwable{
-		ThrowingSelfFunction<Integer, Throwable> identity = ThrowingSelfFunction.identity();
+	public void testAndThenThrowingSuccess(){
+		assertEquals(7, success.andThen(throwingSuccess).apply(5));
+	}
+	
+	@Test
+	public void testIdentity(){
+		ToIntFunction<Integer> identity = ToIntFunction.identity();
 		assertEquals(5, identity.apply(5));
 	}
 }

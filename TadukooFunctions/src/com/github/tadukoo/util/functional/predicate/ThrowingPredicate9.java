@@ -16,7 +16,8 @@ package com.github.tadukoo.util.functional.predicate;
  * @param <T> The type of {@link Throwable} thrown by the predicate
  *
  * @author Logan Ferree (Tadukoo)
- * @version Alpha v.0.3
+ * @version Beta v.0.7
+ * @since Alpha v.0.3
  */
 @FunctionalInterface
 public interface ThrowingPredicate9<A, B, C, D, E, F, G, H, I, T extends Throwable>{
@@ -39,11 +40,11 @@ public interface ThrowingPredicate9<A, B, C, D, E, F, G, H, I, T extends Throwab
 	boolean test(A a, B b, C c, D d, E e, F f, G g, H h, I i) throws T;
 	
 	/**
-	 * Creates a ThrowingPredicate9 that will test the arguments with this ThrowingPredicate9
-	 * and with the given ThrowingPredicate9, returning true only if both results are true.
+	 * Creates a {@link ThrowingPredicate9} that will test the arguments with this {@link ThrowingPredicate9}
+	 * and with the given {@link ThrowingPredicate9}, returning true only if both results are true.
 	 *
-	 * @param other The other ThrowingPredicate9 to test the arguments on
-	 * @return The ThrowingPredicate9 that results from composing this one and the given one
+	 * @param other The other {@link ThrowingPredicate9} to test the arguments on
+	 * @return The {@link ThrowingPredicate9} that results from composing this one and the given one
 	 */
 	default ThrowingPredicate9<A, B, C, D, E, F, G, H, I, T> and(
 			ThrowingPredicate9<? super A, ? super B, ? super C, ? super D, ? super E,
@@ -53,11 +54,25 @@ public interface ThrowingPredicate9<A, B, C, D, E, F, G, H, I, T extends Throwab
 	}
 	
 	/**
-	 * Creates a ThrowingPredicate9 that will test the arguments with this ThrowingPredicate9
-	 * and with the given ThrowingPredicate9, returning true if either result is true.
+	 * Creates a {@link ThrowingPredicate9} that will test the arguments with this {@link ThrowingPredicate9}
+	 * and with the given {@link Predicate9}, returning true only if both results are true.
+	 *
+	 * @param other The other {@link Predicate9} to test the arguments on
+	 * @return The {@link ThrowingPredicate9} that results from composing this {@link ThrowingPredicate9} and the given {@link Predicate9}
+	 */
+	default ThrowingPredicate9<A, B, C, D, E, F, G, H, I, T> and(
+			Predicate9<? super A, ? super B, ? super C, ? super D, ? super E,
+					? super F, ? super G, ? super H, ? super I> other){
+		return (a, b, c, d, e, f, g, h, i) -> this.test(a, b, c, d, e, f, g, h, i) &&
+				other.test(a, b, c, d, e, f, g, h, i);
+	}
+	
+	/**
+	 * Creates a {@link ThrowingPredicate9} that will test the arguments with this {@link ThrowingPredicate9}
+	 * and with the given {@link ThrowingPredicate9}, returning true if either result is true.
 	 * 
-	 * @param other The other ThrowingPredicate9 to test the arguments on
-	 * @return The ThrowingPredicate9 that results from composing this one and the given one
+	 * @param other The other {@link ThrowingPredicate9} to test the arguments on
+	 * @return The {@link ThrowingPredicate9} that results from composing this one and the given one
 	 */
 	default ThrowingPredicate9<A, B, C, D, E, F, G, H, I, T> or(
 			ThrowingPredicate9<? super A, ? super B, ? super C, ? super D, ? super E,
@@ -67,9 +82,23 @@ public interface ThrowingPredicate9<A, B, C, D, E, F, G, H, I, T extends Throwab
 	}
 	
 	/**
-	 * Creates a ThrowingPredicate9 that will return the opposite result of this ThrowingPredicate9.
+	 * Creates a {@link ThrowingPredicate9} that will test the arguments with this {@link ThrowingPredicate9}
+	 * and with the given {@link Predicate9}, returning true if either result is true.
+	 *
+	 * @param other The other {@link Predicate9} to test the arguments on
+	 * @return The {@link ThrowingPredicate9} that results from composing this {@link ThrowingPredicate9} and the given {@link Predicate9}
+	 */
+	default ThrowingPredicate9<A, B, C, D, E, F, G, H, I, T> or(
+			Predicate9<? super A, ? super B, ? super C, ? super D, ? super E,
+					? super F, ? super G, ? super H, ? super I> other){
+		return (a, b, c, d, e, f, g, h, i) -> this.test(a, b, c, d, e, f, g, h, i) ||
+				other.test(a, b, c, d, e, f, g, h, i);
+	}
+	
+	/**
+	 * Creates a {@link ThrowingPredicate9} that will return the opposite result of this {@link ThrowingPredicate9}.
 	 * 
-	 * @return A negated version of this ThrowingPredicate9
+	 * @return A negated version of this {@link ThrowingPredicate9}
 	 */
 	default ThrowingPredicate9<A, B, C, D, E, F, G, H, I, T> negate(){
 		return (a, b, c, d, e, f, g, h, i) -> !this.test(a, b, c, d, e, f, g, h, i);

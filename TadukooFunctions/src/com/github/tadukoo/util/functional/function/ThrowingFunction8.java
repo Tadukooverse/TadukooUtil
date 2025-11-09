@@ -16,7 +16,8 @@ package com.github.tadukoo.util.functional.function;
  * @param <T> The type of {@link Throwable} thrown by the function
  *
  * @author Logan Ferree (Tadukoo)
- * @version Alpha v.0.3
+ * @version Beta v.0.7
+ * @since Alpha v.0.3
  */
 @FunctionalInterface
 public interface ThrowingFunction8<A, B, C, D, E, F, G, H, R, T extends Throwable>{
@@ -38,15 +39,27 @@ public interface ThrowingFunction8<A, B, C, D, E, F, G, H, R, T extends Throwabl
 	R apply(A a, B b, C c, D d, E e, F f, G g, H h) throws T;
 	
 	/**
-	 * Creates a ThrowingFunction8 that runs this ThrowingFunction8 and
+	 * Creates a {@link ThrowingFunction8} that runs this {@link ThrowingFunction8} and
 	 * puts the result into the given {@link ThrowingFunction}.
 	 * 
 	 * @param <S> The output type of the {@link ThrowingFunction}
-	 * @param after A {@link ThrowingFunction} to put the result of this ThrowingFunction8 into
-	 * @return The ThrowingFunction8 made from composing this one and the given {@link ThrowingFunction}
+	 * @param after A {@link ThrowingFunction} to put the result of this {@link ThrowingFunction8} into
+	 * @return The {@link ThrowingFunction8} made from composing this {@link ThrowingFunction8} and the given {@link ThrowingFunction}
 	 */
 	default <S> ThrowingFunction8<A, B, C, D, E, F, G, H, S, T> andThen(
 			ThrowingFunction<? super R, ? extends S, ? extends T> after){
+		return (a, b, c, d, e, f, g, h) -> after.apply(this.apply(a, b, c, d, e, f, g, h));
+	}
+	
+	/**
+	 * Creates a {@link ThrowingFunction8} that runs this {@link ThrowingFunction8} and
+	 * puts the result into the given {@link Function}.
+	 *
+	 * @param <S> The output type of the {@link Function}
+	 * @param after A {@link Function} to put the result of this {@link ThrowingFunction8} into
+	 * @return The {@link ThrowingFunction8} made from composing this {@link ThrowingFunction8} and the given {@link Function}
+	 */
+	default <S> ThrowingFunction8<A, B, C, D, E, F, G, H, S, T> andThen(Function<? super R, ? extends S> after){
 		return (a, b, c, d, e, f, g, h) -> after.apply(this.apply(a, b, c, d, e, f, g, h));
 	}
 }

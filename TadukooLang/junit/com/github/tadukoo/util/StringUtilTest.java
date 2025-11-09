@@ -1,9 +1,13 @@
 package com.github.tadukoo.util;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -415,6 +419,63 @@ public class StringUtilTest{
 	@Test
 	public void testConvertToStringOnInt(){
 		assertEquals("1", StringUtil.convertToString(1));
+	}
+	
+	@ParameterizedTest
+	@MethodSource("getToJavaStringData")
+	public void testConvertToJavaString(Object obj, String expectedText){
+		assertEquals(expectedText, StringUtil.convertToJavaString(obj));
+	}
+	
+	private enum JavaCodeTypes{
+		CLASS
+	}
+	
+	private record EditableJavaAnnotation(String name){
+		@Override
+		public String toString(){
+			return "@" + name;
+		}
+	}
+	
+	public static Stream<Arguments> getToJavaStringData(){
+		return Stream.of(
+				// Null
+				Arguments.of(null, null),
+				// String
+				Arguments.of("testing", "testing"),
+				// Enum
+				Arguments.of(JavaCodeTypes.CLASS, "JavaCodeTypes.CLASS"),
+				// Annotation
+				Arguments.of(new EditableJavaAnnotation("Test"), "@Test")
+		);
+	}
+	
+	@Test
+	public void testEscapeString(){
+		String theString = "test something \t\n \r\n \t\t\t";
+		assertEquals("test something \\t\\n \\r\\n \\t\\t\\t", StringUtil.escapeString(theString));
+	}
+	
+	@ParameterizedTest
+	@MethodSource("getCountSubstringInstancesData")
+	public void testCountSubstringInstances(String text, String substring, int count){
+		assertEquals(count, StringUtil.countSubstringInstances(text, substring));
+	}
+	
+	public static Stream<Arguments> getCountSubstringInstancesData(){
+		return Stream.of(
+				// 0 Within
+				Arguments.of("some random text", "not in", 0),
+				// s
+				Arguments.of("something special", "s", 2),
+				// un
+				Arguments.of("unhappy uniform unicycle", "un", 3),
+				// <
+				Arguments.of("List<Map<String,Object>>", "<", 2),
+				// >
+				Arguments.of("List<Map<String,Object>>", ">", 2)
+		);
 	}
 	
 	@Test

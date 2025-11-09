@@ -13,6 +13,7 @@ public class ThrowingFunction9Test{
 			Integer, Integer, Integer, Integer, IllegalArgumentException> success;
 	private ThrowingFunction<Integer, Integer, IllegalArgumentException> add2;
 	private ThrowingFunction<Integer, Integer, IllegalArgumentException> simpleThrower;
+	private Function<Integer, Integer> regularFunction;
 	
 	@BeforeEach
 	public void setup(){
@@ -24,10 +25,11 @@ public class ThrowingFunction9Test{
 		simpleThrower = i -> {
 			throw new IllegalArgumentException("Not supported");
 		};
+		regularFunction = i -> i + 2;
 	}
 	
 	@Test
-	public void testThrowingFunction7(){
+	public void testThrowingFunction9(){
 		try{
 			thrower.apply(5, 5, 5, 5, 5, 5, 5, 5, 5);
 			fail();
@@ -51,5 +53,11 @@ public class ThrowingFunction9Test{
 	public void testAndThenSuccess(){
 		assertEquals(47,
 				success.andThen(add2).apply(5, 5, 5, 5, 5, 5, 5, 5, 5));
+	}
+	
+	@Test
+	public void testAndThenRegularFunction(){
+		assertEquals(47,
+				success.andThen(regularFunction).apply(5, 5, 5, 5, 5, 5, 5, 5, 5));
 	}
 }

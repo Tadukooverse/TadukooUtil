@@ -10,6 +10,7 @@ public class ThrowingFunctionTest{
 	private ThrowingFunction<Integer, Integer, IllegalArgumentException> thrower;
 	private ThrowingFunction<Integer, Integer, IllegalArgumentException> success;
 	private ThrowingFunction<Integer, Integer, IllegalArgumentException> add2;
+	private Function<Integer, Integer> regularFunction;
 	
 	@BeforeEach
 	public void setup(){
@@ -18,6 +19,7 @@ public class ThrowingFunctionTest{
 		};
 		success = i -> i;
 		add2 = i -> i + 2;
+		regularFunction = i -> i + 2;
 	}
 	
 	@Test
@@ -47,6 +49,11 @@ public class ThrowingFunctionTest{
 	}
 	
 	@Test
+	public void testComposeRegularFunction(){
+		assertEquals(7, regularFunction.compose(success).apply(5));
+	}
+	
+	@Test
 	public void testAndThenThrowing(){
 		try{
 			success.andThen(thrower).apply(5);
@@ -59,6 +66,11 @@ public class ThrowingFunctionTest{
 	@Test
 	public void testAndThenSuccess(){
 		assertEquals(7, success.andThen(add2).apply(5));
+	}
+	
+	@Test
+	public void testAndThenRegularFunction(){
+		assertEquals(7, success.andThen(regularFunction).apply(5));
 	}
 	
 	@Test

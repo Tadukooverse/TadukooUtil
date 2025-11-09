@@ -8,12 +8,10 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 public class ThrowingConsumer6Test{
 	private int value1, value2, value3, value4, value5, value6;
-	private ThrowingConsumer6<Integer, Integer, Integer, Integer, Integer,
-			Integer, IllegalArgumentException> success;
-	private ThrowingConsumer6<Integer, Integer, Integer, Integer, Integer,
-			Integer, IllegalArgumentException> add2;
-	private ThrowingConsumer6<Integer, Integer, Integer, Integer, Integer,
-			Integer, IllegalArgumentException> consumer;
+	private ThrowingConsumer6<Integer, Integer, Integer, Integer, Integer, Integer, IllegalArgumentException> success;
+	private ThrowingConsumer6<Integer, Integer, Integer, Integer, Integer, Integer, IllegalArgumentException> add2;
+	private ThrowingConsumer6<Integer, Integer, Integer, Integer, Integer, Integer, IllegalArgumentException> consumer;
+	private Consumer6<Integer, Integer, Integer, Integer, Integer, Integer> regularConsumer;
 	
 	@BeforeEach
 	public void setup(){
@@ -35,6 +33,14 @@ public class ThrowingConsumer6Test{
 		};
 		consumer = (i, j, k, l, m, n) -> {
 			throw new IllegalArgumentException("Not supported");
+		};
+		regularConsumer = (i, j, k, l, m, n) -> {
+			value1 = i + 2;
+			value2 = j + 2;
+			value3 = k + 2;
+			value4 = l + 2;
+			value5 = m + 2;
+			value6 = n + 2;
 		};
 	}
 	
@@ -68,6 +74,17 @@ public class ThrowingConsumer6Test{
 	@Test
 	public void testAndThenSuccess(){
 		success.andThen(add2).accept(5, 3, 17, 13, 23, 19);
+		assertEquals(7, value1);
+		assertEquals(5, value2);
+		assertEquals(19, value3);
+		assertEquals(15, value4);
+		assertEquals(25, value5);
+		assertEquals(21, value6);
+	}
+	
+	@Test
+	public void testAndThenRegularConsumer(){
+		success.andThen(regularConsumer).accept(5, 3, 17, 13, 23, 19);
 		assertEquals(7, value1);
 		assertEquals(5, value2);
 		assertEquals(19, value3);

@@ -11,6 +11,7 @@ public class ThrowingConsumer4Test{
 	private ThrowingConsumer4<Integer, Integer, Integer, Integer, IllegalArgumentException> success;
 	private ThrowingConsumer4<Integer, Integer, Integer, Integer, IllegalArgumentException> add2;
 	private ThrowingConsumer4<Integer, Integer, Integer, Integer, IllegalArgumentException> consumer;
+	private Consumer4<Integer, Integer, Integer, Integer> regularConsumer;
 	
 	@BeforeEach
 	public void setup(){
@@ -28,6 +29,12 @@ public class ThrowingConsumer4Test{
 		};
 		consumer = (i, j, k, l) -> {
 			throw new IllegalArgumentException("Not supported");
+		};
+		regularConsumer = (i, j, k, l) -> {
+			value1 = i + 2;
+			value2 = j + 2;
+			value3 = k + 2;
+			value4 = l + 2;
 		};
 	}
 	
@@ -59,6 +66,15 @@ public class ThrowingConsumer4Test{
 	@Test
 	public void testAndThenSuccess(){
 		success.andThen(add2).accept(5, 3, 17, 13);
+		assertEquals(7, value1);
+		assertEquals(5, value2);
+		assertEquals(19, value3);
+		assertEquals(15, value4);
+	}
+	
+	@Test
+	public void testAndThenRegularConsumer(){
+		success.andThen(regularConsumer).accept(5, 3, 17, 13);
 		assertEquals(7, value1);
 		assertEquals(5, value2);
 		assertEquals(19, value3);
